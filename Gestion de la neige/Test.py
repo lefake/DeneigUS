@@ -18,13 +18,13 @@ def test_graph():
     y = np.sin(z)
     t = np.linspace(0,dt,time_max)
     
-    graph_genetator  = GraphGeneration()
-    graph_genetator.update_trajectory([x,y,z])
-    graph_genetator.plot_3dtrajectory()
+    graph_generator  = GraphGeneration()
+    graph_generator.update_trajectory([x,y,z])
+    graph_generator.plot_3dtrajectory()
     
 def test_traj_without_wind():
     point = 1000
-    t_max = 2
+    t_max = 10
     
     teta_rot = 30/180*np.pi
     teta_elev = 45/180*np.pi
@@ -37,5 +37,5 @@ def test_traj_without_wind():
     t = traj_with_time[3,:]
     
     graph_generator = GraphGeneration()
-    graph_genetator.update_trajectory(traj)
+    graph_generator.update_trajectory(traj)
     graph_generator.plot_3dtrajectory()
