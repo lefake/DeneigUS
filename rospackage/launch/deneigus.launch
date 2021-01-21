@@ -1,9 +1,14 @@
 <launch>
+ <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+     <arg name="port" value="8080"/>
+     <arg name="output" value="log"/>
+ </include>
+
  <!-- python executif Node -->
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
 
  <!-- python astar node -->
-  <node pkg="deneigus" type="astar.py" name="astar" />
+  <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
 
  <!-- arduino serial Node -->
   <node pkg="rosserial_python" type="serial_node.py" name="serial_node">

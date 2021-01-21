@@ -44,7 +44,7 @@ class Executif:
         rospy.loginfo('5 pos_tourelle_callback with ' + str(msg.data[0]))
 
     def debug_mot_callback(self, msg):
-        rospy.loginfo('5 pos_tourelle_callback with ' + str(msg.data[0]))
+        rospy.loginfo('6 pos_tourelle_callback with ' + str(msg.data[0]))
 
 if __name__ == "__main__":
     rospy.init_node('executif', anonymous=False)
