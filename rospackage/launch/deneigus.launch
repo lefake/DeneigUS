@@ -1,6 +1,6 @@
 <launch>
  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
-     <arg name="port" value="8080"/>
+     <arg name="port" value="9090"/>
      <arg name="output" value="log"/>
  </include>
 
