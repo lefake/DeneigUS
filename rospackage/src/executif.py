@@ -4,6 +4,7 @@ import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
+from sensor_msgs.msg import Joy
 from enum import Enum
 
 logging = False
@@ -30,6 +31,7 @@ class Executif:
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
         self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
         self.imu_data_sub = rospy.Subscriber('/imu_data', Float32MultiArray, self.imu_data_callback)
+        self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
 
         # Services
         self.traj_serv = rospy.ServiceProxy('/trajgen_srv', trajgen)
