@@ -189,7 +189,7 @@ imu_data_topic.subscribe(function(message) {
     imu_table = document.getElementById('IMU');
     for (i = 0; i < 9; i++)
     {
-	imu_table.rows[1].cells[i+1].innerHTML = message.data[i].toFixed(2);
+	imu_table.rows[1].cells[i].innerHTML = message.data[i].toFixed(2);
     }      
 });
 
