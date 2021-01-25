@@ -1,18 +1,27 @@
-/*
- * rosserial Publisher Example
- * Prints "hello world!"
- */
-
 #include <ros.h>
-#include <std_msgs/String.h>
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Float32MultiArray.h>
+#include "constants.h"
 
+// FUNCTION DECLARATION ros_utils
 
-// Function declaration
+void ros_init();
+void ros_msg_init();
+void init_msg_array_values ( std_msgs::Float32MultiArray* msg, int len );
+
+// FUNCTION DECLARATION test_utils
+
+void pos_msg_fake_data( std_msgs::Float32MultiArray* );
+void obs_pos_msg_fake_data( std_msgs::Float32MultiArray* );
+void estop_state_msg_fake_data( std_msgs::Float32MultiArray* );
+void tele_batt_msg_fake_data( std_msgs::Float32MultiArray* );
+void pos_tourelle_msg_fake_data( std_msgs::Float32MultiArray* );
+void debug_mot_msg_fake_data( std_msgs::Float32MultiArray* );
+void gps_data_msg_fake_data( std_msgs::Float32MultiArray* );
+void imu_data_msg_fake_data( std_msgs::Float32MultiArray* );
+
 void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg );
 void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg );
-
 
 // ========== ROS ==========
 
@@ -41,6 +50,51 @@ ros::Publisher pos_tourelle_pub("/pos_tourelle", &pos_tourelle_msg);
 std_msgs::Float32MultiArray debug_mot_msg;
 ros::Publisher debug_mot_pub("/debug_mot", &debug_mot_msg);
 
+std_msgs::Float32MultiArray gps_data_msg;
+ros::Publisher gps_data_pub("/gps_data", &gps_data_msg);
+
+std_msgs::Float32MultiArray imu_data_msg;
+ros::Publisher imu_data_pub("/imu_data", &imu_data_msg);
+
+// GLOBALS
+
+int val = 0;
+
+
+void setup()
+{
+  // ROS
+  ros_init();
+  ros_msg_init();
+}
+
+void loop()
+{
+  // ROS fake data
+  pos_msg_fake_data( &pos_msg );
+  obs_pos_msg_fake_data( &obs_pos_msg );
+  estop_state_msg_fake_data( & estop_state_msg);
+  tele_batt_msg_fake_data( &tele_batt_msg );
+  pos_tourelle_msg_fake_data( &pos_tourelle_msg );
+  debug_mot_msg_fake_data( &debug_mot_msg );
+  gps_data_msg_fake_data( &gps_data_msg );
+  imu_data_msg_fake_data( &imu_data_msg );
+
+  // ROS pub
+  pos_pub.publish( &pos_msg );
+  obs_pos_pub.publish( &obs_pos_msg );
+  estop_state_pub.publish( &estop_state_msg );
+  tele_batt_pub.publish( &tele_batt_msg );
+  pos_tourelle_pub.publish( &pos_tourelle_msg );
+  debug_mot_pub.publish( &debug_mot_msg );
+  gps_data_pub.publish( &gps_data_msg );
+  imu_data_pub.publish( &imu_data_msg );
+  
+  nh.spinOnce();
+  delay(1000);
+}
+
+// CALLBACKS
 
 void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg )
 {
@@ -50,44 +104,4 @@ void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg )
 void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg )
 {
   
-}
-
-// GLOBALS
-
-int val = 0;
-
-
-void setup()
-{
-  nh.initNode();
-
-  nh.subscribe(cmd_vel_sub);
-  nh.subscribe(cmd_tourelle_sub);
-  
-  nh.advertise(pos_pub);
-  nh.advertise(obs_pos_pub);
-  nh.advertise(estop_state_pub);
-  nh.advertise(tele_batt_pub);
-  nh.advertise(pos_tourelle_pub);
-  nh.advertise(debug_mot_pub);  
-
-
-  pos_msg.data_length = 5;
-  
-  for (int i = 0; i < 5; ++i)
-  {
-    pos_msg.data[i] = 0;
-  }
-}
-
-void loop()
-{
-  val = val + 1 > 255 ? 0 : val+1;
-  
-  pos_msg.data[0] = val;
-  
-  pos_pub.publish( &pos_msg );
-  
-  nh.spinOnce();
-  delay(1000);
 }
