@@ -18,6 +18,7 @@ void ros_init()
   nh.advertise(debug_mot_pub);
   nh.advertise(gps_data_pub);
   nh.advertise(imu_data_pub);
+  nh.advertise(debug_arduino_data_pub);
 }
 
 void ros_msg_init()
@@ -30,7 +31,8 @@ void ros_msg_init()
   init_msg_array_values( &pos_tourelle_msg, POS_TOURELLE_MSG_ARRAY_LEN );
   init_msg_array_values( &debug_mot_msg, DEBUG_MOT_MSG_ARRAY_LEN );
   init_msg_array_values( &gps_data_msg, GPS_DATA_MSG_ARRAY_LEN );
-  init_msg_array_values( &imu_data_msg, IMU_DATA_MSG_ARRAY_LEN );  
+  init_msg_array_values( &imu_data_msg, IMU_DATA_MSG_ARRAY_LEN );
+  init_msg_array_values( &debug_arduino_data_msg, DEBUG_ARDUINO_DATA_MSG_ARRAY_LEN );
 }
 
 void init_msg_array_values ( std_msgs::Float32MultiArray* msg, int len )

@@ -56,6 +56,12 @@ ros::Publisher gps_data_pub("/gps_data", &gps_data_msg);
 std_msgs::Float32MultiArray imu_data_msg;
 ros::Publisher imu_data_pub("/imu_data", &imu_data_msg);
 
+
+// Debug
+std_msgs::Float32MultiArray debug_arduino_data_msg;
+ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data_msg);
+
+
 // GLOBALS
 
 int val = 0;
