@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+import os
 from enum import Enum
 
 import rospy
@@ -8,8 +9,6 @@ from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
 from logging_utils import setup_logger, get_logger
-
-LOGGING_FILE = "/home/marc/catkin_ws/src/deneigus/logs/executif.log"
 
 # Control mode values
 class control_modes(Enum):
@@ -91,8 +90,7 @@ class Executif:
 if __name__ == "__main__":
     rospy.init_node('executif', anonymous=False)
 
-    # Need to reload logging after init_node because of a ROS bug
-    setup_logger(LOGGING_FILE)
+    setup_logger(__file__)
     logger = get_logger("executif")
     logger.info("Executif main Started")
 
