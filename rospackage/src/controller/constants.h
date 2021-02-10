@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define NBS_SONARS                          8
+#define NBS_SONARS                          1
 #define NBS_BATTERIES                       2
 #define NBS_MOTORS                          5
 #define NBS_GPS                             1
@@ -24,6 +24,11 @@
 #define DEBUG_MOT_MSG_ARRAY_LEN             NBS_DATA_MOTORS * NBS_MOTORS
 #define GPS_DATA_MSG_ARRAY_LEN              NBS_DATA_GPS * NBS_GPS
 #define IMU_DATA_MSG_ARRAY_LEN              NBS_DATA_IMU * NBS_IMU
-#define DEBUG_ARDUINO_DATA_MSG_ARRAY_LEN    10
+#define DEBUG_ARDUINO_DATA_MSG_ARRAY_LEN    OBS_POS_MSG_ARRAY_LEN
+
+
+
+#define DIST_THRESHOLD_CM                   20
+
 
 #endif

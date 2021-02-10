@@ -1,0 +1,12 @@
+#include "RosUtils.h"
+
+void RosUtils::init_msg_array_values ( std_msgs::Float32MultiArray* msg, int len )
+{
+  //Allocate the array data
+  msg->data = (float *) malloc(sizeof(float)*len);
+  msg->data_length = len;
+
+  //Initialize every value to 0
+  for (int i = 0; i < msg->data_length; ++i)
+    msg->data[i] = 0.0;
+}

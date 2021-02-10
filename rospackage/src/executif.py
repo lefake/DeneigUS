@@ -51,8 +51,8 @@ class Executif:
         #self.logger.debug("Joy echo callback")
         # Random axies values
         # TODO : connect the actual joysticks values
-        throttle = msg.axes(0)
-        angle = msg.axes(1)
+        throttle = msg.axes(1)
+        angle = msg.axes(0)
 
         if self.ctl_mode == control_modes.manuel:
             self.pos_msg.linear.x = throttle
@@ -90,7 +90,7 @@ class Executif:
 if __name__ == "__main__":
     rospy.init_node('executif', anonymous=False)
 
-    setup_logger(__file__)
+    setup_logger(__file__, print_level=logging.DEBUG)
     logger = get_logger("executif")
     logger.info("Executif main Started")
 
