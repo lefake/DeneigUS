@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define NBS_SONARS                          1
+#define NBS_SONARS                          6
 #define NBS_BATTERIES                       2
 #define NBS_MOTORS                          5
 #define NBS_GPS                             1
@@ -27,8 +27,12 @@
 #define DEBUG_ARDUINO_DATA_MSG_ARRAY_LEN    OBS_POS_MSG_ARRAY_LEN
 
 
-
+// Sonars constants
+#define MIN_DIST_DETECTION_CM               1
+#define MAX_DIST_DETECTION_CM               400
 #define DIST_THRESHOLD_CM                   20
+
+#define TEMPERATURE                         20
 
 
 #endif

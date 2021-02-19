@@ -57,9 +57,8 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 
 // GLOBALS
 
-Sonars* sonars;
+Sonars sonars;
 int val = 0;
-
 
 void setup()
 {
@@ -67,14 +66,14 @@ void setup()
   ros_init();
   ros_msg_init();
 
-  sonars = new Sonars(sonars_trigger_pin, sonars_echo_pins);
+  sonars.init(sonars_trigger_pin, sonars_echo_pins);
 }
 
 void loop()
 {
   // ROS fake data
   tests.pos_msg_fake_data( &pos_msg );
-  //tests.obs_pos_msg_fake_data( &obs_pos_msg );
+  // tests.obs_pos_msg_fake_data( &obs_pos_msg );
   tests.estop_state_msg_fake_data( & estop_state_msg);
   tests.tele_batt_msg_fake_data( &tele_batt_msg );
   tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
@@ -82,7 +81,7 @@ void loop()
   tests.gps_data_msg_fake_data( &gps_data_msg );
   tests.imu_data_msg_fake_data( &imu_data_msg );
   
-  sonars->getDistancesRos( &obs_pos_msg );
+  sonars.getDistancesRos( &obs_pos_msg );
 
   // ROS pub
   pos_pub.publish( &pos_msg );
@@ -94,6 +93,7 @@ void loop()
   gps_data_pub.publish( &gps_data_msg );
   imu_data_pub.publish( &imu_data_msg );
   debug_arduino_data_pub.publish( &debug_arduino_data_msg );
+
   
   nh.spinOnce();
   delay(1000);
