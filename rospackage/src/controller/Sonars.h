@@ -2,6 +2,7 @@
 #define SONARS_H
 
 #include <std_msgs/Float32MultiArray.h>
+#include "Arduino.h"
 #include "constants.h"
 
 class Sonars

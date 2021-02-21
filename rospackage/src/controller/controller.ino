@@ -4,6 +4,7 @@
 
 #include "TestUtils.h"
 #include "RosUtils.h"
+#include "IMU.h"
 #include "Sonars.h"
 #include "constants.h"
 #include "pins.h"
@@ -56,8 +57,9 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 
 
 // GLOBALS
-
+float last_time = 0;
 Sonars sonars;
+IMU imu;
 int val = 0;
 
 void setup()
@@ -67,36 +69,41 @@ void setup()
   ros_msg_init();
 
   sonars.init(sonars_trigger_pin, sonars_echo_pins);
+  imu.init();
 }
 
 void loop()
 {
-  // ROS fake data
-  tests.pos_msg_fake_data( &pos_msg );
-  // tests.obs_pos_msg_fake_data( &obs_pos_msg );
-  tests.estop_state_msg_fake_data( & estop_state_msg);
-  tests.tele_batt_msg_fake_data( &tele_batt_msg );
-  tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
-  tests.debug_mot_msg_fake_data( &debug_mot_msg );
-  tests.gps_data_msg_fake_data( &gps_data_msg );
-  tests.imu_data_msg_fake_data( &imu_data_msg );
+  if (millis() - last_time > 100)
+  {
+    // ROS fake data
+    tests.pos_msg_fake_data( &pos_msg );
+    // tests.obs_pos_msg_fake_data( &obs_pos_msg );
+    tests.estop_state_msg_fake_data( & estop_state_msg);
+    tests.tele_batt_msg_fake_data( &tele_batt_msg );
+    tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
+    tests.debug_mot_msg_fake_data( &debug_mot_msg );
+    tests.gps_data_msg_fake_data( &gps_data_msg );
+    // tests.imu_data_msg_fake_data( &imu_data_msg );
+    
+    sonars.getDistancesRos( &obs_pos_msg );
+    imu.getValuesRos( &imu_data_msg );
   
-  sonars.getDistancesRos( &obs_pos_msg );
-
-  // ROS pub
-  pos_pub.publish( &pos_msg );
-  obs_pos_pub.publish( &obs_pos_msg );
-  estop_state_pub.publish( &estop_state_msg );
-  tele_batt_pub.publish( &tele_batt_msg );
-  pos_tourelle_pub.publish( &pos_tourelle_msg );
-  debug_mot_pub.publish( &debug_mot_msg );
-  gps_data_pub.publish( &gps_data_msg );
-  imu_data_pub.publish( &imu_data_msg );
-  debug_arduino_data_pub.publish( &debug_arduino_data_msg );
-
+    // ROS pub
+    pos_pub.publish( &pos_msg );
+    obs_pos_pub.publish( &obs_pos_msg );
+    estop_state_pub.publish( &estop_state_msg );
+    tele_batt_pub.publish( &tele_batt_msg );
+    pos_tourelle_pub.publish( &pos_tourelle_msg );
+    debug_mot_pub.publish( &debug_mot_msg );
+    gps_data_pub.publish( &gps_data_msg );
+    imu_data_pub.publish( &imu_data_msg );
+    debug_arduino_data_pub.publish( &debug_arduino_data_msg );
   
-  nh.spinOnce();
-  delay(1000);
+    nh.spinOnce();
+
+    last_time = millis();
+  }
 }
 
 // CALLBACKS

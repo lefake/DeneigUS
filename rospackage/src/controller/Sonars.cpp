@@ -48,6 +48,6 @@ void Sonars::getDistancesRos( std_msgs::Float32MultiArray* msg )
   for (int i = 0; i < NBS_SONARS + 1; ++i)
   {
     msg->data[i * NBS_DATA_SONRARS] = (distances[i] > DIST_THRESHOLD_CM) ? 0 : 1;
-    msg->data[i * NBS_DATA_SONRARS + 1] = distances[i] / 100.0;
+    msg->data[i * NBS_DATA_SONRARS + 1] = distances[i];
   }
 }

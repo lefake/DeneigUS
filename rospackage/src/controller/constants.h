@@ -28,11 +28,15 @@
 
 
 // Sonars constants
-#define MIN_DIST_DETECTION_CM               1
+#define MIN_DIST_DETECTION_CM               2
 #define MAX_DIST_DETECTION_CM               400
 #define DIST_THRESHOLD_CM                   20
 
 #define TEMPERATURE                         20
+
+
+//IMU contants
+#define IMU_ADDRESS                         0x68
 
 
 #endif
