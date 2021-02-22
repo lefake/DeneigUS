@@ -1,57 +1,57 @@
-#include <ros.h>
-#include <std_msgs/Float32MultiArray.h>
+#include "TestUtils.h"
 
-// Position
-static double x = 0;
-static double y = 5;
-static double z = 10;
-
-// Sonar
-static int obs = 0;
-static int dist = 0;
-
-// EStop 
-static int state = 0;
-
-// Battery
-static double voltage = 0;
-static double currant = 0;
-static double temp = 0;
-static int pad = 0;
-
-// Tourelle
-static double yaw = 0;
-static double pitch = 45;
-
-// Motors
-static int status = 0;
-static double speed = 0;
-static double torque = 0;
-static int direction = 0;
-static double position = 0;
-
-// GPS
-static double lat = 0;
-static double lon = 0;
-static double elev = 0;
-
-// IMU
-static double ddx = 0;
-static double ddy = 0;
-static double ddz = 0;
-static double dx = 0;
-static double dy = 0;
-static double dz = 0;
-static double mx = 0;
-static double my = 0;
-static double mz = 0;
-
-
+TestUtils::TestUtils()
+{
+  // Position
+    x = 0;
+    y = 5;
+    z = 10;
+    
+    // Sonar
+    obs = 0;
+    dist = 0;
+    
+    // EStop 
+    state = 0;
+    
+    // Battery
+    voltage = 0;
+    currant = 0;
+    temp = 0;
+    pad = 0;
+    
+    // Tourelle
+    yaw = 0;
+    pitch = 45;
+    
+    // Motors
+    status = 0;
+    speed = 0;
+    torque = 0;
+    direction = 0;
+    position = 0;
+    
+    // GPS
+    lat = 0;
+    lon = 0;
+    elev = 0;
+    
+    // IMU
+    ddx = 0;
+    ddy = 0;
+    ddz = 0;
+    dx = 0;
+    dy = 0;
+    dz = 0;
+    mx = 0;
+    my = 0;
+    mz = 0;
+}
 
 /*
  * Fake posittion data
  */
-void pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   // Set data
   msg->data[0] = x;
@@ -67,7 +67,7 @@ void pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake obstacle position data
  */
-void obs_pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::obs_pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   for (int i = 0; i < msg->data_length; i += NBS_DATA_SONRARS)
   {
@@ -86,7 +86,7 @@ void obs_pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake EStop State data
  */
-void estop_state_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::estop_state_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   // Set data
   msg->data[0] = state;
@@ -98,7 +98,7 @@ void estop_state_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake telemetrie battery data
  */
-void tele_batt_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::tele_batt_msg_fake_data( std_msgs::Float32MultiArray* msg )
 { 
   for (int i = 0; i < msg->data_length; i += NBS_DATA_BATTERIES)
   {
@@ -121,7 +121,7 @@ void tele_batt_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake Tourelle position data
  */
-void pos_tourelle_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::pos_tourelle_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   // Set data
   yaw = (yaw > 180) ? 0 : yaw + 1;
@@ -133,7 +133,7 @@ void pos_tourelle_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake motor debug data
  */
-void debug_mot_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::debug_mot_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   for (int i = 0; i < msg->data_length; i += NBS_DATA_MOTORS)
   {
@@ -156,7 +156,7 @@ void debug_mot_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake gps data
  */
-void gps_data_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::gps_data_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   for (int i = 0; i < msg->data_length; i += NBS_DATA_GPS)
   {
@@ -175,7 +175,7 @@ void gps_data_msg_fake_data( std_msgs::Float32MultiArray* msg )
 /*
  * Fake imu data
  */
-void imu_data_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::imu_data_msg_fake_data( std_msgs::Float32MultiArray* msg )
 {
   for (int i = 0; i < msg->data_length; i += NBS_DATA_IMU)
   {

@@ -1,6 +1,6 @@
 <launch>
   <arg name="has_web" default="1"/>
-  <arg name="has_joy" default="1"/>
+  <arg name="has_joy" default="0"/>
   
   <arg name="ard_port" default="/dev/ttyUSB0" />
   <arg name="ard_baud" default="57600" />
