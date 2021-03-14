@@ -61,8 +61,12 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 float last_time = 0;
 int val = 0;
 
-//Sonars sonars;
-//IMU imu;
+bool has_sonars = false;
+bool has_imu = false;
+bool has_gps = false;
+
+Sonars sonars;
+IMU imu;
 Gps gps;
 
 void setup()
@@ -82,17 +86,29 @@ void loop()
   {
     // ROS fake data
     tests.pos_msg_fake_data( &pos_msg );
-    tests.obs_pos_msg_fake_data( &obs_pos_msg );
+
+    if(!has_sonars)
+      tests.obs_pos_msg_fake_data( &obs_pos_msg );
+    
     tests.estop_state_msg_fake_data( & estop_state_msg);
     tests.tele_batt_msg_fake_data( &tele_batt_msg );
     tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
     tests.debug_mot_msg_fake_data( &debug_mot_msg );
-    tests.gps_data_msg_fake_data( &gps_data_msg );
-    tests.imu_data_msg_fake_data( &imu_data_msg );
+  
+    if(!has_gps)
+      tests.gps_data_msg_fake_data( &gps_data_msg );
+    
+    if(!has_imu)
+      tests.imu_data_msg_fake_data( &imu_data_msg );
 
-    //sonars.getDistancesRos( &obs_pos_msg );
-    //imu.getValuesRos( &imu_data_msg );
-    gps.getCoordinates( &gps_data_msg );
+    if(has_sonars)
+      sonars.getDistancesRos( &obs_pos_msg );
+
+    if(has_imu)
+      imu.getValuesRos( &imu_data_msg );
+
+    if(has_gps)
+      gps.getCoordinates( &gps_data_msg );
 
     // ROS pub
     pos_pub.publish( &pos_msg );
