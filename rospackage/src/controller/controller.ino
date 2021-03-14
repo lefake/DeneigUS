@@ -6,6 +6,7 @@
 #include "RosUtils.h"
 #include "IMU.h"
 #include "Sonars.h"
+#include "Gps.h"
 #include "constants.h"
 #include "pins.h"
 
@@ -58,9 +59,11 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 
 // GLOBALS
 float last_time = 0;
-Sonars sonars;
-IMU imu;
 int val = 0;
+
+//Sonars sonars;
+//IMU imu;
+Gps gps;
 
 void setup()
 {
@@ -68,8 +71,9 @@ void setup()
   ros_init();
   ros_msg_init();
 
-  sonars.init(sonars_trigger_pin, sonars_echo_pins);
-  imu.init();
+  //sonars.init(sonars_trigger_pin, sonars_echo_pins);
+  //imu.init();
+  gps.init();
 }
 
 void loop()
@@ -78,17 +82,18 @@ void loop()
   {
     // ROS fake data
     tests.pos_msg_fake_data( &pos_msg );
-    // tests.obs_pos_msg_fake_data( &obs_pos_msg );
+    tests.obs_pos_msg_fake_data( &obs_pos_msg );
     tests.estop_state_msg_fake_data( & estop_state_msg);
     tests.tele_batt_msg_fake_data( &tele_batt_msg );
     tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
     tests.debug_mot_msg_fake_data( &debug_mot_msg );
     tests.gps_data_msg_fake_data( &gps_data_msg );
-    // tests.imu_data_msg_fake_data( &imu_data_msg );
-    
-    sonars.getDistancesRos( &obs_pos_msg );
-    imu.getValuesRos( &imu_data_msg );
-  
+    tests.imu_data_msg_fake_data( &imu_data_msg );
+
+    //sonars.getDistancesRos( &obs_pos_msg );
+    //imu.getValuesRos( &imu_data_msg );
+    gps.getCoordinates( &gps_data_msg );
+
     // ROS pub
     pos_pub.publish( &pos_msg );
     obs_pos_pub.publish( &obs_pos_msg );
@@ -99,7 +104,7 @@ void loop()
     gps_data_pub.publish( &gps_data_msg );
     imu_data_pub.publish( &imu_data_msg );
     debug_arduino_data_pub.publish( &debug_arduino_data_msg );
-  
+
     nh.spinOnce();
 
     last_time = millis();
@@ -110,15 +115,15 @@ void loop()
 
 void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg )
 {
-  
+
 }
 
 void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg )
 {
-  
+
 }
 
-// 
+//
 void ros_init()
 {
   nh.initNode();

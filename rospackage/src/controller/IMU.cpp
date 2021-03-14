@@ -9,8 +9,7 @@ IMU::~IMU() { }
 
 void IMU::init()
 {
-  if (imu.setup(IMU_ADDRESS))
-    setup_done = true;
+  setup_done = imu.setup(IMU_ADDRESS);
 }
 
 void IMU::calibrate()
