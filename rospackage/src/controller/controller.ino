@@ -14,8 +14,6 @@
 void ros_init();
 void ros_msg_init();
 
-TestUtils tests;
-
 // ========== ROS ==========
 
 ros::NodeHandle  nh;
@@ -65,6 +63,7 @@ bool has_sonars = false;
 bool has_imu = false;
 bool has_gps = false;
 
+TestUtils tests;
 Sonars sonars;
 IMU imu;
 Gps gps;
@@ -75,9 +74,14 @@ void setup()
   ros_init();
   ros_msg_init();
 
-  //sonars.init(sonars_trigger_pin, sonars_echo_pins);
-  //imu.init();
-  gps.init();
+  if(has_sonars)
+    sonars.init(sonars_trigger_pin, sonars_echo_pins);
+  
+  if (has_imu)
+    imu.init();
+  
+  if (has_gps)
+    gps.init();
 }
 
 void loop()
@@ -85,30 +89,30 @@ void loop()
   if (millis() - last_time > 100)
   {
     // ROS fake data
-    tests.pos_msg_fake_data( &pos_msg );
-
-    if(!has_sonars)
-      tests.obs_pos_msg_fake_data( &obs_pos_msg );
-    
+    tests.pos_msg_fake_data( &pos_msg );   
     tests.estop_state_msg_fake_data( & estop_state_msg);
     tests.tele_batt_msg_fake_data( &tele_batt_msg );
     tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
     tests.debug_mot_msg_fake_data( &debug_mot_msg );
-  
-    if(!has_gps)
-      tests.gps_data_msg_fake_data( &gps_data_msg );
-    
-    if(!has_imu)
-      tests.imu_data_msg_fake_data( &imu_data_msg );
+
+
 
     if(has_sonars)
       sonars.getDistancesRos( &obs_pos_msg );
-
-    if(has_imu)
-      imu.getValuesRos( &imu_data_msg );
-
+    else
+      tests.obs_pos_msg_fake_data( &obs_pos_msg );
+  
     if(has_gps)
       gps.getCoordinates( &gps_data_msg );
+    else
+      tests.gps_data_msg_fake_data( &gps_data_msg );
+    
+    if(has_imu)
+      imu.getValuesRos( &imu_data_msg );
+    else
+      tests.imu_data_msg_fake_data( &imu_data_msg );
+
+      
 
     // ROS pub
     pos_pub.publish( &pos_msg );

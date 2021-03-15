@@ -72,12 +72,12 @@ void Gps::getCoordinates( std_msgs::Float32MultiArray* msg )
     updateLon();
     updateLat();
     
-    msg->data[0] = getX() / 1000.0;               //x
-    msg->data[1] = getY() / 1000.0;               //y
-    msg->data[2] = getZ() / 1000.0;               //z
-    msg->data[3] = latitude;                      //lat
-    msg->data[4] = longitude;                     //lon
-    msg->data[5] = myGPS.getAltitude();           //alt
+    msg->data[0] = getX();               //x
+    msg->data[1] = getY();               //y
+    msg->data[2] = getZ();               //z
+    msg->data[3] = latitude;             //lat
+    msg->data[4] = longitude;            //lon
+    msg->data[5] = myGPS.getAltitude();  //alt
   }
   else
   {
