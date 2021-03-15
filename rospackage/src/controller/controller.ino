@@ -6,14 +6,13 @@
 #include "RosUtils.h"
 #include "IMU.h"
 #include "Sonars.h"
+#include "Gps.h"
 #include "constants.h"
 #include "pins.h"
 
 // FUNCTION DECLARATION
 void ros_init();
 void ros_msg_init();
-
-TestUtils tests;
 
 // ========== ROS ==========
 
@@ -58,9 +57,16 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 
 // GLOBALS
 float last_time = 0;
+int val = 0;
+
+bool has_sonars = false;
+bool has_imu = false;
+bool has_gps = false;
+
+TestUtils tests;
 Sonars sonars;
 IMU imu;
-int val = 0;
+Gps gps;
 
 void setup()
 {
@@ -68,8 +74,14 @@ void setup()
   ros_init();
   ros_msg_init();
 
-  sonars.init(sonars_trigger_pin, sonars_echo_pins);
-  imu.init();
+  if(has_sonars)
+    sonars.init(sonars_trigger_pin, sonars_echo_pins);
+  
+  if (has_imu)
+    imu.init();
+  
+  if (has_gps)
+    gps.init();
 }
 
 void loop()
@@ -77,18 +89,31 @@ void loop()
   if (millis() - last_time > 100)
   {
     // ROS fake data
-    tests.pos_msg_fake_data( &pos_msg );
-    // tests.obs_pos_msg_fake_data( &obs_pos_msg );
+    tests.pos_msg_fake_data( &pos_msg );   
     tests.estop_state_msg_fake_data( & estop_state_msg);
     tests.tele_batt_msg_fake_data( &tele_batt_msg );
     tests.pos_tourelle_msg_fake_data( &pos_tourelle_msg );
     tests.debug_mot_msg_fake_data( &debug_mot_msg );
-    tests.gps_data_msg_fake_data( &gps_data_msg );
-    // tests.imu_data_msg_fake_data( &imu_data_msg );
-    
-    sonars.getDistancesRos( &obs_pos_msg );
-    imu.getValuesRos( &imu_data_msg );
+
+
+
+    if(has_sonars)
+      sonars.getDistancesRos( &obs_pos_msg );
+    else
+      tests.obs_pos_msg_fake_data( &obs_pos_msg );
   
+    if(has_gps)
+      gps.getCoordinates( &gps_data_msg );
+    else
+      tests.gps_data_msg_fake_data( &gps_data_msg );
+    
+    if(has_imu)
+      imu.getValuesRos( &imu_data_msg );
+    else
+      tests.imu_data_msg_fake_data( &imu_data_msg );
+
+      
+
     // ROS pub
     pos_pub.publish( &pos_msg );
     obs_pos_pub.publish( &obs_pos_msg );
@@ -99,7 +124,7 @@ void loop()
     gps_data_pub.publish( &gps_data_msg );
     imu_data_pub.publish( &imu_data_msg );
     debug_arduino_data_pub.publish( &debug_arduino_data_msg );
-  
+
     nh.spinOnce();
 
     last_time = millis();
@@ -110,15 +135,15 @@ void loop()
 
 void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg )
 {
-  
+
 }
 
 void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg )
 {
-  
+
 }
 
-// 
+//
 void ros_init()
 {
   nh.initNode();

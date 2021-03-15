@@ -13,7 +13,7 @@
 #define NBS_DATA_BATTERIES                  4
 #define NBS_DATA_TOURELLES                  5
 #define NBS_DATA_MOTORS                     5
-#define NBS_DATA_GPS                        3
+#define NBS_DATA_GPS                        6
 #define NBS_DATA_IMU                        9
 
 #define POS_MSG_ARRAY_LEN                   NBS_DATA_POS
@@ -38,5 +38,11 @@
 //IMU contants
 #define IMU_ADDRESS                         0x68
 
+
+// GPS
+#ifndef DEGTORAD
+#define DEGTORAD 0.0174532925199432957f
+#define RADTODEG 57.295779513082320876f
+#endif
 
 #endif
