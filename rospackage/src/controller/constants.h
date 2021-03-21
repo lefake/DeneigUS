@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+// ----------------------- ROS messages constants -----------------------
 #define NBS_SONARS                          6
 #define NBS_BATTERIES                       2
 #define NBS_MOTORS                          5
@@ -27,7 +28,7 @@
 #define DEBUG_ARDUINO_DATA_MSG_ARRAY_LEN    OBS_POS_MSG_ARRAY_LEN
 
 
-// Sonars constants
+// ----------------------- Sonars constants -----------------------
 #define MIN_DIST_DETECTION_CM               2
 #define MAX_DIST_DETECTION_CM               400
 #define DIST_THRESHOLD_CM                   20
@@ -35,14 +36,30 @@
 #define TEMPERATURE                         20
 
 
-//IMU contants
+// ----------------------- IMU contants ----------------------- 
 #define IMU_ADDRESS                         0x68
+#define IMU_ACC_BIAS_X                      -129.72
+#define IMU_ACC_BIAS_Y                      218.80
+#define IMU_ACC_BIAS_Z                      -217.03
 
+#define IMU_GYRO_BIAS_X                     4.68
+#define IMU_GYRO_BIAS_Y                     0.41
+#define IMU_GYRO_BIAS_Z                     -26.10
 
-// GPS
+#define IMU_MAG_BIAS_X                      -164.35
+#define IMU_MAG_BIAS_Y                      500.3
+#define IMU_MAG_BIAS_Z                      247.12
+
+#define IMU_MAG_SCALE_X                     0.94
+#define IMU_MAG_SCALE_Y                     1.00
+#define IMU_MAG_SCALE_Z                     1.07
+
+#define IMU_MAG_DECLINATION                 14.926      //https://www.geomag.nrcan.gc.ca/calc/mdcal-en.php
+
+// ----------------------- GPS -----------------------
 #ifndef DEGTORAD
-#define DEGTORAD 0.0174532925199432957f
-#define RADTODEG 57.295779513082320876f
+#define DEGTORAD                            0.0174532925199432957f
+#define RADTODEG                            57.295779513082320876f
 #endif
 
 #endif
