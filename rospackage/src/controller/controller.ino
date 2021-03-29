@@ -1,5 +1,6 @@
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/PoseStamped.h>
 #include <std_msgs/Float32MultiArray.h>
 
 #include "TestUtils.h"
@@ -25,7 +26,7 @@ void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg );
 ros::Subscriber<geometry_msgs::Twist> cmd_tourelle_sub("/cmd_tourelle", &cmd_tourelle_callback);
 
 // ROS OUT
-std_msgs::Float32MultiArray pos_msg;
+geometry_msgs::Twist pos_msg;
 ros::Publisher pos_pub("/pos", &pos_msg);
 
 std_msgs::Float32MultiArray obs_pos_msg;
@@ -167,7 +168,7 @@ void ros_init()
 void ros_msg_init()
 {
   // Init all messages
-  RosUtils::init_msg_array_values( &pos_msg, POS_MSG_ARRAY_LEN);
+  RosUtils::init_twist( &pos_msg );
   RosUtils::init_msg_array_values( &obs_pos_msg, OBS_POS_MSG_ARRAY_LEN );
   RosUtils::init_msg_array_values( &estop_state_msg, ESTOP_STATE_MSG_ARRAY_LEN );
   RosUtils::init_msg_array_values( &tele_batt_msg, TELE_BATT_MSG_ARRAY_LEN );

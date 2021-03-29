@@ -5,6 +5,7 @@ from enum import Enum
 
 import rospy
 from geometry_msgs.msg import Twist
+from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
@@ -28,7 +29,7 @@ class Executif:
         self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
 
         # In
-        self.pos_sub = rospy.Subscriber('/pos', Float32MultiArray, self.pos_callback)
+        self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
         self.obs_pos_sub = rospy.Subscriber('/obs_pos', Float32MultiArray, self.obs_pos_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
@@ -90,7 +91,7 @@ class Executif:
 if __name__ == "__main__":
     rospy.init_node('executif', anonymous=False)
 
-    setup_logger(__file__, print_level=logging.DEBUG)
+    setup_logger(__file__, print_level=logging.INFO)
     logger = get_logger("executif")
     logger.info("Executif main Started")
 
