@@ -51,17 +51,21 @@ TestUtils::TestUtils()
 /*
  * Fake posittion data
  */
-void TestUtils::pos_msg_fake_data( std_msgs::Float32MultiArray* msg )
+void TestUtils::pos_msg_fake_data( geometry_msgs::Twist* msg )
 {
-  // Set data
-  msg->data[0] = x;
-  msg->data[1] = y;
-  msg->data[2] = z;
+  msg->linear.x = x;
+  msg->linear.y = y;
+  msg->linear.z = 0;
+  
+  msg->angular.z = z;
+  
 
   // Update data
-  x = (x > 50) ? -50 : x + 2;
-  y = (y > 50) ? -50 : y + 1;
-  z = (z > 50) ? -50 : z + 3;
+  x = (x > 30) ? 0 : x + 0.1;
+  y = (y > 20) ? 0 : y + 0.1;
+  z = (z > 1) ? -1 : z + 0.05;
+
+  
 }
 
 /*

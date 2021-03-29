@@ -3,13 +3,14 @@
 
 #include <ros.h>
 #include <std_msgs/Float32MultiArray.h>
+#include <geometry_msgs/Twist.h>
 #include "constants.h"
 
 class TestUtils
 {
   public:
     TestUtils();
-    void pos_msg_fake_data( std_msgs::Float32MultiArray* msg );
+    void pos_msg_fake_data( geometry_msgs::Twist* msg );
     void obs_pos_msg_fake_data( std_msgs::Float32MultiArray* msg );
     void estop_state_msg_fake_data( std_msgs::Float32MultiArray* msg );
     void tele_batt_msg_fake_data( std_msgs::Float32MultiArray* msg );

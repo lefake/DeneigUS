@@ -10,3 +10,8 @@ void RosUtils::init_msg_array_values ( std_msgs::Float32MultiArray* msg, int len
   for (int i = 0; i < msg->data_length; ++i)
     msg->data[i] = 0.0;
 }
+
+void RosUtils::init_twist ( geometry_msgs::Twist* msg )
+{
+  msg = (geometry_msgs::Twist *) malloc(sizeof(geometry_msgs::Twist));
+}
