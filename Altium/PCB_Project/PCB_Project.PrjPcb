@@ -75,6 +75,23 @@ GenerateClassCluster=0
 DocumentUniqueId=FYCUGXGI
 
 [Document3]
+DocumentPath=Deneigus_Plan.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=EXIXBOOP
+
+[Document4]
 DocumentPath=Deneigus_MECHANICAL.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -91,7 +108,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=FAPMBNMV
 
-[Document4]
+[Document5]
 DocumentPath=Deneigus_POWER.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -108,7 +125,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=WAFPTCOO
 
-[Document5]
+[Document6]
 DocumentPath=Deneigus_Controle_Soufflante.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -125,7 +142,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=AOTTYJUY
 
-[Document6]
+[Document7]
 DocumentPath=Deneigus_Controle_Deplacement.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -142,7 +159,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XKQPYUMD
 
-[Document7]
+[Document8]
 DocumentPath=Deneigus_Sensors.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -159,7 +176,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=ICARLGTB
 
-[Document8]
+[Document9]
 DocumentPath=Deneigus_PI_Arduino.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -176,7 +193,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=IVQWYZXT
 
-[Document9]
+[Document10]
 DocumentPath=Deneigus_BMS.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -193,7 +210,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=MIPUHMFL
 
-[Document10]
+[Document11]
 DocumentPath=Deneigus_Capteur_Courant.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -210,7 +227,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=UJDVNJGV
 
-[Document11]
+[Document12]
 DocumentPath=Deneigus_BOM.BomDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
