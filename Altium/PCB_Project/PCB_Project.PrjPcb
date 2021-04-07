@@ -211,23 +211,6 @@ GenerateClassCluster=0
 DocumentUniqueId=MIPUHMFL
 
 [Document11]
-DocumentPath=Deneigus_Capteur_Courant.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=7
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=UJDVNJGV
-
-[Document12]
 DocumentPath=Deneigus_BOM.BomDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -244,7 +227,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document13]
+[Document12]
 DocumentPath=Deneigus_Servo.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
