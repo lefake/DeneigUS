@@ -5,11 +5,12 @@ from enum import Enum
 
 import rospy
 from geometry_msgs.msg import Twist
-from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
-from sensor_msgs.msg import Joy
+from sensor_msgs.msg import Joy, Range
 from logging_utils import setup_logger, get_logger
+
+# Need to modifiy setup.py when adding module !
 
 # Control mode values
 class control_modes(Enum):
@@ -24,27 +25,27 @@ class Executif:
         self.logger.debug("Started executif init")
         # Out
         self.pos_msg = Twist()
-        self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
         self.pos_tourelle_msg = Twist()
-        self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
+        self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=1)
 
         # In
         self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
-        self.obs_pos_sub = rospy.Subscriber('/obs_pos', Float32MultiArray, self.obs_pos_callback)
+        self.obs_pos_sub = rospy.Subscriber('/obs_pos', Range, self.obs_pos_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
         self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
         self.imu_data_sub = rospy.Subscriber('/imu_data', Float32MultiArray, self.imu_data_callback)
-        self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
+        self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo, queue_size=1)
         self.imu_data_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
 
         # Services
         self.traj_serv = rospy.ServiceProxy('/trajgen_srv', trajgen)
 
         # Variables
-        self.ctl_mode = control_modes.stop
+        self.ctl_mode = control_modes.manual
 
         self.logger.debug("Finished executif init")
 
@@ -52,10 +53,10 @@ class Executif:
         #self.logger.debug("Joy echo callback")
         # Random axies values
         # TODO : connect the actual joysticks values
-        throttle = msg.axes(1)
-        angle = msg.axes(0)
+        throttle = msg.axes[1]
+        angle = msg.axes[0]
 
-        if self.ctl_mode == control_modes.manuel:
+        if self.ctl_mode == control_modes.manual:
             self.pos_msg.linear.x = throttle
             self.pos_msg.angular.z = angle
 

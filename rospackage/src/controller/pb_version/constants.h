@@ -65,4 +65,11 @@
 // Motors
 #define TRACK_DIST                          0.127
 
+
+
+// ----------------------- Protobuf constants -----------------------
+
+#define MAX_MSG_LEN                         500
+#define MAX_NBS_MSG                         10
+
 #endif

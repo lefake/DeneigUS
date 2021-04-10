@@ -1,0 +1,3 @@
+mkdir ../src/proto_gen_classes
+protoc --proto_path=. --python_out=../src/proto_gen_classes *.proto
+cp -rs ~/git/DeneigUS/rospackage/src/proto_gen_classes/* ~/catkin_ws/src/deneigus/src/proto_gen_classes

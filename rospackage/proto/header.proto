@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+import "time.proto";
+
+message Header {
+    required uint32 seq = 1;
+	required Time stamp = 2;
+	required string frame_id = 3;
+}

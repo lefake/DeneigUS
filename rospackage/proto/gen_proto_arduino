@@ -1,0 +1,8 @@
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py time.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py header.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py range.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py floatarray.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py vector3.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py twist.proto
+
+mv *.pb.* ../src/controller/

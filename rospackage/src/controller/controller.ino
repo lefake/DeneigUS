@@ -2,18 +2,22 @@
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <std_msgs/Float32MultiArray.h>
+#include <sensor_msgs/Range.h>
 
 #include "TestUtils.h"
 #include "RosUtils.h"
 #include "IMU.h"
 #include "Sonars.h"
 #include "Gps.h"
+#include "Motor.h"
 #include "constants.h"
 #include "pins.h"
 
 // FUNCTION DECLARATION
 void ros_init();
+void ros_topic_init();
 void ros_msg_init();
+
 
 // ========== ROS ==========
 
@@ -29,7 +33,7 @@ ros::Subscriber<geometry_msgs::Twist> cmd_tourelle_sub("/cmd_tourelle", &cmd_tou
 geometry_msgs::Twist pos_msg;
 ros::Publisher pos_pub("/pos", &pos_msg);
 
-std_msgs::Float32MultiArray obs_pos_msg;
+sensor_msgs::Range obs_pos_msg;
 ros::Publisher obs_pos_pub("/obs_pos", &obs_pos_msg);
 
 std_msgs::Float32MultiArray estop_state_msg;
@@ -59,15 +63,21 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 // GLOBALS
 float last_time = 0;
 int val = 0;
+int sonars_msg_seq = 0;
+
+float vel_left = 0;
+float vel_right = 0;
 
 bool has_sonars = false;
 bool has_imu = false;
 bool has_gps = false;
+bool has_motor = true;
 
 TestUtils tests;
 Sonars sonars;
 IMU imu;
 Gps gps;
+Motor m_l, m_r;
 
 void setup()
 {
@@ -76,18 +86,31 @@ void setup()
   ros_msg_init();
 
   if(has_sonars)
+  {
     sonars.init(sonars_trigger_pin, sonars_echo_pins);
+    obs_pos_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+    obs_pos_msg.field_of_view = 0.26;
+    obs_pos_msg.min_range = 0.0;
+    obs_pos_msg.max_range = 400.0;
+  }
   
   if (has_imu)
     imu.init();
   
   if (has_gps)
     gps.init();
+
+
+  if (has_motor)
+  {
+    m_l.init(forw_left, back_left, pwm_left);
+    m_r.init(forw_right, back_right, pwm_right);
+  }
 }
 
 void loop()
 {
-  if (millis() - last_time > 100)
+  if (millis() - last_time > 1)
   {
     // ROS fake data
     tests.pos_msg_fake_data( &pos_msg );   
@@ -99,9 +122,20 @@ void loop()
 
 
     if(has_sonars)
-      sonars.getDistancesRos( &obs_pos_msg );
-    else
-      tests.obs_pos_msg_fake_data( &obs_pos_msg );
+    {
+      char frame_id[30] = "";
+      for (int i = 0; i < NBS_SONARS; ++i)
+      {
+        (String("sonar_f_") + String(i)).toCharArray(frame_id, sizeof(frame_id));
+        obs_pos_msg.range = sonars.dist(i);
+        obs_pos_msg.header.seq = sonars_msg_seq++;
+        obs_pos_msg.header.stamp = nh.now();
+        obs_pos_msg.header.frame_id = frame_id;
+        obs_pos_pub.publish( &obs_pos_msg );
+      }
+    }
+//    else
+//      tests.obs_pos_msg_fake_data( &obs_pos_msg );
   
     if(has_gps)
       gps.getCoordinates( &gps_data_msg );
@@ -113,11 +147,18 @@ void loop()
     else
       tests.imu_data_msg_fake_data( &imu_data_msg );
 
-      
+
+    if (has_motor)
+    {
+      m_l.set_speed(vel_left);
+      m_r.set_speed(vel_right);
+    }
+
+    // After 4 pubs and 2 subs it starts lagging
+    // 
 
     // ROS pub
-    pos_pub.publish( &pos_msg );
-    obs_pos_pub.publish( &obs_pos_msg );
+    pos_pub.publish( &pos_msg );  
     estop_state_pub.publish( &estop_state_msg );
     tele_batt_pub.publish( &tele_batt_msg );
     pos_tourelle_pub.publish( &pos_tourelle_msg );
@@ -136,7 +177,11 @@ void loop()
 
 void cmd_vel_callback ( const geometry_msgs::Twist&  twistMsg )
 {
-
+  float lin = twistMsg.linear.x;
+  float rot = twistMsg.angular.z;
+  
+  vel_left = CALC(lin, -rot);
+  vel_right = CALC(lin, rot);
 }
 
 void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg )
@@ -144,9 +189,9 @@ void cmd_tourelle_callback ( const geometry_msgs::Twist&  twistMsg )
 
 }
 
-//
 void ros_init()
 {
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
 
   // Subs
@@ -169,7 +214,7 @@ void ros_msg_init()
 {
   // Init all messages
   RosUtils::init_twist( &pos_msg );
-  RosUtils::init_msg_array_values( &obs_pos_msg, OBS_POS_MSG_ARRAY_LEN );
+  RosUtils::init_range ( &obs_pos_msg );
   RosUtils::init_msg_array_values( &estop_state_msg, ESTOP_STATE_MSG_ARRAY_LEN );
   RosUtils::init_msg_array_values( &tele_batt_msg, TELE_BATT_MSG_ARRAY_LEN );
   RosUtils::init_msg_array_values( &pos_tourelle_msg, POS_TOURELLE_MSG_ARRAY_LEN );

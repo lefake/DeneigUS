@@ -15,3 +15,8 @@ void RosUtils::init_twist ( geometry_msgs::Twist* msg )
 {
   msg = (geometry_msgs::Twist *) malloc(sizeof(geometry_msgs::Twist));
 }
+
+void RosUtils::init_range ( sensor_msgs::Range* msg )
+{
+  msg = (sensor_msgs::Range *) malloc(sizeof(sensor_msgs::Range));
+}

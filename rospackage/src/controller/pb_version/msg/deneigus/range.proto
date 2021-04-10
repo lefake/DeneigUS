@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "header.proto";
+
+message Range {
+	Header header = 1;
+	float field_of_view = 2;
+	float min_range = 3;
+	float max_range = 4;
+	float range = 5;
+}

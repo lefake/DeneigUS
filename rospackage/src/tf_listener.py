@@ -19,6 +19,11 @@ class TfListener:
         rospy.Subscriber('/pos', Twist, self.pos_callback)
         rospy.Subscriber('/map_metadata', MapMetaData, self.map_metadata_callback)
 
+        # Sur un ou deux node ?
+        # Twist ou Pose
+        # Encodeur vs GPS vs IMU
+        # Fusion de capteur
+
         self.listen()
 
     def listen(self):

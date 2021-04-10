@@ -1,0 +1,4 @@
+# floatarray.options
+FloatArray.data         max_count:50
+FloatArray.data         fixed_length:true
+
