@@ -19,6 +19,7 @@
 
  <!-- python executif Node -->
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
+
  <!-- python pb2ros Node -->
   <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
 

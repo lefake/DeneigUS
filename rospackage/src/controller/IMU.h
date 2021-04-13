@@ -2,7 +2,7 @@
 #define IMU_H
 
 #include "MPU9250.h"
-#include <std_msgs/Float32MultiArray.h>
+#include "floatarray.pb.h"
 #include "constants.h"
 
 class IMU {
@@ -12,7 +12,7 @@ class IMU {
     
     void init();
     void calibrate();
-    void getValuesRos( std_msgs::Float32MultiArray* msg );
+    void getValuesRos( FloatArray* msg );
 
   private:
     bool setup_done;

@@ -30,12 +30,12 @@ void IMU::calibrate()
   }
 }
 
-void IMU::getValuesRos( std_msgs::Float32MultiArray* msg )
+void IMU::getValuesRos( FloatArray* msg )
 {
   if (setup_done)
   {
     imu.update();
-
+    msg->data_count = 9;
     for (int i = 0; i < 3; i++)
     {
       msg->data[i] = imu.getGyro(i);

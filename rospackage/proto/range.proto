@@ -1,11 +1,7 @@
 syntax = "proto2";
 
-import "header.proto";
-
 message Range {
-	required Header header = 1;
-	required float field_of_view = 2;
-	required float min_range = 3;
-	required float max_range = 4;
-	required float range = 5;
+	required uint32 seq = 1;
+	required string frame_id = 2;
+	required float range = 3;
 }

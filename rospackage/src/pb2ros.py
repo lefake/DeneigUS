@@ -32,9 +32,9 @@ class PB2ROS:
         self.imu_data_pub = rospy.Publisher('/imu_data', Float32MultiArray, queue_size=5)
         self.joy_data_pub = rospy.Publisher('/joy', Joy, queue_size=5)
 
-        # IDS AND NAME MUST MATCH WITH ARDUINO TOPIC ENUM IN controller/PBConstants.h
+        # Topic IDs much be the same in the Arduino enum (in constants.h)
         self._topics = [
-            Topic(0, "/debug_arduino", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.debug_arduino_pub),
+            Topic(0, "/debug_arduino_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.debug_arduino_pub),
             Topic(1, "/cmd_vel", twist_pb2.Twist(), self.twist_ros2pb),
             Topic(2, "/cmd_tourelle", twist_pb2.Twist(), self.twist_ros2pb),
             Topic(3, "/pos", twist_pb2.Twist(), self.twist_pb2ros, self.pos_pub),
@@ -44,7 +44,7 @@ class PB2ROS:
             Topic(7, "/pos_tourelle", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.pos_tourelle_pub),
             Topic(8, "/debug_mot", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.debug_mot_pub),
             Topic(9, "/gps_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.gps_data_pub),
-            Topic(9, "/imu_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.imu_data_pub),
+            Topic(10, "/imu_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.imu_data_pub),
         ]
         self._msg_obj = [topic.obj for topic in self._topics]
 
@@ -52,6 +52,7 @@ class PB2ROS:
         self._serializer = PBSerializationHandler(self._msg_obj)
 
     def new_msg_callback(self, response):
+        logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
 
         for msg in msgs:
@@ -73,12 +74,11 @@ class PB2ROS:
         twist = Twist()
 
         twist.linear.x = pb.lx
-        twist.linear.x = pb.ly
-        twist.linear.x = pb.lz
+        twist.linear.y = pb.ly
+        twist.linear.z = pb.lz
         twist.angular.x = pb.ax
-        twist.angular.x = pb.ay
-        twist.angular.x = pb.az
-
+        twist.angular.y = pb.ay
+        twist.angular.z = pb.az
         return twist
 
     def twist_ros2pb(self, ros):
@@ -90,11 +90,11 @@ class PB2ROS:
         twist.ax = ros.angular.x
         twist.ay = ros.angular.y
         twist.az = ros.angular.z
-
         return twist
 
     def floatarray_pb2ros(self, pb):
         fa = Float32MultiArray()
+        # len
         fa.data = pb.data
         return fa
 
@@ -105,16 +105,19 @@ class PB2ROS:
 
     def range_pb2ros(self, pb):
         ran = Range()
-        ran.header = pb.header
-        ran.field_of_view = pb.field_of_view
-        ran.min_range = pb.min_range
-        ran.max_range = pb.max_range
+        ran.radiation_type = 0
+        ran.header.seq = pb.seq
+        ran.header.frame_id = pb.frame_id
+        ran.header.stamp = rospy.Time.now()
+        ran.field_of_view = 0.3
+        ran.min_range = 0.1
+        ran.max_range = 2
         ran.range = pb.range
         return ran
 
     def range_ros2pb(self, ros):
         pb = range_pb2.Range()
-        pb.header = ros.header
+        #pb.header = ros.header
         pb.field_of_view = ros.field_of_view
         pb.min_range = ros.min_range
         pb.max_range = ros.max_range
@@ -128,10 +131,10 @@ class PB2ROS:
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
     arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
-    #arduino = serial.Serial('/dev/pts/6', 9600, timeout=0.05)
+    #arduino = serial.Serial('/dev/pts/2', 9600, timeout=0.05)
     rospy.init_node('pb2ros', anonymous=False)
 
-    setup_logger(__file__, print_level=logging.DEBUG)
+    setup_logger(__file__, print_level=logging.INFO)
     logger = get_logger("pb2ros")
     logger.info("pb2ros main Started")
 

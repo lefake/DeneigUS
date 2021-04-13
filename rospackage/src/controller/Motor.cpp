@@ -42,7 +42,7 @@ void Motor::set_speed(float percentage)
 int Motor::convert(float percentage)
 {
   float abs_val = fabs(percentage);
-  return float_map(abs_val, 0, CALC(1.0, 1.0), 0, 255);
+  return float_map(abs_val, 0, 1, 0, 255);
 }
 
 int Motor::float_map(float x, float in_min, float in_max, float out_min, float out_max)

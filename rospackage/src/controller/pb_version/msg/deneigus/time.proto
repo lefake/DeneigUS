@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-message Time {
-	uint32 sec = 1;
-	uint32 nsec = 2;
-}

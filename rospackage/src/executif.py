@@ -51,14 +51,12 @@ class Executif:
 
     def joy_echo(self, msg):
         #self.logger.debug("Joy echo callback")
-        # Random axies values
-        # TODO : connect the actual joysticks values
-        throttle = msg.axes[1]
-        angle = msg.axes[0]
+        throttle_left = msg.axes[1]
+        throttle_right = msg.axes[4]
 
         if self.ctl_mode == control_modes.manual:
-            self.pos_msg.linear.x = throttle
-            self.pos_msg.angular.z = angle
+            self.pos_msg.linear.x = throttle_left
+            self.pos_msg.linear.y = throttle_right
 
             self.cmd_vel_pub.publish(self.pos_msg)
 

@@ -1,6 +1,9 @@
 from binascii import unhexlify
 import threading
 import time
+
+from serial import SerialException
+
 from logging_utils import get_logger
 
 class Topic:
@@ -126,27 +129,29 @@ class PBSerialHandler:
         self._worker.kill()
 
     def read_callback(self):
-        if self._interlock:
-            return
+        if not self._interlock:
+            self._interlock = True
+            try:
+                input = self._serial.read()
+                if input == b'<':
+                    buffer = self._serial.read_until(b'>')
+                    self._serial.flush()
+                    self._response = b'<' + buffer
+                    self._callback(self._response)
+            except SerialException as e:
+                self._logger.error("Read call back error " + str(e))
 
-        self._interlock = True
-        try:
-            input = self._serial.read()
-            if input == b'<':
-                buffer = self._serial.read_until(b'>')
-                self._serial.flush()
-                self._response = b'<' + buffer
-                self._callback(self._response)
-        except Exception as e:
-            print(e)
-
-        self._interlock = False
+            self._interlock = False
 
     def write_pb_msg(self, id, msg):
         self.write_pb_msgs([id], [msg])
 
     def write_pb_msgs(self, ids, msgs):
         encoded_msg = self._serialization_handler.encode_msgs(ids, msgs)
+
+        while self._interlock:
+            time.sleep(self._sleeptime)
+
         self._interlock = True
         self._serial.write(encoded_msg.encode("ascii"))
         self._serial.flush()
