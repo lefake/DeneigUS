@@ -75,9 +75,9 @@ class PB2ROS:
 
         twist.linear.x = pb.lx
         twist.linear.y = pb.ly
-        twist.linear.z = pb.lz
-        twist.angular.x = pb.ax
-        twist.angular.y = pb.ay
+        twist.linear.z = 0
+        twist.angular.x = 0
+        twist.angular.y = 0
         twist.angular.z = pb.az
         return twist
 
@@ -86,9 +86,6 @@ class PB2ROS:
 
         twist.lx = ros.linear.x
         twist.ly = ros.linear.y
-        twist.lz = ros.linear.z
-        twist.ax = ros.angular.x
-        twist.ay = ros.angular.y
         twist.az = ros.angular.z
         return twist
 

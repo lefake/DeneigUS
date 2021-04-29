@@ -1,7 +1,7 @@
 #ifndef IMU_H
 #define IMU_H
 
-// IMU Library by hideakitai
+// IMU Library by hideakitai 0.4.1
 #include "MPU9250.h"
 #include "floatarray.pb.h"
 #include "constants.h"

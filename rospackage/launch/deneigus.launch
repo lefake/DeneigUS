@@ -1,8 +1,8 @@
 <launch>
-  <arg name="has_web" default="0"/>
+  <arg name="has_web" default="1"/>
   <arg name="has_joy" default="1"/>
   
-  <arg name="joy_port" default="/dev/input/js0" />
+  <arg name="joy_port" default="/dev/input/js2" />
   
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/costmap_test.rviz"/>
@@ -19,7 +19,7 @@
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
 
  <!-- python pb2ros Node -->
-  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
+<!--  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/> -->
 
  <!-- python astar node -->
   <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>

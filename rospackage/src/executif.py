@@ -74,7 +74,7 @@ class Executif:
         self.r = Range()
         self.r.radiation_type = 0
         self.r.field_of_view = 0.3
-        self.r.min_range = 1.0
+        self.r.min_range = 0.02
         self.r.max_range = 2.0
 
         for x,_ in enumerate(msg.data):

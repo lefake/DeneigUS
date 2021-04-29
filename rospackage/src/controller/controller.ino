@@ -66,7 +66,7 @@ float vel_right = 0;
 
 // Sonars
 Sonars sonars;
-bool has_sonars = false;
+bool has_sonars = true;
 int sonars_msg_seq = 0;
 
 // IMU
@@ -110,6 +110,9 @@ void loop()
 {
   if (millis() - last_time > delay_interval)
   {
+    // To create the Map TF in tf_broadcaster
+    pbutils.pb_send(1, POS);
+    
     // send imu
     if (has_imu)
     {
@@ -133,9 +136,6 @@ void loop()
                 cmd_vel_callback();
                 m_l.set_speed(vel_left);
                 m_r.set_speed(vel_right);
-
-                // To create the Map TF in tf_broadcaster
-                pbutils.pb_send(1, POS);
               }
               break;
               
