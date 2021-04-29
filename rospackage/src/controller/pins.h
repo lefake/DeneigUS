@@ -15,4 +15,12 @@ const int forw_left = 6;
 const int back_left = 7;
 const int pwm_left = 5;
 
+const int in1 = 3; // Motor 1 pins
+const int in2 = 4;
+const int pwm1 = 2;
+
+const int in3 = 6; // Motor 2 pins
+const int in4 = 7;
+const int pwm2 = 5;
+
 #endif // PINS_H

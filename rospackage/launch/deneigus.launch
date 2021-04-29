@@ -6,8 +6,8 @@
   <arg name="ard_baud" default="57600" />
   <arg name="joy_port" default="/dev/input/js2" />
   
-  <arg name="map_file" default="$(find deneigus)/map/rectangle.yaml"/>
-  <arg name="rviz_file" default="-d $(find deneigus)/rviz/map_test.rviz"/>
+  <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
+  <arg name="rviz_file" default="-d $(find deneigus)/rviz/costmap_test.rviz"/>
 
   <!-- rosbridge server -->
   <group if="$(arg has_web)">
@@ -32,13 +32,6 @@
 <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
-<!-- arduino serial Node 
-  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
-    <param name="port" value="$(arg ard_port)"/>
-    <param name="baud" value="$(arg ard_baud)"/>
-  </node>
--->
-
 <!-- joy node -->
   <group if="$(arg has_joy)">
     <node respawn="true" pkg="joy" type="joy_node" name="raw_joy">
@@ -48,7 +41,21 @@
   </group>
 
 <!-- RVIZ -->
-  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
+  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>	
+
+<!-- Static TF -->
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3  0.0 0.5 0.0   0 0 base_link sonar_f_0" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.0  0.3 0.5 1.57 0 0 base_link sonar_f_1" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" />
+
+<!-- CostMap with move_base -->
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
+   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
+   <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load" ns="local_costmap"/>
+   <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load" ns="global_costmap" />
+</node>
 
 
 <!-- TFs -->

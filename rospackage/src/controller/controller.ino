@@ -12,6 +12,7 @@
 #include "Motor.h"
 #include "constants.h"
 #include "pins.h"
+#include "motor.h"
 
 // Functions 
 void cmd_vel_callback();
@@ -61,9 +62,20 @@ float vel_left = 0;
 float vel_right = 0;
 
 // Sonars
+
 Sonars sonars;
 bool has_sonars = true;
 int sonars_msg_seq = 0;
+
+// Motors
+float left_motor_speed = 0.0;              
+float right_motor_speed = 0.0;
+
+ros::Time time_last_Twistmsg;         // time when we received the last Twist message
+ros::Duration two_seconds(5,0);      // after this timeout (5s), the motors speed are stopped
+
+Motor left_motor(in1, in2, pwm1);
+Motor right_motor(in3, in4, pwm2);
 
 void setup()
 {
@@ -80,6 +92,13 @@ void setup()
     m_r.init(forw_right, back_right, pwm_right);
   }
 
+  
+  if (has_imu)
+    imu.init();
+  
+  if (has_gps)
+    gps.init();
+  
   Serial.begin(115200);
 }
 
@@ -146,6 +165,7 @@ void loop()
     }
   }
 }
+
 
 // CALLBACKS
 

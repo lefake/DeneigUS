@@ -16,7 +16,7 @@ class TfListener:
     def __init__(self):
         self._res = 1       # Default resolution, updated by map_metadata_callback
 
-        rospy.Subscriber('/pos', Twist, self.pos_callback)
+        rospy.Subscriber('pos', Twist, self.pos_callback)
         rospy.Subscriber('/map_metadata', MapMetaData, self.map_metadata_callback)
 
         # Sur un ou deux node ?
@@ -30,8 +30,8 @@ class TfListener:
         listener = tf.TransformListener()
         while not rospy.is_shutdown():
             try:
-                listener.waitForTransform('/map', '/robot', rospy.Time(), rospy.Duration(4.0))
-                (trans, rot) = listener.lookupTransform('/map', '/robot', rospy.Time(0))
+                listener.waitForTransform('map', 'base_link', rospy.Time(), rospy.Duration(4.0))
+                (trans, rot) = listener.lookupTransform('map', 'base_link', rospy.Time(0))
 
                 vel_pub = rospy.Publisher('/vel_robot', Twist, queue_size=1)
                 msg = Twist()
@@ -50,7 +50,7 @@ class TfListener:
 
         t.header.stamp = rospy.Time.now()
         t.header.frame_id = "map"
-        t.child_frame_id = "robot"
+        t.child_frame_id = "base_link"
         t.transform.translation.x = msg.linear.x
         t.transform.translation.y = msg.linear.y
         t.transform.translation.z = msg.linear.z
