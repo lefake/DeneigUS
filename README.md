@@ -1,5 +1,11 @@
 # DeneigUS
-Projet de fin de bac UdeS
+
+DeneigUs is a robotics project created by seven engineering students at the University of Sherbrooke. The main objective of this projet is to design the **proof of concept of an autonomous and electric snowblower** (from mechanics to programming, including electrification).
+
+The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) for navigation and control. Also, the control is ensured by the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing.
+
+
+## Installation
 
 In order to clone this repo and use it with ROS (as a ROS package) you will have to do the following : 
 
