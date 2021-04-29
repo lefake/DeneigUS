@@ -1,6 +1,7 @@
 #ifndef IMU_H
 #define IMU_H
 
+// IMU Library by hideakitai
 #include "MPU9250.h"
 #include "floatarray.pb.h"
 #include "constants.h"
@@ -11,12 +12,18 @@ class IMU {
     ~IMU();
     
     void init();
-    void calibrate();
-    void getValuesRos( FloatArray* msg );
+    void calibrateGyroAcc();
+    void calibrateMag();
+    void getValuesRos( FloatArray*, float );
 
   private:
     bool setup_done;
     MPU9250 imu;
+
+    float vel_x;
+    float pos_x;
+    float vel_y;
+    float pos_y;
 };
 
 #endif

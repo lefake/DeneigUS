@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Pose
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Joy, Range
 import serial
@@ -29,7 +29,7 @@ class PB2ROS:
         self.pos_tourelle_pub = rospy.Publisher('/pos_tourelle', Float32MultiArray, queue_size=5)
         self.debug_mot_pub = rospy.Publisher('/debug_mot', Float32MultiArray, queue_size=5)
         self.gps_data_pub = rospy.Publisher('/gps_data', Float32MultiArray, queue_size=5)
-        self.imu_data_pub = rospy.Publisher('/imu_data', Float32MultiArray, queue_size=5)
+        self.imu_data_pub = rospy.Publisher('/imu_data', Pose, queue_size=5)
         self.joy_data_pub = rospy.Publisher('/joy', Joy, queue_size=5)
 
         # Topic IDs much be the same in the Arduino enum (in constants.h)
@@ -44,7 +44,7 @@ class PB2ROS:
             Topic(7, "/pos_tourelle", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.pos_tourelle_pub),
             Topic(8, "/debug_mot", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.debug_mot_pub),
             Topic(9, "/gps_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.gps_data_pub),
-            Topic(10, "/imu_data", floatarray_pb2.FloatArray(), self.floatarray_pb2ros, self.imu_data_pub),
+            Topic(10, "/imu_data", floatarray_pb2.FloatArray(), self.imu_pb2ros, self.imu_data_pub),
         ]
         self._msg_obj = [topic.obj for topic in self._topics]
 
@@ -124,14 +124,24 @@ class PB2ROS:
         pb.range = ros.range
         return pb
 
+    def imu_pb2ros(self, pb):
+        pose = Pose()
+        pose.position.x = pb.data[0]
+        pose.position.y = pb.data[1]
+        pose.orientation.x = pb.data[2]
+        pose.orientation.y = pb.data[3]
+        pose.orientation.z = pb.data[4]
+        pose.orientation.w = pb.data[5]
+        return pose
+
     def kill(self):
         self._serial.kill()
 
 
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
-    arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
-    #arduino = serial.Serial('/dev/pts/2', 9600, timeout=0.05)
+    #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
+    arduino = serial.Serial('/dev/pts/1', 9600, timeout=0.05)
     rospy.init_node('pb2ros', anonymous=False)
 
     setup_logger(__file__, print_level=logging.INFO)

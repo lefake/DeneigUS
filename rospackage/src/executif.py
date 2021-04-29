@@ -4,7 +4,7 @@ import os
 from enum import Enum
 
 import rospy
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Pose
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy, Range
@@ -37,9 +37,9 @@ class Executif:
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
         self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
-        self.imu_data_sub = rospy.Subscriber('/imu_data', Float32MultiArray, self.imu_data_callback)
+        self.imu_data_sub = rospy.Subscriber('/imu_data', Pose, self.imu_data_callback)
         self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo, queue_size=1)
-        self.imu_data_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
+        self.debug_arduino_data_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
 
         # Services
         self.traj_serv = rospy.ServiceProxy('/trajgen_srv', trajgen)

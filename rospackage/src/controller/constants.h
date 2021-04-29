@@ -17,7 +17,7 @@
 #define NBS_DATA_TOURELLES                  5
 #define NBS_DATA_MOTORS                     5
 #define NBS_DATA_GPS                        6
-#define NBS_DATA_IMU                        9
+#define NBS_DATA_IMU                        6
 
 #define POS_MSG_ARRAY_LEN                   NBS_DATA_POS
 #define OBS_POS_MSG_ARRAY_LEN               NBS_DATA_SONRARS * NBS_SONARS

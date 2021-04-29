@@ -15,7 +15,7 @@ Description: Header file of the nanopb communication protocol
 #include <pb_encode.h>
 #include <pb_decode.h>
 
-#define MAX_MSG_LEN                         500
+#define MAX_MSG_LEN                         1000
 #define MAX_NBS_MSG                         10
 
 struct Topic {
@@ -30,7 +30,7 @@ class PBUtils
     PBUtils(Topic*, int);
     ~PBUtils();
     bool decode_pb(char* , int *, int &);
-    bool pb_send(int* );
+    bool pb_send(int, ...);
 
   private:
     int parse_msg(char[], int *, char **);
@@ -39,7 +39,6 @@ class PBUtils
     
     pb_msgdesc_t** _id_2_type;
     void** _id_2_msg;
-    uint8_t dict['f'-'0'+1];
 };
 
 #endif

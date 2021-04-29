@@ -13,9 +13,6 @@
 typedef struct _Twist { 
     float lx; 
     float ly; 
-    float lz; 
-    float ax; 
-    float ay; 
     float az; 
 } Twist;
 
@@ -25,25 +22,19 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define Twist_init_default                       {0, 0, 0, 0, 0, 0}
-#define Twist_init_zero                          {0, 0, 0, 0, 0, 0}
+#define Twist_init_default                       {0, 0, 0}
+#define Twist_init_zero                          {0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define Twist_lx_tag                             1
 #define Twist_ly_tag                             2
-#define Twist_lz_tag                             3
-#define Twist_ax_tag                             4
-#define Twist_ay_tag                             5
-#define Twist_az_tag                             6
+#define Twist_az_tag                             3
 
 /* Struct field encoding specification for nanopb */
 #define Twist_FIELDLIST(X, a) \
 X(a, STATIC,   REQUIRED, FLOAT,    lx,                1) \
 X(a, STATIC,   REQUIRED, FLOAT,    ly,                2) \
-X(a, STATIC,   REQUIRED, FLOAT,    lz,                3) \
-X(a, STATIC,   REQUIRED, FLOAT,    ax,                4) \
-X(a, STATIC,   REQUIRED, FLOAT,    ay,                5) \
-X(a, STATIC,   REQUIRED, FLOAT,    az,                6)
+X(a, STATIC,   REQUIRED, FLOAT,    az,                3)
 #define Twist_CALLBACK NULL
 #define Twist_DEFAULT NULL
 
@@ -53,7 +44,7 @@ extern const pb_msgdesc_t Twist_msg;
 #define Twist_fields &Twist_msg
 
 /* Maximum encoded size of messages (where known) */
-#define Twist_size                               30
+#define Twist_size                               15
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -23,12 +23,6 @@ PBUtils::PBUtils(Topic *topics, int nbs_topics)
     _id_2_type[topics[i].id] = topics[i].type;
     _id_2_msg[topics[i].id] = topics[i].msg;
   }
-  
-  for (int i = 0; i < 10; ++i)
-    dict[i] = i;
-
-  for (int i = 'a'; i <= 'f'; ++i)
-    dict[i-'0'] = i - 'a' + 10;
 }
 
 PBUtils::~PBUtils() 
@@ -53,6 +47,8 @@ bool PBUtils::decode_pb(char* input_string, int *sub_msg_id, int &nbs_new_msgs)
   
   nbs_new_msgs = parse_msg(input_string, sub_msg_id, sub_msgs);
 
+  // Add assert nbs_new_msgs < length of sub_msg_id
+
   for (int i = 0; i < nbs_new_msgs; ++i)
   {
     uint8_t buffer_in[MAX_MSG_LEN];
@@ -68,27 +64,30 @@ bool PBUtils::decode_pb(char* input_string, int *sub_msg_id, int &nbs_new_msgs)
 /*
  * Send protobufs messages to the serial port with format <id|msg;>
  * 
- * @param ids: The list of ids to send in the same messages
- *             The id list has to be initialized (ex : cant use it like this pb_send({ 0, 1 });
+ * @param nbs: The numbers of id to send
+ * @param ...: List of all the ids to send 
+ *             ex : cant use it like this pb_send(3, POS, OBS_POS, DEBUG_ARDUINO);
  * 
  * @return: If the encode was successful  
  */
-bool PBUtils::pb_send(int* ids)
+bool PBUtils::pb_send(int nbs, ...)
 {
   bool success = true;
-  int nbs_to_send = sizeof(ids)/sizeof(ids[0]);
   String to_send_builder = "<";
+  va_list ids_to_send;
+  va_start(ids_to_send, nbs);
 
-  for (int i = 0; i < nbs_to_send; ++i)
+  for (int i = 0; i < nbs; ++i)
   {
+    int id = va_arg ( ids_to_send, int );
     uint8_t buffer_out[MAX_MSG_LEN];
-    char to_send[2];
+    char to_send[10];  // The biggest byte array in the nanopb encode seems to be 10 (should be coded to not depend on it tho...)
     pb_ostream_t stream = pb_ostream_from_buffer(buffer_out, sizeof(buffer_out));
-    success = success && pb_encode(&stream, _id_2_type[ids[i]], _id_2_msg[ids[i]]);
+    success = success && pb_encode(&stream, _id_2_type[id], _id_2_msg[id]);
 
     if(success)
     {
-      to_send_builder += String(ids[i]);
+      to_send_builder += String(id);
       to_send_builder += "|";
       
       for(int j = 0; j < stream.bytes_written; j++)
@@ -97,9 +96,12 @@ bool PBUtils::pb_send(int* ids)
         to_send_builder += String(to_send);
       }
     }
+    else
+      break;
     to_send_builder += ";";
   }
   to_send_builder += ">";
+  va_end(ids_to_send);
 
   if (success)
     Serial.print(to_send_builder);
@@ -152,11 +154,10 @@ int PBUtils::parse_msg(char in_string[], int *msg_ids, char **out_strings)
  */
 void PBUtils::chars2bytes(char* in_string, uint8_t* string_value)
 {
+  // Jai pt fucker dequoi, a retester ...
   int len = strlen(in_string)/2;
   for (int i = 0; i < len; ++i)
-  {
-    string_value[i] =  dict[in_string[(i*2)] - '0']*16 + dict[in_string[(i*2)+1] - '0'];
-  }
+    string_value[i] = char2hex(in_string[(i*2)], in_string[(i*2)+1]);
 }
 
 /*
@@ -169,19 +170,17 @@ void PBUtils::chars2bytes(char* in_string, uint8_t* string_value)
 uint8_t PBUtils::char2hex(char in1, char in2)
 {
   uint8_t val[2];
+  char in[2] = { in1, in2};
 
-  //for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 2; i++)
   {
-    /*if (in[i] >= 'A' && in[i] <= 'F')
+    if (in[i] >= 'A' && in[i] <= 'F')
       val[i] = in[i] - 'A' + 10;
-    else */
-    
-    /*if (in[i] >= 'a' && in[i] <= 'f')
+    else if (in[i] >= 'a' && in[i] <= 'f')
       val[i] = in[i] - 'a' + 10;
     else
-      val[i] = in[i] - '0';*/
+      val[i] = in[i] - '0';
   }
-  val['0' - '0']=1;
  
   return val[0]*16 + val[1];
 }

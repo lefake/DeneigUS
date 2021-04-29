@@ -57,8 +57,8 @@ class PBSerializationHandler:
         return self.encode_msgs([id], [msg])
 
     def deserialize(self, messages):
-        messages = messages.decode("ascii")       # Remove < > characters<
-        msg_array = messages[1:-1].split(';')
+        messages = messages.decode("ascii")
+        msg_array = messages[1:-1].split(';')      # Remove < > characters and split sub-msgs
 
         object_list = []
 

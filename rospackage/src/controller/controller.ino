@@ -10,6 +10,7 @@
 
 #include "Sonars.h"
 #include "Motor.h"
+#include "IMU.h"
 #include "constants.h"
 #include "pins.h"
 
@@ -29,6 +30,7 @@ Twist cmd_vel_msg = Twist_init_zero;
 Twist cmd_tourelle_msg = Twist_init_zero;
 Twist pos_msg = Twist_init_zero;
 Range obs_pos_msg = Range_init_zero;
+FloatArray imu_data_msg = FloatArray_init_zero;
 
 Topic topics[] = {
       {DEBUG_ARDUINO, FloatArray_fields, &debug_arduino_msg},
@@ -36,6 +38,7 @@ Topic topics[] = {
       {CMD_TOURELLE, Twist_fields, &cmd_tourelle_msg},
       {POS, Twist_fields, &pos_msg},
       {OBS_POS, Range_fields, &obs_pos_msg},
+      {IMU_DATA, FloatArray_fields, &imu_data_msg},
       /*{ESTOP_STATE, FloatArray_fields, NULL},
       {TELE_BATT, FloatArray_fields, NULL},
       {POS_TOURELLE, FloatArray_fields, NULL},
@@ -62,12 +65,20 @@ float vel_right = 0;
 
 // Sonars
 Sonars sonars;
-bool has_sonars = true;
+bool has_sonars = false;
 int sonars_msg_seq = 0;
+
+// IMU
+IMU imu;
+bool has_imu = false;
+
+
+long time_before = 0;
+
 
 void setup()
 {
-  //debug_arduino_msg.data_count = 2;
+  debug_arduino_msg.data_count = 2;
   
   if(has_sonars)
   {
@@ -80,17 +91,50 @@ void setup()
     m_r.init(forw_right, back_right, pwm_right);
   }
 
+  if (has_imu)
+  {
+    imu.init();
+    imu.calibrateGyroAcc();
+    imu_data_msg.data_count = IMU_DATA_MSG_ARRAY_LEN;
+  }
+
   Serial.begin(115200);
+
+  pos_msg.lx = 1;
+  pos_msg.ly = 3;
+  pos_msg.az = 7;
+
+  time_before = micros();
+  pbutils.pb_send(1, POS);
+  Serial.println(micros() - time_before);
+
+  /*char frame[50] = "sonar_f1";
+  obs_pos_msg.seq = 12;
+  memcpy(obs_pos_msg.frame_id, frame, sizeof(frame)/sizeof(frame[0]));
+  obs_pos_msg.range = 2000;
+
+  time_before = micros();
+  pbutils.pb_send(1, OBS_POS);
+  Serial.println(micros() - time_before);*/
 }
 
 void loop()
 {
   if (millis() - last_time > delay_interval)
   {
+    // send imu
+    if (has_imu)
+    {
+      imu.getValuesRos(&imu_data_msg, delay_interval);
+      pbutils.pb_send(1, IMU_DATA);
+    }
+    
     if (in_cmd_complete)
     {
+      time_before = micros();
       bool status = pbutils.decode_pb(in_cmd, new_msgs_ids, nbs_new_msgs);
-
+      Serial.println(micros() - time_before);
+      
       if (status && nbs_new_msgs > 0)
       {
         for (int i = 0; i < nbs_new_msgs; ++i)
@@ -101,8 +145,11 @@ void loop()
               if (has_motor)
               {
                 cmd_vel_callback();
-                int b[] = { POS };
-                pbutils.pb_send(b);
+                m_l.set_speed(vel_left);
+                m_r.set_speed(vel_right);
+
+                Serial.println(vel_left);
+                Serial.println(vel_right);
               }
               break;
               
@@ -132,17 +179,8 @@ void loop()
         obs_pos_msg.range = sonars.dist(i);
         obs_pos_msg.seq = sonars_msg_seq++;
         memcpy(obs_pos_msg.frame_id, frame_id, sizeof(frame_id)/sizeof(frame_id[0]));
-        int bob[] = { OBS_POS };
-        bool r = pbutils.pb_send(bob);
-
-        while(!r);
+        pbutils.pb_send(1, OBS_POS);
       }
-    }
-    
-    if (has_motor)
-    {
-      m_l.set_speed(vel_left);
-      m_r.set_speed(vel_right);
     }
   }
 }
@@ -153,9 +191,6 @@ void cmd_vel_callback ()
 {
   vel_left = cmd_vel_msg.lx;
   vel_right = cmd_vel_msg.ly;
-
-  pos_msg.lx = vel_left;
-  pos_msg.ly = vel_right;
 }
 
 void cmd_tourelle_callback ()
