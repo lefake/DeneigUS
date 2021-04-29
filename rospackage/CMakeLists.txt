@@ -13,10 +13,13 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   rosserial_python
   std_msgs
+  costmap_2d
 )
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures

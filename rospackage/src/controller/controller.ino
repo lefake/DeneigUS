@@ -11,6 +11,7 @@
 #include "Sonars.h"
 #include "Motor.h"
 #include "IMU.h"
+#include "Gps.h"
 #include "constants.h"
 #include "pins.h"
 
@@ -73,8 +74,9 @@ IMU imu;
 bool has_imu = false;
 
 
-long time_before = 0;
-
+// GPS
+Gps gps;
+bool has_gps = false;
 
 void setup()
 {
@@ -98,24 +100,10 @@ void setup()
     imu_data_msg.data_count = IMU_DATA_MSG_ARRAY_LEN;
   }
 
+  if (has_gps)
+    gps.init();
+  
   Serial.begin(115200);
-
-  pos_msg.lx = 1;
-  pos_msg.ly = 3;
-  pos_msg.az = 7;
-
-  time_before = micros();
-  pbutils.pb_send(1, POS);
-  Serial.println(micros() - time_before);
-
-  /*char frame[50] = "sonar_f1";
-  obs_pos_msg.seq = 12;
-  memcpy(obs_pos_msg.frame_id, frame, sizeof(frame)/sizeof(frame[0]));
-  obs_pos_msg.range = 2000;
-
-  time_before = micros();
-  pbutils.pb_send(1, OBS_POS);
-  Serial.println(micros() - time_before);*/
 }
 
 void loop()
@@ -131,9 +119,7 @@ void loop()
     
     if (in_cmd_complete)
     {
-      time_before = micros();
       bool status = pbutils.decode_pb(in_cmd, new_msgs_ids, nbs_new_msgs);
-      Serial.println(micros() - time_before);
       
       if (status && nbs_new_msgs > 0)
       {
@@ -147,9 +133,6 @@ void loop()
                 cmd_vel_callback();
                 m_l.set_speed(vel_left);
                 m_r.set_speed(vel_right);
-
-                Serial.println(vel_left);
-                Serial.println(vel_right);
               }
               break;
               
@@ -184,6 +167,7 @@ void loop()
     }
   }
 }
+
 
 // CALLBACKS
 
