@@ -140,8 +140,8 @@ class PB2ROS:
 
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
-    #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
-    arduino = serial.Serial('/dev/pts/1', 9600, timeout=0.05)
+    arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
+    #arduino = serial.Serial('/dev/pts/1', 9600, timeout=0.05)
     rospy.init_node('pb2ros', anonymous=False)
 
     setup_logger(__file__, print_level=logging.INFO)

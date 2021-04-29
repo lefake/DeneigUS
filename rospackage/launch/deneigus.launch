@@ -2,9 +2,7 @@
   <arg name="has_web" default="0"/>
   <arg name="has_joy" default="1"/>
   
-  <arg name="ard_port" default="/dev/ttyUSB0" />
-  <arg name="ard_baud" default="57600" />
-  <arg name="joy_port" default="/dev/input/js2" />
+  <arg name="joy_port" default="/dev/input/js0" />
   
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/costmap_test.rviz"/>
@@ -57,8 +55,4 @@
    <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load" ns="global_costmap" />
 </node>
 
-
-<!-- TFs -->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.1 -0.05 1 0 0 0 robot sonar_f_0" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.1 0.05 1 0.34 0 0 robot sonar_f_1" />
 </launch>

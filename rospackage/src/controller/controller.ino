@@ -133,6 +133,9 @@ void loop()
                 cmd_vel_callback();
                 m_l.set_speed(vel_left);
                 m_r.set_speed(vel_right);
+
+                // To create the Map TF in tf_broadcaster
+                pbutils.pb_send(1, POS);
               }
               break;
               
