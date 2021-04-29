@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+message Range {
+	required uint32 seq = 1;
+	required string frame_id = 2;
+	required float range = 3;
+}

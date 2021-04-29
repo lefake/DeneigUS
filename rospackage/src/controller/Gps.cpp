@@ -65,13 +65,14 @@ long Gps::getAlt()
   return (setup_done) ? myGPS.getAltitude() : -1;
 }
 
-void Gps::getCoordinates( std_msgs::Float32MultiArray* msg )
+void Gps::getCoordinates( FloatArray* msg )
 {  
   if (setup_done)
   {
     updateLon();
     updateLat();
     
+    msg->data_count = 6;
     msg->data[0] = getX();               //x
     msg->data[1] = getY();               //y
     msg->data[2] = getZ();               //z

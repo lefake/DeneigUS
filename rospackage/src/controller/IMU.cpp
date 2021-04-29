@@ -1,6 +1,6 @@
 #include "IMU.h"
 
-IMU::IMU() {
+IMU::IMU() : vel_x(0), pos_x(0), vel_y(0), pos_y(0) {
   Wire.begin();
   setup_done = false;
 }
@@ -21,27 +21,43 @@ void IMU::init()
   }
 }
 
-void IMU::calibrate()
+void IMU::calibrateGyroAcc()
 {
   if (setup_done)
-  {
     imu.calibrateAccelGyro();
-    imu.calibrateMag(); 
-  }
 }
 
-void IMU::getValuesRos( std_msgs::Float32MultiArray* msg )
+void IMU::calibrateMag()
+{
+  if (setup_done)
+    imu.calibrateMag(); 
+}
+
+void IMU::getValuesRos( FloatArray* msg, float period_ms )
 {
   if (setup_done)
   {
     imu.update();
-
+    vel_x += imu.getLinearAccX() * (period_ms / 1000.0);
+    pos_x += vel_x * (period_ms / 1000.0);
+    vel_y += imu.getLinearAccY() * (period_ms / 1000.0);
+    pos_y += vel_y * (period_ms / 1000.0);
+    
+    msg->data[0] = pos_x;
+    msg->data[1] = pos_y;
+    msg->data[2] = imu.getQuaternionX();
+    msg->data[3] = imu.getQuaternionY();
+    msg->data[4] = imu.getQuaternionZ();
+    msg->data[5] = imu.getQuaternionW();
+    
+    /*
+    
     for (int i = 0; i < 3; i++)
     {
       msg->data[i] = imu.getGyro(i);
       msg->data[3 + i] = imu.getAcc(i);
       msg->data[6 + i] = imu.getMag(i);
-    }
+    }*/
   }
   else 
   {

@@ -1,8 +1,10 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <pb.h>
+
 // ----------------------- ROS messages constants -----------------------
-#define NBS_SONARS                          6
+#define NBS_SONARS                          2
 #define NBS_BATTERIES                       2
 #define NBS_MOTORS                          5
 #define NBS_GPS                             1
@@ -15,7 +17,7 @@
 #define NBS_DATA_TOURELLES                  5
 #define NBS_DATA_MOTORS                     5
 #define NBS_DATA_GPS                        6
-#define NBS_DATA_IMU                        9
+#define NBS_DATA_IMU                        6
 
 #define POS_MSG_ARRAY_LEN                   NBS_DATA_POS
 #define OBS_POS_MSG_ARRAY_LEN               NBS_DATA_SONRARS * NBS_SONARS
@@ -61,5 +63,27 @@
 #define DEGTORAD                            0.0174532925199432957f
 #define RADTODEG                            57.295779513082320876f
 #endif
+
+// Motors
+#define TRACK_DIST                          1//0.127
+
+// ----------------------- Protobuf constants -----------------------
+
+enum TOPICS
+{
+  DEBUG_ARDUINO = 0,
+  CMD_VEL,
+  CMD_TOURELLE,
+  POS,
+  OBS_POS,
+  ESTOP_STATE,
+  TELE_BATT,
+  POS_TOURELLE,
+  DEBUG_MOT,
+  GPS_DATA,
+  IMU_DATA,
+
+  _NBS_TOPICS
+};
 
 #endif

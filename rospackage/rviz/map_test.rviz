@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Range1
       Splitter Ratio: 0.5
     Tree Height: 614
   - Class: rviz/Selection
@@ -69,6 +70,10 @@ Visualization Manager:
           Value: true
         robot:
           Value: true
+        sonar_f_0:
+          Value: true
+        sonar_f_1:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -78,8 +83,21 @@ Visualization Manager:
       Tree:
         map:
           robot:
-            {}
+            sonar_f_0:
+              {}
+            sonar_f_1:
+              {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Buffer Length: 2
+      Class: rviz/Range
+      Color: 239; 41; 41
+      Enabled: true
+      Name: Range
+      Queue Size: 10
+      Topic: /obs_pos
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
@@ -109,7 +127,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 23.62270736694336
+      Distance: 10
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -117,16 +135,16 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 26.06965446472168
-        Y: 15.471814155578613
-        Z: -1.8818861917679897e-06
+        X: 0
+        Y: 0
+        Z: 0
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
       Pitch: 0.7853981852531433
-      Target Frame: map
+      Target Frame: robot
       Yaw: 0.7853981852531433
     Saved: ~
 Window Geometry:
