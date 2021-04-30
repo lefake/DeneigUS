@@ -102,8 +102,12 @@ roscore
 roslaunch deneigus deneigus.launch
 ```
 ### Using the projet on the real snowblower
-1. Plug in your remote if you are using manual mode. 
-2. Launch the deneigus launch file:
+1. Start ROS:
+```bash
+roscore
+```
+2. Plug in your remote if you are using manual mode. 
+3. Launch the deneigus launch file:
 ```bash
 roslaunch deneigus deneigus.launch
 ```
