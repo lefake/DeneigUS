@@ -87,3 +87,23 @@ ln -s /ABS_GIT_PATH/file /ABS_ROS_PATH/
 4. Rendre les fichiers python exécutables??
 
 5. Make all the src files (not needed for the .ino) in the GIT directory executable with chmod +x file
+
+## Usage
+
+### Using the project in simulation with CoppeliaSim
+1. Start ROS:
+```bash
+roscore
+```
+2. Start CoppeliaSim, open the simulation scene in the simulation folder and start the simulation.
+3. Plug in your remote if you are using manual mode. 
+4. Launch the deneigus launch file:
+```bash
+roslaunch deneigus deneigus.launch
+```
+### Using the projet on the real snowblower
+1. Plug in your remote if you are using manual mode. 
+2. Launch the deneigus launch file:
+```bash
+roslaunch deneigus deneigus.launch
+```
