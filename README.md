@@ -2,7 +2,7 @@
 
 DeneigUS is a robotics project created by seven engineering students at the University of Sherbrooke. The main objective of this projet is to design the **proof of concept of an autonomous and electric snowblower** (from mechanics to programming, including electrification).
 
-The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) on Ubuntu 20.04 for navigation and control. Also, the control is ensured by a Rapberry Pi 4 with Arduinos and the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing.
+The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) on Ubuntu 20.04 for navigation and control. Also, the control is ensured by a Rapberry Pi 4 with Arduinos and the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing. A user Interface is also implemented in HTML to visualize sensor data and error messages.
 
 ## Folders Description
 
@@ -31,31 +31,20 @@ pip3 install xmlschema
 
 ### ROS Libraries for Navigation
 
-1. Install [Joy](http://wiki.ros.org/joy) (To control the snowblower manually with a remote control):
-```bash
-sudo apt-get install ros-noetic-joy
-```
+The list of ROS libraries used in the project is as follows:
+- [Joy](http://wiki.ros.org/joy) (To control the snowblower manually with a remote control)
+- [Map_server](http://wiki.ros.org/map_server) (To generate a static map)
+- [Costmap_2d](http://wiki.ros.org/costmap_2d) (To add obstacles layers to the static map)
+- [Move_Base](http://wiki.ros.org/move_base) (To load and use Costmap_2d parameters)
+- [Rosbrige Server](http://wiki.ros.org/rosbridge_suite) (In order to use our web Interface with ROS)
 
-2. Install [Map_server](http://wiki.ros.org/map_server) (To generate a static map):
+1. To install all ROS libraries needed in one command:
 ```bash
-sudo apt-get install ros-noetic-map-server
+sudo apt-get install ros-noetic-joy ros-noetic-map-server ros-noetic-costmap-2d ros-noetic-move-base ros-noetic-rosbridge-server
 ```
-3. Install [Costmap_2d](http://wiki.ros.org/costmap_2d) (To add obstacles layers to the static map):
-```bash
-sudo apt-get install ros-noetic-costmap-2d
-```
-4. Install [Move_Base](http://wiki.ros.org/move_base) (To load and use Costmap_2d parameters):
-```bash
-sudo apt-get install ros-noetic-move-base
-```
-5. Clone the [Range_Sensor_Layer](https://github.com/DLu/navigation_layers.git) in the src folder of your catkin workspace (we don't need social_navigation_layer and navigation_layers. We use only de Range Layer):
+2. Clone the [Range_Sensor_Layer](https://github.com/DLu/navigation_layers.git) in the src folder of your catkin workspace (we don't need social_navigation_layer and navigation_layers. We use only de Range Layer):
 ```bash
 git clone https://github.com/DLu/navigation_layers.git
-```
-
-6. Install the [Rosbrige Server](http://wiki.ros.org/rosbridge_suite) (In order to use our web Interface with ROS):
-```bash
-sudo apt-get install ros-noetic-rosbridge-server
 ```
 
 ### Libraries for Communication Between Raspberry Pi and Arduino
