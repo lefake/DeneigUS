@@ -30,35 +30,39 @@ pip install xmlschema
 3. In the user manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
 
 ### Installation of ROS Libraries for Navigation
-1. Install Costmap_2d:
+
+1. Install [Joy](http://wiki.ros.org/joy) (To control the snowblower manually with a remote control):
 ```bash
 
 ```
-2. Install Move_Base:
+
+2. Install [Map_server](http://wiki.ros.org/map_server) (To generate a static map):
 ```bash
 
 ```
-3. Clone the Range_Sensor_Layer in the src folder of your catkin workspace:
+3. Install [Costmap_2d](http://wiki.ros.org/costmap_2d) (To add obstacles layers to the static map):
 ```bash
 
 ```
-4. Install Map_server:
+4. Install [Move_Base](http://wiki.ros.org/move_base) (To load and use Costmap_2d parameters):
 ```bash
 
 ```
-5. Install Joy:
+5. Clone the Range_Sensor_Layer in the src folder of your catkin workspace:
 ```bash
 
 ```
-6. Install pyserial:
+6. Install the [Rosbrige Server](http://wiki.ros.org/rosbridge_suite) (In order to use our web Interface with ROS):
 ```bash
 
 ```
-7. Install the Rosbrige Server:
+
+### Installations for Communication Between Raspberry Pi and Arduino
+1. Install pyserial:
 ```bash
 
 ```
-8. Install Protobuf:
+2. Install Protobuf:
 ```bash
 
 ```
