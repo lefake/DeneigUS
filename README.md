@@ -62,9 +62,8 @@ pip3 install pyserial
 ```
 
 ### Arduino Libraries for sensors
-In Arduino IDE, go to Tools/Manage Libraries.../ and add the following libraries:
-1.  MPU9250 by hideakitai (v.0.4.1)
-  1.1 In the header file of this library, add this instruction: #include "Arduino.h"
+In Arduino IDE, go to Tools/Manage Libraries... and add the following libraries:
+1.  MPU9250 by hideakitai (v.0.4.1) -- In the header file of this library, don't forget to add this instruction: #include "Arduino.h"
 2. SparkFun u-blox by SparkFun Electronics (last version) 
 
 ### Configuring your Catkin Workspace and Installation
