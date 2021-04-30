@@ -12,7 +12,7 @@ The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) 
 
 ## Installation
 
-### Cloning the repo 
+### Cloning the repository 
 
 1. Clone the package in your git directory on your computer:
 ```bash
@@ -20,16 +20,23 @@ git clone https://github.com/lefake/DeneigUS.git
 ```
 ### Installing ROS Noetic on Ubuntu 20.04
 1. Follow the instructions on the offical website ([ROS Installation](http://wiki.ros.org/noetic/Installation/Ubuntu))
-2. If you are not familiar with ROS, we strongly recommend that you take the tutorials ([ROS Tutorials](http://wiki.ros.org/ROS/Tutorials))
+2. If you are not familiar with ROS, we strongly recommend that you do the tutorials ([ROS Tutorials](http://wiki.ros.org/ROS/Tutorials))
 
 ### Installing CoppeliaSim for use with ROS (Optional)
 At the begining of the projet we used CoppeliaSim to simulate the snowblower and test our navigation with ROS. To install the CoppeliaSim simulator in order to use it with ROS, follow these steps:
 
 1. Go to the official webstite of Coppelia Robotics and [download](https://www.coppeliarobotics.com/downloads) the free EDU version for Ubuntu 20.04.
-2. 
+2. Before configuring the simulator with ROS, you will need to install some libraries:
+```bash
+sudo apt-get install xsltproc
+```
+```bash
+pip install xmlschema
+```
+3. In the User Manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
 
 
-
+### Configuring your Catkin workspace
 1. catkin_create_pkg deneigus:
 2. clone this repo somewhere on your system
 3. Make sym-link of all the files in the git folder to the ros folder 
