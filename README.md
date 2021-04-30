@@ -57,7 +57,7 @@ git clone https://github.com/DLu/navigation_layers.git
 pip3 install pyserial
 ```
 2. Install Protobuf:
-Clone or download the nanoPB library and move the folder into the Arduino's library folder (usually ~/snap/arduino/current/Arduino/libries)
+Clone or download the nanoPB library and move the folder into the Arduino's libraries folder (usually ~/snap/arduino/current/Arduino/libraries)
 ```bash
 clone https://github.com/nanopb/nanopb.git
 ```
