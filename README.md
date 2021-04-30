@@ -12,11 +12,11 @@ The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) 
 
 ## Installation
 
-### Installation of ROS Noetic on Ubuntu 20.04
+### ROS Noetic on Ubuntu 20.04
 1. Follow the instructions on the offical website ([ROS Installation](http://wiki.ros.org/noetic/Installation/Ubuntu))
 2. If you are not familiar with ROS, we strongly recommend that you do the tutorials ([ROS Tutorials](http://wiki.ros.org/ROS/Tutorials))
 
-### Installion of CoppeliaSim for use with ROS (Optional)
+### The CoppeliaSim Simulator for use with ROS (Optional)
 At the begining of the projet we used CoppeliaSim to simulate the snowblower and test our navigation with ROS. To install the CoppeliaSim simulator in order to use it with ROS, follow these steps:
 
 1. Go to the official webstite of Coppelia Robotics and [download](https://www.coppeliarobotics.com/downloads) the free EDU version for Ubuntu 20.04.
@@ -25,49 +25,50 @@ At the begining of the projet we used CoppeliaSim to simulate the snowblower and
 sudo apt-get install xsltproc
 ```
 ```bash
-pip install xmlschema
+pip3 install xmlschema
 ```
 3. In the user manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
 
-### Installation of ROS Libraries for Navigation
+### ROS Libraries for Navigation
 
 1. Install [Joy](http://wiki.ros.org/joy) (To control the snowblower manually with a remote control):
 ```bash
-
+sudo apt-get install ros-noetic-joy
 ```
 
 2. Install [Map_server](http://wiki.ros.org/map_server) (To generate a static map):
 ```bash
-
+sudo apt-get install ros-noetic-map-server
 ```
 3. Install [Costmap_2d](http://wiki.ros.org/costmap_2d) (To add obstacles layers to the static map):
 ```bash
-
+sudo apt-get install ros-noetic-costmap-2d
 ```
 4. Install [Move_Base](http://wiki.ros.org/move_base) (To load and use Costmap_2d parameters):
 ```bash
-
+sudo apt-get install ros-noetic-move-base
 ```
-5. Clone the Range_Sensor_Layer in the src folder of your catkin workspace:
+5. Clone the [Range_Sensor_Layer](https://github.com/DLu/navigation_layers.git) in the src folder of your catkin workspace (we don't need social_navigation_layer and navigation_layers. We use only de Range Layer):
 ```bash
-
+git clone https://github.com/DLu/navigation_layers.git
 ```
+
 6. Install the [Rosbrige Server](http://wiki.ros.org/rosbridge_suite) (In order to use our web Interface with ROS):
 ```bash
-
+sudo apt-get install ros-noetic-rosbridge-server
 ```
 
-### Installations for Communication Between Raspberry Pi and Arduino
+### Libraries for Communication Between Raspberry Pi and Arduino
 1. Install pyserial:
 ```bash
-
+pip3 install pyserial
 ```
 2. Install Protobuf:
 ```bash
 
 ```
 
-### Installation of Arduino Libraries for sensors
+### Arduino Libraries for sensors
 1. Install MPU9250 -> hideakitai (v.0.4.1):
 2. In the header file of this library, add this instruction: #include "Arduino.h"
 3. Install SparkFun U-Blox (last version):
