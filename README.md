@@ -12,12 +12,6 @@ The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) 
 
 ## Installation
 
-### Cloning the repository 
-
-1. Clone the package in your git directory on your computer:
-```bash
-git clone https://github.com/lefake/DeneigUS.git
-```
 ### Installing ROS Noetic on Ubuntu 20.04
 1. Follow the instructions on the offical website ([ROS Installation](http://wiki.ros.org/noetic/Installation/Ubuntu))
 2. If you are not familiar with ROS, we strongly recommend that you do the tutorials ([ROS Tutorials](http://wiki.ros.org/ROS/Tutorials))
@@ -33,13 +27,34 @@ sudo apt-get install xsltproc
 ```bash
 pip install xmlschema
 ```
-3. In the User Manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
+3. In the user manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
 
+### Installation of ROS Libraries for Navigation
+1. Install Costmap_2d:
+2. Install Move_Base:
+3. Clone the Range_Sensor_Layer in the src folder of your catkin workspace:
+4. Install Map_server:
+5. Install Joy:
+6. Install pyserial:
+7. Install the Rosbrige Server:
+8. Install Protobuf:
 
-### Configuring your Catkin workspace
-1. catkin_create_pkg deneigus:
-2. clone this repo somewhere on your system
-3. Make sym-link of all the files in the git folder to the ros folder 
-    3.1 For each file except git files (.git/ and .gitignore) use this command "ln -s /ABS_GIT_PATH/file /ABS_ROS_PATH/
-    3.2 For each folder you have to create the folder in the ROS directory first
-4. Make all the src files (not needed for the .ino) in the GIT directory executable with chmod +x file
+### Installation of Arduino Libraries for sensors
+1. Install MPU9250 -> hideakitai (v.0.4.1):
+2. In the header file of this library, add this instruction: #include "Arduino.h"
+3. Install SparkFun U-Blox (last version):
+4. 
+
+### Configuring your Catkin Workspace and Installation
+1. Create a new ROS package named deneigus in your catkin workspace
+2. clone this repo somewhere on your system:
+```bash
+git clone https://github.com/lefake/DeneigUS.git
+```
+3. Make a sym-link of all the files in the git folder to the ros folder:
+```bash
+ln -s /ABS_GIT_PATH/file /ABS_ROS_PATH/
+```
+4. Rendre les fichiers python exécutables??
+
+5. Make all the src files (not needed for the .ino) in the GIT directory executable with chmod +x file
