@@ -57,28 +57,31 @@ git clone https://github.com/DLu/navigation_layers.git
 pip3 install pyserial
 ```
 2. Install Protobuf:
+Clone or download the nanoPB library and move the folder into the Arduino's library folder (usually ~/snap/arduino/current/Arduino/libries)
 ```bash
-
+clone https://github.com/nanopb/nanopb.git
 ```
+
 
 ### Arduino Libraries for sensors
 In Arduino IDE, go to Tools/Manage Libraries... and add the following libraries:
-1.  MPU9250 by hideakitai (v.0.4.1) -- In the header file of this library, don't forget to add this instruction: #include "Arduino.h"
+1.  MPU9250 by hideakitai (v.0.4.1). In the file MPU9250.h, add #include "Arduino.h" before #include <Wire.h>
 2. SparkFun u-blox by SparkFun Electronics (last version) 
 
 ### Configuring your Catkin Workspace and Installation
-1. Create a new ROS package named deneigus in your catkin workspace
+1. Create a new folder named deneigus in your catkin/src
 2. clone this repo somewhere on your system:
 ```bash
 git clone https://github.com/lefake/DeneigUS.git
 ```
 3. Make a sym-link of all the files in the git folder to the ros folder:
 ```bash
-ln -s /ABS_GIT_PATH/file /ABS_ROS_PATH/
+cp -rs /ABS_GIT_PATH/rospackage/* /ABS_ROS_PATH/catkin/src/deneigus/
 ```
-4. Rendre les fichiers python exécutables??
-
-5. Make all the src files (not needed for the .ino) in the GIT directory executable with chmod +x file
+4. Make the setup.sh file executable and run it:
+```bash
+chmod +x setup.sh;./setup.sh
+```
 
 ## Usage
 
