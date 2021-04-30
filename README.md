@@ -27,8 +27,8 @@ sudo apt-get install xsltproc
 ```bash
 pip3 install xmlschema
 ```
-3. In the user manual of the simulator, do the ROS Tutorial in order to install the ROS Interface plugin ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
-4. In your ~/.bashrc, add the following command and replace the path with to location of your CoppeliaSim folder on your system:
+3. In the user manual of the simulator, do the ROS Tutorial in Tutorials section, in order to install the ROS Interface plugin. ([Setting CoppeliaSim with ROS](https://www.coppeliarobotics.com/helpFiles/))
+4. In your ~/.bashrc, add the following command and replace the path with the location of your CoppeliaSim folder on your system:
 ```bash
 export COPPELIASIM_ROOT_DIR=put_your_path_here
 ```
@@ -62,10 +62,10 @@ pip3 install pyserial
 ```
 
 ### Arduino Libraries for sensors
-1. Install MPU9250 -> hideakitai (v.0.4.1):
-2. In the header file of this library, add this instruction: #include "Arduino.h"
-3. Install SparkFun U-Blox (last version):
-4. 
+In Arduino IDE, go to Tools/Manage Libraries.../ and add the following libraries:
+1.  MPU9250 by hideakitai (v.0.4.1)
+  1.1 In the header file of this library, add this instruction: #include "Arduino.h"
+2. SparkFun u-blox by SparkFun Electronics (last version) 
 
 ### Configuring your Catkin Workspace and Installation
 1. Create a new ROS package named deneigus in your catkin workspace
