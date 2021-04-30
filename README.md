@@ -2,7 +2,7 @@
 
 DeneigUS is a robotics project created by seven engineering students at the University of Sherbrooke. The main objective of this projet is to design the **proof of concept of an autonomous and electric snowblower** (from mechanics to programming, including electrification).
 
-The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) on Ubuntu 20.04 for navigation and control. Also, the control is ensured by the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing.
+The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) on Ubuntu 20.04 for navigation and control. Also, the control is ensured by a Rapberry Pi 4 with Arduinos and the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing.
 
 ## Folders Description
 
@@ -12,11 +12,11 @@ The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) 
 
 ## Installation
 
-### Installing ROS Noetic on Ubuntu 20.04
+### Installation of ROS Noetic on Ubuntu 20.04
 1. Follow the instructions on the offical website ([ROS Installation](http://wiki.ros.org/noetic/Installation/Ubuntu))
 2. If you are not familiar with ROS, we strongly recommend that you do the tutorials ([ROS Tutorials](http://wiki.ros.org/ROS/Tutorials))
 
-### Installing CoppeliaSim for use with ROS (Optional)
+### Installion of CoppeliaSim for use with ROS (Optional)
 At the begining of the projet we used CoppeliaSim to simulate the snowblower and test our navigation with ROS. To install the CoppeliaSim simulator in order to use it with ROS, follow these steps:
 
 1. Go to the official webstite of Coppelia Robotics and [download](https://www.coppeliarobotics.com/downloads) the free EDU version for Ubuntu 20.04.
@@ -31,13 +31,37 @@ pip install xmlschema
 
 ### Installation of ROS Libraries for Navigation
 1. Install Costmap_2d:
+```bash
+
+```
 2. Install Move_Base:
+```bash
+
+```
 3. Clone the Range_Sensor_Layer in the src folder of your catkin workspace:
+```bash
+
+```
 4. Install Map_server:
+```bash
+
+```
 5. Install Joy:
+```bash
+
+```
 6. Install pyserial:
+```bash
+
+```
 7. Install the Rosbrige Server:
+```bash
+
+```
 8. Install Protobuf:
+```bash
+
+```
 
 ### Installation of Arduino Libraries for sensors
 1. Install MPU9250 -> hideakitai (v.0.4.1):
