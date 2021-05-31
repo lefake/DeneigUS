@@ -259,7 +259,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=FCZWPMQE
+DocumentUniqueId=JCHPDMBI
 
 [Document14]
 DocumentPath=..\librairies\2-644861-4.IntLib
@@ -296,52 +296,52 @@ GenerateClassCluster=0
 DocumentUniqueId=ESOEOIHD
 
 [Parameter1]
-Name=Project_Stencil_Top_Thickness
-Value=0.1 MM
+Name=Project_Date
+Value=2021-03-19
 
 [Parameter2]
-Name=Project_Stencil_Bot_Thickness
-Value=0.1 MM
-
-[Parameter3]
-Name=Project_Revision
-Value=1.000
-
-[Parameter4]
-Name=Project_Name
-Value=Deneigus
-
-[Parameter5]
-Name=Project_Group
-Value=Deneigus
-
-[Parameter6]
-Name=Project_Global
-Value=PMC
-
-[Parameter7]
-Name=Project_Designer4
-Value=
-
-[Parameter8]
-Name=Project_Designer3
-Value=
-
-[Parameter9]
-Name=Project_Designer2
-Value=Ian Lalonde
-
-[Parameter10]
-Name=Project_Designer1
-Value=Samuel Mathieu
-
-[Parameter11]
 Name=Project_DateCode
 Value=DCXXXX
 
+[Parameter3]
+Name=Project_Designer1
+Value=Samuel Mathieu
+
+[Parameter4]
+Name=Project_Designer2
+Value=Ian Lalonde
+
+[Parameter5]
+Name=Project_Designer3
+Value=
+
+[Parameter6]
+Name=Project_Designer4
+Value=
+
+[Parameter7]
+Name=Project_Global
+Value=PMC
+
+[Parameter8]
+Name=Project_Group
+Value=Deneigus
+
+[Parameter9]
+Name=Project_Name
+Value=Deneigus
+
+[Parameter10]
+Name=Project_Revision
+Value=1.000
+
+[Parameter11]
+Name=Project_Stencil_Bot_Thickness
+Value=0.1 MM
+
 [Parameter12]
-Name=Project_Date
-Value=2021-03-19
+Name=Project_Stencil_Top_Thickness
+Value=0.1 MM
 
 [Configuration1]
 Name=Sources
@@ -1273,9 +1273,9 @@ UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Library Name And Type
-ComponentLibraryIdentifier0=2-644861-4.IntLib
-ComponentDesignItemID0=2-644861-4
-ComponentSymbolReference0=2-644861-4
+ComponentLibraryIdentifier0=S7CAS-APP1.SchLib
+ComponentDesignItemID0=StandOff 12mm
+ComponentSymbolReference0=StandOff 12mm
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=1
@@ -1291,37 +1291,20 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=Availability
+ParameterName0=Comment
 ParameterUpdate0=1
-ParameterName1=Check_prices
+ParameterName1=Component Kind
 ParameterUpdate1=1
-ParameterName2=Comment
+ParameterName2=Description
 ParameterUpdate2=1
-ParameterName3=Component Kind
+ParameterName3=Library Reference
 ParameterUpdate3=1
-ParameterName4=Description
+ParameterName4=Quantity
 ParameterUpdate4=1
-ParameterName5=Library Reference
+ParameterName5=Supplier 1
 ParameterUpdate5=1
-ParameterName6=MF
+ParameterName6=Supplier Part Number 1
 ParameterUpdate6=1
-ParameterName7=MP
-ParameterUpdate7=1
-ParameterName8=Package
-ParameterUpdate8=1
-ParameterName9=Price
-ParameterUpdate9=1
-ParameterName10=Purchase-URL
-ParameterUpdate10=1
-ParameterName11=SnapEDA_Link
-ParameterUpdate11=1
-ParameterName12=Value
-ParameterUpdate12=1
-ModelTypeGroup0=PCBLIB
-ModelTypeUpdate0=1
-ModelType0=PCBLIB
-ModelName0=TE_2-644861-4
-ModelUpdate0=1
 
 [DatabaseUpdateOptions]
 SelectedOnly=0
