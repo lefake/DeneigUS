@@ -1,6 +1,11 @@
 <launch>
+<<<<<<< Updated upstream
   <arg name="has_web" default="1"/>
   <arg name="has_joy" default="0"/>
+=======
+  <arg name="has_web" default="0"/>
+  <arg name="has_joy" default="1"/>
+>>>>>>> Stashed changes
   
   <arg name="ard_port" default="/dev/ttyUSB0" />
   <arg name="ard_baud" default="57600" />
@@ -17,6 +22,12 @@
  <!-- python executif Node -->
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
 
+<<<<<<< Updated upstream
+=======
+ <!-- python pb2ros Node -->
+  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
+
+>>>>>>> Stashed changes
  <!-- python astar node -->
   <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
 

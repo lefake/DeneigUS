@@ -2,11 +2,27 @@
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Float32MultiArray.h>
 
+<<<<<<< Updated upstream
 #include "TestUtils.h"
 #include "RosUtils.h"
 #include "IMU.h"
 #include "Sonars.h"
 #include "Gps.h"
+=======
+
+// -------------- TODO : USE #IFDEF TO REDUCE SKETCH SIZE -------------------- //
+
+
+#include "PBUtils.h"
+#include "twist.pb.h"
+//#include "floatarray.pb.h"
+#include "range.pb.h"
+
+#include "Sonars.h"
+#include "Motor.h"
+//#include "IMU.h"
+//#include "Gps.h"
+>>>>>>> Stashed changes
 #include "constants.h"
 #include "pins.h"
 
@@ -56,6 +72,7 @@ ros::Publisher debug_arduino_data_pub("/debug_arduino_data", &debug_arduino_data
 
 
 // GLOBALS
+<<<<<<< Updated upstream
 float last_time = 0;
 int val = 0;
 
@@ -74,20 +91,107 @@ void setup()
   ros_init();
   ros_msg_init();
 
+=======
+long last_time = 0;
+long delay_interval = 10;
+
+long last_time_sonar = 0;
+long delay_interval_sonar = 100;
+
+//FloatArray debug_arduino_msg = FloatArray_init_zero;
+Twist cmd_vel_msg = Twist_init_zero;
+Twist cmd_tourelle_msg = Twist_init_zero;
+Twist pos_msg = Twist_init_zero;
+Range obs_pos_msg = Range_init_zero;
+//FloatArray imu_data_msg = FloatArray_init_zero;
+
+Topic topics[] = {
+      //{DEBUG_ARDUINO, FloatArray_fields, &debug_arduino_msg},
+      {CMD_VEL, Twist_fields, &cmd_vel_msg},
+      {CMD_TOURELLE, Twist_fields, &cmd_tourelle_msg},
+      {POS, Twist_fields, &pos_msg},
+      {OBS_POS, Range_fields, &obs_pos_msg},
+      //{IMU_DATA, FloatArray_fields, &imu_data_msg},
+      /*{ESTOP_STATE, FloatArray_fields, NULL},
+      {TELE_BATT, FloatArray_fields, NULL},
+      {POS_TOURELLE, FloatArray_fields, NULL},
+      {DEBUG_MOT, FloatArray_fields, NULL},
+      {GPS_DATA, FloatArray_fields, NULL},
+      {IMU_DATA, FloatArray_fields, NULL},*/
+    };
+
+// PB Communication
+int ind = 0;
+char in_char;
+boolean recv_in_progress = false;
+bool in_cmd_complete = false;
+int nbs_new_msgs = 0;
+int new_msgs_ids[MAX_NBS_MSG];
+char in_cmd[MAX_MSG_LEN];
+PBUtils pbutils(topics, sizeof(topics) / sizeof(Topic));
+
+// Motors
+Motor m_l, m_r;
+bool has_motor = true;
+float vel_left = 0;
+float vel_right = 0;
+
+// Sonars
+Sonars sonars;
+bool has_sonars = true;
+int sonars_msg_seq = 0;
+
+// IMU
+//IMU imu;
+//bool has_imu = false;
+
+
+// GPS
+//Gps gps;
+//bool has_gps = false;
+
+void setup()
+{
+  //debug_arduino_msg.data_count = 2;
+  
+>>>>>>> Stashed changes
   if(has_sonars)
     sonars.init(sonars_trigger_pin, sonars_echo_pins);
   
+<<<<<<< Updated upstream
   if (has_imu)
     imu.init();
   
   if (has_gps)
     gps.init();
+=======
+  if (has_motor)
+  {
+    m_l.init(forw_left, back_left, pwm_left);
+    m_r.init(forw_right, back_right, pwm_right);
+  }
+
+  //if (has_imu)
+  {
+    //imu.init();
+    //imu.calibrateGyroAcc();
+    //imu_data_msg.data_count = IMU_DATA_MSG_ARRAY_LEN;
+  }
+
+  //if (has_gps)
+  //  gps.init();
+  
+  Serial.begin(115200);
+
+  // TODO : Add Arduino ID acknowledge 
+>>>>>>> Stashed changes
 }
 
 void loop()
 {
   if (millis() - last_time > 100)
   {
+<<<<<<< Updated upstream
     // ROS fake data
     tests.pos_msg_fake_data( &pos_msg );   
     tests.estop_state_msg_fake_data( & estop_state_msg);
@@ -106,6 +210,17 @@ void loop()
       gps.getCoordinates( &gps_data_msg );
     else
       tests.gps_data_msg_fake_data( &gps_data_msg );
+=======
+    // To create the Map TF in tf_broadcaster
+    pbutils.pb_send(1, POS);
+    
+    // send imu
+    //if (has_imu)
+    {
+      //imu.getValuesRos(&imu_data_msg, delay_interval);
+      //pbutils.pb_send(1, IMU_DATA);
+    }
+>>>>>>> Stashed changes
     
     if(has_imu)
       imu.getValuesRos( &imu_data_msg );
