@@ -12,7 +12,6 @@ from PBUtils import PBSerialHandler, PBSerializationHandler, Topic
 class PB2ROS:
     def __init__(self, serials):
         # TODO : Add Arduino ID acknowledge 
-
         self.logger = get_logger("pb2ros.main")
         self.logger.debug("Started pb2ros init")
 
@@ -24,6 +23,7 @@ class PB2ROS:
         self.debug_arduino_pub = rospy.Publisher('/debug_arduino_data', Float32MultiArray, queue_size=5)
         self.pos_pub = rospy.Publisher('/pos', Twist, queue_size=5)
         self.obs_pos_pub = rospy.Publisher('/obs_pos', Float32MultiArray, queue_size=5)
+
         self.estop_state_pub = rospy.Publisher('/estop_state', Float32MultiArray, queue_size=5)
         self.tele_batt_pub = rospy.Publisher('/tele_batt', Float32MultiArray, queue_size=5)
         self.pos_tourelle_pub = rospy.Publisher('/pos_tourelle', Float32MultiArray, queue_size=5)
@@ -66,7 +66,7 @@ class PB2ROS:
                 current_topic.pub.publish(current_topic.converter(msg[1]))
             else:
                 self.logger.warn("new_msg_callback :  Couldn't find message ID")
-    
+
     def new_id_callback(self, response):
         logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
@@ -86,17 +86,14 @@ class PB2ROS:
         for s in self._serials:
             s.kill()
 
-
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
     #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
-
     arduinos = [
         serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
         #serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
         serial.Serial('/dev/pts/4', 9600, timeout=0.05),
     ]
-
     rospy.init_node('pb2ros', anonymous=False)
 
     setup_logger(__file__, print_level=logging.INFO)

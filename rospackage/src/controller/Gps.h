@@ -3,7 +3,7 @@
 
 #include <Wire.h>
 #include "SparkFun_Ublox_Arduino_Library.h" //http://librarymanager/All#SparkFun_Ublox_GPS
-#include <std_msgs/Float32MultiArray.h>
+#include "floatarray.pb.h"
 #include "constants.h"
 
 class Gps
@@ -20,7 +20,7 @@ class Gps
     long updateLat();
     long getSIVs();
     long getAlt();
-    void getCoordinates( std_msgs::Float32MultiArray* msg );
+    void getCoordinates( FloatArray* msg );
 
   private:
     SFE_UBLOX_GPS myGPS;

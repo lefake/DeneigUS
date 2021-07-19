@@ -3,7 +3,6 @@ import threading
 import time
 
 from serial import SerialException
-
 import rospy
 
 from logging_utils import get_logger
@@ -162,7 +161,6 @@ class PBSerialHandler:
                     self._serial.flush()
                     self._response = b'{' + buffer
                     self._id_callback(self._response)
-                    
             except SerialException as e:
                 self._logger.error("Read call back error " + str(e))
 

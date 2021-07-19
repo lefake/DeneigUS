@@ -11,12 +11,14 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   message_generation
   rospy
-  rosserial_python
   std_msgs
+  costmap_2d
 )
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -108,7 +110,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES deneigus
-  CATKIN_DEPENDS rospy rosserial_python std_msgs message_runtime
+  CATKIN_DEPENDS rospy std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
