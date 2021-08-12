@@ -278,22 +278,9 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document15]
-DocumentPath=..\librairies\S7CAS-APP1.PcbLib
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
+[GeneratedDocument1]
+DocumentPath=Project Outputs for PCB_Project\Design Rule Check - Deneigus.html
 DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=ESOEOIHD
 
 [Parameter1]
 Name=Project_Date
