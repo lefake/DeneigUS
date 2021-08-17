@@ -66,7 +66,7 @@ float vel_right = 0;
 
 // Sonars
 Sonars sonars;
-bool has_sonars = true;
+bool has_sonars = false;
 int sonars_msg_seq = 0;
 
 // IMU
@@ -78,6 +78,10 @@ bool has_imu = false;
 Gps gps;
 bool has_gps = false;
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 void setup()
 {
   debug_arduino_msg.data_count = 2;

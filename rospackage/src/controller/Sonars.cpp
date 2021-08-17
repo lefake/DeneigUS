@@ -33,16 +33,15 @@ float Sonars::dist(int n)
   digitalWrite(_trigger_pins[n], LOW);
   
   noInterrupts();
-  float d = pulseIn(_echo_pins[n], HIGH);
+  float d = pulseIn(_echo_pins[n], HIGH, pusleTimeout);
   interrupts();
 
-  float speedOfSoundInCmPerMs = 0.03313 + 0.0000606 * TEMPERATURE; // Cair ≈ (331.3 + 0.606 ⋅ ϑ) m/s
-  float distanceCm = d / 2.0 * speedOfSoundInCmPerMs;
+  float distanceM = d / 2.0 * soundSpeed;
   
-  if (distanceCm <= MIN_DIST_DETECTION_CM) 
+  if (distanceM <= MIN_DIST_DETECTION_M) 
     return -1.0;
-  else if (distanceCm > MAX_DIST_DETECTION_CM)
+  else if (distanceM > MAX_DIST_DETECTION_M)
     return -2.0 ;
   else
-    return distanceCm;
+    return distanceM;
 }

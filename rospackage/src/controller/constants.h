@@ -31,31 +31,15 @@
 
 
 // ----------------------- Sonars constants -----------------------
-#define MIN_DIST_DETECTION_CM               2
-#define MAX_DIST_DETECTION_CM               400
-#define DIST_THRESHOLD_CM                   20
+#define MIN_DIST_DETECTION_M                0.02
+#define MAX_DIST_DETECTION_M                2
 
 #define TEMPERATURE                         20
 
 
 // ----------------------- IMU contants ----------------------- 
 #define IMU_ADDRESS                         0x68
-#define IMU_ACC_BIAS_X                      -129.72
-#define IMU_ACC_BIAS_Y                      218.80
-#define IMU_ACC_BIAS_Z                      -217.03
-
-#define IMU_GYRO_BIAS_X                     4.68
-#define IMU_GYRO_BIAS_Y                     0.41
-#define IMU_GYRO_BIAS_Z                     -26.10
-
-#define IMU_MAG_BIAS_X                      -164.35
-#define IMU_MAG_BIAS_Y                      500.3
-#define IMU_MAG_BIAS_Z                      247.12
-
-#define IMU_MAG_SCALE_X                     0.94
-#define IMU_MAG_SCALE_Y                     1.00
-#define IMU_MAG_SCALE_Z                     1.07
-
+#define IMU_EEPROM_ADDRESS                  0x00
 #define IMU_MAG_DECLINATION                 14.926      //https://www.geomag.nrcan.gc.ca/calc/mdcal-en.php
 
 // ----------------------- GPS -----------------------
@@ -63,9 +47,6 @@
 #define DEGTORAD                            0.0174532925199432957f
 #define RADTODEG                            57.295779513082320876f
 #endif
-
-// Motors
-#define TRACK_DIST                          1//0.127
 
 // ----------------------- Protobuf constants -----------------------
 

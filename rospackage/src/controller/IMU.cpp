@@ -13,10 +13,13 @@ void IMU::init()
   
   if (setup_done)
   {
-    imu.setAccBias(IMU_ACC_BIAS_X, IMU_ACC_BIAS_Y, IMU_ACC_BIAS_Z);
-    imu.setGyroBias(IMU_GYRO_BIAS_X, IMU_GYRO_BIAS_Y, IMU_GYRO_BIAS_Z);
-    imu.setMagBias(IMU_MAG_BIAS_X, IMU_MAG_BIAS_Y, IMU_MAG_BIAS_Z);
-    imu.setMagScale(IMU_MAG_SCALE_X, IMU_MAG_SCALE_Y, IMU_MAG_SCALE_Z);
+    IMUCalibration calibration;
+    EEPROM.get(IMU_EEPROM_ADDRESS, calibration);
+    
+    imu.setAccBias(calibration.acc_bias[0], calibration.acc_bias[1], calibration.acc_bias[2]);
+    imu.setGyroBias(calibration.gyro_bias[0], calibration.gyro_bias[1], calibration.gyro_bias[2]);
+    imu.setMagBias(calibration.mag_bias[0], calibration.mag_bias[1], calibration.mag_bias[2]);
+    imu.setMagScale(calibration.mag_scale[0], calibration.mag_scale[1], calibration.mag_scale[2]);
     imu.setMagneticDeclination(IMU_MAG_DECLINATION);
   }
 }

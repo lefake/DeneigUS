@@ -1,6 +1,7 @@
 #ifndef IMU_H
 #define IMU_H
 
+#include <EEPROM.h>
 // IMU Library by hideakitai 0.4.1
 #include "MPU9250.h"
 #include "floatarray.pb.h"
@@ -24,6 +25,13 @@ class IMU {
     float pos_x;
     float vel_y;
     float pos_y;
+
+    struct IMUCalibration {
+      float acc_bias[3];
+      float gyro_bias[3];
+      float mag_bias[3];
+      float mag_scale[3];
+    };
 };
 
 #endif

@@ -11,7 +11,7 @@ from logging_utils import setup_logger, get_logger
 class Sonar2PC():
     def __init__(self):
         self.point_cloud_pub = rospy.Publisher('/point_cloud', PointCloud2, queue_size=10)
-        self.range_sub = rospy.Subscriber('/range', Range, self.sonar_callback, queue_size=10)
+        self.range_sub = rospy.Subscriber('/obs_pos', Range, self.sonar_callback, queue_size=10)
 
         self.point_density = 1 * np.pi/180 # points/d
 
