@@ -3,15 +3,17 @@
 #include <pb_encode.h>
 #include <pb_decode.h>
 
+// -------------- TODO : USE #IFDEF TO REDUCE SKETCH SIZE -------------------- //
+
 #include "PBUtils.h"
 #include "twist.pb.h"
-#include "floatarray.pb.h"
+//#include "floatarray.pb.h"
 #include "range.pb.h"
 
 #include "Sonars.h"
 #include "Motor.h"
-#include "IMU.h"
-#include "Gps.h"
+//#include "IMU.h"
+//#include "Gps.h"
 #include "constants.h"
 #include "pins.h"
 
@@ -20,6 +22,7 @@ void cmd_vel_callback();
 void cmd_tourelle_callback();
 
 // GLOBALS
+int val = 0;
 long last_time = 0;
 long delay_interval = 10;
 
@@ -73,7 +76,6 @@ int sonars_msg_seq = 0;
 IMU imu;
 bool has_imu = false;
 
-
 // GPS
 Gps gps;
 bool has_gps = false;
@@ -84,7 +86,68 @@ bool has_gps = false;
 >>>>>>> Stashed changes
 void setup()
 {
-  debug_arduino_msg.data_count = 2;
+
+long last_time = 0;
+long delay_interval = 10;
+
+long last_time_sonar = 0;
+long delay_interval_sonar = 100;
+
+//FloatArray debug_arduino_msg = FloatArray_init_zero;
+Twist cmd_vel_msg = Twist_init_zero;
+Twist cmd_tourelle_msg = Twist_init_zero;
+Twist pos_msg = Twist_init_zero;
+Range obs_pos_msg = Range_init_zero;
+//FloatArray imu_data_msg = FloatArray_init_zero;
+
+Topic topics[] = {
+      //{DEBUG_ARDUINO, FloatArray_fields, &debug_arduino_msg},
+      {CMD_VEL, Twist_fields, &cmd_vel_msg},
+      {CMD_TOURELLE, Twist_fields, &cmd_tourelle_msg},
+      {POS, Twist_fields, &pos_msg},
+      {OBS_POS, Range_fields, &obs_pos_msg},
+      //{IMU_DATA, FloatArray_fields, &imu_data_msg},
+      /*{ESTOP_STATE, FloatArray_fields, NULL},
+      {TELE_BATT, FloatArray_fields, NULL},
+      {POS_TOURELLE, FloatArray_fields, NULL},
+      {DEBUG_MOT, FloatArray_fields, NULL},
+      {GPS_DATA, FloatArray_fields, NULL},
+      {IMU_DATA, FloatArray_fields, NULL},*/
+    };
+
+// PB Communication
+int ind = 0;
+char in_char;
+boolean recv_in_progress = false;
+bool in_cmd_complete = false;
+int nbs_new_msgs = 0;
+int new_msgs_ids[MAX_NBS_MSG];
+char in_cmd[MAX_MSG_LEN];
+PBUtils pbutils(topics, sizeof(topics) / sizeof(Topic));
+
+// Motors
+Motor m_l, m_r;
+bool has_motor = true;
+float vel_left = 0;
+float vel_right = 0;
+
+// Sonars
+Sonars sonars;
+bool has_sonars = true;
+int sonars_msg_seq = 0;
+
+// IMU
+//IMU imu;
+//bool has_imu = false;
+
+
+// GPS
+//Gps gps;
+//bool has_gps = false;
+
+void setup()
+{
+  //debug_arduino_msg.data_count = 2;
   
   if(has_sonars)
   {
@@ -97,17 +160,19 @@ void setup()
     m_r.init(forw_right, back_right, pwm_right);
   }
 
-  if (has_imu)
+  //if (has_imu)
   {
-    imu.init();
-    imu.calibrateGyroAcc();
-    imu_data_msg.data_count = IMU_DATA_MSG_ARRAY_LEN;
+    //imu.init();
+    //imu.calibrateGyroAcc();
+    //imu_data_msg.data_count = IMU_DATA_MSG_ARRAY_LEN;
   }
 
-  if (has_gps)
-    gps.init();
+  //if (has_gps)
+  //  gps.init();
   
   Serial.begin(115200);
+
+  // TODO : Add Arduino ID acknowledge 
 }
 
 void loop()
@@ -116,6 +181,13 @@ void loop()
   {
     // To create the Map TF in tf_broadcaster
     pbutils.pb_send(1, POS);
+    
+    // send imu
+    //if (has_imu)
+    {
+      //imu.getValuesRos(&imu_data_msg, delay_interval);
+      //pbutils.pb_send(1, IMU_DATA);
+    }
     
     // send imu
     if (has_imu)

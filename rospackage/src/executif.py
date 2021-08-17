@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import logging
-import os
 from enum import Enum
 
 import rospy
@@ -23,14 +22,14 @@ class Executif:
 
         self.logger.debug("Started executif init")
         # Out
-        self.pos_msg = Twist()
-        self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
         self.cmd_vel_msg = Twist()
         self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
         self.cmd_tourelle_msg = Twist()
     
         # In
         self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
+        self.obs_pos_sub = rospy.Subscriber('/obs_pos', Range, self.obs_pos_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
@@ -53,9 +52,9 @@ class Executif:
         throttle_right = msg.axes[3]
 
         if self.ctl_mode == control_modes.manual:
-            self.pos_msg.linear.x = throttle_left
-            self.pos_msg.linear.y = throttle_right
-            self.cmd_vel_pub.publish(self.pos_msg)
+            self.cmd_vel_msg.linear.x = throttle_left
+            self.cmd_vel_msg.linear.y = throttle_right
+            self.cmd_vel_pub.publish(self.cmd_vel_msg)
 
     def pos_callback(self, msg):
         self.logger.debug("Pos callback")
@@ -68,6 +67,10 @@ class Executif:
 
     def pos_tourelle_callback(self, msg):
         self.logger.debug("Pos tourelle callback")
+        self.logger.warn(msg)
+        t = Float32MultiArray()
+        t.data = msg.data
+        self.cmd_vel_pub.publish(t)
 
     def debug_mot_callback(self, msg):
         self.logger.debug("Debug mot callback")

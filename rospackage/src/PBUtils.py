@@ -3,20 +3,37 @@ import threading
 import time
 
 from serial import SerialException
+import rospy
 
 from logging_utils import get_logger
+from msg_utils import MsgFactory
 
 class Topic:
-    def __init__(self, id, name, obj, converter, pub=None):
+    '''
+    Use ros_obj when doing a One to One conversion (ex: Twist -> Twist)
+    Use the obj_type only when changing the type (ex: Pose -> Float32MultiArray)
+        The obj_type name should be the ROS name to work with the map
+    '''
+    def __init__(self, id, ros_obj, dst=None, obj_type=None):
+        factory = MsgFactory()
+        is_pub = True if isinstance(ros_obj, rospy.Publisher) else False
+        class_name = ros_obj.data_class.__name__ if obj_type is None else obj_type
+        converters = factory.getMsg(class_name)[1]
+
         self._id = id
-        self._name = name
-        self._obj = obj
-        self._converter = converter
-        self._pub = pub
+        self._dst = dst
+        self._name = ros_obj.name
+        self._obj = factory.getMsg(class_name)[0]
+        self._converter = converters[0] if is_pub else converters[1]
+        self._pub = ros_obj if is_pub else None
 
     @property
     def id(self):
         return self._id
+
+    @property
+    def dst(self):
+        return self._dst
 
     @property
     def name(self):
@@ -46,6 +63,7 @@ class PBSerializationHandler:
 
         for id_msg, pb_msg in zip(ids, msgs):
             msg += str(id_msg) + "|"
+            self._logger.warning(pb_msg.data_count)
             for byte in bytearray(pb_msg.SerializeToString()):
                 msg += str(hex(byte))[2:].zfill(2)  # Remove \x and fill with 0 in front to always takes 2 digits
             msg += ";"
@@ -138,6 +156,11 @@ class PBSerialHandler:
                     self._serial.flush()
                     self._response = b'<' + buffer
                     self._callback(self._response)
+                elif input == b'{':
+                    buffer = self._serial.read_until(b'}')
+                    self._serial.flush()
+                    self._response = b'{' + buffer
+                    self._id_callback(self._response)
             except SerialException as e:
                 self._logger.error("Read call back error " + str(e))
 

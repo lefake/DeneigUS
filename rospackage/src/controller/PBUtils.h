@@ -15,7 +15,7 @@ Description: Header file of the nanopb communication protocol
 #include <pb_encode.h>
 #include <pb_decode.h>
 
-#define MAX_MSG_LEN                         1000
+#define MAX_MSG_LEN                         500
 #define MAX_NBS_MSG                         10
 
 struct Topic {
