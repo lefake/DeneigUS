@@ -29,13 +29,12 @@ class Executif:
     
         # In
         self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
-        self.obs_pos_sub = rospy.Subscriber('/obs_pos', Range, self.obs_pos_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
         self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
-        self.imu_data_sub = rospy.Subscriber('/imu_data', Pose, self.imu_data_callback)
+        self.imu_data_sub = rospy.Subscriber('/imu_data', Twist, self.imu_data_callback)
         self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
         self.debug_arduino_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
 
@@ -43,13 +42,15 @@ class Executif:
         self.traj_serv = rospy.ServiceProxy('/trajgen_srv', trajgen)
 
         # Variables
-        self.ctl_mode = control_modes.stop
+        self.ctl_mode = control_modes.manual
 
         self.logger.debug("Finished executif init")
 
     def joy_echo(self, msg):
         throttle_left = msg.axes[1]
         throttle_right = msg.axes[3]
+
+        self.logger.error(throttle_right)
 
         if self.ctl_mode == control_modes.manual:
             self.cmd_vel_msg.linear.x = throttle_left

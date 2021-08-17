@@ -63,7 +63,6 @@ class PBSerializationHandler:
 
         for id_msg, pb_msg in zip(ids, msgs):
             msg += str(id_msg) + "|"
-            self._logger.warning(pb_msg.data_count)
             for byte in bytearray(pb_msg.SerializeToString()):
                 msg += str(hex(byte))[2:].zfill(2)  # Remove \x and fill with 0 in front to always takes 2 digits
             msg += ";"

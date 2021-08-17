@@ -16,25 +16,25 @@ class PB2ROS:
         self.logger.debug("Started pb2ros init")
 
         # Out Executif, In Arduino
-        self.cmd_vel_sub = rospy.Subscriber('/cmd_vel', Range, self.cmd_vel_callback)
-        self.cmd_tourelle_sub = rospy.Subscriber('/cmd_tourelle', Float32MultiArray, self.cmd_tourelle_callback)
+        self.cmd_vel_sub = rospy.Subscriber('/cmd_vel', Twist, self.cmd_vel_callback)
+        self.cmd_tourelle_sub = rospy.Subscriber('/cmd_tourelle', Twist, self.cmd_tourelle_callback)
 
         # In Executif, Out Arduino
         self.debug_arduino_pub = rospy.Publisher('/debug_arduino_data', Float32MultiArray, queue_size=5)
         self.pos_pub = rospy.Publisher('/pos', Twist, queue_size=5)
-        self.obs_pos_pub = rospy.Publisher('/obs_pos', Float32MultiArray, queue_size=5)
+        self.obs_pos_pub = rospy.Publisher('/obs_pos', Range, queue_size=5)
 
         self.estop_state_pub = rospy.Publisher('/estop_state', Float32MultiArray, queue_size=5)
         self.tele_batt_pub = rospy.Publisher('/tele_batt', Float32MultiArray, queue_size=5)
         self.pos_tourelle_pub = rospy.Publisher('/pos_tourelle', Float32MultiArray, queue_size=5)
         self.debug_mot_pub = rospy.Publisher('/debug_mot', Float32MultiArray, queue_size=5)
         self.gps_data_pub = rospy.Publisher('/gps_data', Float32MultiArray, queue_size=5)
-        self.imu_data_pub = rospy.Publisher('/imu_data', Pose, queue_size=5)
+        self.imu_data_pub = rospy.Publisher('/imu_data', Twist, queue_size=5)
         self.joy_data_pub = rospy.Publisher('/joy', Joy, queue_size=5)
 
         # Topic IDs much be the same in the Arduino enum (in constants.h)
         self._sub_topics = [
-            Topic(1, self.cmd_vel_sub, dst=1),
+            Topic(1, self.cmd_vel_sub, dst=0),
             Topic(2, self.cmd_tourelle_sub, dst=0),
         ]
         self._pub_topics = [
@@ -90,9 +90,7 @@ if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
     #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
     arduinos = [
-        serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
-        #serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
-        serial.Serial('/dev/pts/4', 9600, timeout=0.05),
+        serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
     ]
     rospy.init_node('pb2ros', anonymous=False)
 
