@@ -22,7 +22,7 @@
   <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen"/>
 
  <!-- python pb2ros Node -->
-<!--  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/> -->
+  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
 
  <!-- python astar node -->
   <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
