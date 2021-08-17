@@ -1,37 +1,23 @@
 
-# Footprint of the robot
+plugin: []
 footprint: [ [0.5, 0.4], [0.5, -0.4], [-0.5, -0.4], [-0.5, 0.4] ]
-footprint_padding: 0.04
-#robot_radius: 0.3
+publish_frequency: 5.0
 
-inflation_layer:
-  inflation_radius: 5.0
-  cost_scaling_factor: 5.0
-transform_tolerance: 0.2
+static_layer:
+  map_topic: /map
+  subscribe_to_updates: true
 
 obstacle_layer:
-  obstacle_range: 2.0
-  raytrace_range: 2.0
-  max_obstacle_height: 0.5
+  min_obstacle_height: 0.0
+  max_obstacle_height: 5
+  enabled: true
   track_unknown_space: true
+  observation_sources: point_cloud_sensor
+  point_cloud_sensor: {sensor_frame: base_link, data_type: PointCloud2, topic: /point_cloud, marking: true, clearing: true}
 
-range_sensor_layer:
-  topics: ["range"]
-  no_readings_timeout: 2.0
-  clear_threshold:    0.46
-  mark_threshold:     0.98
-  clear_on_max_reading: true
-  
-# Pour afficher les obstacles
-observation_sources: range
+inflation_layer:
+  inflation_radius: 0.3
 
-# Nuage de point des sonars
-#point_cloud_sensor: {
-    #sensor_frame: base_link,
-    #data_type: PointCloud2,
-    #topic: obstacles_cloud,
-    #expected_update_rate: 0.5,
-    #marking: true,
-    #clearing: true,
-    #min_obstacle_height: 0.04
- # }
+
+
+

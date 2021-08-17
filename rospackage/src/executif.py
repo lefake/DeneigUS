@@ -32,7 +32,6 @@ class Executif:
 
         self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
         self.range_pub = rospy.Publisher('/range', Range, queue_size=10)
-        self.point_cloud_pub = rospy.Publisher('/point_cloud', PointCloud2, queue_size=10)
         
 
         # In
@@ -59,7 +58,7 @@ class Executif:
     def joy_echo(self, msg):
         #self.logger.debug("Joy echo callback")
         throttle_left = msg.axes[1]
-        throttle_right = msg.axes[4]
+        throttle_right = msg.axes[3]
 
         if self.ctl_mode == control_modes.manual:
             self.pos_msg.linear.x = throttle_left
