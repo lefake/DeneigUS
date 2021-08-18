@@ -36,7 +36,7 @@ float Sonars::dist(int n)
   float d = pulseIn(_echo_pins[n], HIGH, pusleTimeout);
   interrupts();
 
-  float distanceM = d / 2.0 * soundSpeed;
+  float distanceM = d / 2000000.0 * soundSpeed;
   
   if (distanceM <= MIN_DIST_DETECTION_M) 
     return -1.0;

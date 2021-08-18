@@ -46,7 +46,7 @@ class PB2ROS:
             Topic(7, self.pos_tourelle_pub),
             Topic(8, self.debug_mot_pub),
             Topic(9, self.gps_data_pub),
-            Topic(10, self.imu_data_pub, obj_type="Float32MultiArray"),
+            Topic(10, self.pos_pub), # Belle trice de dernière minute (self.pose_pub -> self.imu_data)
         ]
         self._topics = self._sub_topics + self._pub_topics
         self._msg_obj = [topic.obj for topic in self._topics]

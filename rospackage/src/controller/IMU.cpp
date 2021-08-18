@@ -36,7 +36,7 @@ void IMU::calibrateMag()
     imu.calibrateMag(); 
 }
 
-void IMU::getValuesRos( FloatArray* msg, float period_ms )
+void IMU::getValuesRos( Twist* msg, float period_ms )
 {
   if (setup_done)
   {
@@ -45,28 +45,10 @@ void IMU::getValuesRos( FloatArray* msg, float period_ms )
     pos_x += vel_x * (period_ms / 1000.0);
     vel_y += imu.getLinearAccY() * (period_ms / 1000.0);
     pos_y += vel_y * (period_ms / 1000.0);
+
+    msg->lx = pos_x/1000;
+    msg->ly = pos_y/1000;
+    msg->az = imu.getGyroZ()/180*3.145;
     
-    msg->data[0] = pos_x;
-    msg->data[1] = pos_y;
-    msg->data[2] = imu.getQuaternionX();
-    msg->data[3] = imu.getQuaternionY();
-    msg->data[4] = imu.getQuaternionZ();
-    msg->data[5] = imu.getQuaternionW();
-    
-    /*
-    
-    for (int i = 0; i < 3; i++)
-    {
-      msg->data[i] = imu.getGyro(i);
-      msg->data[3 + i] = imu.getAcc(i);
-      msg->data[6 + i] = imu.getMag(i);
-    }*/
-  }
-  else 
-  {
-    for (int i = 0; i < IMU_DATA_MSG_ARRAY_LEN; i++)
-    {
-      msg->data[i] = -1;
-    }
   }
 }

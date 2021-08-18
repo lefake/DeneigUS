@@ -4,7 +4,7 @@
 #include <EEPROM.h>
 // IMU Library by hideakitai 0.4.1
 #include "MPU9250.h"
-#include "floatarray.pb.h"
+#include "twist.pb.h"
 #include "constants.h"
 
 class IMU {
@@ -15,7 +15,7 @@ class IMU {
     void init();
     void calibrateGyroAcc();
     void calibrateMag();
-    void getValuesRos( FloatArray*, float );
+    void getValuesRos( Twist*, float );
 
   private:
     bool setup_done;

@@ -7,6 +7,7 @@ import rospy
 
 from logging_utils import get_logger
 from msg_utils import MsgFactory
+from std_msgs.msg import String
 
 class Topic:
     '''
@@ -74,20 +75,24 @@ class PBSerializationHandler:
         return self.encode_msgs([id], [msg])
 
     def deserialize(self, messages):
-        messages = messages.decode("ascii")
-        msg_array = messages[1:-1].split(';')      # Remove < > characters and split sub-msgs
-
         object_list = []
+        try:
+            messages = messages.decode("ascii")
+            msg_array = messages[1:-1].split(';')      # Remove < > characters and split sub-msgs
 
-        for msg in msg_array:
-            if len(msg) > 0:
-                msg_id, raw_msg = msg.split("|")    # Find the id of the message
-                msg_id = int(msg_id)
-                obj = self._msg_obj[msg_id]
-                obj.ParseFromString(unhexlify(raw_msg))
-                object_list.append([msg_id, obj])
+            for msg in msg_array:
+                if len(msg) > 0:
+                    msg_id, raw_msg = msg.split("|")    # Find the id of the message
+                    msg_id = int(msg_id)
+                    obj = self._msg_obj[msg_id]
+                    obj.ParseFromString(unhexlify(raw_msg))
+                    object_list.append([msg_id, obj])
+
+        except Exception as e:
+            self._logger.error("deserialize error " + str(e))
 
         return object_list
+
 
 
 
@@ -138,6 +143,8 @@ class PBSerialHandler:
         self._interlock = False
         self._response = None
 
+        self.string_test_pub = rospy.Publisher('/string_test', String, queue_size=10)
+
         self._serialization_handler = PBSerializationHandler(msg_obj)
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
@@ -155,13 +162,16 @@ class PBSerialHandler:
                     self._serial.flush()
                     self._response = b'<' + buffer
                     self._callback(self._response)
+
+                    self.string_test_pub.publish(str(self._response))
                 elif input == b'{':
                     buffer = self._serial.read_until(b'}')
                     self._serial.flush()
                     self._response = b'{' + buffer
                     self._id_callback(self._response)
-            except SerialException as e:
+            except Exception as e:
                 self._logger.error("Read call back error " + str(e))
+
 
             self._interlock = False
 
