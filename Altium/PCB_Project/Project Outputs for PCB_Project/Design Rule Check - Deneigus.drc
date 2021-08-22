@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\samum\OneDrive\Documents\école\université\Projet Fin de Bac\Developpement Électrique\PCB\Altium\PCB_Project\Deneigus.PcbDoc
-Date     : 8/13/2021
-Time     : 11:14:32 AM
+Date     : 8/22/2021
+Time     : 3:47:28 PM
 
 WARNING: Zero hole size multi-layer pad(s) detected
    Pad Q19-3(1850mil,7500mil) on Multi-Layer on Net GND_DRIVE2
@@ -114,26 +114,9 @@ Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
 Rule Violations :0
 
 Processing Rule : Un-Routed Net Constraint ( (All) )
-   Violation between Un-Routed Net Constraint: Net LED_RED_ARD1 Between Pad U12-58(3893.701mil,4200mil) on Multi-Layer And Pad D1-1(13200mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net LED_RED_ARD2 Between Pad U7-58(6293.701mil,4200mil) on Multi-Layer And Pad D2-1(13800mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net LED_GREEN_ARD1 Between Pad U12-56(3993.701mil,4200mil) on Multi-Layer And Pad D3-1(13500mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net LED_GREEN_ARD2 Between Pad U7-56(6393.701mil,4200mil) on Multi-Layer And Pad D4-1(14100mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net LED_RED_ARD3 Between Pad U10-58(11050mil,4200mil) on Multi-Layer And Pad D5-1(14400mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net LED_GREEN_ARD3 Between Pad U10-56(11150mil,4200mil) on Multi-Layer And Pad D6-1(14700mil,1018.898mil) on Top 
-   Violation between Un-Routed Net Constraint: Net Sens_Rotation1 Between Pad U4-14(1192.717mil,6450mil) on Top And Pad R25-1(1264.5mil,6450mil) on Bottom [Unplated] 
-   Violation between Un-Routed Net Constraint: Net Sens_Rotation1 Between Pad R25-1(1264.5mil,6450mil) on Bottom [Unplated] And Pad U7-78(7893.701mil,1940mil) on Multi-Layer 
-   Violation between Un-Routed Net Constraint: Net PWM_Déplacement2 Between Pad R66-1(3535.5mil,6600mil) on Top [Unplated] And Pad U7-75(7893.701mil,2300mil) on Multi-Layer 
-   Violation between Un-Routed Net Constraint: Net BTN1 Between Pad U12-55(3993.701mil,4100mil) on Multi-Layer And Pad SW1-4(13209.055mil,587.795mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net BTN2 Between Pad U12-57(3893.701mil,4100mil) on Multi-Layer And Pad SW2-4(13509.055mil,587.801mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net BTN3 Between Pad U7-55(6393.701mil,4100mil) on Multi-Layer And Pad SW3-4(13809.055mil,587.795mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net BTN4 Between Pad U7-57(6293.701mil,4100mil) on Multi-Layer And Pad SW4-4(14109.055mil,587.795mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net BTN5 Between Pad U10-55(11150mil,4100mil) on Multi-Layer And Pad SW5-4(14434.04mil,587.798mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net BTN6 Between Pad U10-57(11050mil,4100mil) on Multi-Layer And Pad SW6-4(14784.055mil,587.795mil) on Top [Unplated] 
-   Violation between Un-Routed Net Constraint: Net GND Between Pad U2-12(3090.551mil,6600mil) on Top And Pad U2-4(3300mil,6650mil) on Top 
-   Violation between Un-Routed Net Constraint: Net NetC5_2 Between Pad U3-2(2404.976mil,6375mil) on Top And Track (2597.797mil,6322.227mil)(2742.273mil,6322.227mil) on Top 
-   Violation between Un-Routed Net Constraint: Net PWM_Déplacement1 Between Via (3730mil,6540mil) from Top to Bottom And Pad U7-74(7893.701mil,2400mil) on Multi-Layer 
    Violation between Un-Routed Net Constraint: Net Sens_Rotation2 Between Via (1400mil,6800mil) from Top to Bottom And Pad U7-79(7893.701mil,1840mil) on Multi-Layer 
-Rule Violations :19
+   Violation between Un-Routed Net Constraint: Net Sens_Rotation1 Between Via (1120mil,6450mil) from Top to Bottom And Track (7868.701mil,1940mil)(7893.701mil,1940mil) on Top 
+Rule Violations :2
 
 Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
 Rule Violations :0
@@ -239,6 +222,9 @@ Rule Violations :0
 Processing Rule : Room Deneigus_Servo (Bounding Region = (26460mil, 24740mil, 31190mil, 27990mil) (Disabled)(InComponentClass('Deneigus_Servo'))
 Rule Violations :0
 
+Processing Rule : Room Deneigus_Sensors (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_Sensors'))
+Rule Violations :0
+
 Processing Rule : Room Deneigus_Controle_Deplacement (Bounding Region = (20370mil, 25400mil, 23900mil, 27900mil) (Disabled)(InComponentClass('Deneigus_Controle_Deplacement'))
 Rule Violations :0
 
@@ -246,6 +232,6 @@ Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (
 Rule Violations :0
 
 
-Violations Detected : 84
+Violations Detected : 67
 Waived Violations : 0
-Time Elapsed        : 00:00:03
+Time Elapsed        : 00:00:02
