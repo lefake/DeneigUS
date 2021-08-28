@@ -1,21 +1,19 @@
-#ifndef IMU_H
-#define IMU_H
+#ifndef _IMU_H
+#define _IMU_H
 
 #include <EEPROM.h>
 // IMU Library by hideakitai 0.4.1
 #include "MPU9250.h"
+#include "StatusMessage.h"
 #include "twist.pb.h"
 #include "constants.h"
 
 class IMU {
   public:
     IMU();
-    ~IMU();
     
     void init();
-    void calibrateGyroAcc();
-    void calibrateMag();
-    void getValuesRos( Twist*, float );
+    void getValues( Twist*, float );
 
   private:
     bool setup_done;
@@ -34,4 +32,4 @@ class IMU {
     };
 };
 
-#endif
+#endif // _IMU_H

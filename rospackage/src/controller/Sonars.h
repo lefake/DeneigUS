@@ -1,5 +1,5 @@
-#ifndef SONARS_H
-#define SONARS_H
+#ifndef _SONARS_H
+#define _SONARS_H
 
 #include "Arduino.h"
 #include "constants.h"
@@ -22,4 +22,4 @@ class Sonars
     
 };
 
-#endif // SONARS_H
+#endif // _SONARS_H

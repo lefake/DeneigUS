@@ -67,10 +67,8 @@ bool PBUtils::decode_pb(char* input_string, int *sub_msg_id, int &nbs_new_msgs)
  * @param nbs: The numbers of id to send
  * @param ...: List of all the ids to send 
  *             ex : cant use it like this pb_send(3, POS, OBS_POS, DEBUG_ARDUINO);
- * 
- * @return: If the encode was successful  
  */
-bool PBUtils::pb_send(int nbs, ...)
+void PBUtils::pb_send(int nbs, ...)
 {
   bool success = true;
   String to_send_builder = "<";
@@ -97,7 +95,8 @@ bool PBUtils::pb_send(int nbs, ...)
       }
     }
     else
-      break;
+      sendStatus(ERROR, ENCODING_PB);
+    
     to_send_builder += ";";
   }
   to_send_builder += ">";
@@ -105,8 +104,8 @@ bool PBUtils::pb_send(int nbs, ...)
 
   if (success)
     Serial.print(to_send_builder);
-  
-  return success;
+  else
+    sendStatus(ERROR, ENCODING_PB);
 }
 
 /*
@@ -154,7 +153,6 @@ int PBUtils::parse_msg(char in_string[], int *msg_ids, char **out_strings)
  */
 void PBUtils::chars2bytes(char* in_string, uint8_t* string_value)
 {
-  // Jai pt fucker dequoi, a retester ...
   int len = strlen(in_string)/2;
   for (int i = 0; i < len; ++i)
     string_value[i] = char2hex(in_string[(i*2)], in_string[(i*2)+1]);

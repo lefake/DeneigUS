@@ -5,8 +5,6 @@ IMU::IMU() : vel_x(0), pos_x(0), vel_y(0), pos_y(0) {
   setup_done = false;
 }
 
-IMU::~IMU() { }
-
 void IMU::init()
 {
   setup_done = imu.setup(IMU_ADDRESS);
@@ -22,21 +20,12 @@ void IMU::init()
     imu.setMagScale(calibration.mag_scale[0], calibration.mag_scale[1], calibration.mag_scale[2]);
     imu.setMagneticDeclination(IMU_MAG_DECLINATION);
   }
+  else
+    sendStatusNotInitialize(FATAL, IMU_DEVICE);
 }
 
-void IMU::calibrateGyroAcc()
-{
-  if (setup_done)
-    imu.calibrateAccelGyro();
-}
 
-void IMU::calibrateMag()
-{
-  if (setup_done)
-    imu.calibrateMag(); 
-}
-
-void IMU::getValuesRos( Twist* msg, float period_ms )
+void IMU::getValues( Twist* msg, float period_ms )
 {
   if (setup_done)
   {
@@ -49,6 +38,7 @@ void IMU::getValuesRos( Twist* msg, float period_ms )
     msg->lx = pos_x/1000;
     msg->ly = pos_y/1000;
     msg->az = imu.getGyroZ()/180*3.145;
-    
   }
+  else
+    sendStatusNotInitialize(ERROR, IMU_DEVICE);
 }

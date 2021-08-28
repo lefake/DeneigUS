@@ -3,17 +3,18 @@ Author: Marc-Antoine C. Lafrenière
 Project: DeneigUS
 Date: April 2020
 Description: Header file of the nanopb communication protocol 
-             Encode and decode protobuf messages with an id on the serial port
+             Encode and decode protobuf messages with an id from the serial port
              The messages are of the form : <id|msg;id|msg;> (can have from one to MAX_NBS_MSG messages)
 ==============================================================================================================================*/
-#ifndef PBUTILS_H
-#define PBUTILS_H
+#ifndef _PBUTILS_H
+#define _PBUTILS_H
 
 #include <Arduino.h>
 #include <pb_common.h>
 #include <pb.h>
 #include <pb_encode.h>
 #include <pb_decode.h>
+#include "StatusMessage.h"
 
 #define MAX_MSG_LEN                         500
 #define MAX_NBS_MSG                         10
@@ -30,7 +31,7 @@ class PBUtils
     PBUtils(Topic*, int);
     ~PBUtils();
     bool decode_pb(char* , int *, int &);
-    bool pb_send(int, ...);
+    void pb_send(int, ...);
 
   private:
     int parse_msg(char[], int *, char **);
@@ -41,4 +42,4 @@ class PBUtils
     void** _id_2_msg;
 };
 
-#endif
+#endif // _PBUTILS_H

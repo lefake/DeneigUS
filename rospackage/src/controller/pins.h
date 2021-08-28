@@ -1,5 +1,5 @@
-#ifndef PINS_H
-#define PINS_H
+#ifndef _PINS_H
+#define _PINS_H
 
 #include "constants.h"
 
@@ -23,4 +23,4 @@ const int in3 = 6; // Motor 2 pins
 const int in4 = 7;
 const int pwm2 = 5;
 
-#endif // PINS_H
+#endif // _PINS_H

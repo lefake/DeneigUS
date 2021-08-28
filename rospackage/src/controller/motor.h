@@ -1,5 +1,5 @@
-#ifndef MOTOR_H
-#define MOTOR_H
+#ifndef _MOTOR_H
+#define _MOTOR_H
 #include <Arduino.h>
 #include "constants.h"
 
@@ -17,4 +17,4 @@ class Motor
     
 };
 
-#endif
+#endif // _MOTOR_H
