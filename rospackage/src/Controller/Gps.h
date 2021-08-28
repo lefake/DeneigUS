@@ -5,7 +5,7 @@
 #include "SparkFun_Ublox_Arduino_Library.h" //http://librarymanager/All#SparkFun_Ublox_GPS
 #include "StatusMessage.h"
 #include "floatarray.pb.h"
-#include "constants.h"
+#include "Constants.h"
 
 #define NBS_DATA_SENT           6
 
@@ -34,7 +34,7 @@ class Gps
     long latitude = 0;
     long longitude = 0;
 
-    bool setup_done;
+    bool setupDone;
 
 };
 

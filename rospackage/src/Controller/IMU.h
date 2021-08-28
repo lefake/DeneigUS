@@ -6,7 +6,7 @@
 #include "MPU9250.h"
 #include "StatusMessage.h"
 #include "twist.pb.h"
-#include "constants.h"
+#include "Constants.h"
 
 class IMU {
   public:
@@ -16,19 +16,19 @@ class IMU {
     void getValues( Twist*, float );
 
   private:
-    bool setup_done;
+    bool setupDone;
     MPU9250 imu;
 
-    float vel_x;
-    float pos_x;
-    float vel_y;
-    float pos_y;
+    float velX;
+    float posX;
+    float velY;
+    float posY;
 
     struct IMUCalibration {
-      float acc_bias[3];
-      float gyro_bias[3];
-      float mag_bias[3];
-      float mag_scale[3];
+      float accBias[3];
+      float gyroBias[3];
+      float magBias[3];
+      float magScale[3];
     };
 };
 

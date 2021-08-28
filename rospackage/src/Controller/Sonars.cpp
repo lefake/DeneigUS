@@ -2,38 +2,38 @@
 
 Sonars::Sonars() 
 {
-  _echo_pins = (int *) malloc(sizeof(int)*NBS_SONARS);
-  _trigger_pins = (int *) malloc(sizeof(int)*NBS_SONARS);
+  echoPins = (int *) malloc(sizeof(int)*NBS_SONARS);
+  triggerPins = (int *) malloc(sizeof(int)*NBS_SONARS);
 }
 
 Sonars::~Sonars()
 { 
-  delete[] _echo_pins;
-  delete[] _trigger_pins;
+  delete[] echoPins;
+  delete[] triggerPins;
 }
 
 void Sonars::init(int trigger[], int echo[])
 {
-  _trigger_pins = trigger;
-  _echo_pins = echo;
+  triggerPins = trigger;
+  echoPins = echo;
 
   for (int i = 0; i < NBS_SONARS; i++)
   {
-    pinMode(_trigger_pins[i], OUTPUT);
-    pinMode(_echo_pins[i], INPUT);
+    pinMode(triggerPins[i], OUTPUT);
+    pinMode(echoPins[i], INPUT);
   }
 }
 
 float Sonars::dist(int n)
 {
-  digitalWrite(_trigger_pins[n], LOW);
+  digitalWrite(triggerPins[n], LOW);
   delayMicroseconds(2);
-  digitalWrite(_trigger_pins[n], HIGH);
+  digitalWrite(triggerPins[n], HIGH);
   delayMicroseconds(10);
-  digitalWrite(_trigger_pins[n], LOW);
+  digitalWrite(triggerPins[n], LOW);
   
   noInterrupts();
-  float d = pulseIn(_echo_pins[n], HIGH, pusleTimeout);
+  float d = pulseIn(echoPins[n], HIGH, pusleTimeout);
   interrupts();
 
   float distanceM = d / 2000000.0 * soundSpeed;

@@ -30,16 +30,16 @@ class PBUtils
   public:
     PBUtils(Topic*, int);
     ~PBUtils();
-    bool decode_pb(char* , int *, int &);
-    void pb_send(int, ...);
+    bool decodePb(char* , int *, int &);
+    void pbSend(int, ...);
 
   private:
-    int parse_msg(char[], int *, char **);
-    void chars2bytes(char* , uint8_t*);
-    uint8_t char2hex(char, char);
+    int parseMsg(char[], int *, char **);
+    void charsToBytes(char* , uint8_t*);
+    uint8_t charToHex(char, char);
     
-    pb_msgdesc_t** _id_2_type;
-    void** _id_2_msg;
+    pb_msgdesc_t** idToType;
+    void** idToMsg;
 };
 
 #endif // _PBUTILS_H
