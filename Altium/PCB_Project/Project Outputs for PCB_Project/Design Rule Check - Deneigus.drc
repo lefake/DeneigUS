@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\samum\OneDrive\Documents\école\université\Projet Fin de Bac\Developpement Électrique\PCB\Altium\PCB_Project\Deneigus.PcbDoc
-Date     : 9/2/2021
-Time     : 3:55:41 PM
+Date     : 9/8/2021
+Time     : 10:50:50 AM
 
 WARNING: Zero hole size multi-layer pad(s) detected
    Pad C20-2(10540.394mil,5040mil) on Multi-Layer on Net GND
@@ -143,15 +143,6 @@ Rule Violations :0
 Processing Rule : Net Antennae (Tolerance=0mil) (All)
 Rule Violations :0
 
-Processing Rule : Room Deneigus_BMS (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_BMS'))
-Rule Violations :0
-
-Processing Rule : Room Deneigus_Servo (Bounding Region = (27960mil, 24140mil, 33400mil, 27390mil) (Disabled)(InComponentClass('Deneigus_Servo'))
-Rule Violations :0
-
-Processing Rule : Room Deneigus_Sensors (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_Sensors'))
-Rule Violations :0
-
 Processing Rule : Room Deneigus_Controle_Soufflante (Bounding Region = (34400mil, 24630mil, 37250mil, 27380mil) (Disabled)(InComponentClass('Deneigus_Controle_Soufflante'))
 Rule Violations :0
 
@@ -159,6 +150,12 @@ Processing Rule : Room Deneigus_Controle_Deplacement (Bounding Region = (20000mi
 Rule Violations :0
 
 Processing Rule : Room Deneigus_PI_Arduino (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_PI_Arduino'))
+Rule Violations :0
+
+Processing Rule : Room Deneigus_BMS (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_BMS'))
+Rule Violations :0
+
+Processing Rule : Room Deneigus_Servo (Bounding Region = (27960mil, 24140mil, 33400mil, 27390mil) (Disabled)(InComponentClass('Deneigus_Servo'))
 Rule Violations :0
 
 Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (Disabled)(All)
