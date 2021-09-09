@@ -1,111 +1,111 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\samum\OneDrive\Documents\école\université\Projet Fin de Bac\Developpement Électrique\PCB\Altium\PCB_Project\Deneigus.PcbDoc
 Date     : 9/8/2021
-Time     : 10:50:50 AM
+Time     : 9:18:54 PM
 
 WARNING: Zero hole size multi-layer pad(s) detected
-   Pad C20-2(10540.394mil,5040mil) on Multi-Layer on Net GND
-   Pad C20-1(10190mil,5040mil) on Multi-Layer on Net 24V
-   Pad C9-2(9290.394mil,5040mil) on Multi-Layer on Net GND
-   Pad C9-1(8940mil,5040mil) on Multi-Layer on Net 24V
-   Pad C1-2(15080mil,6940.394mil) on Multi-Layer on Net GND_SOUFFLANTE
-   Pad C1-1(15080mil,6590mil) on Multi-Layer on Net 5V_SOUFFLANTE
-   Pad C34-1(3500mil,5400mil) on Multi-Layer on Net NetC34_1
-   Pad C34-2(3500mil,5179.528mil) on Multi-Layer on Net GND
-   Pad C33-1(1050mil,4800mil) on Multi-Layer on Net Signal_Drive_1
-   Pad C33-2(1050mil,5020.472mil) on Multi-Layer on Net GND_DRIVE1
-   Pad C6-1(1050mil,6229.528mil) on Multi-Layer on Net Signal_Drive_2
-   Pad C6-2(1050mil,6450mil) on Multi-Layer on Net GND_DRIVE2
-   Pad C4-1(3500mil,5809.528mil) on Multi-Layer on Net NetC4_1
-   Pad C4-2(3500mil,6030mil) on Multi-Layer on Net GND
-   Pad C3-1(16930mil,5310.472mil) on Multi-Layer on Net NetC3_1
-   Pad C3-2(16930mil,5090mil) on Multi-Layer on Net GND_SOUFFLANTE
-   Pad C22-1(9910.472mil,6590mil) on Multi-Layer on Net 6V
-   Pad C22-2(9690mil,6590mil) on Multi-Layer on Net GND
-   Pad C21-1(9910.472mil,6890mil) on Multi-Layer on Net 6V
-   Pad C21-2(9690mil,6890mil) on Multi-Layer on Net GND
-   Pad C10-1(8660.472mil,6890mil) on Multi-Layer on Net 7V4
-   Pad C10-2(8440mil,6890mil) on Multi-Layer on Net GND
-   Pad C11-1(8660.472mil,6590mil) on Multi-Layer on Net 7V4
-   Pad C11-2(8440mil,6590mil) on Multi-Layer on Net GND
-   Pad Q18-1(2100mil,4850mil) on Multi-Layer on Net NetQ18_1
-   Pad Q18-2(2100mil,4950mil) on Multi-Layer on Net GND
-   Pad Q18-4(1851.968mil,4850mil) on Multi-Layer on Net NetQ13_1
-   Pad Q18-3(1851.968mil,4950mil) on Multi-Layer on Net GND_DRIVE1
-   Pad Q14-1(15181.969mil,5140mil) on Multi-Layer on Net NetQ14_1
-   Pad Q14-2(15181.969mil,5040mil) on Multi-Layer on Net GND
-   Pad Q14-4(15430mil,5140mil) on Multi-Layer on Net NetQ14_4
-   Pad Q14-3(15430mil,5040mil) on Multi-Layer on Net GND_SOUFFLANTE
-   Pad Q16-1(15180mil,5590mil) on Multi-Layer on Net NetQ16_1
-   Pad Q16-2(15180mil,5490mil) on Multi-Layer on Net GND
-   Pad Q16-4(15428.031mil,5590mil) on Multi-Layer on Net NetQ12_1
-   Pad Q16-3(15428.031mil,5490mil) on Multi-Layer on Net GND_SOUFFLANTE
-   Pad Q17-1(15180mil,5940mil) on Multi-Layer on Net NetQ17_1
-   Pad Q17-2(15180mil,5840mil) on Multi-Layer on Net GND
-   Pad Q17-4(15428.031mil,5940mil) on Multi-Layer on Net NetQ17_4
-   Pad Q17-3(15428.031mil,5840mil) on Multi-Layer on Net GND_SOUFFLANTE
-   Pad Q19-3(1850mil,6450mil) on Multi-Layer on Net GND_DRIVE2
-   Pad Q19-4(1850mil,6350mil) on Multi-Layer on Net NetQ15_1
-   Pad Q19-2(2098.032mil,6450mil) on Multi-Layer on Net GND
    Pad Q19-1(2098.032mil,6350mil) on Multi-Layer on Net NetQ19_1
-   Pad F1-2(16805.906mil,1350mil) on Multi-Layer on Net NetF1_2
-   Pad F1-1(16600mil,1350mil) on Multi-Layer on Net 5V
-   Pad F3-2(16450mil,1650mil) on Multi-Layer on Net 5V
+   Pad Q19-2(2098.032mil,6450mil) on Multi-Layer on Net GND
+   Pad Q19-4(1850mil,6350mil) on Multi-Layer on Net NetQ15_1
+   Pad Q19-3(1850mil,6450mil) on Multi-Layer on Net GND_DRIVE2
+   Pad C34-2(3500mil,5179.528mil) on Multi-Layer on Net GND
+   Pad C34-1(3500mil,5400mil) on Multi-Layer on Net NetC34_1
+   Pad C1-1(15080mil,6590mil) on Multi-Layer on Net 5V_SOUFFLANTE
+   Pad C1-2(15080mil,6940.394mil) on Multi-Layer on Net GND_SOUFFLANTE
    Pad F3-1(16450mil,1855.906mil) on Multi-Layer on Net NetF3_1
-   Pad F2-2(12040mil,7145.905mil) on Multi-Layer on Net NetF2_2
+   Pad F3-2(16450mil,1650mil) on Multi-Layer on Net 5V
+   Pad C3-2(16930mil,5090mil) on Multi-Layer on Net GND_SOUFFLANTE
+   Pad C3-1(16930mil,5310.472mil) on Multi-Layer on Net NetC3_1
+   Pad C4-2(3500mil,6030mil) on Multi-Layer on Net GND
+   Pad C4-1(3500mil,5809.528mil) on Multi-Layer on Net NetC4_1
+   Pad C6-2(1050mil,6450mil) on Multi-Layer on Net GND_DRIVE2
+   Pad C6-1(1050mil,6229.528mil) on Multi-Layer on Net Signal_Drive_2
+   Pad C22-2(9690mil,6590mil) on Multi-Layer on Net GND
+   Pad C22-1(9910.472mil,6590mil) on Multi-Layer on Net 6V
+   Pad C9-1(8940mil,5040mil) on Multi-Layer on Net 24V
+   Pad C9-2(9290.394mil,5040mil) on Multi-Layer on Net GND
+   Pad C10-2(8440mil,6890mil) on Multi-Layer on Net GND
+   Pad C10-1(8660.472mil,6890mil) on Multi-Layer on Net 7V4
+   Pad C11-2(8440mil,6590mil) on Multi-Layer on Net GND
+   Pad C11-1(8660.472mil,6590mil) on Multi-Layer on Net 7V4
+   Pad C21-2(9690mil,6890mil) on Multi-Layer on Net GND
+   Pad C21-1(9910.472mil,6890mil) on Multi-Layer on Net 6V
+   Pad C20-1(10190mil,5040mil) on Multi-Layer on Net 24V
+   Pad C20-2(10540.394mil,5040mil) on Multi-Layer on Net GND
+   Pad C33-2(1050mil,5020.472mil) on Multi-Layer on Net GND_DRIVE1
+   Pad C33-1(1050mil,4800mil) on Multi-Layer on Net Signal_Drive_1
+   Pad Q14-3(15430mil,5040mil) on Multi-Layer on Net GND_SOUFFLANTE
+   Pad Q14-4(15430mil,5140mil) on Multi-Layer on Net NetQ14_4
+   Pad Q14-2(15181.969mil,5040mil) on Multi-Layer on Net GND
+   Pad Q14-1(15181.969mil,5140mil) on Multi-Layer on Net NetQ14_1
+   Pad Q16-3(15428.031mil,5490mil) on Multi-Layer on Net GND_SOUFFLANTE
+   Pad Q16-4(15428.031mil,5590mil) on Multi-Layer on Net NetQ12_1
+   Pad Q16-2(15180mil,5490mil) on Multi-Layer on Net GND
+   Pad Q16-1(15180mil,5590mil) on Multi-Layer on Net NetQ16_1
+   Pad Q17-3(15428.031mil,5840mil) on Multi-Layer on Net GND_SOUFFLANTE
+   Pad Q17-4(15428.031mil,5940mil) on Multi-Layer on Net NetQ17_4
+   Pad Q17-2(15180mil,5840mil) on Multi-Layer on Net GND
+   Pad Q17-1(15180mil,5940mil) on Multi-Layer on Net NetQ17_1
+   Pad Q18-3(1851.968mil,4950mil) on Multi-Layer on Net GND_DRIVE1
+   Pad Q18-4(1851.968mil,4850mil) on Multi-Layer on Net NetQ13_1
+   Pad Q18-2(2100mil,4950mil) on Multi-Layer on Net GND
+   Pad Q18-1(2100mil,4850mil) on Multi-Layer on Net NetQ18_1
+   Pad F1-1(16600mil,1350mil) on Multi-Layer on Net 5V
+   Pad F1-2(16805.906mil,1350mil) on Multi-Layer on Net NetF1_2
    Pad F2-1(12040mil,6940mil) on Multi-Layer on Net 24V
+   Pad F2-2(12040mil,7145.905mil) on Multi-Layer on Net NetF2_2
 
 WARNING: Multilayer Pads with 0 size Hole found
-   Pad C20-2(10540.394mil,5040mil) on Multi-Layer
-   Pad C20-1(10190mil,5040mil) on Multi-Layer
-   Pad C9-2(9290.394mil,5040mil) on Multi-Layer
-   Pad C9-1(8940mil,5040mil) on Multi-Layer
-   Pad C1-2(15080mil,6940.394mil) on Multi-Layer
-   Pad C1-1(15080mil,6590mil) on Multi-Layer
-   Pad C34-1(3500mil,5400mil) on Multi-Layer
-   Pad C34-2(3500mil,5179.528mil) on Multi-Layer
-   Pad C33-1(1050mil,4800mil) on Multi-Layer
-   Pad C33-2(1050mil,5020.472mil) on Multi-Layer
-   Pad C6-1(1050mil,6229.528mil) on Multi-Layer
-   Pad C6-2(1050mil,6450mil) on Multi-Layer
-   Pad C4-1(3500mil,5809.528mil) on Multi-Layer
-   Pad C4-2(3500mil,6030mil) on Multi-Layer
-   Pad C3-1(16930mil,5310.472mil) on Multi-Layer
-   Pad C3-2(16930mil,5090mil) on Multi-Layer
-   Pad C22-1(9910.472mil,6590mil) on Multi-Layer
-   Pad C22-2(9690mil,6590mil) on Multi-Layer
-   Pad C21-1(9910.472mil,6890mil) on Multi-Layer
-   Pad C21-2(9690mil,6890mil) on Multi-Layer
-   Pad C10-1(8660.472mil,6890mil) on Multi-Layer
-   Pad C10-2(8440mil,6890mil) on Multi-Layer
-   Pad C11-1(8660.472mil,6590mil) on Multi-Layer
-   Pad C11-2(8440mil,6590mil) on Multi-Layer
-   Pad Q18-1(2100mil,4850mil) on Multi-Layer
-   Pad Q18-2(2100mil,4950mil) on Multi-Layer
-   Pad Q18-4(1851.968mil,4850mil) on Multi-Layer
-   Pad Q18-3(1851.968mil,4950mil) on Multi-Layer
-   Pad Q14-1(15181.969mil,5140mil) on Multi-Layer
-   Pad Q14-2(15181.969mil,5040mil) on Multi-Layer
-   Pad Q14-4(15430mil,5140mil) on Multi-Layer
-   Pad Q14-3(15430mil,5040mil) on Multi-Layer
-   Pad Q16-1(15180mil,5590mil) on Multi-Layer
-   Pad Q16-2(15180mil,5490mil) on Multi-Layer
-   Pad Q16-4(15428.031mil,5590mil) on Multi-Layer
-   Pad Q16-3(15428.031mil,5490mil) on Multi-Layer
-   Pad Q17-1(15180mil,5940mil) on Multi-Layer
-   Pad Q17-2(15180mil,5840mil) on Multi-Layer
-   Pad Q17-4(15428.031mil,5940mil) on Multi-Layer
-   Pad Q17-3(15428.031mil,5840mil) on Multi-Layer
-   Pad Q19-3(1850mil,6450mil) on Multi-Layer
-   Pad Q19-4(1850mil,6350mil) on Multi-Layer
-   Pad Q19-2(2098.032mil,6450mil) on Multi-Layer
    Pad Q19-1(2098.032mil,6350mil) on Multi-Layer
-   Pad F1-2(16805.906mil,1350mil) on Multi-Layer
-   Pad F1-1(16600mil,1350mil) on Multi-Layer
-   Pad F3-2(16450mil,1650mil) on Multi-Layer
+   Pad Q19-2(2098.032mil,6450mil) on Multi-Layer
+   Pad Q19-4(1850mil,6350mil) on Multi-Layer
+   Pad Q19-3(1850mil,6450mil) on Multi-Layer
+   Pad C34-2(3500mil,5179.528mil) on Multi-Layer
+   Pad C34-1(3500mil,5400mil) on Multi-Layer
+   Pad C1-1(15080mil,6590mil) on Multi-Layer
+   Pad C1-2(15080mil,6940.394mil) on Multi-Layer
    Pad F3-1(16450mil,1855.906mil) on Multi-Layer
-   Pad F2-2(12040mil,7145.905mil) on Multi-Layer
+   Pad F3-2(16450mil,1650mil) on Multi-Layer
+   Pad C3-2(16930mil,5090mil) on Multi-Layer
+   Pad C3-1(16930mil,5310.472mil) on Multi-Layer
+   Pad C4-2(3500mil,6030mil) on Multi-Layer
+   Pad C4-1(3500mil,5809.528mil) on Multi-Layer
+   Pad C6-2(1050mil,6450mil) on Multi-Layer
+   Pad C6-1(1050mil,6229.528mil) on Multi-Layer
+   Pad C22-2(9690mil,6590mil) on Multi-Layer
+   Pad C22-1(9910.472mil,6590mil) on Multi-Layer
+   Pad C9-1(8940mil,5040mil) on Multi-Layer
+   Pad C9-2(9290.394mil,5040mil) on Multi-Layer
+   Pad C10-2(8440mil,6890mil) on Multi-Layer
+   Pad C10-1(8660.472mil,6890mil) on Multi-Layer
+   Pad C11-2(8440mil,6590mil) on Multi-Layer
+   Pad C11-1(8660.472mil,6590mil) on Multi-Layer
+   Pad C21-2(9690mil,6890mil) on Multi-Layer
+   Pad C21-1(9910.472mil,6890mil) on Multi-Layer
+   Pad C20-1(10190mil,5040mil) on Multi-Layer
+   Pad C20-2(10540.394mil,5040mil) on Multi-Layer
+   Pad C33-2(1050mil,5020.472mil) on Multi-Layer
+   Pad C33-1(1050mil,4800mil) on Multi-Layer
+   Pad Q14-3(15430mil,5040mil) on Multi-Layer
+   Pad Q14-4(15430mil,5140mil) on Multi-Layer
+   Pad Q14-2(15181.969mil,5040mil) on Multi-Layer
+   Pad Q14-1(15181.969mil,5140mil) on Multi-Layer
+   Pad Q16-3(15428.031mil,5490mil) on Multi-Layer
+   Pad Q16-4(15428.031mil,5590mil) on Multi-Layer
+   Pad Q16-2(15180mil,5490mil) on Multi-Layer
+   Pad Q16-1(15180mil,5590mil) on Multi-Layer
+   Pad Q17-3(15428.031mil,5840mil) on Multi-Layer
+   Pad Q17-4(15428.031mil,5940mil) on Multi-Layer
+   Pad Q17-2(15180mil,5840mil) on Multi-Layer
+   Pad Q17-1(15180mil,5940mil) on Multi-Layer
+   Pad Q18-3(1851.968mil,4950mil) on Multi-Layer
+   Pad Q18-4(1851.968mil,4850mil) on Multi-Layer
+   Pad Q18-2(2100mil,4950mil) on Multi-Layer
+   Pad Q18-1(2100mil,4850mil) on Multi-Layer
+   Pad F1-1(16600mil,1350mil) on Multi-Layer
+   Pad F1-2(16805.906mil,1350mil) on Multi-Layer
    Pad F2-1(12040mil,6940mil) on Multi-Layer
+   Pad F2-2(12040mil,7145.905mil) on Multi-Layer
 
 Processing Rule : Clearance Constraint (Gap=6mil) (All),(All)
 Rule Violations :0
@@ -143,19 +143,13 @@ Rule Violations :0
 Processing Rule : Net Antennae (Tolerance=0mil) (All)
 Rule Violations :0
 
-Processing Rule : Room Deneigus_Controle_Soufflante (Bounding Region = (34400mil, 24630mil, 37250mil, 27380mil) (Disabled)(InComponentClass('Deneigus_Controle_Soufflante'))
-Rule Violations :0
-
 Processing Rule : Room Deneigus_Controle_Deplacement (Bounding Region = (20000mil, 24350mil, 23900mil, 27000mil) (Disabled)(InComponentClass('Deneigus_Controle_Deplacement'))
 Rule Violations :0
 
-Processing Rule : Room Deneigus_PI_Arduino (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_PI_Arduino'))
-Rule Violations :0
-
-Processing Rule : Room Deneigus_BMS (Bounding Region = (0mil, 0mil, 2000mil, 1000mil) (Disabled)(InComponentClass('Deneigus_BMS'))
-Rule Violations :0
-
 Processing Rule : Room Deneigus_Servo (Bounding Region = (27960mil, 24140mil, 33400mil, 27390mil) (Disabled)(InComponentClass('Deneigus_Servo'))
+Rule Violations :0
+
+Processing Rule : Room Deneigus_Controle_Soufflante (Bounding Region = (34400mil, 24630mil, 37250mil, 27380mil) (Disabled)(InComponentClass('Deneigus_Controle_Soufflante'))
 Rule Violations :0
 
 Processing Rule : Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (Disabled)(All)
@@ -164,4 +158,4 @@ Rule Violations :0
 
 Violations Detected : 0
 Waived Violations : 0
-Time Elapsed        : 00:00:03
+Time Elapsed        : 00:00:02
