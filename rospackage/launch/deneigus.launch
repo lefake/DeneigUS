@@ -7,57 +7,6 @@
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/costmap_test.rviz"/>
 
-  <!-- rosbridge server -->
-  <group if="$(arg has_web)">
-    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
-      <arg name="port" value="9090"/>
-      <arg name="output" value="log"/>
-    </include>
-  </group>
-
- <!-- python executif Node -->
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
-
-  <!-- python sonar2pc Node -->
-  <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen"/>
-
  <!-- python pb2ros Node -->
   <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
-
- <!-- python astar node -->
-  <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
-
-<!-- python tf_listener node -->
-  <node pkg="deneigus" type="tf_listener.py" name="tf_listner" output="screen"/>
-
-<!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-
-<!-- joy node -->
-  <group if="$(arg has_joy)">
-    <node respawn="true" pkg="joy" type="joy_node" name="raw_joy">
-      <param name="dev" type="string" value="$(arg joy_port)" />
-      <param name="deadzone" value="0.12" />
-    </node>
-  </group>
-
-<!-- RVIZ -->
-  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>	
-
-<!-- Static TF -->
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3 0.02 0.5 0.215 0 0 base_link sonar_f_0" />
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.3 -0.02 0.5 -0.215 0 0 base_link sonar_f_1" />
-<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" /> -->
-<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" /> -->
-
-<!-- CostMap with move_base -->
-<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
-   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
-   <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
-   <param name="local_costmap/width" value="10.0"/>
-   <param name="local_costmap/height" value="10.0"/>
-   <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
-</node>
-
 </launch>

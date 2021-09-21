@@ -83,7 +83,8 @@ bool has_gps = false;
 
 
 void setup()
-{
+{ 
+  /*
   //debug_arduino_msg.data_count = 2;
   
   if(has_sonars)
@@ -105,10 +106,21 @@ void setup()
 
   //if (has_gps)
   //  gps.init();
+  */
   
   Serial.begin(115200);
 
-  // TODO : Add Arduino ID acknowledge 
+  pos_msg.lx = 10;
+  pos_msg.ly = 5.5;
+  pos_msg.az = 1.3450000286102295;
+
+  while(1)
+  {
+    pbutils.pb_send(1, POS);
+    delay(500);
+  }
+
+  // TODO : Add Arduino ID acknowledge
 
 }
 

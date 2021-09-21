@@ -9,6 +9,8 @@ from logging_utils import get_logger
 from msg_utils import MsgFactory
 from std_msgs.msg import String
 
+import datetime
+
 class Topic:
     '''
     Use ros_obj when doing a One to One conversion (ex: Twist -> Twist)
@@ -129,7 +131,8 @@ class ArduinoReadHandler(threading.Thread):
         return self._runflag.is_set()
 
     def kill(self):
-        self._run = False
+        self._runflag.clear()
+        self._run = False  
 
 
 class PBSerialHandler:
@@ -143,8 +146,6 @@ class PBSerialHandler:
         self._interlock = False
         self._response = None
 
-        self.string_test_pub = rospy.Publisher('/string_test', String, queue_size=10)
-
         self._serialization_handler = PBSerializationHandler(msg_obj)
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
@@ -157,18 +158,30 @@ class PBSerialHandler:
             self._interlock = True
             try:
                 input = self._serial.read()
+
+                #if input == b'':
+                #    return
+
+                #self._logger.warn("Bobbbbbbb")
+
                 if input == b'<':
+                    n = datetime.datetime.now()
                     buffer = self._serial.read_until(b'>')
                     self._serial.flush()
                     self._response = b'<' + buffer
                     self._callback(self._response)
 
-                    self.string_test_pub.publish(str(self._response))
+                    a = datetime.datetime.now()
+                    time = (a - n).microseconds
+                    self._logger.error("Time " + str(time) + " us")
+
                 elif input == b'{':
                     buffer = self._serial.read_until(b'}')
                     self._serial.flush()
                     self._response = b'{' + buffer
                     self._id_callback(self._response)
+
+                
             except Exception as e:
                 self._logger.error("Read call back error " + str(e))
 
