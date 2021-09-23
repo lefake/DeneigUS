@@ -1,5 +1,7 @@
 from proto_gen_classes import floatarray_pb2, twist_pb2, range_pb2
 
+from logging_utils import get_logger
+
 import rospy
 from geometry_msgs.msg import Twist, Pose
 from rospy.topics import Message
@@ -41,9 +43,12 @@ class MsgConverter:
 
     @staticmethod
     def floatarray_pb2ros(pb):
-        fa = Float32MultiArray()
-        fa.data = pb.data
-        return fa
+        _logger = get_logger("pb2ros.floatarray_pb2ros")
+        _logger.warn(str(pb.data))
+
+    	fa = Float32MultiArray()
+    	fa.data = pb.data
+    	return fa
 
     @staticmethod
     def floatarray_ros2pb(ros):

@@ -46,10 +46,11 @@ class PB2ROS:
             Topic(7, self.pos_tourelle_pub),
             Topic(8, self.debug_mot_pub),
             Topic(9, self.gps_data_pub),
-            Topic(10, self.pos_pub), # Belle trice de dernière minute (self.pose_pub -> self.imu_data)
+            Topic(10, self.pos_pub), # Belle triche de dernière minute (self.pose_pub -> self.imu_data)
         ]
         self._topics = self._sub_topics + self._pub_topics
         self._msg_obj = [topic.obj for topic in self._topics]
+        self.logger.error(" Allo : " + str(self._topics))
         self._serializer = PBSerializationHandler(self._msg_obj)
 
         self._serials = []
@@ -57,8 +58,9 @@ class PB2ROS:
             self._serials.append(PBSerialHandler(s, self.new_msg_callback, self._msg_obj))
 
     def new_msg_callback(self, response):
-        logger.debug("Arduino in:" + str(response))
+        self.logger.info("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
+        self.logger.info(str(msgs))
 
         for msg in msgs:
             current_topic = next((topic for topic in self._topics if topic.id == msg[0]), None)
@@ -68,7 +70,7 @@ class PB2ROS:
                 self.logger.warn("new_msg_callback :  Couldn't find message ID")
 
     def new_id_callback(self, response):
-        logger.debug("Arduino in:" + str(response))
+        self.logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
 
         #self._serials.add()

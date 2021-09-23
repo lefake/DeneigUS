@@ -23,11 +23,21 @@ class Topic:
         class_name = ros_obj.data_class.__name__ if obj_type is None else obj_type
         converters = factory.getMsg(class_name)[1]
 
+        self._logger = get_logger("pb2ros.Topic")
+
         self._id = id
         self._dst = dst
         self._name = ros_obj.name
         self._obj = factory.getMsg(class_name)[0]
-        self._converter = converters[0] if is_pub else converters[1]
+
+        if id == 0:
+            self._logger.error("obj -> " + str(self._obj.data))
+            self._logger.error("conv -> " + str(converters))
+        
+        if is_pub:
+            self._converter = converters[0]
+        else:
+            self._converter = converters[1]
         self._pub = ros_obj if is_pub else None
 
     @property
@@ -86,6 +96,7 @@ class PBSerializationHandler:
                 if len(msg) > 0:
                     msg_id, raw_msg = msg.split("|")    # Find the id of the message
                     msg_id = int(msg_id)
+                    self._logger.error(str(self._msg_obj))
                     obj = self._msg_obj[msg_id]
                     obj.ParseFromString(unhexlify(raw_msg))
                     object_list.append([msg_id, obj])
@@ -162,7 +173,7 @@ class PBSerialHandler:
                 #if input == b'':
                 #    return
 
-                #self._logger.warn("Bobbbbbbb")
+                #self._logger.warn("bbbbbb")
 
                 if input == b'<':
                     n = datetime.datetime.now()
