@@ -18,6 +18,7 @@ PBUtils::PBUtils(Topic *topics, int nbs_topics)
   
   // Initializie array from the struct so it isn't dependant on array indexes
   // Hence the id must be positive and can't appear more than once
+  // Ids must be valid array index. If there's 4 topics then id must be [0, 5[
   for (int i = 0; i < nbs_topics; ++i)
   {
     _id_2_type[topics[i].id] = topics[i].type;

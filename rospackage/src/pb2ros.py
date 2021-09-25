@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+
 import rospy
-from geometry_msgs.msg import Twist, Pose
+from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Joy, Range
 import serial
@@ -49,18 +50,15 @@ class PB2ROS:
             Topic(10, self.pos_pub), # Belle triche de dernière minute (self.pose_pub -> self.imu_data)
         ]
         self._topics = self._sub_topics + self._pub_topics
-        self._msg_obj = [topic.obj for topic in self._topics]
-        self.logger.error(" Allo : " + str(self._topics))
-        self._serializer = PBSerializationHandler(self._msg_obj)
+        self._serializer = PBSerializationHandler(self._topics)
 
         self._serials = []
         for s in serials:
-            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self._msg_obj))
+            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self._serializer))
 
     def new_msg_callback(self, response):
-        self.logger.info("Arduino in:" + str(response))
+        self.logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
-        self.logger.info(str(msgs))
 
         for msg in msgs:
             current_topic = next((topic for topic in self._topics if topic.id == msg[0]), None)

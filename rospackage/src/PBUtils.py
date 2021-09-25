@@ -1,15 +1,11 @@
-from binascii import unhexlify
 import threading
 import time
+import datetime
 
-from serial import SerialException
 import rospy
 
 from logging_utils import get_logger
 from msg_utils import MsgFactory
-from std_msgs.msg import String
-
-import datetime
 
 class Topic:
     '''
@@ -23,17 +19,11 @@ class Topic:
         class_name = ros_obj.data_class.__name__ if obj_type is None else obj_type
         converters = factory.getMsg(class_name)[1]
 
-        self._logger = get_logger("pb2ros.Topic")
-
         self._id = id
         self._dst = dst
         self._name = ros_obj.name
         self._obj = factory.getMsg(class_name)[0]
 
-        if id == 0:
-            self._logger.error("obj -> " + str(self._obj.data))
-            self._logger.error("conv -> " + str(converters))
-        
         if is_pub:
             self._converter = converters[0]
         else:
@@ -66,10 +56,10 @@ class Topic:
 
 # Serialization utils
 class PBSerializationHandler:
-    def __init__(self, msg_obj):
+    def __init__(self, topics):
         self._logger = get_logger("pb2ros.PBSerializationHandler")
         self._logger.debug("PBSerializationHandler started")
-        self._msg_obj = msg_obj
+        self._topics = topics
 
     def encode_msgs(self, ids, msgs):
         msg = "<"
@@ -96,9 +86,14 @@ class PBSerializationHandler:
                 if len(msg) > 0:
                     msg_id, raw_msg = msg.split("|")    # Find the id of the message
                     msg_id = int(msg_id)
-                    self._logger.error(str(self._msg_obj))
-                    obj = self._msg_obj[msg_id]
-                    obj.ParseFromString(unhexlify(raw_msg))
+                    current_topic = next((topic for topic in self._topics if topic.id == msg_id), None)
+
+                    if current_topic is None:
+                        self._logger.error("Unknown topic id: " + str(msg_id))
+                        continue
+
+                    obj = current_topic.obj
+                    obj.ParseFromString(bytearray.fromhex(raw_msg))
                     object_list.append([msg_id, obj])
 
         except Exception as e:
@@ -147,7 +142,7 @@ class ArduinoReadHandler(threading.Thread):
 
 
 class PBSerialHandler:
-    def __init__(self, serial, callback, msg_obj, sleeptime=0.01):
+    def __init__(self, serial, callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
         self._serial = serial
@@ -157,7 +152,7 @@ class PBSerialHandler:
         self._interlock = False
         self._response = None
 
-        self._serialization_handler = PBSerializationHandler(msg_obj)
+        self._serializer = serializer
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
 
@@ -203,7 +198,7 @@ class PBSerialHandler:
         self.write_pb_msgs([id], [msg])
 
     def write_pb_msgs(self, ids, msgs):
-        encoded_msg = self._serialization_handler.encode_msgs(ids, msgs)
+        encoded_msg = self._serializer.encode_msgs(ids, msgs)
 
         while self._interlock:
             time.sleep(self._sleeptime)

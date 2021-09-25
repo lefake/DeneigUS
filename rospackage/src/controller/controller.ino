@@ -36,6 +36,8 @@ Twist pos_msg = Twist_init_zero;
 Range obs_pos_msg = Range_init_zero;
 Twist imu_data_msg = Twist_init_zero;
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DONT USE THE POS TOPIC IT'S BUGGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 Topic topics[] = {
       {DEBUG_ARDUINO, FloatArray_fields, &debug_arduino_msg},
       {CMD_VEL, Twist_fields, &cmd_vel_msg},
@@ -110,9 +112,9 @@ void setup()
   
   Serial.begin(115200);
 
-  pos_msg.lx = 10;
-  pos_msg.ly = 5.5;
-  pos_msg.az = 1.3450000286102295;
+  imu_data_msg.lx = 10;
+  imu_data_msg.ly = 5.5;
+  imu_data_msg.az = 1.3450000286102295;
 
   obs_pos_msg.seq = 1432;
   char frame_id[50] = "sonar_f1";
@@ -127,7 +129,6 @@ void setup()
 
   while(1)
   {
-    //pbutils.pb_send(1, POS);
     pbutils.pb_send(1, DEBUG_ARDUINO);
     delay(500);
   }
