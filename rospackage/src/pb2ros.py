@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
+import serial
+import logging
+
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Joy, Range
-import serial
-import logging
 
 from logging_utils import setup_logger, get_logger
 from PBUtils import PBSerialHandler, PBSerializationHandler, Topic

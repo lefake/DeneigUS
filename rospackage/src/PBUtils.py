@@ -1,7 +1,5 @@
 import threading
 import time
-import datetime
-
 import rospy
 
 from logging_utils import get_logger
@@ -165,21 +163,11 @@ class PBSerialHandler:
             try:
                 input = self._serial.read()
 
-                #if input == b'':
-                #    return
-
-                #self._logger.warn("bbbbbb")
-
                 if input == b'<':
-                    n = datetime.datetime.now()
                     buffer = self._serial.read_until(b'>')
                     self._serial.flush()
                     self._response = b'<' + buffer
                     self._callback(self._response)
-
-                    a = datetime.datetime.now()
-                    time = (a - n).microseconds
-                    self._logger.error("Time " + str(time) + " us")
 
                 elif input == b'{':
                     buffer = self._serial.read_until(b'}')
