@@ -86,7 +86,6 @@ bool has_gps = false;
 
 void setup()
 { 
-  /*
   //debug_arduino_msg.data_count = 2;
   
   if(has_sonars)
@@ -108,30 +107,8 @@ void setup()
 
   //if (has_gps)
   //  gps.init();
-  */
   
   Serial.begin(115200);
-
-  imu_data_msg.lx = 10;
-  imu_data_msg.ly = 5.5;
-  imu_data_msg.az = 1.3450000286102295;
-
-  obs_pos_msg.seq = 1432;
-  char frame_id[50] = "sonar_f1";
-  memcpy(obs_pos_msg.frame_id, frame_id, sizeof(frame_id)/sizeof(frame_id[0]));
-  obs_pos_msg.range = 1.4335399866104126;
-
-
-  debug_arduino_msg.data_count = 9;
-  for (int i = 0; i < 8; ++i)
-    debug_arduino_msg.data[i] = i+1;
-  debug_arduino_msg.data[8] = 9.322999954223633;
-
-  while(1)
-  {
-    pbutils.pb_send(1, DEBUG_ARDUINO);
-    delay(500);
-  }
 
   // TODO : Add Arduino ID acknowledge
 
