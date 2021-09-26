@@ -2,9 +2,8 @@ from proto_gen_classes import floatarray_pb2, twist_pb2, range_pb2
 
 import rospy
 from geometry_msgs.msg import Twist, Pose
-from rospy.topics import Message
 from std_msgs.msg import Float32MultiArray
-from sensor_msgs.msg import Joy, Range
+from sensor_msgs.msg import Range
 
 class MsgFactory:
     def __init__(self):

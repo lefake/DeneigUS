@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-import rospy
-from geometry_msgs.msg import Twist, Pose
-from std_msgs.msg import Float32MultiArray
-from sensor_msgs.msg import Joy, Range
+
 import serial
 import logging
+
+import rospy
+from geometry_msgs.msg import Twist
+from std_msgs.msg import Float32MultiArray
+from sensor_msgs.msg import Joy, Range
 
 from logging_utils import setup_logger, get_logger
 from PBUtils import PBSerialHandler, PBSerializationHandler, Topic
@@ -46,18 +48,17 @@ class PB2ROS:
             Topic(7, self.pos_tourelle_pub),
             Topic(8, self.debug_mot_pub),
             Topic(9, self.gps_data_pub),
-            Topic(10, self.pos_pub), # Belle trice de dernière minute (self.pose_pub -> self.imu_data)
+            Topic(10, self.pos_pub), # Belle triche de dernière minute (self.pose_pub -> self.imu_data)
         ]
         self._topics = self._sub_topics + self._pub_topics
-        self._msg_obj = [topic.obj for topic in self._topics]
-        self._serializer = PBSerializationHandler(self._msg_obj)
+        self._serializer = PBSerializationHandler(self._topics)
 
         self._serials = []
         for s in serials:
-            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self._msg_obj))
+            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self._serializer))
 
     def new_msg_callback(self, response):
-        logger.debug("Arduino in:" + str(response))
+        self.logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
 
         for msg in msgs:
@@ -68,14 +69,13 @@ class PB2ROS:
                 self.logger.warn("new_msg_callback :  Couldn't find message ID")
 
     def new_id_callback(self, response):
-        logger.debug("Arduino in:" + str(response))
+        self.logger.debug("Arduino in:" + str(response))
         msgs = self._serializer.deserialize(response)
 
         #self._serials.add()
 
     def cmd_vel_callback(self, msg):
         obj = next(topic for topic in self._topics if topic.name == "/cmd_vel")
-        self.logger.info("Welp")
         self._serials[obj.dst].write_pb_msg(obj.id, obj.converter(msg))
 
     def cmd_tourelle_callback(self, msg):
@@ -91,6 +91,7 @@ if __name__ == "__main__":
     #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
     arduinos = [
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
+        #serial.Serial('/dev/pts/4', 9600, timeout=0.05)
     ]
     rospy.init_node('pb2ros', anonymous=False)
 

@@ -57,6 +57,9 @@ Twist posMsg = Twist_init_zero;
 Range obsPosMsg = Range_init_zero;
 Twist imuDataMsg = Twist_init_zero;
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DONT USE THE POS TOPIC IT'S BUGGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TODO : FIX IT DUS-499              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 const Topic topics[] = {
       {DEBUG_ARDUINO, FloatArray_fields, &debugArduinoMsg},
       {CMD_VEL, Twist_fields, &cmdVelMsg},
