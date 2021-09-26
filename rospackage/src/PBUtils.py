@@ -140,7 +140,7 @@ class ArduinoReadHandler(threading.Thread):
 
 
 class PBSerialHandler:
-    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01):
+    def __init__(self, serial, temp_id, msg_callback, status_callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
         self._serial = serial
@@ -148,6 +148,7 @@ class PBSerialHandler:
         self._msg_callback = msg_callback
         self._status_callback = status_callback
 
+        self._id = temp_id
         self._interlock = False
         self._response = None
 
@@ -155,31 +156,46 @@ class PBSerialHandler:
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
 
+    def set_arduino_id(self, id):
+        self._id = id
+
+    @property
+    def id(self):
+        return self._id
+
     def kill(self):
         self._worker.kill()
 
     def read_callback(self):
-        if not self._interlock:
-            self._interlock = True
-            try:
-                input = self._serial.read()
+        try:
+            input = self._serial.read()
 
-                if input == b'<':
-                    buffer = self._serial.read_until(b'>')
-                    self._serial.flush()
-                    self._response = b'<' + buffer
-                    self._msg_callback(self._response)
+            if input == b'<':
+                buffer = self._serial.read_until(b'>')
+                self._serial.flush()
+                self._response = b'<' + buffer
+                self._msg_callback(self._response)
 
-                elif input == b'{':
-                    buffer = self._serial.read_until(b'}')
-                    self._serial.flush()
-                    self._response = b'{' + buffer
-                    self._status_callback(self._response)
+            elif input == b'{':
+                buffer = self._serial.read_until(b'}')
+                self._serial.flush()
+                self._response = b'{' + buffer
+                self._status_callback(self._id, self._response)
 
-            except Exception as e:
-                self._logger.error("Read call back error " + str(e))
+        except Exception as e:
+            self._logger.error("Read call back error " + str(e))
 
-            self._interlock = False
+
+    def acknowledge_arduino(self, status_type):
+        while self._interlock:
+            time.sleep(self._sleeptime)
+
+        msg = "{" + status_type + ";" + self._id + "}"
+
+        self._interlock = True
+        self._serial.write(msg.encode("ascii"))
+        self._serial.flush()
+        self._interlock = False
 
     def write_pb_msg(self, id, msg):
         self.write_pb_msgs([id], [msg])

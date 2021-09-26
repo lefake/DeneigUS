@@ -127,6 +127,22 @@ void setup()
 #ifdef HAS_GPS
   gps.init();
 #endif
+
+#ifdef DEBUGGING
+  if (ARDUINO_ID == "CONTROLLER")
+  {
+    imuDataMsg.lx = 1;
+    imuDataMsg.ly = 2;
+    imuDataMsg.az = 3;
+  }
+  else
+  {
+    imuDataMsg.lx = -1;
+    imuDataMsg.ly = -2;
+    imuDataMsg.az = -3;
+  }
+
+#endif
 }
 
 void loop()
@@ -139,6 +155,14 @@ void loop()
       // To create the Map TF in tf_broadcaster
       // This is a patch in the case there's no IMU/Encoder connected
       pbUtils.pbSend(1, POS);
+      if (ARDUINO_ID == "SENSORS")
+      {
+        sendStatusWithMessage(WARNING, SERIAL_COMMUNICATION, "Bobbb");
+      }
+      else
+      {
+        sendStatusWithMessage(ERROR, SERIAL_COMMUNICATION, "Jeannn");
+      }
 #endif
 
 #ifdef HAS_IMU
@@ -159,6 +183,9 @@ void loop()
               switch (newMsgsIds[i])
               {
                 case CMD_VEL:
+#ifdef DEBUGGING
+                  sendStatusWithMessage(WARNING, MOTOR_PROP_DEVICE, "hello from " + ARDUINO_ID);
+#endif
 #ifdef HAS_MOTOR_PROP
                   cmdVelCallback();
                   motorLeft.setSpeed(motorVelLeft);
@@ -167,6 +194,9 @@ void loop()
                   break;
                   
                 case CMD_TOURELLE:
+#ifdef DEBUGGING
+                  sendStatusWithMessage(WARNING, SERVOS_DEVICE, "hello from " + ARDUINO_ID);
+#endif
                   cmdTourelleCallback();
                   break;
                   
