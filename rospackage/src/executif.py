@@ -48,9 +48,7 @@ class Executif:
 
     def joy_echo(self, msg):
         throttle_left = msg.axes[1]
-        throttle_right = msg.axes[3]
-
-        self.logger.error(throttle_right)
+        throttle_right = msg.axes[4]
 
         if self.ctl_mode == control_modes.manual:
             self.cmd_vel_msg.linear.x = throttle_left
@@ -68,7 +66,6 @@ class Executif:
 
     def pos_tourelle_callback(self, msg):
         self.logger.debug("Pos tourelle callback")
-        self.logger.warn(msg)
         t = Float32MultiArray()
         t.data = msg.data
         self.cmd_vel_pub.publish(t)

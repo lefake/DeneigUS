@@ -76,7 +76,6 @@ class PB2ROS:
 
     def cmd_vel_callback(self, msg):
         obj = next(topic for topic in self._topics if topic.name == "/cmd_vel")
-        self.logger.info("Welp")
         self._serials[obj.dst].write_pb_msg(obj.id, obj.converter(msg))
 
     def cmd_tourelle_callback(self, msg):
