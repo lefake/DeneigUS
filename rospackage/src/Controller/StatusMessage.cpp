@@ -13,7 +13,7 @@ void sendStatusNotInitialize(int level, int type)
 void sendStatusWithMessage(int level, int type, String msg)
 {
   Serial.print("{");
-  if (level != -1)
+  if (level != NONE)
   {
     Serial.print(level);
     Serial.print(";");
@@ -21,5 +21,5 @@ void sendStatusWithMessage(int level, int type, String msg)
   Serial.print(type);
   Serial.print(";");
   Serial.print(msg);
-  Serial.println("}");
+  Serial.print("}");
 }

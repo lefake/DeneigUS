@@ -13,22 +13,22 @@
  */
 
 // ==================== GPS CONSTANTS =========================
-//#define HAS_GPS
+// #define HAS_GPS
 
 // ==================== IMU ===================================
-#define HAS_IMU
+// #define HAS_IMU
 
 // ==================== SONARS ================================
-//#define HAS_SONARS
+// #define HAS_SONARS
 
 // ==================== MOTOR_BLOW ============================
-//#define HAS_MOTOR_BLOW
+// #define HAS_MOTOR_BLOW
 
 // ==================== MOTOR_PROP ============================
-#define HAS_MOTOR_PROP
+// #define HAS_MOTOR_PROP
 
 // ==================== SERVOS ================================
-//#define HAS_SERVOS
+// #define HAS_SERVOS
 
 
 
@@ -36,6 +36,7 @@
 
 // Uncomment to do a full calibration of the robot
 // Will only calibrate sensors and write values to EEPROM
+// TODO
 // #define CONFIGURATION_MODE
 
 // #define DEBUGGING

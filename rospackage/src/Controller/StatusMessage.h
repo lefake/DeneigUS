@@ -9,7 +9,8 @@ void sendStatusNotInitialize(int level, int type);
 
 enum STATUS_LVL 
 {
-  FATAL = 0,
+  NONE = 0,
+  FATAL,
   ERROR,
   WARNING,
   INFO,
@@ -32,6 +33,7 @@ enum STATUS_TYPE
   SERVOS_DEVICE,
   ENCODER_DEVICE,
   ACKNOWLEDGE,
+  ID,
   OTHER,
 
   _NBS_TYPE

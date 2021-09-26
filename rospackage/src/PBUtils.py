@@ -140,12 +140,13 @@ class ArduinoReadHandler(threading.Thread):
 
 
 class PBSerialHandler:
-    def __init__(self, serial, callback, serializer, sleeptime=0.01):
+    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
         self._serial = serial
         self._sleeptime = float(sleeptime)
-        self._callback = callback
+        self._msg_callback = msg_callback
+        self._status_callback = status_callback
 
         self._interlock = False
         self._response = None
@@ -167,18 +168,16 @@ class PBSerialHandler:
                     buffer = self._serial.read_until(b'>')
                     self._serial.flush()
                     self._response = b'<' + buffer
-                    self._callback(self._response)
+                    self._msg_callback(self._response)
 
                 elif input == b'{':
                     buffer = self._serial.read_until(b'}')
                     self._serial.flush()
                     self._response = b'{' + buffer
-                    self._id_callback(self._response)
+                    self._status_callback(self._response)
 
-                
             except Exception as e:
                 self._logger.error("Read call back error " + str(e))
-
 
             self._interlock = False
 

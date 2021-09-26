@@ -44,7 +44,7 @@ bool parseAcknowledgeMessage(char* msg);
 // ==================== TIMERS ====================
 int val = 0;
 long lastTime = 0;
-long delayInterval = 50;
+long delayInterval = 1000;
 
 long lastTimeSonar = 0;
 long delayIntervalSonar = 250;
@@ -127,8 +127,6 @@ void setup()
 #ifdef HAS_GPS
   gps.init();
 #endif
-
-  //debugArduinoMsg.data_count = 2;
 }
 
 void loop()
@@ -137,12 +135,10 @@ void loop()
   {
     if (millis() - lastTime > delayInterval)
     {
-#ifndef HAS_IMU
 #ifdef DEBUGGING
       // To create the Map TF in tf_broadcaster
       // This is a patch in the case there's no IMU/Encoder connected
-      pbUtils.pb_send(1, POS);
-#endif
+      pbUtils.pbSend(1, POS);
 #endif
 
 #ifdef HAS_IMU
@@ -256,7 +252,7 @@ void acknowldgeArduino()
     inCmdComplete = -1;
   }
 
-  broadcastId();
+  sendStatusWithMessage(NONE, ID, ARDUINO_ID);
   delay(ID_BROADCAST_DELAY);
 }
 
@@ -268,11 +264,6 @@ bool parseAcknowledgeMessage(char* msg)
     return true;
 
   return false;
-}
-
-void broadcastId()
-{
-  sendStatusWithMessage(-1, ACKNOWLEDGE, ARDUINO_ID);
 }
 
 // ======================================== SERIAL ========================================

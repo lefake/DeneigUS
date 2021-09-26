@@ -7,7 +7,6 @@
 #define MAX_DIST_DETECTION_M                2
 #define TEMPERATURE                         20
 
-
 // ======================= IMU ======================================
 #define IMU_ADDRESS                         0x68
 #define IMU_EEPROM_ADDRESS                  0x00
