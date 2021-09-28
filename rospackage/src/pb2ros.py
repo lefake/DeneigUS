@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from os import stat
 import serial
 import logging
 
@@ -119,7 +118,6 @@ class PB2ROS:
                 self._logger.warning("Status type not found")
                 status_type = "OTHER"
 
-            # TODO : Test id arduino  
             log_level(id + " -> " + status_type + " : " + status_values[2])
 
     def cmd_vel_callback(self, msg):
@@ -151,7 +149,7 @@ if __name__ == "__main__":
     #serial.Serial('/dev/pts/4', 9600, timeout=0.05)
     arduinos = [
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
-        serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05)
+        serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05)
     ]
     rospy.init_node('pb2ros', anonymous=False)
 

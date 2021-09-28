@@ -30,6 +30,9 @@
 // ==================== SERVOS ================================
 // #define HAS_SERVOS
 
+// ==================== ENCODERS ==============================
+// #define HAS_ENCODERS
+
 
 
 // ==================== STATE OF THE ROBOT ====================
@@ -39,7 +42,7 @@
 // TODO
 // #define CONFIGURATION_MODE
 
- #define DEBUGGING
+#define DEBUGGING
 
 
 

@@ -18,6 +18,12 @@
 #define RADTODEG                            57.295779513082320876f
 #endif
 
+// ======================= ENCODERS ==================================
+#define NBS_ENCODERS                        3
+#define NOP_A5                              0x00
+#define RD_POS                              0x10
+#define WAIT                                0xA5
+
 // ======================= SERIAL COMMUNICATION =====================
 #define ID_BROADCAST_DELAY                  500
 #define DATA_MSGS                           0

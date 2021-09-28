@@ -32,6 +32,10 @@
 #include "Gps.h"
 #endif
 
+#ifdef HAS_ENCODERS
+#include "Encoder.h"
+#endif
+
 // ======================================== FUNCTIONS ========================================
 void cmdVelCallback();
 void cmdTourelleCallback();
@@ -72,7 +76,7 @@ const Topic topics[] = {
 // ==================== SERIAL COMMUNICATION ====================
 const String START_DELIMITER = "<{";
 const String END_DELIMITER = ">}";
-const String ARDUINO_ID = "SENSORS"; // Put in EEPROM ?
+const String ARDUINO_ID = "CONTROLLER"; // Put in EEPROM ?
 
 bool recvInProgress = false;
 int inCmdIndex = 0;
@@ -99,10 +103,15 @@ int sonarsMsgSeq = 0;
 
 #ifdef HAS_IMU
 IMU imu;
+long lastImuTime = 0;
 #endif
 
 #ifdef HAS_GPS
 Gps gps;
+#endif
+
+#ifdef HAS_ENCODERS
+Encoder encoders;
 #endif
 
 // ======================================== MAIN ========================================
@@ -127,6 +136,10 @@ void setup()
 #ifdef HAS_GPS
   gps.init();
 #endif
+
+#ifdef HAS_ENCODERS
+  encoders.init(encoderCSPins);
+#endif
 }
 
 void loop()
@@ -136,14 +149,26 @@ void loop()
     if (millis() - lastTime > delayInterval)
     {
 #ifdef DEBUGGING
+      if (ARDUINO_ID == "SENSORS")
+        sendStatusWithMessage(ERROR, SERIAL_COMMUNICATION, "Bob");
+      else
+        sendStatusWithMessage(WARNING, MOTOR_BLOW_DEVICE, "Jean");
+
       // To create the Map TF in tf_broadcaster
       // This is a patch in the case there's no IMU/Encoder connected
       pbUtils.pbSend(1, POS);
 #endif
 
 #ifdef HAS_IMU
-      imu.getValues(&imuDataMsg, delayInterval);
+      imu.getValues(&imuDataMsg, millis() - lastImuTime);
+      lastImuTime = millis();
       pbUtils.pbSend(1, IMU_DATA);
+#endif
+
+#ifdef HAS_ENCODERS
+      posMsg.lx = encoders.getEncValue(0);
+      posMsg.ly = encoders.getEncValue(1);
+      pbUtils.pbSend(1, POS);
 #endif
 
       // Command received

@@ -3,6 +3,12 @@
 
 #include "Constants.h"
 
+// ----------------------- Encoder pins ----------------------
+const int mosiPin = 51;
+const int misoPin = 50;
+const int clkPin = 52;
+const int encoderCSPins[NBS_ENCODERS] { 47, 48, 49 };
+
 // ----------------------- Sonars pins -----------------------
 const int sonarsTriggerPin[NBS_SONARS] { 23, 25 };
 const int sonarsEchoPins[NBS_SONARS] { 22, 24 };
