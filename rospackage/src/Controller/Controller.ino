@@ -114,10 +114,10 @@ void setup()
 #ifdef HAS_SONARS
   sonars.init(sonarsTriggerPin, sonarsEchoPins);
 #endif
-  
+
 #ifdef HAS_MOTOR_PROP
-    motorLeft.init(motorForwardLeft, motorBackwardLeft, motorPwmLeft);
-    motorRight.init(motorForwardRight, motorBackwardRight, motorPwmRight);
+  motorLeft.init(motorForwardLeft, motorBackwardLeft, motorPwmLeft);
+  motorRight.init(motorForwardRight, motorBackwardRight, motorPwmRight);
 #endif
 
 #ifdef HAS_HAS_IMU

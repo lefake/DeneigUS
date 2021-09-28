@@ -39,7 +39,7 @@
 // TODO
 // #define CONFIGURATION_MODE
 
-// #define DEBUGGING
+ #define DEBUGGING
 
 
 

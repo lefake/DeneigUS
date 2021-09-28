@@ -37,8 +37,8 @@ class PB2ROS:
 
         # Topic IDs much be the same in the Arduino enum (in constants.h)
         self._sub_topics = [
-            Topic(1, self._cmd_vel_sub, dst=0),
-            Topic(2, self._cmd_tourelle_sub, dst=0),
+            Topic(1, self._cmd_vel_sub, dst="SENSORS"),
+            Topic(2, self._cmd_tourelle_sub, dst="CONTROLLER"),
         ]
         self._pub_topics = [
             Topic(0, self._debug_arduino_pub),
@@ -80,8 +80,10 @@ class PB2ROS:
         }
 
         self._serials = []
-        for s in serials:
-            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self.new_status_callback, self._serializer))
+        for i, s in enumerate(serials):
+            self._serials.append(PBSerialHandler(s, i, self.new_msg_callback, self.new_status_callback, self._serializer))
+
+        self._arduinos_acknowledged = False
 
     def new_msg_callback(self, response):
         self._logger.debug("Arduino msg in:" + str(response))
@@ -94,12 +96,16 @@ class PB2ROS:
             else:
                 self._logger.warn("new_msg_callback :  Couldn't find message ID")
 
-    def new_status_callback(self, response):
+    def new_status_callback(self, id, response):
         self._logger.debug("Arduino status in:" + str(response))
         status_values = response.decode()[1:-1].split(';')
 
-        if len(status_values) == 2:
-            pass # ID received
+        if len(status_values) == 2 and status_values[0] == '12':
+            s = next((serial for serial in self._serials if serial.id == id), None)
+            s.set_arduino_id(status_values[1])
+            s.acknowledge_arduino("11")
+            self._logger.info("Acknowledged : " + status_values[1])
+
         else:
             try:
                 log_level = self._status_log_level_map[int(status_values[0])]
@@ -113,17 +119,28 @@ class PB2ROS:
                 self._logger.warning("Status type not found")
                 status_type = "OTHER"
 
-            log_level(status_type + " : " + status_values[2])
-
-        #self._serials.add()
+            # TODO : Test id arduino  
+            log_level(id + " -> " + status_type + " : " + status_values[2])
 
     def cmd_vel_callback(self, msg):
-        obj = next(topic for topic in self._topics if topic.name == "/cmd_vel")
-        self._serials[obj.dst].write_pb_msg(obj.id, obj.converter(msg))
+        current_topic = next(topic for topic in self._topics if topic.name == "/cmd_vel")
+        current_serial = next((serial for serial in self._serials if serial.id == current_topic.dst), None)
+
+        if current_serial is None:
+            self._logger.fatal("Arduino not acknowledged yet")
+            return
+
+        current_serial.write_pb_msg(current_topic.id, current_topic.converter(msg))
 
     def cmd_tourelle_callback(self, msg):
-        obj = next(topic for topic in self._topics if topic.name == "/cmd_tourelle")
-        self._serials[obj.dst].write_pb_msg(obj.id, obj.converter(msg))
+        current_topic = next(topic for topic in self._topics if topic.name == "/cmd_tourelle")
+        current_serial = next((serial for serial in self._serials if serial.id == current_topic.dst), None)
+
+        if current_serial is None:
+            self._logger.fatal("Arduino not acknowledged yet")
+            return
+
+        current_serial.write_pb_msg(current_topic.id, current_topic.converter(msg))
 
     def kill(self):
         for s in self._serials:
@@ -131,10 +148,10 @@ class PB2ROS:
 
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
-    #arduino = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
+    #serial.Serial('/dev/pts/4', 9600, timeout=0.05)
     arduinos = [
-        serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
-        #serial.Serial('/dev/pts/4', 9600, timeout=0.05)
+        serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
+        serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05)
     ]
     rospy.init_node('pb2ros', anonymous=False)
 
