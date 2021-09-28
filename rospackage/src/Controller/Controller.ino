@@ -103,7 +103,6 @@ int sonarsMsgSeq = 0;
 
 #ifdef HAS_IMU
 IMU imu;
-long lastImuTime = 0;
 #endif
 
 #ifdef HAS_GPS
@@ -149,19 +148,13 @@ void loop()
     if (millis() - lastTime > delayInterval)
     {
 #ifdef DEBUGGING
-      if (ARDUINO_ID == "SENSORS")
-        sendStatusWithMessage(ERROR, SERIAL_COMMUNICATION, "Bob");
-      else
-        sendStatusWithMessage(WARNING, MOTOR_BLOW_DEVICE, "Jean");
-
       // To create the Map TF in tf_broadcaster
       // This is a patch in the case there's no IMU/Encoder connected
       pbUtils.pbSend(1, POS);
 #endif
 
 #ifdef HAS_IMU
-      imu.getValues(&imuDataMsg, millis() - lastImuTime);
-      lastImuTime = millis();
+      imu.getValues(&imuDataMsg, delayInterval);
       pbUtils.pbSend(1, IMU_DATA);
 #endif
 
