@@ -119,7 +119,8 @@ class PB2ROS:
                 self._logger.warning("Status type not found")
                 status_type = "OTHER"
 
-            log_level(status_type + " : " + status_values[2])
+            # TODO : Test id arduino  
+            log_level(id + " -> " + status_type + " : " + status_values[2])
 
     def cmd_vel_callback(self, msg):
         current_topic = next(topic for topic in self._topics if topic.name == "/cmd_vel")
