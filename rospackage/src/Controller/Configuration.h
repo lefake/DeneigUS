@@ -31,7 +31,7 @@
 // #define HAS_SERVOS
 
 // ==================== ENCODERS ==============================
-// #define HAS_ENCODERS
+#define HAS_ENCODERS
 
 
 
@@ -42,7 +42,7 @@
 // TODO
 // #define CONFIGURATION_MODE
 
-#define DEBUGGING
+// #define DEBUGGING
 
 
 

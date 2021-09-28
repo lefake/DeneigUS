@@ -19,7 +19,7 @@
 #endif
 
 // ======================= ENCODERS ==================================
-#define NBS_ENCODERS                        3
+#define NBS_ENCODERS                        1
 #define NOP_A5                              0x00
 #define RD_POS                              0x10
 #define WAIT                                0xA5
@@ -31,21 +31,6 @@
 
 // ======================= Protobuf constants =======================
 
-enum TOPICS
-{
-  DEBUG_ARDUINO = 0,
-  CMD_VEL,
-  CMD_TOURELLE,
-  POS,
-  OBS_POS,
-  ESTOP_STATE,
-  TELE_BATT,
-  POS_TOURELLE,
-  DEBUG_MOT,
-  GPS_DATA,
-  IMU_DATA,
 
-  _NBS_TOPICS
-};
 
 #endif // _CONSTANTS_H

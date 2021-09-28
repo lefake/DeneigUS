@@ -9,7 +9,6 @@ Description: Header file of the nanopb communication protocol
 #ifndef _PBUTILS_H
 #define _PBUTILS_H
 
-#include <Arduino.h>
 #include <pb_common.h>
 #include <pb.h>
 #include <pb_encode.h>
@@ -25,10 +24,27 @@ struct Topic {
   void* msg;
 };
 
+enum TOPICS
+{
+  DEBUG_ARDUINO = 0,
+  CMD_VEL,
+  CMD_TOURELLE,
+  POS,
+  OBS_POS,
+  ESTOP_STATE,
+  TELE_BATT,
+  POS_TOURELLE,
+  DEBUG_MOT,
+  GPS_DATA,
+  IMU_DATA,
+
+  _NBS_TOPICS
+};
+
 class PBUtils
 {
   public:
-    PBUtils(Topic*, int);
+    PBUtils(Topic*);
     ~PBUtils();
     bool decodePb(char* , int *, int &);
     void pbSend(int, ...);
@@ -38,8 +54,10 @@ class PBUtils
     void charsToBytes(char* , uint8_t*);
     uint8_t charToHex(char, char);
     
-    pb_msgdesc_t** idToType;
-    void** idToMsg;
+    pb_msgdesc_t *idToType[_NBS_TOPICS];
+    void* idToMsg[_NBS_TOPICS];
 };
+
+
 
 #endif // _PBUTILS_H

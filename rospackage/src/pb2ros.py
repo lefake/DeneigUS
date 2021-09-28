@@ -148,7 +148,7 @@ if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
     #serial.Serial('/dev/pts/4', 9600, timeout=0.05)
     arduinos = [
-        serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
+        serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
         serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05)
     ]
     rospy.init_node('pb2ros', anonymous=False)

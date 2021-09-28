@@ -44,9 +44,9 @@ int Encoder::getEncValue(int n)
     uint8_t lsbPosition = sendByte(NOP_A5, encCurrPin);
     pos = msbPosition << 8 | lsbPosition; 
   }
-  else // else if (receivedMessage == 0) needed?
+  else
   {
-    sendStatusWithMessage(FATAL, ENCODER_DEVICE, "Encoder #" + String(n) + " timeout");
+    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(n) + " bad read (" + receivedMessage + ")");
   }
 
   return pos;

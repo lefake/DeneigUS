@@ -9,28 +9,17 @@ Date: April 2020
  * Constructor of the class
  * 
  * @param topics: Array of all the topics containing their type
- * @param nbs_topics: Number of topic in the array
- */
-PBUtils::PBUtils(Topic *topics, int nbsTopics)
+ */ 
+PBUtils::PBUtils(Topic *topics)
 {
-  idToType = malloc(sizeof(pb_msgdesc_t *) * nbsTopics);
-  idToMsg = malloc(sizeof(void *) * nbsTopics);
-  
-  // Initializie array from the struct so it isn't dependant on array indexes
-  // Hence the id must be positive and can't appear more than once
-  // Ids must be valid array index. If there's 4 topics then id must be [0, 5[
-  for (int i = 0; i < nbsTopics; ++i)
+  for (int i = 0; i < _NBS_TOPICS; ++i)
   {
     idToType[topics[i].id] = topics[i].type;
     idToMsg[topics[i].id] = topics[i].msg;
   }
 }
 
-PBUtils::~PBUtils() 
-{
-  free(idToType);
-  free(idToMsg);
-}
+PBUtils::~PBUtils() { }
 
 /*
  * Convert a string to a list of PB messages

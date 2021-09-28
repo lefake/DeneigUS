@@ -51,7 +51,7 @@ long lastTime = 0;
 long delayInterval = 1000;
 
 long lastTimeSonar = 0;
-long delayIntervalSonar = 250;
+long delayIntervalSonar = 1500;
 
 // ==================== TOPICS ====================
 FloatArray debugArduinoMsg = FloatArray_init_zero;
@@ -60,9 +60,6 @@ Twist cmdTourelleMsg = Twist_init_zero;
 Twist posMsg = Twist_init_zero;
 Range obsPosMsg = Range_init_zero;
 Twist imuDataMsg = Twist_init_zero;
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DONT USE THE POS TOPIC IT'S BUGGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TODO : FIX IT DUS-499              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 const Topic topics[] = {
       {DEBUG_ARDUINO, FloatArray_fields, &debugArduinoMsg},
@@ -84,7 +81,7 @@ char inCmd[MAX_MSG_LEN] = { "\0" };
 int inCmdComplete = -1;
 int nbsNewMsgs = 0;
 int newMsgsIds[MAX_NBS_MSG];
-PBUtils pbUtils(topics, sizeof(topics) / sizeof(Topic));
+PBUtils pbUtils(topics);
 
 bool ackRecieved = false;
 bool msgDiscardedLength = false;
@@ -128,7 +125,7 @@ void setup()
   motorRight.init(motorForwardRight, motorBackwardRight, motorPwmRight);
 #endif
 
-#ifdef HAS_HAS_IMU
+#ifdef HAS_IMU
   imu.init();
 #endif
 
@@ -139,6 +136,7 @@ void setup()
 #ifdef HAS_ENCODERS
   encoders.init(encoderCSPins);
 #endif
+
 }
 
 void loop()
@@ -160,7 +158,6 @@ void loop()
 
 #ifdef HAS_ENCODERS
       posMsg.lx = encoders.getEncValue(0);
-      posMsg.ly = encoders.getEncValue(1);
       pbUtils.pbSend(1, POS);
 #endif
 
@@ -225,7 +222,7 @@ void loop()
       {
         (String("sonar_f_") + String(i)).toCharArray(frameId, sizeof(frameId));
         obsPosMsg.range = sonars.dist(i);
-        obsPosMsg.seq = sonars_msg_seq++;
+        obsPosMsg.seq = sonarsMsgSeq++;
         memcpy(obsPosMsg.frame_id, frameId, sizeof(frameId)/sizeof(frameId[0]));
         pbUtils.pbSend(1, OBS_POS);
       }

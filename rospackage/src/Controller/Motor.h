@@ -1,6 +1,7 @@
 #ifndef _MOTOR_H
 #define _MOTOR_H
-#include "Arduino.h"
+
+#include <Arduino.h>
 #include "Constants.h"
 
 class Motor {
