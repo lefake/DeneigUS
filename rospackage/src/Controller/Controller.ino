@@ -48,7 +48,7 @@ bool parseAcknowledgeMessage(char* msg);
 // ==================== TIMERS ====================
 int val = 0;
 long lastTime = 0;
-long delayInterval = 1000;
+long delayInterval = 100;
 
 long lastTimeSonar = 0;
 long delayIntervalSonar = 1500;
@@ -157,7 +157,7 @@ void loop()
 #endif
 
 #ifdef HAS_ENCODERS
-      posMsg.lx = encoders.getEncValue(0);
+      posMsg.lx = encoders.getEncVel(0, delayInterval);
       pbUtils.pbSend(1, POS);
 #endif
 

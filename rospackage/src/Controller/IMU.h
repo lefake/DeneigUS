@@ -2,7 +2,7 @@
 #define _IMU_H
 
 #include <EEPROM.h>
-// IMU Library by hideakitai 0.4.1
+#include "Arduino.h"
 #include "MPU9250.h"
 #include "StatusMessage.h"
 #include "twist.pb.h"
