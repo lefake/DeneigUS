@@ -27,6 +27,11 @@
 #define TICK_SAFTY_RATIO                    1.15
 #define MAX_SPEED_RPM                       90.0
 
+// ======================= Servos ===================================
+#define NBR_SERVOS                          2
+#define INIT_ELEVATION                      45 // En degree
+#define INIT_ROTATION                       0  // En degree
+
 
 // ======================= SERIAL COMMUNICATION =====================
 #define ID_BROADCAST_DELAY                  500

@@ -36,6 +36,10 @@
 #include "Encoder.h"
 #endif
 
+#ifdef HAS_SERVOS
+#include "Servos.h"
+#endif
+
 // ======================================== FUNCTIONS ========================================
 void cmdVelCallback();
 void cmdTourelleCallback();
@@ -110,6 +114,10 @@ Gps gps;
 Encoder encoders;
 #endif
 
+#ifdef HAS_SERVOS
+Servos servos;
+#endif
+
 // ======================================== MAIN ========================================
 
 void setup()
@@ -135,6 +143,10 @@ void setup()
 
 #ifdef HAS_ENCODERS
   encoders.init(encoderCSPins);
+#endif
+
+#ifdef HAS_SERVOS
+  servos.init(servoPins);
 #endif
 
 }
