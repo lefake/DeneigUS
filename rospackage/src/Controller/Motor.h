@@ -9,12 +9,11 @@ class Motor {
     Motor();
     ~Motor();
 
-    void init(const int, const int, const int);
+    void init(const int, const int);
     void setSpeed(float);
 
   private:
     int forwardPin;
-    int backwardPin;
     int speedPin;
 
     int floatMap(float, float, float, float, float);

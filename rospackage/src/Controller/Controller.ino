@@ -121,8 +121,8 @@ void setup()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorBackwardLeft, motorPwmLeft);
-  motorRight.init(motorForwardRight, motorBackwardRight, motorPwmRight);
+  motorLeft.init(motorForwardLeft, motorPwmLeft);
+  motorRight.init(motorForwardRight, motorPwmRight);
 #endif
 
 #ifdef HAS_IMU
@@ -158,6 +158,7 @@ void loop()
 
 #ifdef HAS_ENCODERS
       posMsg.lx = encoders.getEncVel(0, delayInterval);
+      posMsg.ly = encoders.getEncVel(1, delayInterval);
       pbUtils.pbSend(1, POS);
 #endif
 

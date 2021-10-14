@@ -3,39 +3,19 @@
 Motor::Motor() {}
 Motor::~Motor() {}
     
-void Motor::init(const int fPin, const int bPin, const int sPin)
+void Motor::init(const int fPin, const int sPin)
 {
   forwardPin = fPin;
-  backwardPin = bPin;
   speedPin = sPin;
 
   pinMode(forwardPin, OUTPUT);
-  pinMode(backwardPin, OUTPUT);
   pinMode(speedPin, OUTPUT);
 }
 
 void Motor::setSpeed(float percentage)
 {
-
-  if (fabs(percentage) < 0.001)
-  {
-    digitalWrite(forwardPin, LOW);
-    digitalWrite(backwardPin, LOW);
-    analogWrite(speedPin, 0);
-  }
-  else if (percentage > 0)
-  {
-    digitalWrite(forwardPin, HIGH);
-    digitalWrite(backwardPin, LOW);
-    analogWrite(speedPin, convert(percentage));
-  }
-  else
-  {
-    digitalWrite(forwardPin, LOW);
-    digitalWrite(backwardPin, HIGH);
-    
-    analogWrite(speedPin, convert(percentage));
-  }
+  digitalWrite(forwardPin, percentage < 0);
+  analogWrite(speedPin, convert(percentage));
 }
 
 int Motor::convert(float percentage)

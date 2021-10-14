@@ -25,7 +25,7 @@
 // #define HAS_MOTOR_BLOW
 
 // ==================== MOTOR_PROP ============================
-// #define HAS_MOTOR_PROP
+#define HAS_MOTOR_PROP
 
 // ==================== SERVOS ================================
 // #define HAS_SERVOS

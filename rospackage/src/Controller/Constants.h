@@ -19,7 +19,7 @@
 #endif
 
 // ======================= ENCODERS ==================================
-#define NBS_ENCODERS                        1
+#define NBS_ENCODERS                        2
 #define NOP_A5                              0x00
 #define RD_POS                              0x10
 #define WAIT                                0xA5
