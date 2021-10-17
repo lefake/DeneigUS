@@ -5,7 +5,7 @@
 
 void sendStatus(int level, int type);
 void sendStatusWithMessage(int level, int type, String msg);
-void sendStatusNotInitialize(int level, int type);
+void sendStatusNotInitialized(int type);
 
 enum STATUS_LVL 
 {

@@ -21,7 +21,7 @@ void IMU::init()
     imu.setMagneticDeclination(IMU_MAG_DECLINATION);
   }
   else
-    sendStatusNotInitialize(FATAL, IMU_DEVICE);
+    sendStatusNotInitialized(IMU_DEVICE);
 }
 
 
@@ -40,5 +40,5 @@ void IMU::getValues( Twist* msg, float periodMs )
     msg->az = imu.getGyroZ()/180*3.145;
   }
   else
-    sendStatusNotInitialize(ERROR, IMU_DEVICE);
+    sendStatusNotInitialized(IMU_DEVICE);
 }

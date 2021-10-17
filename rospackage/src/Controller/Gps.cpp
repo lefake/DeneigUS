@@ -18,7 +18,7 @@ void Gps::init()
     setZero();
   }
   else
-    sendStatusNotInitialize(FATAL, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
 }
 
 void Gps::setZero()
@@ -30,7 +30,7 @@ void Gps::setZero()
     altitudeRef = myGPS.getAltitude();
   }
   else
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
 }
 
 long Gps::getX()
@@ -47,7 +47,7 @@ long Gps::getZ()
 {
   if (!setupDone)
   {
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
     return -1;
   }
   return myGPS.getAltitude() - altitudeRef;
@@ -57,7 +57,7 @@ void Gps::updateLon()
 {
   if (!setupDone)
   {
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
     longitude = -1;
   }
   else
@@ -70,7 +70,7 @@ void Gps::updateLat()
 {
   if (!setupDone)
   {
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
     latitude = -1;
   }
   else
@@ -83,7 +83,7 @@ long Gps::getSIVs()
 {
   if (!setupDone)
   {
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
     return -1;
   }  
   return myGPS.getSIV();
@@ -93,7 +93,7 @@ long Gps::getAlt()
 {
   if (!setupDone)
   {
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
     return -1;
   }
   return myGPS.getAltitude();
@@ -115,6 +115,6 @@ void Gps::getCoordinates( FloatArray* msg )
     msg->data[5] = myGPS.getAltitude();  //alt
   }
   else
-    sendStatusNotInitialize(ERROR, GPS_DEVICE);
+    sendStatusNotInitialized(GPS_DEVICE);
  
 }

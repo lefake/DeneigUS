@@ -36,7 +36,7 @@
 // ======================= SERIAL COMMUNICATION =====================
 #define ID_BROADCAST_DELAY                  500
 #define DATA_MSGS                           0
-#define META_MSGS                           1
+#define STATUS_MSGS                         1
 
 // ======================= Protobuf constants =======================
 

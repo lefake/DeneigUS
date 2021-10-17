@@ -11,11 +11,13 @@ class Topic:
     Use the obj_type only when changing the type (ex: Pose -> Float32MultiArray)
         The obj_type name should be the ROS name to work with the map
     '''
-    def __init__(self, id, ros_obj, dst=None, obj_type=None):
+    def __init__(self, id, ros_obj, dst=None, dst_obj_type=None):
         factory = MsgFactory()
         is_pub = True if isinstance(ros_obj, rospy.Publisher) else False
-        class_name = ros_obj.data_class.__name__ if obj_type is None else obj_type
+        class_name = ros_obj.data_class.__name__ if dst_obj_type is None else dst_obj_type
         converters = factory.getMsg(class_name)[1]
+
+        # TODO DUS-500 : Test with diff dst_obj_type
 
         self._id = id
         self._dst = dst

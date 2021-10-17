@@ -13,6 +13,7 @@
 #include "PBUtils.h"
 #include "Pins.h"
 
+// Make 2 classes for each arduino loops
 
 // ======================================== CONDITIONNAL INCLUDES ========================================
 
@@ -82,7 +83,8 @@ const String ARDUINO_ID = "CONTROLLER"; // Put in EEPROM ?
 bool recvInProgress = false;
 int inCmdIndex = 0;
 char inCmd[MAX_MSG_LEN] = { "\0" };
-int inCmdComplete = -1;
+bool inCmdComplete = false;
+int inCmdType = -1;
 int nbsNewMsgs = 0;
 int newMsgsIds[MAX_NBS_MSG];
 PBUtils pbUtils(topics);
@@ -174,51 +176,52 @@ void loop()
       pbUtils.pbSend(1, POS);
 #endif
 
-      // Command received
-      switch (inCmdComplete)
+      if (inCmdComplete)
       {
-        case DATA_MSGS:
-          bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
-          
-          if (status && nbsNewMsgs > 0)
-          {
-            for (int i = 0; i < nbsNewMsgs; ++i)
+        inCmdComplete = false;
+
+        switch (inCmdType)
+        {
+          case DATA_MSGS:
+            bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+            
+            if (status && nbsNewMsgs > 0)
             {
-              switch (newMsgsIds[i])
+              for (int i = 0; i < nbsNewMsgs; ++i)
               {
-                case CMD_VEL:
-#ifdef HAS_MOTOR_PROP
-                  cmdVelCallback();
-                  motorLeft.setSpeed(motorVelLeft);
-                  motorRight.setSpeed(motorVelRight);
-#endif
-                  break;
-                  
-                case CMD_TOURELLE:
-                  cmdTourelleCallback();
-                  break;
-                  
-                default:
-                  sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
-                  break;
+                switch (newMsgsIds[i])
+                {
+                  case CMD_VEL:
+  #ifdef HAS_MOTOR_PROP
+                    cmdVelCallback();
+  #endif
+                    sendStatusWithMessage(INFO, OTHER, "Allo from cmd_vel");
+                    break;
+                    
+                  case CMD_TOURELLE:
+                    cmdTourelleCallback();
+                    break;
+                    
+                  default:
+                    sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+                    break;
+                }
               }
             }
-          }
-          else
-          {
-            sendStatus(ERROR, DECODING_PB);
-          }
-          inCmdComplete = -1;
-          break;
+            else
+            {
+              sendStatus(ERROR, DECODING_PB);
+            }
+            break;
 
-        case META_MSGS:
-          inCmdComplete = -1;
-          break;
+          case STATUS_MSGS:
+            break;
 
-        default:
-          sendStatusWithMessage(WARNING, SERIAL_COMMUNICATION, "Unknown message type" + String(inCmdComplete));
-          inCmdComplete = -1;
-          break;
+          default:
+            sendStatusWithMessage(WARNING, SERIAL_COMMUNICATION, "Unknown message type");
+            break;
+        }
+        inCmdType = -1;
       }
       lastTime = millis();
     }
@@ -260,6 +263,8 @@ void cmdVelCallback ()
 #ifdef HAS_MOTOR_PROP
   motorVelLeft = cmdVelMsg.lx;
   motorVelRight = cmdVelMsg.ly;
+  motorLeft.setSpeed(motorVelLeft);
+  motorRight.setSpeed(motorVelRight);
 #endif
 }
 
@@ -272,12 +277,13 @@ void cmdTourelleCallback ()
 
 void acknowldgeArduino()
 {
-  if (inCmdComplete == META_MSGS)
+  if (inCmdComplete && inCmdType == STATUS_MSGS)
   {
+    inCmdComplete = false;
+    inCmdType = -1;
+
     if (parseAcknowledgeMessage(inCmd))
       ackRecieved = true;
-      
-    inCmdComplete = -1;
   }
 
   sendStatusWithMessage(NONE, ID, ARDUINO_ID);
@@ -322,7 +328,8 @@ void serialEvent()
         inCmd[inCmdIndex] = '\0';
         recvInProgress = false;
         inCmdIndex = 0;
-        inCmdComplete = endDelimIndex;
+        inCmdType = endDelimIndex;
+        inCmdComplete = true;
       }
     }
     else if (startDelimIndex != -1)

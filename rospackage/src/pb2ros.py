@@ -18,8 +18,8 @@ class PB2ROS:
         self._logger.debug("Started pb2ros init")
 
         # Out Executif, In Arduino
-        self._cmd_vel_sub = rospy.Subscriber('/cmd_vel', Twist, self.cmd_vel_callback)
-        self._cmd_tourelle_sub = rospy.Subscriber('/cmd_tourelle', Twist, self.cmd_tourelle_callback)
+        self._cmd_vel_sub = rospy.Subscriber('/cmd_vel', Twist, self.sub_callback, ('/cmd_vel'))
+        self._cmd_tourelle_sub = rospy.Subscriber('/cmd_tourelle', Twist, self.sub_callback, ('/cmd_tourelle'))
 
         # In Executif, Out Arduino
         self._debug_arduino_pub = rospy.Publisher('/debug_arduino_data', Float32MultiArray, queue_size=5)
@@ -120,18 +120,8 @@ class PB2ROS:
 
             log_level(id + " -> " + status_type + " : " + status_values[2])
 
-    def cmd_vel_callback(self, msg):
-        current_topic = next(topic for topic in self._topics if topic.name == "/cmd_vel")
-        current_serial = next((serial for serial in self._serials if serial.id == current_topic.dst), None)
-
-        if current_serial is None:
-            self._logger.fatal("Arduino not acknowledged yet")
-            return
-
-        current_serial.write_pb_msg(current_topic.id, current_topic.converter(msg))
-
-    def cmd_tourelle_callback(self, msg):
-        current_topic = next(topic for topic in self._topics if topic.name == "/cmd_tourelle")
+    def sub_callback(self, msg, curent_topic_name):
+        current_topic = next(topic for topic in self._topics if topic.name == curent_topic_name)
         current_serial = next((serial for serial in self._serials if serial.id == current_topic.dst), None)
 
         if current_serial is None:
