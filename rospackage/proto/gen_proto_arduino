@@ -2,7 +2,7 @@ python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generat
 python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py floatarray.proto
 python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py twist.proto
 
-rm ../src/controller/*.pb.*
-rm ~/catkin_ws/src/deneigus/src/controller/*.pb.*
-mv *.pb.* ../src/controller/
-cp -rs ~/git/DeneigUS/rospackage/src/controller/*.pb.* ~/catkin_ws/src/deneigus/src/controller
+rm ../src/Controller/*.pb.*
+rm ~/catkin_ws/src/deneigus/src/Controller/*.pb.*
+mv *.pb.* ../src/Controller/
+cp -rs ~/git/DeneigUS/rospackage/src/Controller/*.pb.* ~/catkin_ws/src/deneigus/src/Controller

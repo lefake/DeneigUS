@@ -1,22 +1,42 @@
-from binascii import unhexlify
 import threading
 import time
-
-from serial import SerialException
+import rospy
 
 from logging_utils import get_logger
+from msg_utils import MsgFactory
 
 class Topic:
-    def __init__(self, id, name, obj, converter, pub=None):
+    '''
+    Use ros_obj when doing a One to One conversion (ex: Twist -> Twist)
+    Use the obj_type only when changing the type (ex: Pose -> Float32MultiArray)
+        The obj_type name should be the ROS name to work with the map
+    '''
+    def __init__(self, id, ros_obj, dst=None, dst_obj_type=None):
+        factory = MsgFactory()
+        is_pub = True if isinstance(ros_obj, rospy.Publisher) else False
+        class_name = ros_obj.data_class.__name__ if dst_obj_type is None else dst_obj_type
+        converters = factory.getMsg(class_name)[1]
+
+        # TODO DUS-500 : Test with diff dst_obj_type
+
         self._id = id
-        self._name = name
-        self._obj = obj
-        self._converter = converter
-        self._pub = pub
+        self._dst = dst
+        self._name = ros_obj.name
+        self._obj = factory.getMsg(class_name)[0]
+
+        if is_pub:
+            self._converter = converters[0]
+        else:
+            self._converter = converters[1]
+        self._pub = ros_obj if is_pub else None
 
     @property
     def id(self):
         return self._id
+
+    @property
+    def dst(self):
+        return self._dst
 
     @property
     def name(self):
@@ -36,10 +56,10 @@ class Topic:
 
 # Serialization utils
 class PBSerializationHandler:
-    def __init__(self, msg_obj):
+    def __init__(self, topics):
         self._logger = get_logger("pb2ros.PBSerializationHandler")
         self._logger.debug("PBSerializationHandler started")
-        self._msg_obj = msg_obj
+        self._topics = topics
 
     def encode_msgs(self, ids, msgs):
         msg = "<"
@@ -57,20 +77,30 @@ class PBSerializationHandler:
         return self.encode_msgs([id], [msg])
 
     def deserialize(self, messages):
-        messages = messages.decode("ascii")
-        msg_array = messages[1:-1].split(';')      # Remove < > characters and split sub-msgs
-
         object_list = []
+        try:
+            messages = messages.decode("ascii")
+            msg_array = messages[1:-1].split(';')      # Remove < > characters and split sub-msgs
 
-        for msg in msg_array:
-            if len(msg) > 0:
-                msg_id, raw_msg = msg.split("|")    # Find the id of the message
-                msg_id = int(msg_id)
-                obj = self._msg_obj[msg_id]
-                obj.ParseFromString(unhexlify(raw_msg))
-                object_list.append([msg_id, obj])
+            for msg in msg_array:
+                if len(msg) > 0:
+                    msg_id, raw_msg = msg.split("|")    # Find the id of the message
+                    msg_id = int(msg_id)
+                    current_topic = next((topic for topic in self._topics if topic.id == msg_id), None)
+
+                    if current_topic is None:
+                        self._logger.error("Unknown topic id: " + str(msg_id))
+                        continue
+
+                    obj = current_topic.obj
+                    obj.ParseFromString(bytearray.fromhex(raw_msg))
+                    object_list.append([msg_id, obj])
+
+        except Exception as e:
+            self._logger.error("deserialize error " + str(e))
 
         return object_list
+
 
 
 
@@ -107,47 +137,73 @@ class ArduinoReadHandler(threading.Thread):
         return self._runflag.is_set()
 
     def kill(self):
-        self._run = False
+        self._runflag.clear()
+        self._run = False  
 
 
 class PBSerialHandler:
-    def __init__(self, serial, callback, msg_obj, sleeptime=0.01):
+    def __init__(self, serial, temp_id, msg_callback, status_callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
         self._serial = serial
         self._sleeptime = float(sleeptime)
-        self._callback = callback
+        self._msg_callback = msg_callback
+        self._status_callback = status_callback
 
+        self._id = temp_id
         self._interlock = False
         self._response = None
 
-        self._serialization_handler = PBSerializationHandler(msg_obj)
+        self._serializer = serializer
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
+
+    def set_arduino_id(self, id):
+        self._id = id
+
+    @property
+    def id(self):
+        return self._id
 
     def kill(self):
         self._worker.kill()
 
     def read_callback(self):
-        if not self._interlock:
-            self._interlock = True
-            try:
-                input = self._serial.read()
-                if input == b'<':
-                    buffer = self._serial.read_until(b'>')
-                    self._serial.flush()
-                    self._response = b'<' + buffer
-                    self._callback(self._response)
-            except SerialException as e:
-                self._logger.error("Read call back error " + str(e))
+        try:
+            input = self._serial.read()
 
-            self._interlock = False
+            if input == b'<':
+                buffer = self._serial.read_until(b'>')
+                self._serial.flush()
+                self._response = b'<' + buffer
+                self._msg_callback(self._response)
+
+            elif input == b'{':
+                buffer = self._serial.read_until(b'}')
+                self._serial.flush()
+                self._response = b'{' + buffer
+                self._status_callback(self._id, self._response)
+
+        except Exception as e:
+            self._logger.error("Read call back error " + str(e))
+
+
+    def acknowledge_arduino(self, status_type):
+        while self._interlock:
+            time.sleep(self._sleeptime)
+
+        msg = "{" + status_type + ";" + self._id + "}"
+
+        self._interlock = True
+        self._serial.write(msg.encode("ascii"))
+        self._serial.flush()
+        self._interlock = False
 
     def write_pb_msg(self, id, msg):
         self.write_pb_msgs([id], [msg])
 
     def write_pb_msgs(self, ids, msgs):
-        encoded_msg = self._serialization_handler.encode_msgs(ids, msgs)
+        encoded_msg = self._serializer.encode_msgs(ids, msgs)
 
         while self._interlock:
             time.sleep(self._sleeptime)

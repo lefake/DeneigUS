@@ -1,6 +1,6 @@
 #include "Gps.h"
 
-Gps::Gps(){ setup_done = false; }
+Gps::Gps() : setupDone(false) {}
 
 Gps::~Gps(){}
 
@@ -8,26 +8,29 @@ void Gps::init()
 {
   
   Wire.begin();
-  setup_done = myGPS.begin();
+  setupDone = myGPS.begin();
 
-  if(setup_done)
+  if(setupDone)
   {
     myGPS.setI2COutput(COM_TYPE_UBX); //Set the I2C port to output UBX only (turn off NMEA noise)
     myGPS.saveConfiguration(); //Save the current settings to flash and BBR
 
     setZero();
   }
-  
+  else
+    sendStatusNotInitialized(GPS_DEVICE);
 }
 
 void Gps::setZero()
 {
-  if(setup_done)
+  if(setupDone)
   {
     latitudeRef = myGPS.getLatitude();
     longitudeRef = myGPS.getLongitude();
     altitudeRef = myGPS.getAltitude();
   }
+  else
+    sendStatusNotInitialized(GPS_DEVICE);
 }
 
 long Gps::getX()
@@ -42,37 +45,68 @@ long Gps::getY()
 
 long Gps::getZ()
 {
-  return (setup_done) ? myGPS.getAltitude() - altitudeRef : -1;
+  if (!setupDone)
+  {
+    sendStatusNotInitialized(GPS_DEVICE);
+    return -1;
+  }
+  return myGPS.getAltitude() - altitudeRef;
 }
 
-long Gps::updateLon()
+void Gps::updateLon()
 {
-  longitude = (setup_done) ? myGPS.getLongitude() : -1;
+  if (!setupDone)
+  {
+    sendStatusNotInitialized(GPS_DEVICE);
+    longitude = -1;
+  }
+  else
+  {
+    longitude = myGPS.getLongitude();
+  }
 }
 
-long Gps::updateLat()
+void Gps::updateLat()
 {
-  latitude = (setup_done) ? myGPS.getLatitude() : -1;
+  if (!setupDone)
+  {
+    sendStatusNotInitialized(GPS_DEVICE);
+    latitude = -1;
+  }
+  else
+  {
+    latitude = myGPS.getLatitude();
+  }
 }
 
 long Gps::getSIVs()
 {
-  return (setup_done) ? myGPS.getSIV() : -1;
+  if (!setupDone)
+  {
+    sendStatusNotInitialized(GPS_DEVICE);
+    return -1;
+  }  
+  return myGPS.getSIV();
 }
 
 long Gps::getAlt()
 {
-  return (setup_done) ? myGPS.getAltitude() : -1;
+  if (!setupDone)
+  {
+    sendStatusNotInitialized(GPS_DEVICE);
+    return -1;
+  }
+  return myGPS.getAltitude();
 }
 
 void Gps::getCoordinates( FloatArray* msg )
 {  
-  if (setup_done)
+  if (setupDone)
   {
     updateLon();
     updateLat();
     
-    msg->data_count = 6;
+    msg->data_count = NBS_DATA_SENT;
     msg->data[0] = getX();               //x
     msg->data[1] = getY();               //y
     msg->data[2] = getZ();               //z
@@ -81,11 +115,6 @@ void Gps::getCoordinates( FloatArray* msg )
     msg->data[5] = myGPS.getAltitude();  //alt
   }
   else
-  {
-    for (int i = 0; i < GPS_DATA_MSG_ARRAY_LEN; i++)
-    {
-      msg->data[i] = i;
-    }
-  }
+    sendStatusNotInitialized(GPS_DEVICE);
  
 }

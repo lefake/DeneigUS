@@ -9,27 +9,17 @@ Date: April 2020
  * Constructor of the class
  * 
  * @param topics: Array of all the topics containing their type
- * @param nbs_topics: Number of topic in the array
- */
-PBUtils::PBUtils(Topic *topics, int nbs_topics)
+ */ 
+PBUtils::PBUtils(Topic *topics)
 {
-  _id_2_type = malloc(sizeof(pb_msgdesc_t *) * nbs_topics);
-  _id_2_msg = malloc(sizeof(void *) * nbs_topics);
-  
-  // Initializie array from the struct so it isn't dependant on array indexes
-  // Hence the id must be positive and can't appear more than once
-  for (int i = 0; i < nbs_topics; ++i)
+  for (int i = 0; i < _NBS_TOPICS; ++i)
   {
-    _id_2_type[topics[i].id] = topics[i].type;
-    _id_2_msg[topics[i].id] = topics[i].msg;
+    idToType[topics[i].id] = topics[i].type;
+    idToMsg[topics[i].id] = topics[i].msg;
   }
 }
 
-PBUtils::~PBUtils() 
-{
-  free(_id_2_type);
-  free(_id_2_msg);
-}
+PBUtils::~PBUtils() { }
 
 /*
  * Convert a string to a list of PB messages
@@ -40,22 +30,22 @@ PBUtils::~PBUtils()
  * 
  * @return: if the decode was successful
  */
-bool PBUtils::decode_pb(char* input_string, int *sub_msg_id, int &nbs_new_msgs)
+bool PBUtils::decodePb(char* inputString, int *subMsgId, int &nbsNewMsgs)
 {
-  char *sub_msgs[MAX_MSG_LEN];
+  char *subMsgs[MAX_MSG_LEN];
   bool success = true;
   
-  nbs_new_msgs = parse_msg(input_string, sub_msg_id, sub_msgs);
+  nbsNewMsgs = parseMsg(inputString, subMsgId, subMsgs);
 
   // Add assert nbs_new_msgs < length of sub_msg_id
 
-  for (int i = 0; i < nbs_new_msgs; ++i)
+  for (int i = 0; i < nbsNewMsgs; ++i)
   {
-    uint8_t buffer_in[MAX_MSG_LEN];
-    chars2bytes(sub_msgs[i], buffer_in);
+    uint8_t bufferIn[MAX_MSG_LEN];
+    charsToBytes(subMsgs[i], bufferIn);
 
-    pb_istream_t stream_in = pb_istream_from_buffer(buffer_in, strlen(sub_msgs[i])/2);
-    success = success && pb_decode(&stream_in, _id_2_type[sub_msg_id[i]], _id_2_msg[sub_msg_id[i]]);
+    pb_istream_t streamIn = pb_istream_from_buffer(bufferIn, strlen(subMsgs[i])/2);
+    success = success && pb_decode(&streamIn, idToType[subMsgId[i]], idToMsg[subMsgId[i]]);
   }
   
   return success;
@@ -67,46 +57,45 @@ bool PBUtils::decode_pb(char* input_string, int *sub_msg_id, int &nbs_new_msgs)
  * @param nbs: The numbers of id to send
  * @param ...: List of all the ids to send 
  *             ex : cant use it like this pb_send(3, POS, OBS_POS, DEBUG_ARDUINO);
- * 
- * @return: If the encode was successful  
  */
-bool PBUtils::pb_send(int nbs, ...)
+void PBUtils::pbSend(int nbs, ...)
 {
   bool success = true;
-  String to_send_builder = "<";
-  va_list ids_to_send;
-  va_start(ids_to_send, nbs);
+  String toSendBuilder = "<";
+  va_list idsToSend;
+  va_start(idsToSend, nbs);
 
   for (int i = 0; i < nbs; ++i)
   {
-    int id = va_arg ( ids_to_send, int );
-    uint8_t buffer_out[MAX_MSG_LEN];
-    char to_send[10];  // The biggest byte array in the nanopb encode seems to be 10 (should be coded to not depend on it tho...)
-    pb_ostream_t stream = pb_ostream_from_buffer(buffer_out, sizeof(buffer_out));
-    success = success && pb_encode(&stream, _id_2_type[id], _id_2_msg[id]);
+    int id = va_arg ( idsToSend, int );
+    uint8_t bufferOut[MAX_MSG_LEN];
+    char toSend[10];  // The biggest byte array in the nanopb encode seems to be 10 (should be coded to not depend on it tho...)
+    pb_ostream_t stream = pb_ostream_from_buffer(bufferOut, sizeof(bufferOut));
+    success = success && pb_encode(&stream, idToType[id], idToMsg[id]);
 
     if(success)
     {
-      to_send_builder += String(id);
-      to_send_builder += "|";
+      toSendBuilder += String(id);
+      toSendBuilder += "|";
       
       for(int j = 0; j < stream.bytes_written; j++)
       {
-        sprintf (to_send, "%02X", buffer_out[j]);
-        to_send_builder += String(to_send);
+        sprintf (toSend, "%02X", bufferOut[j]);
+        toSendBuilder += String(toSend);
       }
     }
     else
-      break;
-    to_send_builder += ";";
+      sendStatus(ERROR, ENCODING_PB);
+    
+    toSendBuilder += ";";
   }
-  to_send_builder += ">";
-  va_end(ids_to_send);
+  toSendBuilder += ">";
+  va_end(idsToSend);
 
   if (success)
-    Serial.print(to_send_builder);
-  
-  return success;
+    Serial.print(toSendBuilder);
+  else
+    sendStatus(ERROR, ENCODING_PB);
 }
 
 /*
@@ -118,27 +107,27 @@ bool PBUtils::pb_send(int nbs, ...)
  * 
  * @return: The number of submessages
  */
-int PBUtils::parse_msg(char in_string[], int *msg_ids, char **out_strings)
+int PBUtils::parseMsg(char inString[], int *msgIds, char **outStrings)
 {
   // Split all messages
-  char *whole_msgs[MAX_MSG_LEN];
+  char *wholeMsgs[MAX_MSG_LEN];
   int ind = 0;
-  char* substr = strtok(in_string, ";");
+  char* substr = strtok(inString, ";");
 
   while (substr != NULL)
   {
-    whole_msgs[ind++] = substr;
+    wholeMsgs[ind++] = substr;
     substr = strtok(NULL, ";");
   }
 
   // Split (id, msg) pair
   for (int i = 0; i < ind; i++)
   {
-    char* id = strtok(whole_msgs[i], "|");
+    char* id = strtok(wholeMsgs[i], "|");
     char* msg = strtok(NULL, "|");
     
-    msg_ids[i] = atoi(id);
-    out_strings[i] = msg;
+    msgIds[i] = atoi(id);
+    outStrings[i] = msg;
   }
 
   return ind;
@@ -152,12 +141,11 @@ int PBUtils::parse_msg(char in_string[], int *msg_ids, char **out_strings)
  * 
  * @return: 
  */
-void PBUtils::chars2bytes(char* in_string, uint8_t* string_value)
+void PBUtils::charsToBytes(char* inString, uint8_t* stringValue)
 {
-  // Jai pt fucker dequoi, a retester ...
-  int len = strlen(in_string)/2;
+  int len = strlen(inString)/2;
   for (int i = 0; i < len; ++i)
-    string_value[i] = char2hex(in_string[(i*2)], in_string[(i*2)+1]);
+    stringValue[i] = charToHex(inString[(i*2)], inString[(i*2)+1]);
 }
 
 /*
@@ -167,7 +155,7 @@ void PBUtils::chars2bytes(char* in_string, uint8_t* string_value)
  * 
  * @return: The decimal value
  */
-uint8_t PBUtils::char2hex(char in1, char in2)
+uint8_t PBUtils::charToHex(char in1, char in2)
 {
   uint8_t val[2];
   char in[2] = { in1, in2};
