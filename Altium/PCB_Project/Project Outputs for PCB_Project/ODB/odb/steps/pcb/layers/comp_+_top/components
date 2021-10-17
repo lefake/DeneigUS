@@ -1,0 +1,4215 @@
+#
+#Component attribute names
+#
+@0 .comp_mount_type
+@1 .comp_height
+
+# CMP 0
+CMP 16 12.7 5.9 180 N Q35 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 12.7 5.8 180 N 129 0 Q35-1
+TOP 1 12.7 5.9 180 N 1 1 Q35-2
+TOP 2 12.7 6 180 N 186 2 Q35-3
+#
+# CMP 1
+CMP 16 13.3 5.9 180 N Q34 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 13.3 5.8 180 N 127 0 Q34-1
+TOP 1 13.3 5.9 180 N 2 2 Q34-2
+TOP 2 13.3 6 180 N 186 3 Q34-3
+#
+# CMP 2
+CMP 17 12.7 6.45 270 N Q33 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 12.7 6.35 180 N 1 2 Q33-1
+TOP 1 12.7 6.45 180 N 101 2 Q33-2
+TOP 2 12.7 6.55 180 N 158 11 Q33-3
+#
+# CMP 3
+CMP 16 13 5.9 180 N Q32 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 13 5.8 180 N 128 0 Q32-1
+TOP 1 13 5.9 180 N 3 2 Q32-2
+TOP 2 13 6 180 N 186 4 Q32-3
+#
+# CMP 4
+CMP 16 12.4 5.9 180 N Q31 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 12.4 5.8 180 N 130 0 Q31-1
+TOP 1 12.4 5.9 180 N 4 2 Q31-2
+TOP 2 12.4 6 180 N 186 147 Q31-3
+#
+# CMP 5
+CMP 17 13.3 6.45 270 N Q30 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 13.3 6.35 180 N 2 1 Q30-1
+TOP 1 13.3 6.45 180 N 104 1 Q30-2
+TOP 2 13.3 6.55 180 N 158 7 Q30-3
+#
+# CMP 6
+CMP 17 13 6.45 270 N Q29 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 13 6.35 180 N 3 1 Q29-1
+TOP 1 13 6.45 180 N 100 1 Q29-2
+TOP 2 13 6.55 180 N 158 9 Q29-3
+#
+# CMP 7
+CMP 17 12.4 6.45 270 N Q28 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 12.4 6.35 180 N 4 1 Q28-1
+TOP 1 12.4 6.45 180 N 102 2 Q28-2
+TOP 2 12.4 6.55 180 N 158 15 Q28-3
+#
+# CMP 8
+CMP 16 5.05 5.95 180 N Q27 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 5.05 5.85 180 N 9 1 Q27-1
+TOP 1 5.05 5.95 180 N 5 0 Q27-2
+TOP 2 5.05 6.05 180 N 186 139 Q27-3
+#
+# CMP 9
+CMP 16 6.25 5.95 180 N Q26 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 6.25 5.85 180 N 10 1 Q26-1
+TOP 1 6.25 5.95 180 N 6 0 Q26-2
+TOP 2 6.25 6.05 180 N 186 140 Q26-3
+#
+# CMP 10
+CMP 16 5.85 5.95 180 N Q25 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 5.85 5.85 180 N 11 1 Q25-1
+TOP 1 5.85 5.95 180 N 7 0 Q25-2
+TOP 2 5.85 6.05 180 N 186 141 Q25-3
+#
+# CMP 11
+CMP 16 5.45 5.95 180 N Q24 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 5.45 5.85 180 N 12 1 Q24-1
+TOP 1 5.45 5.95 180 N 8 0 Q24-2
+TOP 2 5.45 6.05 180 N 186 142 Q24-3
+#
+# CMP 12
+CMP 18 5.5346457 6.75 0 N J12 0460150402 ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'WM3844-ND'
+TOP 0 5.5346457 6.75 0 N 8 1 J12-1
+TOP 1 5.7 6.75 0 N 7 1 J12-2
+TOP 2 5.7 6.9665354 0 N 6 1 J12-3
+TOP 3 5.5346457 6.9665354 0 N 5 1 J12-4
+#
+# CMP 13
+CMP 16 14.05 5.9 180 N Q23 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 14.05 5.8 180 N 18 1 Q23-1
+TOP 1 14.05 5.9 180 N 13 2 Q23-2
+TOP 2 14.05 6 180 N 186 138 Q23-3
+#
+# CMP 14
+CMP 16 13.65 5.9 180 N Q22 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 13.65 5.8 180 N 17 1 Q22-1
+TOP 1 13.65 5.9 180 N 14 2 Q22-2
+TOP 2 13.65 6 180 N 186 137 Q22-3
+#
+# CMP 15
+CMP 17 14.05 6.55 270 N Q21 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 14.05 6.45 180 N 13 1 Q21-1
+TOP 1 14.05 6.55 180 N 16 1 Q21-2
+TOP 2 14.05 6.65 180 N 158 4 Q21-3
+#
+# CMP 16
+CMP 17 13.65 6.55 270 N Q20 MOSFET_P-CH_55V_12A_TO220AB ;0=2,1=0.0000
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'IRF9Z24NPBF-ND'
+TOP 0 13.65 6.45 180 N 14 1 Q20-1
+TOP 1 13.65 6.55 180 N 15 1 Q20-2
+TOP 2 13.65 6.65 180 N 158 3 Q20-3
+#
+# CMP 17
+CMP 9 13.95 7.05 180 N Actuateur 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 13.95 7.05 180 N 16 0 Actuateur-1
+TOP 1 13.85 7.05 180 N 0 220 Actuateur-2
+TOP 2 13.75 7.05 180 N 15 0 Actuateur-3
+#
+# CMP 18
+CMP 14 6.5 6.5 90 N J7 GPS-15005 ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '1568-1970-ND'
+TOP 0 7.75 5.75 0 N 186 136 J7-1
+TOP 1 7.75 5.65 0 N 216 74 J7-2
+TOP 2 7.75 5.55 0 N 0 225 J7-3
+TOP 3 7.75 5.45 0 N 0 226 J7-4
+TOP 4 7.75 5.35 0 N 214 0 J7-5
+TOP 5 7.75 5.25 0 N 215 0 J7-6
+TOP 6 7.75 5.15 0 N 0 227 J7-7
+TOP 7 6.55 6.15 180 N 0 234 J7-8
+TOP 8 6.55 6.05 180 N 0 233 J7-9
+TOP 9 6.55 5.95 180 N 0 232 J7-10
+TOP 10 6.55 5.85 180 N 0 231 J7-11
+TOP 11 6.55 5.75 180 N 0 230 J7-12
+TOP 12 6.55 5.65 180 N 0 229 J7-13
+TOP 13 6.55 5.55 0 N 186 135 J7-14
+TOP 14 6.55 5.45 0 N 0 228 J7-15
+TOP 15 6.55 5.35 0 N 188 3 J7-16
+TOP 16 6.55 5.25 0 N 189 3 J7-17
+TOP 17 7.7 6.4 90 N 0 224 J7-MH1
+TOP 18 7.7 5 90 N 0 223 J7-MH1
+TOP 19 6.6 6.4 90 N 0 222 J7-MH1
+TOP 20 6.6 5 90 N 0 221 J7-MH1
+#
+# CMP 19
+CMP 12 15.76 6.31 90 N C41 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 15.76 6.3602504 90 N 106 16 C41-1
+TOP 1 15.76 6.2597495 90 N 103 16 C41-2
+#
+# CMP 20
+CMP 12 15.67 6.31 90 N C40 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 15.67 6.3602504 90 N 106 15 C40-1
+TOP 1 15.67 6.2597495 90 N 103 15 C40-2
+#
+# CMP 21
+CMP 12 15.58 6.31 90 N C39 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 15.58 6.3602504 90 N 106 14 C39-1
+TOP 1 15.58 6.2597495 90 N 103 14 C39-2
+#
+# CMP 22
+CMP 12 15.49 6.31 90 N C38 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 15.49 6.3602504 90 N 106 13 C38-1
+TOP 1 15.49 6.2597495 90 N 103 13 C38-2
+#
+# CMP 23
+CMP 7 1.975 6.55 0 N C37 CAP_-_0805 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg 'Murata Electronics'
+PRP Mfg_Part_Number 'GRM21BR61H106ME43L'
+PRP NI ''
+PRP Package '0805'
+PRP Power ''
+PRP Precision '10%'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '490-5825-1-ND'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '100V'
+TOP 0 1.9415 6.55 270 N 94 2 C37-1
+TOP 1 2.0085 6.55 270 N 186 58 C37-2
+#
+# CMP 24
+CMP 7 1.975 4.75 0 N C36 CAP_-_0805 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg 'Murata Electronics'
+PRP Mfg_Part_Number 'GRM21BR61H106ME43L'
+PRP NI ''
+PRP Package '0805'
+PRP Power ''
+PRP Precision '10%'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '490-5825-1-ND'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '100V'
+TOP 0 1.9415 4.75 270 N 95 1 C36-1
+TOP 1 2.0085 4.75 270 N 186 43 C36-2
+#
+# CMP 25
+CMP 7 14.375 6.945 180 N C35 CAP_-_0805 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg 'Murata Electronics'
+PRP Mfg_Part_Number 'GRM21BR61H106ME43L'
+PRP NI ''
+PRP Package '0805'
+PRP Power ''
+PRP Precision '10%'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '490-5825-1-ND'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '100V'
+TOP 0 14.4085 6.945 90 N 103 9 C35-1
+TOP 1 14.3415 6.945 90 N 186 42 C35-2
+#
+# CMP 26
+CMP 3 16.45 0.45 270 N SW6 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 16.390945 0.312205 270 N 216 23 SW6-1
+TOP 1 16.390945 0.587795 270 N 216 24 SW6-2
+TOP 2 16.5090549 0.312205 270 N 34 1 SW6-3
+TOP 3 16.5090549 0.587795 270 N 34 2 SW6-4
+#
+# CMP 27
+CMP 3 16.15 0.4500032 270 N SW5 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 16.090945 0.3122082 270 N 216 21 SW5-1
+TOP 1 16.090945 0.5877982 270 N 216 22 SW5-2
+TOP 2 16.2090549 0.3122082 270 N 35 1 SW5-3
+TOP 3 16.2090549 0.5877982 270 N 35 2 SW5-4
+#
+# CMP 28
+CMP 25 16.4 0.9 270 N R79 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 '2019-RK73H2ATTD84R5FCT-ND'
+PRP Value '84.5'
+TOP 0 16.4 0.8645 180 N 21 1 R79-1
+TOP 1 16.4 0.9355 180 N 186 36 R79-2
+#
+# CMP 29
+CMP 25 16.1 0.9 270 N R78 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD150RCT-ND'
+PRP Value '150'
+TOP 0 16.1 0.8645 180 N 22 1 R78-1
+TOP 1 16.1 0.9355 180 N 186 37 R78-2
+#
+# CMP 30
+CMP 9 15.6 4.3 270 N J11 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 15.6 4.3 270 N 216 77 J11-1
+TOP 1 15.6 4.4 270 N 19 3 J11-2
+TOP 2 15.6 4.5 270 N 186 145 J11-3
+#
+# CMP 31
+CMP 9 15.15 4.3 270 N J9 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 15.15 4.3 270 N 216 76 J9-1
+TOP 1 15.15 4.4 270 N 20 3 J9-2
+TOP 2 15.15 4.5 270 N 186 144 J9-3
+#
+# CMP 32
+CMP 31 3.5 2.5 0 N J8 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.35 2.5 0 N 216 48 J8-1
+TOP 1 3.45 2.5 0 N 37 0 J8-2
+TOP 2 3.55 2.5 0 N 36 0 J8-3
+TOP 3 3.65 2.5 0 N 186 72 J8-4
+#
+# CMP 33
+CMP 30 0.75 3.05 0 N J6 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 0.75 3.05 0 N 216 54 J6-1
+TOP 1 0.85 3.05 0 N 213 3 J6-2
+TOP 2 0.95 3.05 0 N 190 3 J6-3
+TOP 3 1.05 3.05 0 N 192 3 J6-4
+TOP 4 1.15 3.05 0 N 191 3 J6-5
+TOP 5 1.25 3.05 0 N 186 80 J6-6
+TOP 6 1.292126 3.1740157 0 N 0 247 J6-empty-1
+#
+# CMP 34
+CMP 11 16.5 0.95 90 N D6 LED2 ;0=1,1=0.0000
+PRP Color 'Green'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '754-1440-1-ND'
+TOP 0 16.5 1.0188976 90 N 26 0 D6-1
+TOP 1 16.5 0.8811023 90 N 21 0 D6-2
+#
+# CMP 35
+CMP 11 16.2 0.95 90 N D5 LED2 ;0=1,1=0.0000
+PRP Color 'RED'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '754-1796-1-ND'
+TOP 0 16.2 1.0188976 90 N 23 0 D5-1
+TOP 1 16.2 0.8811023 90 N 22 0 D5-2
+#
+# CMP 36
+CMP 5 5 4.1 90 N U12 Arduino_Mega ;0=2,1=0.0000
+TOP 0 7.0062993 3.0000001 180 N 0 181 U12-1
+TOP 1 7.0062993 2.9000001 180 N 0 180 U12-2
+TOP 2 7.0062993 2.8000001 180 N 0 179 U12-3
+TOP 3 7.0062993 2.7000001 180 N 0 178 U12-4
+TOP 4 7.0062993 2.6000001 180 N 0 177 U12-5
+TOP 5 7.0062993 2.5000001 180 N 186 107 U12-6
+TOP 6 7.0062993 2.4000001 180 N 186 108 U12-7
+TOP 7 7.0062993 2.3000001 180 N 0 176 U12-8
+TOP 8 7.0062993 2.1000001 180 N 130 1 U12-9
+TOP 9 7.0062993 2.0000001 180 N 129 1 U12-10
+TOP 10 7.0062993 1.9000001 180 N 128 1 U12-11
+TOP 11 7.0062993 1.8000001 180 N 127 1 U12-12
+TOP 12 7.0062993 1.7000001 180 N 126 0 U12-13
+TOP 13 7.0062993 1.6000001 180 N 125 0 U12-14
+TOP 14 7.0062993 1.5000001 180 N 124 0 U12-15
+TOP 15 7.0062993 1.4000001 180 N 123 0 U12-16
+TOP 16 7.0062993 1.2000001 180 N 45 1 U12-17
+TOP 17 7.0062993 1.1000001 180 N 42 1 U12-18
+TOP 18 7.0062993 1.0000001 180 N 44 1 U12-19
+TOP 19 7.0062993 0.9000001 180 N 43 1 U12-20
+TOP 20 7.0062993 0.8000001 180 N 0 173 U12-21
+TOP 21 7.0062993 0.7000001 180 N 33 2 U12-22
+TOP 22 7.0062993 0.6000001 180 N 32 2 U12-23
+TOP 23 7.0062993 0.5000001 180 N 31 2 U12-24
+TOP 24 5.1062993 0.4000001 0 N 0 206 U12-25
+TOP 25 5.1062993 0.3000001 0 N 0 208 U12-26
+TOP 26 5.2062993 0.4000001 0 N 212 0 U12-27
+TOP 27 5.2062993 0.3000001 0 N 211 0 U12-28
+TOP 28 5.3062993 0.4000001 0 N 210 0 U12-29
+TOP 29 5.3062993 0.3000001 0 N 209 0 U12-30
+TOP 30 5.4062993 0.4000001 0 N 208 0 U12-31
+TOP 31 5.4062993 0.3000001 0 N 207 0 U12-32
+TOP 32 5.5062993 0.4000001 0 N 206 0 U12-33
+TOP 33 5.5062993 0.3000001 0 N 205 0 U12-34
+TOP 34 5.6062993 0.4000001 0 N 204 0 U12-35
+TOP 35 5.6062993 0.3000001 0 N 203 0 U12-36
+TOP 36 5.7062993 0.4000001 0 N 202 0 U12-37
+TOP 37 5.7062993 0.3000001 0 N 201 0 U12-38
+TOP 38 5.8062993 0.4000001 0 N 200 0 U12-39
+TOP 39 5.8062993 0.3000001 0 N 199 0 U12-40
+TOP 40 5.9062993 0.4000001 0 N 198 0 U12-41
+TOP 41 5.9062993 0.3000001 0 N 197 0 U12-42
+TOP 42 6.0062993 0.4000001 0 N 196 0 U12-43
+TOP 43 6.0062993 0.3000001 0 N 195 0 U12-44
+TOP 44 6.1062993 0.4000001 0 N 194 0 U12-45
+TOP 45 6.1062993 0.3000001 0 N 193 0 U12-46
+TOP 46 6.2062993 0.4000001 0 N 115 0 U12-47
+TOP 47 6.2062993 0.3000001 0 N 114 0 U12-48
+TOP 48 6.3062993 0.4000001 0 N 113 0 U12-49
+TOP 49 6.3062993 0.3000001 0 N 112 0 U12-50
+TOP 50 6.4062993 0.4000001 0 N 111 0 U12-51
+TOP 51 6.4062993 0.3000001 0 N 110 0 U12-52
+TOP 52 6.5062993 0.4000001 0 N 109 0 U12-53
+TOP 53 6.5062993 0.3000001 0 N 108 0 U12-54
+TOP 54 6.6062993 0.4000001 0 N 76 3 U12-55
+TOP 55 6.6062993 0.3000001 0 N 28 1 U12-56
+TOP 56 6.7062993 0.4000001 0 N 75 3 U12-57
+TOP 57 6.7062993 0.3000001 0 N 25 1 U12-58
+TOP 58 6.8062993 0.4000001 0 N 186 109 U12-59
+TOP 59 6.8062993 0.3000001 0 N 186 110 U12-60
+TOP 60 5.1062993 0.7000001 0 N 0 205 U12-61
+TOP 61 5.1062993 0.8000001 0 N 0 204 U12-62
+TOP 62 5.1062993 0.9000001 0 N 0 203 U12-63
+TOP 63 5.1062993 1.0000001 0 N 0 202 U12-64
+TOP 64 5.1062993 1.1000001 0 N 0 211 U12-65
+TOP 65 5.1062993 1.2000001 0 N 0 215 U12-66
+TOP 66 5.1062993 1.3000001 0 N 0 214 U12-67
+TOP 67 5.1062993 1.4000001 0 N 0 213 U12-68
+TOP 68 5.1062993 1.6000001 0 N 0 212 U12-69
+TOP 69 5.1062993 1.7000001 0 N 0 187 U12-70
+TOP 70 5.1062993 1.8000001 0 N 0 186 U12-71
+TOP 71 5.1062993 1.9000001 0 N 0 185 U12-72
+TOP 72 5.1062993 2.0000001 0 N 0 188 U12-73
+TOP 73 5.1062993 2.1000001 0 N 0 184 U12-74
+TOP 74 5.1062993 2.2000001 0 N 0 183 U12-75
+TOP 75 5.1062993 2.3000001 0 N 0 201 U12-76
+TOP 76 5.1062993 2.4600001 180 N 29 4 U12-77
+TOP 77 5.1062993 2.5600001 180 N 0 197 U12-78
+TOP 78 5.1062993 2.6600001 180 N 0 198 U12-79
+TOP 79 5.1062993 2.7600001 180 N 0 195 U12-80
+TOP 80 5.1062993 2.8600001 180 N 0 196 U12-81
+TOP 81 5.1062993 2.9600001 180 N 0 199 U12-82
+TOP 82 5.1062993 3.0600001 180 N 186 106 U12-83
+TOP 83 5.1062993 3.1600001 180 N 0 210 U12-84
+TOP 84 5.1062993 3.2600001 180 N 188 1 U12-85
+TOP 85 5.1062993 3.3600001 180 N 189 1 U12-86
+TOP 86 5.2362993 3.2800001 270 N 0 189 U12-87
+TOP 87 5.3362993 3.2800001 270 N 0 194 U12-88
+TOP 88 5.2362993 3.3800001 270 N 0 193 U12-89
+TOP 89 5.3362993 3.3800001 270 N 0 192 U12-90
+TOP 90 5.2362993 3.4800001 270 N 0 191 U12-91
+TOP 91 5.3362993 3.4800001 270 N 0 190 U12-92
+TOP 92 5.9062993 1.5950001 0 N 0 172 U12-93
+TOP 93 5.9062993 1.4950001 0 N 0 171 U12-94
+TOP 94 6.0062993 1.5950001 0 N 0 170 U12-95
+TOP 95 6.0062993 1.4950001 0 N 0 169 U12-96
+TOP 96 6.1062993 1.5950001 0 N 0 167 U12-97
+TOP 97 6.1062993 1.4950001 0 N 0 168 U12-98
+TOP 98 7.0062993 0.3000001 90 N 0 175 U12-MH1
+TOP 99 5.1062993 3.5000001 90 N 0 200 U12-MH2
+TOP 100 5.1062993 0.5500001 90 N 0 207 U12-MH3
+TOP 101 7.0062993 3.5500001 90 N 0 182 U12-MH4
+TOP 102 5.7062993 1.5000001 90 N 0 209 U12-MH5
+TOP 103 6.8062993 1.5000001 90 N 0 174 U12-MH6
+#
+# CMP 37
+CMP 11 15.9 0.95 90 N D4 LED2 ;0=1,1=0.0000
+PRP Color 'Green'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '754-1440-1-ND'
+TOP 0 15.9 1.0188976 90 N 27 0 D4-1
+TOP 1 15.9 0.8811023 90 N 46 0 D4-2
+#
+# CMP 38
+CMP 11 15.3 0.95 90 N D3 LED2 ;0=1,1=0.0000
+PRP Color 'Green'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '754-1440-1-ND'
+TOP 0 15.3 1.0188976 90 N 28 0 D3-1
+TOP 1 15.3 0.8811023 90 N 47 0 D3-2
+#
+# CMP 39
+CMP 11 15.6 0.95 90 N D2 LED2 ;0=1,1=0.0000
+PRP Color 'RED'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '754-1796-1-ND'
+TOP 0 15.6 1.0188976 90 N 24 0 D2-1
+TOP 1 15.6 0.8811023 90 N 48 0 D2-2
+#
+# CMP 40
+CMP 11 15 0.95 90 N D1 LED2 ;0=1,1=0.0000
+PRP Color 'RED'
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'SM LED; 2 Flat Leads'
+PRP PackageReference '3.2X1.6X1.1'
+PRP PackageVersion 'Feb-2002'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '754-1796-1-ND'
+TOP 0 15 1.0188976 90 N 25 0 D1-1
+TOP 1 15 0.8811023 90 N 49 0 D1-2
+#
+# CMP 41
+CMP 19 0.3 0.3 0 N MTH4 M3 ;0=2,1=0.0000
+PRP Assembly_Note ''
+PRP Assembly_Type 'NONE'
+PRP CreatedBy/Date 'Jonathan Bouchard 2018-07-23'
+PRP Cryo 'UNKNOWN'
+PRP Current_Rating ''
+PRP GRAMS_Lib_Spec '2.8'
+PRP HelpURL 'https://littlemachineshop.com/images/gallery/PDF/TapDrillSizes.pdf'
+PRP Magnetic_Material 'NO'
+PRP Manufacturer_#1 ''
+PRP Manufacturer_#2 ''
+PRP Note ''
+PRP Package 'M3'
+PRP Part_Number_#1 ''
+PRP Part_Number_#2 ''
+PRP Polarized ''
+PRP Power_Max ''
+PRP Supplier_1 ''
+PRP Supplier_Part_Number_1 ''
+PRP Temperature ''
+PRP Tolerance ''
+PRP Value ''
+PRP VerifiedBy 'Arnaud Samson 23-07-18'
+PRP Voltage_Rating ''
+TOP 0 0.3 0.3 180 N 0 241 MTH4-1
+#
+# CMP 42
+CMP 19 16.95 0.3 0 N MTH3 M3 ;0=2,1=0.0000
+PRP Assembly_Note ''
+PRP Assembly_Type 'NONE'
+PRP CreatedBy/Date 'Jonathan Bouchard 2018-07-23'
+PRP Cryo 'UNKNOWN'
+PRP Current_Rating ''
+PRP GRAMS_Lib_Spec '2.8'
+PRP HelpURL 'https://littlemachineshop.com/images/gallery/PDF/TapDrillSizes.pdf'
+PRP Magnetic_Material 'NO'
+PRP Manufacturer_#1 ''
+PRP Manufacturer_#2 ''
+PRP Note ''
+PRP Package 'M3'
+PRP Part_Number_#1 ''
+PRP Part_Number_#2 ''
+PRP Polarized ''
+PRP Power_Max ''
+PRP Supplier_1 ''
+PRP Supplier_Part_Number_1 ''
+PRP Temperature ''
+PRP Tolerance ''
+PRP Value ''
+PRP VerifiedBy 'Arnaud Samson 23-07-18'
+PRP Voltage_Rating ''
+TOP 0 16.95 0.3 180 N 0 13 MTH3-1
+#
+# CMP 43
+CMP 19 16.95 7.22 270 N MTH1 M3 ;0=2,1=0.0000
+PRP Assembly_Note ''
+PRP Assembly_Type 'NONE'
+PRP CreatedBy/Date 'Jonathan Bouchard 2018-07-23'
+PRP Cryo 'UNKNOWN'
+PRP Current_Rating ''
+PRP GRAMS_Lib_Spec '2.8'
+PRP HelpURL 'https://littlemachineshop.com/images/gallery/PDF/TapDrillSizes.pdf'
+PRP Magnetic_Material 'NO'
+PRP Manufacturer_#1 ''
+PRP Manufacturer_#2 ''
+PRP Note ''
+PRP Package 'M3'
+PRP Part_Number_#1 ''
+PRP Part_Number_#2 ''
+PRP Polarized ''
+PRP Power_Max ''
+PRP Supplier_1 ''
+PRP Supplier_Part_Number_1 ''
+PRP Temperature ''
+PRP Tolerance ''
+PRP Value ''
+PRP VerifiedBy 'Arnaud Samson 23-07-18'
+PRP Voltage_Rating ''
+TOP 0 16.95 7.22 90 N 0 14 MTH1-1
+#
+# CMP 44
+CMP 19 0.3 7.2 0 N MTH2 M3 ;0=2,1=0.0000
+PRP Assembly_Note ''
+PRP Assembly_Type 'NONE'
+PRP CreatedBy/Date 'Jonathan Bouchard 2018-07-23'
+PRP Cryo 'UNKNOWN'
+PRP Current_Rating ''
+PRP GRAMS_Lib_Spec '2.8'
+PRP HelpURL 'https://littlemachineshop.com/images/gallery/PDF/TapDrillSizes.pdf'
+PRP Magnetic_Material 'NO'
+PRP Manufacturer_#1 ''
+PRP Manufacturer_#2 ''
+PRP Note ''
+PRP Package 'M3'
+PRP Part_Number_#1 ''
+PRP Part_Number_#2 ''
+PRP Polarized ''
+PRP Power_Max ''
+PRP Supplier_1 ''
+PRP Supplier_Part_Number_1 ''
+PRP Temperature ''
+PRP Tolerance ''
+PRP Value ''
+PRP VerifiedBy 'Arnaud Samson 23-07-18'
+PRP Voltage_Rating ''
+TOP 0 0.3 7.2 180 N 0 15 MTH2-1
+#
+# CMP 45
+CMP 9 15.15 3.85 90 N Temp_Battery 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 15.15 3.85 90 N 216 47 Temp_Battery-1
+TOP 1 15.15 3.75 90 N 51 1 Temp_Battery-2
+TOP 2 15.15 3.65 90 N 186 68 Temp_Battery-3
+#
+# CMP 46
+CMP 9 15.6 3.85 90 N Temp_Motor 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 15.6 3.85 90 N 216 49 Temp_Motor-1
+TOP 1 15.6 3.75 90 N 50 1 Temp_Motor-2
+TOP 2 15.6 3.65 90 N 186 73 Temp_Motor-3
+#
+# CMP 47
+CMP 25 15.35 2.6 90 N R71 RES_-_0805 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg ''
+PRP Mfg_Part_Number ''
+PRP NI ''
+PRP Package '0805'
+PRP Power ''
+PRP Precision '1%'
+PRP Temperature ''
+PRP Value '121'
+PRP VerifiedBy ''
+PRP Voltage ''
+TOP 0 15.35 2.6355 0 N 56 1 R71-1
+TOP 1 15.35 2.5645 0 N 57 1 R71-2
+#
+# CMP 48
+CMP 31 15.6 2.6 270 N BMS 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 15.6 2.45 270 N 216 50 BMS-1
+TOP 1 15.6 2.55 270 N 57 2 BMS-2
+TOP 2 15.6 2.65 270 N 56 2 BMS-3
+TOP 3 15.6 2.75 270 N 186 74 BMS-4
+#
+# CMP 49
+CMP 27 15.1 2.6 0 N U9 MAX485ESA+ ;0=1,1=0.0000
+PRP Availability 'Unavailable'
+PRP MF 'Maxim Integrated'
+PRP MP 'MAX485ESA+'
+PRP Package 'SOIC-8 Maxim'
+PRP Price 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/MAX485ESA%2B/Maxim%20Integrated/view-part/553653/?ref=snap'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MAX485ESA+TCT-ND'
+PRP Value ''
+TOP 0 15.0025591 2.675 0 N 54 0 U9-1
+TOP 1 15.0025591 2.625 0 N 55 0 U9-2
+TOP 2 15.0025591 2.575 0 N 53 0 U9-3
+TOP 3 15.0025591 2.525 0 N 52 0 U9-4
+TOP 4 15.1974409 2.525 0 N 186 38 U9-5
+TOP 5 15.1974409 2.575 0 N 57 0 U9-6
+TOP 6 15.1974409 2.625 0 N 56 0 U9-7
+TOP 7 15.1974409 2.675 0 N 216 25 U9-8
+#
+# CMP 50
+CMP 20 9.89 5.74 0 N U8 L4970A ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2018 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number 'L4970A'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Updates_to_database_2020-11-02'
+PRP Type 'DEV'
+PRP Vendor 'STMicroelectronics'
+TOP 0 9.89 5.74 0 N 59 1 U8-1
+TOP 1 9.94 5.94 0 N 62 1 U8-2
+TOP 2 9.99 5.74 0 N 58 1 U8-3
+TOP 3 10.04 5.94 0 N 78 0 U8-4
+TOP 4 10.09 5.74 0 N 61 1 U8-5
+TOP 5 10.14 5.94 0 N 64 1 U8-6
+TOP 6 10.19 5.74 0 N 160 4 U8-7
+TOP 7 10.24 5.94 0 N 186 85 U8-8
+TOP 8 10.29 5.74 0 N 158 17 U8-9
+TOP 9 10.34 5.94 0 N 133 2 U8-10
+TOP 10 10.39 5.74 0 N 131 2 U8-11
+TOP 11 10.44 5.94 0 N 60 1 U8-12
+TOP 12 10.49 5.74 0 N 0 242 U8-13
+TOP 13 10.54 5.94 0 N 134 2 U8-14
+TOP 14 10.59 5.74 0 N 63 1 U8-15
+#
+# CMP 51
+CMP 20 8.64 5.74 0 N U5 L4970A ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2018 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number 'L4970A'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Updates_to_database_2020-11-02'
+PRP Type 'DEV'
+PRP Vendor 'STMicroelectronics'
+TOP 0 8.64 5.74 0 N 66 1 U5-1
+TOP 1 8.69 5.94 0 N 69 1 U5-2
+TOP 2 8.74 5.74 0 N 65 1 U5-3
+TOP 3 8.79 5.94 0 N 77 0 U5-4
+TOP 4 8.84 5.74 0 N 68 1 U5-5
+TOP 5 8.89 5.94 0 N 71 1 U5-6
+TOP 6 8.94 5.74 0 N 159 4 U5-7
+TOP 7 8.99 5.94 0 N 186 86 U5-8
+TOP 8 9.04 5.74 0 N 158 20 U5-9
+TOP 9 9.09 5.94 0 N 136 2 U5-10
+TOP 10 9.14 5.74 0 N 146 2 U5-11
+TOP 11 9.19 5.94 0 N 67 1 U5-12
+TOP 12 9.24 5.74 0 N 0 16 U5-13
+TOP 13 9.29 5.94 0 N 135 2 U5-14
+TOP 14 9.34 5.74 0 N 70 1 U5-15
+#
+# CMP 52
+CMP 9 8.99 7.19 180 N J39 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 8.99 7.19 180 N 140 0 J39-1
+TOP 1 8.89 7.19 180 N 159 3 J39-2
+TOP 2 8.79 7.19 180 N 186 66 J39-3
+#
+# CMP 53
+CMP 9 10.29 7.19 180 N J40 5-103414-1 ;0=2,1=0.0000
+PRP Built_By 'EMA_UL_Team'
+PRP Copyright 'Copyright (C) 2016 Accelerated Designs. All rights reserved'
+PRP Manufacturer_Part_Number '5-103414-1'
+PRP RefDes 'RefDes'
+PRP SourceLibrary 'Tyco_2012-1-03'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A32977-ND'
+PRP Type 'DEV'
+PRP Vendor 'TE Connectivity'
+TOP 0 10.29 7.19 180 N 139 0 J40-1
+TOP 1 10.19 7.19 180 N 160 3 J40-2
+TOP 2 10.09 7.19 180 N 186 65 J40-3
+#
+# CMP 54
+CMP 30 1.65 3.05 0 N Encodeur_Gauche 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 1.65 3.05 0 N 216 45 Encodeur_Gauche-1
+TOP 1 1.75 3.05 0 N 213 2 Encodeur_Gauche-2
+TOP 2 1.85 3.05 0 N 190 2 Encodeur_Gauche-3
+TOP 3 1.95 3.05 0 N 192 2 Encodeur_Gauche-4
+TOP 4 2.05 3.05 0 N 191 2 Encodeur_Gauche-5
+TOP 5 2.15 3.05 0 N 186 64 Encodeur_Gauche-6
+TOP 6 2.192126 3.1740157 0 N 0 17 Encodeur_Gauche-empty-1
+#
+# CMP 55
+CMP 30 12.59 7.04 0 N J5 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 12.59 7.04 0 N 158 12 J5-1
+TOP 1 12.69 7.04 0 N 102 0 J5-2
+TOP 2 12.79 7.04 0 N 101 0 J5-3
+TOP 3 12.89 7.04 0 N 100 2 J5-4
+TOP 4 12.99 7.04 0 N 104 2 J5-5
+TOP 5 13.09 7.04 0 N 186 146 J5-6
+TOP 6 13.132126 7.1640157 0 N 0 18 J5-empty-1
+#
+# CMP 56
+CMP 30 1.65 2.5 0 N Encodeur_Droite 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 1.65 2.5 0 N 216 44 Encodeur_Droite-1
+TOP 1 1.75 2.5 0 N 213 1 Encodeur_Droite-2
+TOP 2 1.85 2.5 0 N 190 1 Encodeur_Droite-3
+TOP 3 1.95 2.5 0 N 192 1 Encodeur_Droite-4
+TOP 4 2.05 2.5 0 N 191 1 Encodeur_Droite-5
+TOP 5 2.15 2.5 0 N 186 63 Encodeur_Droite-6
+TOP 6 2.192126 2.6240157 0 N 0 19 Encodeur_Droite-empty-1
+#
+# CMP 57
+CMP 30 1.65 3.6 0 N Encodeur_Soufflante 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 1.65 3.6 0 N 216 73 Encodeur_Soufflante-1
+TOP 1 1.75 3.6 0 N 213 5 Encodeur_Soufflante-2
+TOP 2 1.85 3.6 0 N 190 5 Encodeur_Soufflante-3
+TOP 3 1.95 3.6 0 N 192 5 Encodeur_Soufflante-4
+TOP 4 2.05 3.6 0 N 191 5 Encodeur_Soufflante-5
+TOP 5 2.15 3.6 0 N 186 134 Encodeur_Soufflante-6
+TOP 6 2.192126 3.7240157 0 N 0 20 Encodeur_Soufflante-empty-1
+#
+# CMP 58
+CMP 30 0.75 2.5 0 N Encodeur_Autre 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 0.75 2.5 0 N 216 43 Encodeur_Autre-1
+TOP 1 0.85 2.5 0 N 213 0 Encodeur_Autre-2
+TOP 2 0.95 2.5 0 N 190 0 Encodeur_Autre-3
+TOP 3 1.05 2.5 0 N 192 0 Encodeur_Autre-4
+TOP 4 1.15 2.5 0 N 191 0 Encodeur_Autre-5
+TOP 5 1.25 2.5 0 N 186 62 Encodeur_Autre-6
+TOP 6 1.292126 2.6240157 0 N 0 21 Encodeur_Autre-empty-1
+#
+# CMP 59
+CMP 30 0.75 3.6 0 N J41 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 0.75 3.6 0 N 216 42 J41-1
+TOP 1 0.85 3.6 0 N 45 0 J41-2
+TOP 2 0.95 3.6 0 N 42 0 J41-3
+TOP 3 1.05 3.6 0 N 44 0 J41-4
+TOP 4 1.15 3.6 0 N 43 0 J41-5
+TOP 5 1.25 3.6 0 N 186 61 J41-6
+TOP 6 1.292126 3.7240157 0 N 0 22 J41-empty-1
+#
+# CMP 60
+CMP 30 16.9 4.05 90 N Current_Motor 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 16.9 4.05 90 N 216 46 Current_Motor-1
+TOP 1 16.9 3.95 90 N 120 2 Current_Motor-2
+TOP 2 16.9 3.85 90 N 121 0 Current_Motor-3
+TOP 3 16.9 3.75 90 N 122 1 Current_Motor-4
+TOP 4 16.9 3.65 90 N 186 67 Current_Motor-5
+TOP 5 16.9 3.55 90 N 0 23 Current_Motor-6
+TOP 6 17.0240157 3.507874 90 N 0 24 Current_Motor-empty-1
+#
+# CMP 61
+CMP 30 16.9 3.1 90 N Current_Battery 2-644486-6 ;0=2,1=0.0000
+PRP Digi-Key_Part_Number 'A30896-ND'
+PRP DigiKey-Purchase-URL 'https://snapeda.com/shop?store=DigiKey&id=2876038'
+PRP MF 'TE Connectivity'
+PRP Mouser-Purchase-URL 'https://snapeda.com/shop?store=Mouser&id=2876038'
+PRP MP '2-644486-6'
+PRP Package 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644486-6/TE%20Connectivity%20AMP%20Connectors/view-part/2876038/?ref=snap'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 'A30896-ND'
+PRP Value ''
+TOP 0 16.9 3.1 90 N 216 53 Current_Battery-1
+TOP 1 16.9 3 90 N 117 2 Current_Battery-2
+TOP 2 16.9 2.9 90 N 118 0 Current_Battery-3
+TOP 3 16.9 2.8 90 N 119 1 Current_Battery-4
+TOP 4 16.9 2.7 90 N 186 76 Current_Battery-5
+TOP 5 16.9 2.6 90 N 0 26 Current_Battery-6
+TOP 6 17.0240157 2.557874 90 N 0 25 Current_Battery-empty-1
+#
+# CMP 62
+CMP 1 12.3937008 5.1 180 N C8 CAP_ALUM_3300UF_20%_50V_SNAP ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '338-2545-ND'
+PRP Tolerance '20%'
+PRP Value '3300µF'
+PRP Voltage '50V'
+TOP 0 12.3937008 5.1 180 N 158 18 C8-1
+TOP 1 12 5.1 180 N 186 84 C8-2
+#
+# CMP 63
+CMP 22 17 2 270 N J4 USB-A1HSW6 ;0=2,1=0.0000
+PRP Availability 'Unavailable'
+PRP MF 'On Shore'
+PRP MP 'USB-A1HSW6'
+PRP Package 'None'
+PRP Price 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/USB-A1HSW6/On%20Shore%20Technology%20Inc./view-part/13110/?ref=snap'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'ED2989-ND'
+PRP Value ''
+TOP 0 16.7437008 1.8622047 270 N 72 1 J4-1
+TOP 1 16.7437008 1.9606299 270 N 0 243 J4-2
+TOP 2 16.7437008 2.0393701 270 N 0 244 J4-3
+TOP 3 16.7437008 2.1377953 270 N 186 75 J4-4
+TOP 4 16.8503937 1.7413386 270 N 0 245 J4-empty-1
+TOP 5 16.8503937 2.2586614 270 N 0 246 J4-empty-2
+#
+# CMP 64
+CMP 18 16.4346457 6.27 0 N J3 0460150402 ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'WM3844-ND'
+TOP 0 16.4346457 6.27 0 N 105 3 J3-1
+TOP 1 16.6 6.27 0 N 138 3 J3-2
+TOP 2 16.6 6.4865354 0 N 166 0 J3-3
+TOP 3 16.4346457 6.4865354 0 N 103 22 J3-4
+#
+# CMP 65
+CMP 3 15.85 0.45 270 N SW4 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 15.790945 0.312205 270 N 216 18 SW4-1
+TOP 1 15.790945 0.587795 270 N 216 19 SW4-2
+TOP 2 15.9090549 0.312205 270 N 73 1 SW4-3
+TOP 3 15.9090549 0.587795 270 N 73 2 SW4-4
+#
+# CMP 66
+CMP 3 15.55 0.45 270 N SW3 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 15.490945 0.312205 270 N 216 14 SW3-1
+TOP 1 15.490945 0.587795 270 N 216 15 SW3-2
+TOP 2 15.6090549 0.312205 270 N 74 1 SW3-3
+TOP 3 15.6090549 0.587795 270 N 74 2 SW3-4
+#
+# CMP 67
+CMP 3 15.25 0.4500064 270 N SW2 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 15.190945 0.3122114 270 N 216 13 SW2-1
+TOP 1 15.190945 0.5878014 270 N 216 12 SW2-2
+TOP 2 15.3090549 0.3122114 270 N 75 2 SW2-3
+TOP 3 15.3090549 0.5878014 270 N 75 1 SW2-4
+#
+# CMP 68
+CMP 3 14.95 0.45 270 N SW1 430181038816 ;0=1,1=0.1496
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.we-online.com'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://katalog.we-online.de/em/datasheet/430181038816.pdf'
+PRP Manufacturer 'Wuerth Elektronik'
+PRP NoPins '04'
+PRP PackageReference '430181038816'
+PRP PartNumber '430181038816'
+TOP 0 14.890945 0.312205 270 N 216 16 SW1-1
+TOP 1 14.890945 0.587795 270 N 216 17 SW1-2
+TOP 2 15.0090549 0.312205 270 N 76 1 SW1-3
+TOP 3 15.0090549 0.587795 270 N 76 2 SW1-4
+#
+# CMP 69
+CMP 0 16.45 1.8559055 90 N F3 0ZCG0075BF2B ;0=2,1=0.0000
+PRP Hold_Current '750mA'
+PRP Max_Voltage '33V'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'F3486CT-ND'
+TOP 0 16.45 1.8559055 90 N 72 0 F3-1
+TOP 1 16.45 1.65 90 N 216 51 F3-2
+#
+# CMP 70
+CMP 0 12.04 6.94 270 N F2 0ZCG0075BF2B ;0=2,1=0.0000
+PRP Hold_Current '750mA'
+PRP Max_Voltage '33V'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'F3486CT-ND'
+TOP 0 12.04 6.94 270 N 158 16 F2-1
+TOP 1 12.04 7.1459055 270 N 79 0 F2-2
+#
+# CMP 71
+CMP 0 16.6 1.35 0 N F1 0ZCG0075BF2B ;0=2,1=0.0000
+PRP Hold_Current '750mA'
+PRP Max_Voltage '33V'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'F3486CT-ND'
+TOP 0 16.6 1.35 0 N 216 52 F1-1
+TOP 1 16.8059055 1.35 0 N 80 1 F1-2
+#
+# CMP 72
+CMP 2 15.08 6.9403937 90 N C1 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'P122136CT-ND'
+PRP Value '330 µF'
+TOP 0 15.08 6.59 0 N 106 17 C1-1
+TOP 1 15.08 6.9403937 0 N 103 21 C1-2
+#
+# CMP 73
+CMP 32 2.0980315 6.35 180 N Q19 WL-OCPT_OPTOCOUPLER_PHOTOTRANSIS ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '732-140357145400CT-ND'
+TOP 0 2.0980315 6.35 180 N 81 1 Q19-1
+TOP 1 2.0980315 6.45 180 N 186 79 Q19-2
+TOP 2 1.85 6.45 180 N 94 3 Q19-3
+TOP 3 1.85 6.35 180 N 87 2 Q19-4
+#
+# CMP 74
+CMP 32 2.1 4.85 180 N Q18 WL-OCPT_OPTOCOUPLER_PHOTOTRANSIS ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '732-140357145400CT-ND'
+TOP 0 2.1 4.85 180 N 82 1 Q18-1
+TOP 1 2.1 4.95 180 N 186 87 Q18-2
+TOP 2 1.8519685 4.95 180 N 95 4 Q18-3
+TOP 3 1.8519685 4.85 180 N 93 2 Q18-4
+#
+# CMP 75
+CMP 25 3.5 5.55 180 N R66 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 3.5355 5.55 90 N 145 0 R66-1
+TOP 1 3.4645 5.55 90 N 91 0 R66-2
+#
+# CMP 76
+CMP 32 15.18 5.94 0 N Q17 WL-OCPT_OPTOCOUPLER_PHOTOTRANSIS ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '732-140357145400CT-ND'
+TOP 0 15.18 5.94 0 N 84 1 Q17-1
+TOP 1 15.18 5.84 0 N 186 81 Q17-2
+TOP 2 15.4280315 5.84 0 N 103 17 Q17-3
+TOP 3 15.4280315 5.94 0 N 83 2 Q17-4
+#
+# CMP 77
+CMP 32 15.18 5.59 0 N Q16 WL-OCPT_OPTOCOUPLER_PHOTOTRANSIS ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '732-140357145400CT-ND'
+TOP 0 15.18 5.59 0 N 85 1 Q16-1
+TOP 1 15.18 5.49 0 N 186 82 Q16-2
+TOP 2 15.4280315 5.49 0 N 103 18 Q16-3
+TOP 3 15.4280315 5.59 0 N 99 2 Q16-4
+#
+# CMP 78
+CMP 29 1.7 6.4 180 N Q15 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 1.7472441 6.3625984 90 N 87 1 Q15-1
+TOP 1 1.7472441 6.4374015 90 N 94 1 Q15-2
+TOP 2 1.6527559 6.4 90 N 86 2 Q15-3
+#
+# CMP 79
+CMP 32 15.1819685 5.14 0 N Q14 WL-OCPT_OPTOCOUPLER_PHOTOTRANSIS ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '732-140357145400CT-ND'
+TOP 0 15.1819685 5.14 0 N 89 1 Q14-1
+TOP 1 15.1819685 5.04 0 N 186 83 Q14-2
+TOP 2 15.43 5.04 0 N 103 19 Q14-3
+TOP 3 15.43 5.14 0 N 88 2 Q14-4
+#
+# CMP 80
+CMP 4 3.5 5.1795276 270 N C34 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6421-2-ND'
+PRP Value '47µF'
+TOP 0 3.5 5.4 180 N 91 2 C34-1
+TOP 1 3.5 5.1795276 180 N 186 93 C34-2
+#
+# CMP 81
+CMP 4 1.05 5.0204724 90 N C33 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6421-2-ND'
+PRP Value '47µF'
+TOP 0 1.05 4.8 0 N 165 2 C33-1
+TOP 1 1.05 5.0204724 0 N 95 5 C33-2
+#
+# CMP 82
+CMP 25 16.6 4 270 N R65 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k - DNP'
+TOP 0 16.6 3.9645 180 N 120 1 R65-1
+TOP 1 16.6 4.0355 180 N 186 35 R65-2
+#
+# CMP 83
+CMP 25 16.7 4 270 N R64 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k - DNP'
+TOP 0 16.7 3.9645 180 N 120 0 R64-1
+TOP 1 16.7 4.0355 180 N 216 20 R64-2
+#
+# CMP 84
+CMP 25 16.7 2.75 90 N R62 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k - DNP'
+TOP 0 16.7 2.7855 0 N 117 0 R62-1
+TOP 1 16.7 2.7145 0 N 186 39 R62-2
+#
+# CMP 85
+CMP 25 16.7 3.05 270 N R61 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k - DNP'
+TOP 0 16.7 3.0145 180 N 117 1 R61-1
+TOP 1 16.7 3.0855 180 N 216 26 R61-2
+#
+# CMP 86
+CMP 25 2.25 6.35 180 N R59 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '383'
+TOP 0 2.2855 6.35 90 N 145 1 R59-1
+TOP 1 2.2145 6.35 90 N 81 0 R59-2
+#
+# CMP 87
+CMP 25 1.5 4.9 180 N R58 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 1.5355 4.9 90 N 92 2 R58-1
+TOP 1 1.4645 4.9 90 N 165 0 R58-2
+#
+# CMP 88
+CMP 25 1.5 6.2 0 N R57 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 1.4645 6.2 270 N 96 1 R57-1
+TOP 1 1.5355 6.2 270 N 87 0 R57-2
+#
+# CMP 89
+CMP 29 1.7 4.9 180 N Q13 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 1.7472441 4.8625984 90 N 93 1 Q13-1
+TOP 1 1.7472441 4.9374015 90 N 95 2 Q13-2
+TOP 2 1.6527559 4.9 90 N 92 1 Q13-3
+#
+# CMP 90
+CMP 31 3.5 3.05 0 N J36 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.35 3.05 0 N 216 41 J36-1
+TOP 1 3.45 3.05 0 N 189 0 J36-2
+TOP 2 3.55 3.05 0 N 188 0 J36-3
+TOP 3 3.65 3.05 0 N 186 60 J36-4
+#
+# CMP 91
+CMP 31 3.5 3.6 0 N J34 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.35 3.6 0 N 216 40 J34-1
+TOP 1 3.45 3.6 0 N 39 0 J34-2
+TOP 2 3.55 3.6 0 N 38 0 J34-3
+TOP 3 3.65 3.6 0 N 186 59 J34-4
+#
+# CMP 92
+CMP 31 2.75 3.6 0 N J28 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 2.6 3.6 0 N 216 70 J28-1
+TOP 1 2.7 3.6 0 N 41 1 J28-2
+TOP 2 2.8 3.6 0 N 40 1 J28-3
+TOP 3 2.9 3.6 0 N 186 131 J28-4
+#
+# CMP 93
+CMP 31 2.75 3.05 0 N J25 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 2.6 3.05 0 N 216 71 J25-1
+TOP 1 2.7 3.05 0 N 124 1 J25-2
+TOP 2 2.8 3.05 0 N 123 1 J25-3
+TOP 3 2.9 3.05 0 N 186 132 J25-4
+#
+# CMP 94
+CMP 31 2.75 2.5 0 N J23 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 2.6 2.5 0 N 216 72 J23-1
+TOP 1 2.7 2.5 0 N 126 1 J23-2
+TOP 2 2.8 2.5 0 N 125 1 J23-3
+TOP 3 2.9 2.5 0 N 186 133 J23-4
+#
+# CMP 95
+CMP 31 7.5 6.8 0 N J10 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 7.35 6.8 0 N 216 75 J10-1
+TOP 1 7.45 6.8 0 N 215 1 J10-2
+TOP 2 7.55 6.8 0 N 214 1 J10-3
+TOP 3 7.65 6.8 0 N 186 143 J10-4
+#
+# CMP 96
+CMP 31 3.3 0.85 0 N RB 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.15 0.85 0 N 216 56 RB-1
+TOP 1 3.25 0.85 0 N 113 1 RB-2
+TOP 2 3.35 0.85 0 N 112 1 RB-3
+TOP 3 3.45 0.85 0 N 186 113 RB-4
+#
+# CMP 97
+CMP 31 3.3 0.35 0 N BRR 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.15 0.35 0 N 216 57 BRR-1
+TOP 1 3.25 0.35 0 N 196 1 BRR-2
+TOP 2 3.35 0.35 0 N 195 1 BRR-3
+TOP 3 3.45 0.35 0 N 186 114 BRR-4
+#
+# CMP 98
+CMP 31 0.9 0.85 0 N LB 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.75 0.85 0 N 216 62 LB-1
+TOP 1 0.85 0.85 0 N 202 1 LB-2
+TOP 2 0.95 0.85 0 N 201 1 LB-3
+TOP 3 1.05 0.85 0 N 186 119 LB-4
+#
+# CMP 99
+CMP 31 0.9 1.35 0 N LF 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.75 1.35 0 N 216 63 LF-1
+TOP 1 0.85 1.35 0 N 208 1 LF-2
+TOP 2 0.95 1.35 0 N 207 1 LF-3
+TOP 3 1.05 1.35 0 N 186 120 LF-4
+#
+# CMP 100
+CMP 31 2.7 0.35 0 N BR 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 2.55 0.35 0 N 216 58 BR-1
+TOP 1 2.65 0.35 0 N 115 1 BR-2
+TOP 2 2.75 0.35 0 N 114 1 BR-3
+TOP 3 2.85 0.35 0 N 186 115 BR-4
+#
+# CMP 101
+CMP 31 2.1 0.35 0 N BM 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 1.95 0.35 0 N 216 59 BM-1
+TOP 1 2.05 0.35 0 N 198 1 BM-2
+TOP 2 2.15 0.35 0 N 197 1 BM-3
+TOP 3 2.25 0.35 0 N 186 116 BM-4
+#
+# CMP 102
+CMP 31 1.5 0.35 0 N BL 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 1.35 0.35 0 N 216 60 BL-1
+TOP 1 1.45 0.35 0 N 204 1 BL-2
+TOP 2 1.55 0.35 0 N 203 1 BL-3
+TOP 3 1.65 0.35 0 N 186 117 BL-4
+#
+# CMP 103
+CMP 31 0.9 0.35 0 N BLL 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.75 0.35 0 N 216 61 BLL-1
+TOP 1 0.85 0.35 0 N 210 1 BLL-2
+TOP 2 0.95 0.35 0 N 209 1 BLL-3
+TOP 3 1.05 0.35 0 N 186 118 BLL-4
+#
+# CMP 104
+CMP 31 3.3 1.35 0 N RF 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.15 1.35 0 N 216 55 RF-1
+TOP 1 3.25 1.35 0 N 111 1 RF-2
+TOP 2 3.35 1.35 0 N 110 1 RF-3
+TOP 3 3.45 1.35 0 N 186 112 RF-4
+#
+# CMP 105
+CMP 31 2.7 1.85 0 N FR 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 2.55 1.85 0 N 216 67 FR-1
+TOP 1 2.65 1.85 0 N 194 1 FR-2
+TOP 2 2.75 1.85 0 N 193 1 FR-3
+TOP 3 2.85 1.85 0 N 186 124 FR-4
+#
+# CMP 106
+CMP 31 2.1 1.85 0 N FM 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 1.95 1.85 0 N 216 66 FM-1
+TOP 1 2.05 1.85 0 N 200 1 FM-2
+TOP 2 2.15 1.85 0 N 199 1 FM-3
+TOP 3 2.25 1.85 0 N 186 123 FM-4
+#
+# CMP 107
+CMP 31 1.5 1.85 0 N FL 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 1.35 1.85 0 N 216 65 FL-1
+TOP 1 1.45 1.85 0 N 206 1 FL-2
+TOP 2 1.55 1.85 0 N 205 1 FL-3
+TOP 3 1.65 1.85 0 N 186 122 FL-4
+#
+# CMP 108
+CMP 31 0.9 1.85 0 N FLL 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.75 1.85 0 N 216 64 FLL-1
+TOP 1 0.85 1.85 0 N 212 1 FLL-2
+TOP 2 0.95 1.85 0 N 211 1 FLL-3
+TOP 3 1.05 1.85 0 N 186 121 FLL-4
+#
+# CMP 109
+CMP 31 3.3 1.85 0 N FRR 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 3.15 1.85 0 N 216 68 FRR-1
+TOP 1 3.25 1.85 0 N 109 1 FRR-2
+TOP 2 3.35 1.85 0 N 108 1 FRR-3
+TOP 3 3.45 1.85 0 N 186 125 FRR-4
+#
+# CMP 110
+CMP 31 0.575 6.3 270 N J32 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.575 6.15 270 N 96 2 J32-1
+TOP 1 0.575 6.25 270 N 164 2 J32-2
+TOP 2 0.575 6.35 270 N 142 1 J32-3
+TOP 3 0.575 6.45 270 N 94 5 J32-4
+#
+# CMP 111
+CMP 31 0.575 4.85 270 N J31 2-644861-4 ;0=2,1=0.0000
+PRP Availability 'Good'
+PRP Check_prices 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=eda'
+PRP MF 'TE Connectivity'
+PRP MP '2-644861-4'
+PRP Package 'None'
+PRP Price 'None'
+PRP Purchase-URL 'https://pricing.snapeda.com/search/part/2-644861-4/?ref=eda'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/2-644861-4/TE%20Connectivity%20AMP%20Connectors/view-part/2876279/?ref=snap'
+PRP Value ''
+TOP 0 0.575 4.7 270 N 97 2 J31-1
+TOP 1 0.575 4.8 270 N 165 1 J31-2
+TOP 2 0.575 4.9 270 N 143 1 J31-3
+TOP 3 0.575 5 270 N 95 3 J31-4
+#
+# CMP 112
+CMP 10 15.63 6.69 90 N PS2 VXO7805-500-M ;0=1,1=0.0000
+PRP Availability 'Unavailable'
+PRP MF 'CUI Inc.'
+PRP MP 'VXO7805-500-M'
+PRP Package 'SMD-4'
+PRP Price 'None'
+PRP SnapEDA_Link 'https://www.snapeda.com/parts/VXO7805-500-M/CUI%20Inc./view-part/4703817/?ref=snap'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '102-VXO7805-500-M-CT-ND'
+PRP Value ''
+TOP 0 15.8662205 6.9065354 90 N 105 0 PS2-1
+TOP 1 15.8662205 6.4734646 90 N 103 3 PS2-2
+TOP 2 15.3937795 6.4734646 90 N 106 4 PS2-3
+TOP 3 15.3937795 6.9065354 90 N 0 6 PS2-4
+#
+# CMP 113
+CMP 25 15.8 0.9 270 N R56 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 '2019-RK73H2ATTD84R5FCT-ND'
+PRP Value '84.5'
+TOP 0 15.8 0.8645 180 N 46 1 R56-1
+TOP 1 15.8 0.9355 180 N 186 18 R56-2
+#
+# CMP 114
+CMP 25 15.2 0.9 270 N R55 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 '2019-RK73H2ATTD84R5FCT-ND'
+PRP Value '84.5'
+TOP 0 15.2 0.8645 180 N 47 1 R55-1
+TOP 1 15.2 0.9355 180 N 186 17 R55-2
+#
+# CMP 115
+CMP 25 15.5 0.9 270 N R54 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD150RCT-ND'
+PRP Value '150'
+TOP 0 15.5 0.8645 180 N 48 1 R54-1
+TOP 1 15.5 0.9355 180 N 186 41 R54-2
+#
+# CMP 116
+CMP 25 14.9 0.9 270 N R53 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD150RCT-ND'
+PRP Value '150'
+TOP 0 14.9 0.8645 180 N 49 1 R53-1
+TOP 1 14.9 0.9355 180 N 186 16 R53-2
+#
+# CMP 117
+CMP 25 16.18 5.44 90 N R50 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 16.18 5.4755 0 N 98 0 R50-1
+TOP 1 16.18 5.4045 0 N 185 0 R50-2
+#
+# CMP 118
+CMP 25 16.28 5.44 270 N R49 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 16.28 5.4045 180 N 106 6 R49-1
+TOP 1 16.28 5.4755 180 N 98 1 R49-2
+#
+# CMP 119
+CMP 25 15.63 5.94 0 N R48 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.5945 5.94 270 N 83 0 R48-1
+TOP 1 15.6655 5.94 270 N 181 0 R48-2
+#
+# CMP 120
+CMP 29 15.88 5.44 270 N Q12 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 15.8425984 5.3927559 180 N 99 1 Q12-1
+TOP 1 15.9174015 5.3927559 180 N 103 10 Q12-2
+TOP 2 15.88 5.4872441 180 N 90 2 Q12-3
+#
+# CMP 121
+CMP 12 16.08 6.69 90 N C32 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 16.08 6.7402504 90 N 105 2 C32-1
+TOP 1 16.08 6.6397495 90 N 103 12 C32-2
+#
+# CMP 122
+CMP 12 15.98 6.69 90 N C31 CL31B475KBHNFNE ;0=1,1=0.0000
+PRP Capacitance '4.7uF'
+PRP Case_Code_(Imperial) '1206'
+PRP Case_Code_(Metric) '3216'
+PRP Case/Package '1206'
+PRP Depth '1.6mm'
+PRP Dielectric 'X7R'
+PRP Height '1.6mm'
+PRP Length '3.2mm'
+PRP Max_Operating_Temperature '125°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Radiation_Hardening 'No'
+PRP Thickness '0.071inch'
+PRP Tolerance '10%'
+PRP Voltage_Rating '50V'
+PRP Width '0.063inch'
+TOP 0 15.98 6.7402504 90 N 105 1 C31-1
+TOP 1 15.98 6.6397495 90 N 103 11 C31-2
+#
+# CMP 123
+CMP 16 11.69 6.59 270 N Q11 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 11.59 6.59 270 N 107 0 Q11-1
+TOP 1 11.69 6.59 270 N 116 0 Q11-2
+TOP 2 11.79 6.59 270 N 186 71 Q11-3
+#
+# CMP 124
+CMP 24 12 0.4 270 N U11 Raspberry_PI_4 ;0=2,1=0.0000
+TOP 0 12 0.4 180 N 186 126 U11-0
+TOP 1 12 2.6834646 180 N 186 127 U11-0
+TOP 2 10.0708661 0.4 180 N 186 128 U11-0
+TOP 3 10.0708661 2.6834646 180 N 186 129 U11-0
+#
+# CMP 125
+CMP 5 12.5 4.1 90 N U10 Arduino_Mega ;0=2,1=0.0000
+TOP 0 14.5062993 3.0000001 180 N 0 61 U10-1
+TOP 1 14.5062993 2.9000001 180 N 0 60 U10-2
+TOP 2 14.5062993 2.8000001 180 N 0 59 U10-3
+TOP 3 14.5062993 2.7000001 180 N 0 58 U10-4
+TOP 4 14.5062993 2.6000001 180 N 0 57 U10-5
+TOP 5 14.5062993 2.5000001 180 N 186 97 U10-6
+TOP 6 14.5062993 2.4000001 180 N 186 98 U10-7
+TOP 7 14.5062993 2.3000001 180 N 0 56 U10-8
+TOP 8 14.5062993 2.1000001 180 N 117 3 U10-9
+TOP 9 14.5062993 2.0000001 180 N 118 1 U10-10
+TOP 10 14.5062993 1.9000001 180 N 0 52 U10-11
+TOP 11 14.5062993 1.8000001 180 N 120 3 U10-12
+TOP 12 14.5062993 1.7000001 180 N 121 1 U10-13
+TOP 13 14.5062993 1.6000001 180 N 0 51 U10-14
+TOP 14 14.5062993 1.5000001 180 N 0 50 U10-15
+TOP 15 14.5062993 1.4000001 180 N 0 54 U10-16
+TOP 16 14.5062993 1.2000001 180 N 0 55 U10-17
+TOP 17 14.5062993 1.1000001 180 N 0 48 U10-18
+TOP 18 14.5062993 1.0000001 180 N 0 47 U10-19
+TOP 19 14.5062993 0.9000001 180 N 0 46 U10-20
+TOP 20 14.5062993 0.8000001 180 N 0 45 U10-21
+TOP 21 14.5062993 0.7000001 180 N 33 0 U10-22
+TOP 22 14.5062993 0.6000001 180 N 32 0 U10-23
+TOP 23 14.5062993 0.5000001 180 N 31 0 U10-24
+TOP 24 12.6062993 0.4000001 0 N 0 89 U10-25
+TOP 25 12.6062993 0.3000001 0 N 0 91 U10-26
+TOP 26 12.7062993 0.4000001 0 N 77 1 U10-27
+TOP 27 12.7062993 0.3000001 0 N 107 1 U10-28
+TOP 28 12.8062993 0.4000001 0 N 78 1 U10-29
+TOP 29 12.8062993 0.3000001 0 N 122 2 U10-30
+TOP 30 12.9062993 0.4000001 0 N 55 1 U10-31
+TOP 31 12.9062993 0.3000001 0 N 119 2 U10-32
+TOP 32 13.0062993 0.4000001 0 N 53 1 U10-33
+TOP 33 13.0062993 0.3000001 0 N 0 76 U10-34
+TOP 34 13.1062993 0.4000001 0 N 20 2 U10-35
+TOP 35 13.1062993 0.3000001 0 N 0 79 U10-36
+TOP 36 13.2062993 0.4000001 0 N 19 2 U10-37
+TOP 37 13.2062993 0.3000001 0 N 0 75 U10-38
+TOP 38 13.3062993 0.4000001 0 N 0 78 U10-39
+TOP 39 13.3062993 0.3000001 0 N 0 77 U10-40
+TOP 40 13.4062993 0.4000001 0 N 0 34 U10-41
+TOP 41 13.4062993 0.3000001 0 N 50 2 U10-42
+TOP 42 13.5062993 0.4000001 0 N 0 33 U10-43
+TOP 43 13.5062993 0.3000001 0 N 51 2 U10-44
+TOP 44 13.6062993 0.4000001 0 N 0 32 U10-45
+TOP 45 13.6062993 0.3000001 0 N 0 31 U10-46
+TOP 46 13.7062993 0.4000001 0 N 0 30 U10-47
+TOP 47 13.7062993 0.3000001 0 N 0 29 U10-48
+TOP 48 13.8062993 0.4000001 0 N 0 44 U10-49
+TOP 49 13.8062993 0.3000001 0 N 0 39 U10-50
+TOP 50 13.9062993 0.4000001 0 N 0 43 U10-51
+TOP 51 13.9062993 0.3000001 0 N 0 42 U10-52
+TOP 52 14.0062993 0.4000001 0 N 0 41 U10-53
+TOP 53 14.0062993 0.3000001 0 N 0 40 U10-54
+TOP 54 14.1062993 0.4000001 0 N 35 3 U10-55
+TOP 55 14.1062993 0.3000001 0 N 26 1 U10-56
+TOP 56 14.2062993 0.4000001 0 N 34 3 U10-57
+TOP 57 14.2062993 0.3000001 0 N 23 1 U10-58
+TOP 58 14.3062993 0.4000001 0 N 186 99 U10-59
+TOP 59 14.3062993 0.3000001 0 N 186 100 U10-60
+TOP 60 12.6062993 0.7000001 0 N 0 88 U10-61
+TOP 61 12.6062993 0.8000001 0 N 0 87 U10-62
+TOP 62 12.6062993 0.9000001 0 N 54 1 U10-63
+TOP 63 12.6062993 1.0000001 0 N 52 1 U10-64
+TOP 64 12.6062993 1.1000001 0 N 0 96 U10-65
+TOP 65 12.6062993 1.2000001 0 N 0 100 U10-66
+TOP 66 12.6062993 1.3000001 0 N 0 99 U10-67
+TOP 67 12.6062993 1.4000001 0 N 0 98 U10-68
+TOP 68 12.6062993 1.6000001 0 N 0 97 U10-69
+TOP 69 12.6062993 1.7000001 0 N 0 67 U10-70
+TOP 70 12.6062993 1.8000001 0 N 0 66 U10-71
+TOP 71 12.6062993 1.9000001 0 N 0 65 U10-72
+TOP 72 12.6062993 2.0000001 0 N 0 68 U10-73
+TOP 73 12.6062993 2.1000001 0 N 0 64 U10-74
+TOP 74 12.6062993 2.2000001 0 N 0 63 U10-75
+TOP 75 12.6062993 2.3000001 0 N 0 86 U10-76
+TOP 76 12.6062993 2.4600001 180 N 29 2 U10-77
+TOP 77 12.6062993 2.5600001 180 N 0 82 U10-78
+TOP 78 12.6062993 2.6600001 180 N 0 83 U10-79
+TOP 79 12.6062993 2.7600001 180 N 0 80 U10-80
+TOP 80 12.6062993 2.8600001 180 N 0 81 U10-81
+TOP 81 12.6062993 2.9600001 180 N 0 84 U10-82
+TOP 82 12.6062993 3.0600001 180 N 186 96 U10-83
+TOP 83 12.6062993 3.1600001 180 N 0 93 U10-84
+TOP 84 12.6062993 3.2600001 180 N 0 95 U10-85
+TOP 85 12.6062993 3.3600001 180 N 0 94 U10-86
+TOP 86 12.7362993 3.2800001 270 N 0 69 U10-87
+TOP 87 12.8362993 3.2800001 270 N 0 74 U10-88
+TOP 88 12.7362993 3.3800001 270 N 0 73 U10-89
+TOP 89 12.8362993 3.3800001 270 N 0 72 U10-90
+TOP 90 12.7362993 3.4800001 270 N 0 71 U10-91
+TOP 91 12.8362993 3.4800001 270 N 0 70 U10-92
+TOP 92 13.4062993 1.5950001 0 N 0 38 U10-93
+TOP 93 13.4062993 1.4950001 0 N 0 37 U10-94
+TOP 94 13.5062993 1.5950001 0 N 0 36 U10-95
+TOP 95 13.5062993 1.4950001 0 N 0 35 U10-96
+TOP 96 13.6062993 1.5950001 0 N 0 27 U10-97
+TOP 97 13.6062993 1.4950001 0 N 0 28 U10-98
+TOP 98 14.5062993 0.3000001 90 N 0 53 U10-MH1
+TOP 99 12.6062993 3.5000001 90 N 0 85 U10-MH2
+TOP 100 12.6062993 0.5500001 90 N 0 90 U10-MH3
+TOP 101 14.5062993 3.5500001 90 N 0 62 U10-MH4
+TOP 102 13.2062993 1.5000001 90 N 0 92 U10-MH5
+TOP 103 14.3062993 1.5000001 90 N 0 49 U10-MH6
+#
+# CMP 126
+CMP 5 7.5 4.1 90 N U7 Arduino_Mega ;0=2,1=0.0000
+TOP 0 9.5062993 3.0000001 180 N 0 133 U7-1
+TOP 1 9.5062993 2.9000001 180 N 0 132 U7-2
+TOP 2 9.5062993 2.8000001 180 N 0 131 U7-3
+TOP 3 9.5062993 2.7000001 180 N 0 130 U7-4
+TOP 4 9.5062993 2.6000001 180 N 0 129 U7-5
+TOP 5 9.5062993 2.5000001 180 N 186 102 U7-6
+TOP 6 9.5062993 2.4000001 180 N 186 103 U7-7
+TOP 7 9.5062993 2.3000001 180 N 0 128 U7-8
+TOP 8 9.5062993 2.1000001 180 N 41 0 U7-9
+TOP 9 9.5062993 2.0000001 180 N 40 0 U7-10
+TOP 10 9.5062993 1.9000001 180 N 39 1 U7-11
+TOP 11 9.5062993 1.8000001 180 N 38 1 U7-12
+TOP 12 9.5062993 1.7000001 180 N 0 123 U7-13
+TOP 13 9.5062993 1.6000001 180 N 0 124 U7-14
+TOP 14 9.5062993 1.5000001 180 N 0 122 U7-15
+TOP 15 9.5062993 1.4000001 180 N 0 126 U7-16
+TOP 16 9.5062993 1.2000001 180 N 0 127 U7-17
+TOP 17 9.5062993 1.1000001 180 N 0 120 U7-18
+TOP 18 9.5062993 1.0000001 180 N 0 119 U7-19
+TOP 19 9.5062993 0.9000001 180 N 0 118 U7-20
+TOP 20 9.5062993 0.8000001 180 N 0 117 U7-21
+TOP 21 9.5062993 0.7000001 180 N 33 1 U7-22
+TOP 22 9.5062993 0.6000001 180 N 32 1 U7-23
+TOP 23 9.5062993 0.5000001 180 N 31 1 U7-24
+TOP 24 7.6062993 0.4000001 0 N 0 157 U7-25
+TOP 25 7.6062993 0.3000001 0 N 0 159 U7-26
+TOP 26 7.7062993 0.4000001 0 N 191 4 U7-27
+TOP 27 7.7062993 0.3000001 0 N 192 4 U7-28
+TOP 28 7.8062993 0.4000001 0 N 190 4 U7-29
+TOP 29 7.8062993 0.3000001 0 N 213 4 U7-30
+TOP 30 7.9062993 0.4000001 0 N 18 0 U7-31
+TOP 31 7.9062993 0.3000001 0 N 0 146 U7-32
+TOP 32 8.0062993 0.4000001 0 N 17 0 U7-33
+TOP 33 8.0062993 0.3000001 0 N 0 145 U7-34
+TOP 34 8.1062993 0.4000001 0 N 0 144 U7-35
+TOP 35 8.1062993 0.3000001 0 N 0 150 U7-36
+TOP 36 8.2062993 0.4000001 0 N 0 149 U7-37
+TOP 37 8.2062993 0.3000001 0 N 0 143 U7-38
+TOP 38 8.3062993 0.4000001 0 N 0 148 U7-39
+TOP 39 8.3062993 0.3000001 0 N 0 147 U7-40
+TOP 40 8.4062993 0.4000001 0 N 9 0 U7-41
+TOP 41 8.4062993 0.3000001 0 N 0 106 U7-42
+TOP 42 8.5062993 0.4000001 0 N 12 0 U7-43
+TOP 43 8.5062993 0.3000001 0 N 0 105 U7-44
+TOP 44 8.6062993 0.4000001 0 N 11 0 U7-45
+TOP 45 8.6062993 0.3000001 0 N 0 104 U7-46
+TOP 46 8.7062993 0.4000001 0 N 10 0 U7-47
+TOP 47 8.7062993 0.3000001 0 N 0 103 U7-48
+TOP 48 8.8062993 0.4000001 0 N 0 116 U7-49
+TOP 49 8.8062993 0.3000001 0 N 0 111 U7-50
+TOP 50 8.9062993 0.4000001 0 N 0 115 U7-51
+TOP 51 8.9062993 0.3000001 0 N 0 114 U7-52
+TOP 52 9.0062993 0.4000001 0 N 0 113 U7-53
+TOP 53 9.0062993 0.3000001 0 N 0 112 U7-54
+TOP 54 9.1062993 0.4000001 0 N 74 3 U7-55
+TOP 55 9.1062993 0.3000001 0 N 27 1 U7-56
+TOP 56 9.2062993 0.4000001 0 N 73 3 U7-57
+TOP 57 9.2062993 0.3000001 0 N 24 1 U7-58
+TOP 58 9.3062993 0.4000001 0 N 186 104 U7-59
+TOP 59 9.3062993 0.3000001 0 N 186 105 U7-60
+TOP 60 7.6062993 0.7000001 0 N 0 156 U7-61
+TOP 61 7.6062993 0.8000001 0 N 0 155 U7-62
+TOP 62 7.6062993 0.9000001 0 N 0 154 U7-63
+TOP 63 7.6062993 1.0000001 0 N 0 153 U7-64
+TOP 64 7.6062993 1.1000001 0 N 0 162 U7-65
+TOP 65 7.6062993 1.2000001 0 N 0 166 U7-66
+TOP 66 7.6062993 1.3000001 0 N 0 165 U7-67
+TOP 67 7.6062993 1.4000001 0 N 0 164 U7-68
+TOP 68 7.6062993 1.6000001 0 N 0 163 U7-69
+TOP 69 7.6062993 1.7000001 0 N 0 135 U7-70
+TOP 70 7.6062993 1.8000001 0 N 140 1 U7-71
+TOP 71 7.6062993 1.9000001 0 N 139 1 U7-72
+TOP 72 7.6062993 2.0000001 0 N 0 136 U7-73
+TOP 73 7.6062993 2.1000001 0 N 168 2 U7-74
+TOP 74 7.6062993 2.2000001 0 N 145 2 U7-75
+TOP 75 7.6062993 2.3000001 0 N 0 152 U7-76
+TOP 76 7.6062993 2.4600001 180 N 29 3 U7-77
+TOP 77 7.6062993 2.5600001 180 N 167 2 U7-78
+TOP 78 7.6062993 2.6600001 180 N 141 2 U7-79
+TOP 79 7.6062993 2.7600001 180 N 163 1 U7-80
+TOP 80 7.6062993 2.8600001 180 N 144 1 U7-81
+TOP 81 7.6062993 2.9600001 180 N 162 1 U7-82
+TOP 82 7.6062993 3.0600001 180 N 186 101 U7-83
+TOP 83 7.6062993 3.1600001 180 N 0 161 U7-84
+TOP 84 7.6062993 3.2600001 180 N 36 1 U7-85
+TOP 85 7.6062993 3.3600001 180 N 37 1 U7-86
+TOP 86 7.7362993 3.2800001 270 N 0 137 U7-87
+TOP 87 7.8362993 3.2800001 270 N 0 142 U7-88
+TOP 88 7.7362993 3.3800001 270 N 0 141 U7-89
+TOP 89 7.8362993 3.3800001 270 N 0 140 U7-90
+TOP 90 7.7362993 3.4800001 270 N 0 139 U7-91
+TOP 91 7.8362993 3.4800001 270 N 0 138 U7-92
+TOP 92 8.4062993 1.5950001 0 N 0 110 U7-93
+TOP 93 8.4062993 1.4950001 0 N 0 109 U7-94
+TOP 94 8.5062993 1.5950001 0 N 0 108 U7-95
+TOP 95 8.5062993 1.4950001 0 N 0 107 U7-96
+TOP 96 8.6062993 1.5950001 0 N 0 101 U7-97
+TOP 97 8.6062993 1.4950001 0 N 0 102 U7-98
+TOP 98 9.5062993 0.3000001 90 N 0 125 U7-MH1
+TOP 99 7.6062993 3.5000001 90 N 0 151 U7-MH2
+TOP 100 7.6062993 0.5500001 90 N 0 158 U7-MH3
+TOP 101 9.5062993 3.5500001 90 N 0 134 U7-MH4
+TOP 102 8.2062993 1.5000001 90 N 0 160 U7-MH5
+TOP 103 9.3062993 1.5000001 90 N 0 121 U7-MH6
+#
+# CMP 127
+CMP 28 16.63 5.3795 0 N U1 LM339 ;0=1,1=0.0591
+PRP Category 'Comparators'
+PRP CreatedBy 'Samuel Mathieu'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL 'https://d1d2qsbl8m0m72.cloudfront.net/en/products/databook/datasheet/ic/amp_linear/comparator/lm393f-e.pdf'
+PRP Manufacturer 'Rohm'
+PRP Manufacturer_Part_Number 'LM339F-E2'
+PRP Mfg 'Rohm Semiconductor'
+PRP Mfg_Part_Number 'LM339F-E2'
+PRP NI ''
+PRP Package 'BGA-676'
+PRP Power ''
+PRP Precision ''
+PRP Pricing_2 '1=0.96000, 10=0.84900, 25=0.79720, 100=0.65060, 250=0.60432, 500=0.51432, 1000=0.41145 (USD)'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Stock_2 '2211'
+PRP Supplier_1 'Digikey'
+PRP Supplier_2 'Digi-Key'
+PRP Supplier_Part_Number_1 'LM339F-E2TR-ND'
+PRP Supplier_Part_Number_2 'LM339F-E2CT-ND'
+PRP Temperature '-40°C ~ 85°C'
+PRP Value ''
+PRP VerifiedBy ''
+PRP Voltage '1.14 V ~ 1.26 V'
+TOP 0 16.5138583 5.5295 270 N 138 1 U1-1
+TOP 1 16.5138583 5.4795 270 N 98 2 U1-2
+TOP 2 16.5138583 5.4295 270 N 106 8 U1-3
+TOP 3 16.5138583 5.3795 270 N 90 0 U1-4
+TOP 4 16.5138583 5.3295 270 N 174 2 U1-5
+TOP 5 16.5138583 5.2795 270 N 138 2 U1-6
+TOP 6 16.5138583 5.2295 270 N 185 1 U1-7
+TOP 7 16.7461418 5.2295 270 N 172 1 U1-8
+TOP 8 16.7461418 5.2795 270 N 185 2 U1-9
+TOP 9 16.7461418 5.3295 270 N 103 8 U1-10
+TOP 10 16.7461418 5.3795 270 N 103 7 U1-11
+TOP 11 16.7461418 5.4295 270 N 103 6 U1-12
+TOP 12 16.7461418 5.4795 270 N 0 12 U1-13
+TOP 13 16.7461418 5.5295 270 N 173 1 U1-14
+#
+# CMP 128
+CMP 26 1.3 5.55 180 N U4 IC_FF_JK_TYPE_DUAL_1BIT_14SOIC ;0=1,1=0.0689
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '296-14540-1-ND'
+TOP 0 1.4072835 5.4 90 N 187 1 U4-1
+TOP 1 1.4072835 5.45 90 N 216 34 U4-2
+TOP 2 1.4072835 5.5 90 N 175 2 U4-3
+TOP 3 1.4072835 5.55 90 N 216 35 U4-4
+TOP 4 1.4072835 5.6 90 N 157 2 U4-5
+TOP 5 1.4072835 5.65 90 N 216 36 U4-6
+TOP 6 1.4072835 5.7 90 N 141 1 U4-7
+TOP 7 1.1927166 5.7 90 N 0 10 U4-8
+TOP 8 1.1927166 5.65 90 N 152 0 U4-9
+TOP 9 1.1927166 5.6 90 N 150 2 U4-10
+TOP 10 1.1927166 5.55 90 N 186 50 U4-11
+TOP 11 1.1927166 5.5 90 N 153 0 U4-12
+TOP 12 1.1927166 5.45 90 N 0 11 U4-13
+TOP 13 1.1927166 5.4 90 N 167 1 U4-14
+#
+# CMP 129
+CMP 13 2.4549764 5.825 0 N U6 NE555DR ;0=1,1=0.0000
+PRP Case/Package 'SOIC'
+PRP Contact_Plating 'Gold'
+PRP Frequency '100kHz'
+PRP Height '1.58mm'
+PRP High_Level_Output_Current '-200mA'
+PRP Lead_Free 'Lead Free'
+PRP Length '4.9mm'
+PRP Low_Level_Output_Current '200mA'
+PRP Max_Operating_Temperature '70°C'
+PRP Max_Supply_Voltage '16V'
+PRP Min_Operating_Temperature '0°C'
+PRP Min_Supply_Voltage '4.5V'
+PRP Mount 'Surface Mount'
+PRP Number_of_Pins '8'
+PRP Number_of_Timers/Counters '1'
+PRP Operating_Supply_Current '10mA'
+PRP Package_Quantity '2500'
+PRP Packaging 'Tape and Reel'
+PRP Quiescent_Current '15mA'
+PRP Radiation_Hardening 'No'
+PRP REACH_SVHC 'No SVHC'
+PRP Weight '0.002561oz'
+PRP Width '3.91mm'
+TOP 0 2.3599528 5.9 0 N 186 49 U6-1
+TOP 1 2.3599528 5.85 0 N 156 2 U6-2
+TOP 2 2.3599528 5.8 0 N 147 2 U6-3
+TOP 3 2.3599528 5.75 0 N 216 32 U6-4
+TOP 4 2.55 5.75 0 N 0 7 U6-5
+TOP 5 2.55 5.8 0 N 156 3 U6-6
+TOP 6 2.55 5.85 0 N 148 2 U6-7
+TOP 7 2.55 5.9 0 N 216 33 U6-8
+#
+# CMP 130
+CMP 25 9.19 6.44 90 N R41 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD10K0CT-ND'
+PRP Value '10k'
+TOP 0 9.19 6.4755 0 N 155 0 R41-1
+TOP 1 9.19 6.4045 0 N 186 25 R41-2
+#
+# CMP 131
+CMP 25 8.74 5.59 270 N R40 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RMCF0805FT30K1CT-ND'
+PRP Value '30.1k'
+TOP 0 8.74 5.5545 180 N 135 0 R40-1
+TOP 1 8.74 5.6255 180 N 65 0 R40-2
+#
+# CMP 132
+CMP 25 8.94 5.59 90 N R39 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD4K53CT-ND'
+PRP Value '4.53k'
+TOP 0 8.94 5.6255 0 N 159 1 R39-1
+TOP 1 8.94 5.5545 0 N 146 1 R39-2
+#
+# CMP 133
+CMP 25 10.19 5.59 90 N R44 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RMCF0805FT1K69CT-ND'
+PRP Value '1.69k'
+TOP 0 10.19 5.6255 0 N 160 1 R44-1
+TOP 1 10.19 5.5545 0 N 131 0 R44-2
+#
+# CMP 134
+CMP 25 10.39 5.59 90 N R47 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD10K0CT-ND'
+PRP Value '10k'
+TOP 0 10.39 5.6255 0 N 131 1 R47-1
+TOP 1 10.39 5.5545 0 N 186 29 R47-2
+#
+# CMP 135
+CMP 25 10.44 6.44 90 N R46 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 10.44 6.4755 0 N 132 0 R46-1
+TOP 1 10.44 6.4045 0 N 186 33 R46-2
+#
+# CMP 136
+CMP 25 9.89 5.59 90 N R43 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 '2019-RK73H2ATTD1622FCT-ND'
+PRP Value '16.2k'
+TOP 0 9.89 5.6255 0 N 59 0 R43-1
+TOP 1 9.89 5.5545 0 N 186 28 R43-2
+#
+# CMP 137
+CMP 25 9.99 5.59 270 N R45 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RMCF0805FT30K1CT-ND'
+PRP Value '30.1k'
+TOP 0 9.99 5.5545 180 N 134 0 R45-1
+TOP 1 9.99 5.6255 180 N 58 0 R45-2
+#
+# CMP 138
+CMP 25 8.64 5.59 90 N R38 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 '2019-RK73H2ATTD1622FCT-ND'
+PRP Value '16.2k'
+TOP 0 8.64 5.6255 0 N 66 0 R38-1
+TOP 1 8.64 5.5545 0 N 186 19 R38-2
+#
+# CMP 139
+CMP 25 9.14 5.59 90 N R42 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'digikey'
+PRP Supplier_Part_Number_1 'RNCP0805FTD10K0CT-ND'
+PRP Value '10k'
+TOP 0 9.14 5.6255 0 N 146 0 R42-1
+TOP 1 9.14 5.5545 0 N 186 21 R42-2
+#
+# CMP 140
+CMP 25 2.7049764 5.825 270 N R35 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '3k'
+TOP 0 2.7049764 5.7895 180 N 156 1 R35-1
+TOP 1 2.7049764 5.8605 180 N 148 1 R35-2
+#
+# CMP 141
+CMP 25 2.1049764 5.925 90 N R34 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '220'
+TOP 0 2.1049764 5.9605 0 N 137 0 R34-1
+TOP 1 2.1049764 5.8895 0 N 154 1 R34-2
+#
+# CMP 142
+CMP 25 2.1904764 5.775 180 N R33 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 2.2259764 5.775 90 N 147 1 R33-1
+TOP 1 2.1549764 5.775 90 N 157 1 R33-2
+#
+# CMP 143
+CMP 25 2.1904764 5.675 180 N R32 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 2.2259764 5.675 90 N 147 0 R32-1
+TOP 1 2.1549764 5.675 90 N 216 31 R32-2
+#
+# CMP 144
+CMP 25 2.7049764 5.975 270 N R31 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '3k'
+TOP 0 2.7049764 5.9395 180 N 148 0 R31-1
+TOP 1 2.7049764 6.0105 180 N 216 30 R31-2
+#
+# CMP 145
+CMP 25 1.5 6.4 180 N R28 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 1.5355 6.4 90 N 86 1 R28-1
+TOP 1 1.4645 6.4 90 N 164 0 R28-2
+#
+# CMP 146
+CMP 25 1.5 6.3 180 N R27 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 1.5355 6.3 90 N 86 0 R27-1
+TOP 1 1.4645 6.3 90 N 96 0 R27-2
+#
+# CMP 147
+CMP 25 2.25 4.85 180 N R26 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '383'
+TOP 0 2.2855 4.85 90 N 168 1 R26-1
+TOP 1 2.2145 4.85 90 N 82 0 R26-2
+#
+# CMP 148
+CMP 29 1.05 5.6 0 N Q10 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 1.0027559 5.6374016 270 N 151 1 Q10-1
+TOP 1 1.0027559 5.5625985 270 N 186 48 Q10-2
+TOP 2 1.0972441 5.6 270 N 150 1 Q10-3
+#
+# CMP 149
+CMP 16 0.9 5.85 90 N Q9 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 1 5.85 90 N 152 1 Q9-1
+TOP 1 0.9 5.85 90 N 142 0 Q9-2
+TOP 2 0.8 5.85 90 N 186 78 Q9-3
+#
+# CMP 150
+CMP 16 0.9 5.3 90 N Q8 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Elements '1'
+PRP Frequency ''
+PRP Input_Capacitance '330pF'
+PRP Manufacturer 'International Rectifier'
+PRP Max_Operating_Temperature '175°C'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Rds_On_Max '200mohm'
+PRP RoHS_Compliant 'True'
+PRP Transistor_Type ''
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+TOP 0 1 5.3 90 N 153 1 Q8-1
+TOP 1 0.9 5.3 90 N 143 0 Q8-2
+TOP 2 0.8 5.3 90 N 186 77 Q8-3
+#
+# CMP 151
+CMP 29 1.9577323 5.9124016 180 N Q7 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 2.0049764 5.875 90 N 154 0 Q7-1
+TOP 1 2.0049764 5.9498031 90 N 186 47 Q7-2
+TOP 2 1.9104882 5.9124016 90 N 157 0 Q7-3
+#
+# CMP 152
+CMP 7 10.09 5.59 270 N C29 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 10.09 5.5565 180 N 186 27 C29-1
+TOP 1 10.09 5.6235 180 N 61 0 C29-2
+#
+# CMP 153
+CMP 23 10.14 6.39 90 N C26 Cap ;0=2,1=0.2362
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '1276-2488-1-ND'
+PRP Value '22nF'
+TOP 0 10.14 6.54 90 N 186 70 C26-1
+TOP 1 10.14 6.24 90 N 133 0 C26-2
+#
+# CMP 154
+CMP 7 9.99 5.19 270 N C28 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 9.99 5.1565 180 N 186 34 C28-1
+TOP 1 9.99 5.2235 180 N 134 1 C28-2
+#
+# CMP 155
+CMP 7 8.64 6.24 90 N C14 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference '0805'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '1276-1171-1-ND'
+PRP Value '2.2nF'
+TOP 0 8.64 6.2735 0 N 186 26 C14-1
+TOP 1 8.64 6.2065 0 N 69 0 C14-2
+#
+# CMP 156
+CMP 2 10.5403937 5.04 180 N C20 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'P122136CT-ND'
+PRP Value '330 µF'
+TOP 0 10.19 5.04 90 N 158 19 C20-1
+TOP 1 10.5403937 5.04 90 N 186 95 C20-2
+#
+# CMP 157
+CMP 7 9.89 6.24 90 N C25 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference '0805'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '1276-1171-1-ND'
+PRP Value '2.2nF'
+TOP 0 9.89 6.2735 0 N 186 32 C25-1
+TOP 1 9.89 6.2065 0 N 62 0 C25-2
+#
+# CMP 158
+CMP 23 8.89 6.39 90 N C15 Cap ;0=2,1=0.2362
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '1276-2488-1-ND'
+PRP Value '22nF'
+TOP 0 8.89 6.54 90 N 186 69 C15-1
+TOP 1 8.89 6.24 90 N 136 1 C15-2
+#
+# CMP 159
+CMP 7 9.34 5.59 270 N C13 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 9.34 5.5565 180 N 186 23 C13-1
+TOP 1 9.34 5.6235 180 N 70 0 C13-2
+#
+# CMP 160
+CMP 23 9.04 6.39 90 N C16 Cap ;0=2,1=0.2362
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '1276-2488-1-ND'
+PRP Value '22nF'
+TOP 0 9.04 6.54 90 N 155 1 C16-1
+TOP 1 9.04 6.24 90 N 136 0 C16-2
+#
+# CMP 161
+CMP 4 9.69 6.89 0 N C21 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344010.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344010'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6425-2-ND'
+PRP Value '100µF'
+TOP 0 9.9104724 6.89 270 N 160 5 C21-1
+TOP 1 9.69 6.89 270 N 186 90 C21-2
+#
+# CMP 162
+CMP 4 8.44 6.59 0 N C11 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344010.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344010'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6425-2-ND'
+PRP Value '100µF'
+TOP 0 8.6604724 6.59 270 N 159 5 C11-1
+TOP 1 8.44 6.59 270 N 186 88 C11-2
+#
+# CMP 163
+CMP 23 10.29 6.39 90 N C27 Cap ;0=2,1=0.2362
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '1276-2488-1-ND'
+PRP Value '22nF'
+TOP 0 10.29 6.54 90 N 132 1 C27-1
+TOP 1 10.29 6.24 90 N 133 1 C27-2
+#
+# CMP 164
+CMP 7 9.99 6.24 270 N C23 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '1276-1123-1-ND'
+PRP Value '330nF'
+TOP 0 9.99 6.2065 180 N 64 0 C23-1
+TOP 1 9.99 6.2735 180 N 160 2 C23-2
+#
+# CMP 165
+CMP 4 8.44 6.89 0 N C10 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344010.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344010'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6425-2-ND'
+PRP Value '100µF'
+TOP 0 8.6604724 6.89 270 N 159 6 C10-1
+TOP 1 8.44 6.89 270 N 186 89 C10-2
+#
+# CMP 166
+CMP 2 9.2903937 5.04 180 N C9 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'P122136CT-ND'
+PRP Value '330 µF'
+TOP 0 8.94 5.04 90 N 158 21 C9-1
+TOP 1 9.2903937 5.04 90 N 186 94 C9-2
+#
+# CMP 167
+CMP 4 9.69 6.59 0 N C22 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344010.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344010'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6425-2-ND'
+PRP Value '100µF'
+TOP 0 9.9104724 6.59 270 N 160 6 C22-1
+TOP 1 9.69 6.59 270 N 186 91 C22-2
+#
+# CMP 168
+CMP 7 8.74 6.24 270 N C12 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '1276-1123-1-ND'
+PRP Value '330nF'
+TOP 0 8.74 6.2065 180 N 71 0 C12-1
+TOP 1 8.74 6.2735 180 N 159 2 C12-2
+#
+# CMP 169
+CMP 7 10.59 5.59 270 N C24 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 10.59 5.5565 180 N 186 30 C24-1
+TOP 1 10.59 5.6235 180 N 63 0 C24-2
+#
+# CMP 170
+CMP 7 8.84 5.59 270 N C18 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 8.84 5.5565 180 N 186 20 C18-1
+TOP 1 8.84 5.6235 180 N 68 0 C18-2
+#
+# CMP 171
+CMP 7 9.19 6.24 90 N C19 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 9.19 6.2735 0 N 186 24 C19-1
+TOP 1 9.19 6.2065 0 N 67 0 C19-2
+#
+# CMP 172
+CMP 7 10.44 6.2235 90 N C30 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 10.44 6.257 0 N 186 31 C30-1
+TOP 1 10.44 6.19 0 N 60 0 C30-2
+#
+# CMP 173
+CMP 7 8.74 5.19 270 N C17 Cap ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'RAD-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '445-5968-1-ND'
+PRP Value '2.2µF'
+TOP 0 8.74 5.1565 180 N 186 22 C17-1
+TOP 1 8.74 5.2235 180 N 135 1 C17-2
+#
+# CMP 174
+CMP 6 2.2299764 5.895 90 N C7 CAP_-_0603 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg ''
+PRP Mfg_Part_Number ''
+PRP NI ''
+PRP Package '0603'
+PRP Power ''
+PRP Precision '10%'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '50V'
+TOP 0 2.2299764 5.9245 90 N 186 46 C7-1
+TOP 1 2.2299764 5.8655 90 N 156 0 C7-2
+#
+# CMP 175
+CMP 4 1.05 6.45 90 N C6 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6421-2-ND'
+PRP Value '47µF'
+TOP 0 1.05 6.2295276 0 N 164 1 C6-1
+TOP 1 1.05 6.45 0 N 94 4 C6-2
+#
+# CMP 176
+CMP 13 2.5 5.3 0 N U3 NE555DR ;0=1,1=0.0000
+PRP Case/Package 'SOIC'
+PRP Contact_Plating 'Gold'
+PRP Frequency '100kHz'
+PRP Height '1.58mm'
+PRP High_Level_Output_Current '-200mA'
+PRP Lead_Free 'Lead Free'
+PRP Length '4.9mm'
+PRP Low_Level_Output_Current '200mA'
+PRP Max_Operating_Temperature '70°C'
+PRP Max_Supply_Voltage '16V'
+PRP Min_Operating_Temperature '0°C'
+PRP Min_Supply_Voltage '4.5V'
+PRP Mount 'Surface Mount'
+PRP Number_of_Pins '8'
+PRP Number_of_Timers/Counters '1'
+PRP Operating_Supply_Current '10mA'
+PRP Package_Quantity '2500'
+PRP Packaging 'Tape and Reel'
+PRP Quiescent_Current '15mA'
+PRP Radiation_Hardening 'No'
+PRP REACH_SVHC 'No SVHC'
+PRP Weight '0.002561oz'
+PRP Width '3.91mm'
+TOP 0 2.4049764 5.375 0 N 186 56 U3-1
+TOP 1 2.4049764 5.325 0 N 183 3 U3-2
+TOP 2 2.4049764 5.275 0 N 169 2 U3-3
+TOP 3 2.4049764 5.225 0 N 216 39 U3-4
+TOP 4 2.5950236 5.225 0 N 0 0 U3-5
+TOP 5 2.5950236 5.275 0 N 183 2 U3-6
+TOP 6 2.5950236 5.325 0 N 170 2 U3-7
+TOP 7 2.5950236 5.375 0 N 216 38 U3-8
+#
+# CMP 177
+CMP 21 3.1952756 5.6 180 N U2 LM324DR2G ;0=1,1=0.0689
+PRP ComponentLink1Description 'Manufacturer URL'
+PRP ComponentLink1URL 'http://www.onsemi.com/'
+PRP ComponentLink2Description 'Datasheet'
+PRP ComponentLink2URL 'http://www.onsemi.cn/pub_link/Collateral/LM324-D.PDF'
+PRP ComponentLink3Description 'Package Specification'
+PRP ComponentLink3URL 'http://www.onsemi.com/pub_link/Collateral/751A-03.PDF'
+PRP DatasheetVersion 'Rev. 25'
+PRP Manufacturer 'On Semiconductor'
+PRP Mounting_Technology 'Surface Mount'
+PRP PackageDescription '14-Pin Small Outline Integrated Circuit, Body 8.65 x 3.9 mm, Pitch 1.27 mm'
+PRP PackageReference 'SOIC-14-751A-03'
+PRP PackageVersion 'Rev. K, 05/2011'
+PRP Packing 'Tape and Reel'
+PRP PartNumber 'LM324DR2G'
+PRP RoHS 'TRUE'
+PRP VCC_Max_(V) '32'
+PRP VCC_Min_(V) '3'
+TOP 0 3.3 5.45 90 N 137 1 U2-1
+TOP 1 3.3 5.5 90 N 149 2 U2-2
+TOP 2 3.3 5.55 90 N 91 1 U2-3
+TOP 3 3.3 5.6 90 N 186 51 U2-4
+TOP 4 3.3 5.65 90 N 184 1 U2-5
+TOP 5 3.3 5.7 90 N 171 2 U2-6
+TOP 6 3.3 5.75 90 N 161 1 U2-7
+TOP 7 3.0905512 5.75 90 N 0 9 U2-8
+TOP 8 3.0905512 5.7 90 N 186 52 U2-9
+TOP 9 3.0905512 5.65 90 N 186 53 U2-10
+TOP 10 3.0905512 5.6 90 N 216 37 U2-11
+TOP 11 3.0905512 5.55 90 N 186 54 U2-12
+TOP 12 3.0905512 5.5 90 N 186 55 U2-13
+TOP 13 3.0905512 5.45 90 N 0 8 U2-14
+#
+# CMP 178
+CMP 25 1.5 5.45 90 N R24 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'RMCF0805FT1K00CT-ND'
+PRP Value '1k'
+TOP 0 1.5 5.4855 0 N 175 1 R24-1
+TOP 1 1.5 5.4145 0 N 216 29 R24-2
+#
+# CMP 179
+CMP 25 2.75 5.3 270 N R23 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '3k'
+TOP 0 2.75 5.2645 180 N 183 1 R23-1
+TOP 1 2.75 5.3355 180 N 170 1 R23-2
+#
+# CMP 180
+CMP 25 2.15 5.4 90 N R22 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '220'
+TOP 0 2.15 5.4355 0 N 161 0 R22-1
+TOP 1 2.15 5.3645 0 N 177 0 R22-2
+#
+# CMP 181
+CMP 25 2.2 5.25 180 N R21 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 2.2355 5.25 90 N 169 1 R21-1
+TOP 1 2.1645 5.25 90 N 187 0 R21-2
+#
+# CMP 182
+CMP 25 2.2 5.15 180 N R20 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 2.2355 5.15 90 N 169 0 R20-1
+TOP 1 2.1645 5.15 90 N 216 28 R20-2
+#
+# CMP 183
+CMP 25 2.75 5.45 270 N R19 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '3k'
+TOP 0 2.75 5.4145 180 N 170 0 R19-1
+TOP 1 2.75 5.4855 180 N 216 27 R19-2
+#
+# CMP 184
+CMP 25 3.5 5.65 180 N R16 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-15.0CRCT-ND'
+PRP Value '15k'
+TOP 0 3.5355 5.65 90 N 168 0 R16-1
+TOP 1 3.4645 5.65 90 N 184 0 R16-2
+#
+# CMP 185
+CMP 25 1.5 4.8 180 N R15 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 1.5355 4.8 90 N 92 0 R15-1
+TOP 1 1.4645 4.8 90 N 97 1 R15-2
+#
+# CMP 186
+CMP 25 1.5 4.7 0 N R14 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 1.4645 4.7 270 N 97 0 R14-1
+TOP 1 1.5355 4.7 270 N 93 0 R14-2
+#
+# CMP 187
+CMP 25 16.73 5.09 90 N R12 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '30k'
+TOP 0 16.73 5.1255 0 N 172 2 R12-1
+TOP 1 16.73 5.0545 0 N 106 12 R12-2
+#
+# CMP 188
+CMP 25 16.93 5.54 90 N R11 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 16.93 5.5755 0 N 173 2 R11-1
+TOP 1 16.93 5.5045 0 N 178 1 R11-2
+#
+# CMP 189
+CMP 25 15.98 5.89 90 N R10 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '10k'
+TOP 0 15.98 5.9255 0 N 179 0 R10-1
+TOP 1 15.98 5.8545 0 N 180 0 R10-2
+#
+# CMP 190
+CMP 25 16.83 5.54 270 N R9 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 16.83 5.5045 180 N 173 0 R9-1
+TOP 1 16.83 5.5755 180 N 106 2 R9-2
+#
+# CMP 191
+CMP 25 14.93 5.94 0 N R8 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '383'
+TOP 0 14.8945 5.94 270 N 162 0 R8-1
+TOP 1 14.9655 5.94 270 N 84 0 R8-2
+#
+# CMP 192
+CMP 25 15.63 5.84 180 N R7 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.6655 5.84 90 N 106 3 R7-1
+TOP 1 15.5945 5.84 90 N 83 1 R7-2
+#
+# CMP 193
+CMP 25 15.73 5.54 270 N R6 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.73 5.5045 180 N 90 1 R6-1
+TOP 1 15.73 5.5755 180 N 106 11 R6-2
+#
+# CMP 194
+CMP 25 15.63 5.54 270 N R5 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.63 5.5045 180 N 99 0 R5-1
+TOP 1 15.63 5.5755 180 N 106 5 R5-2
+#
+# CMP 195
+CMP 25 14.93 5.59 0 N R4 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '383'
+TOP 0 14.8945 5.59 270 N 144 0 R4-1
+TOP 1 14.9655 5.59 270 N 85 0 R4-2
+#
+# CMP 196
+CMP 25 15.68 5.14 0 N R3 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.6445 5.14 270 N 88 0 R3-1
+TOP 1 15.7155 5.14 270 N 182 0 R3-2
+#
+# CMP 197
+CMP 25 15.68 5.04 180 N R2 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '311-1.00KCRCT-ND'
+PRP Value '1k'
+TOP 0 15.7155 5.04 90 N 106 9 R2-1
+TOP 1 15.6445 5.04 90 N 88 1 R2-2
+#
+# CMP 198
+CMP 25 14.93 5.14 0 N R1 Res1 ;0=1,1=0.0000
+PRP LatestRevisionDate '17-Jul-2002'
+PRP LatestRevisionNote 'Re-released for DXP Platform.'
+PRP PackageDescription 'Axial Device, Thru-Hole; 2 Leads; 0.3 in Pin Spacing'
+PRP PackageReference 'AXIAL-0.3'
+PRP Published '8-Jun-2000'
+PRP Publisher 'Altium Limited'
+PRP Value '383'
+TOP 0 14.8945 5.14 270 N 163 0 R1-1
+TOP 1 14.9655 5.14 270 N 89 0 R1-2
+#
+# CMP 199
+CMP 29 1.65 5.45 270 N Q6 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 1.6125984 5.4027559 180 N 176 1 Q6-1
+TOP 1 1.6874015 5.4027559 180 N 186 45 Q6-2
+TOP 2 1.65 5.4972441 180 N 175 0 Q6-3
+#
+# CMP 200
+CMP 29 2 5.4 180 N Q5 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 2.0472441 5.3625984 90 N 177 1 Q5-1
+TOP 1 2.0472441 5.4374015 90 N 186 57 Q5-2
+TOP 2 1.9527559 5.4 90 N 187 2 Q5-3
+#
+# CMP 201
+CMP 29 16.93 5.94 270 N Q4 TRANS_NPN_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '60V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '300mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '300mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972515.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/16291/mmbt3904sot-23-37005-16291911.pdf?src-supplier=Mouser'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/15139/getdatasheetpartid-251950-15139820.pdf?src-supplier=Verical'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/972/mmbt3904sot-23-972516.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16742/mmbt3904tsot-523-16742101.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink6Description 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP ComponentLink6URL 'https://datasheet.ciiva.com/14546/70055699-14546053.pdf?src-supplier=Allied+Electronics'
+PRP Current_Rating '100mA'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '6V'
+PRP Frequency '300MHz'
+PRP Gain_Bandwidth_Product '300MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '40'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3904-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '300MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '350mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'NPN'
+PRP Power_Dissipation '350mW'
+PRP Pricing_1 '1=0.10000, 10=0.08100, 25=0.07680, 100=0.04400, 500=0.02706, 1000=0.01844 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'Yes'
+PRP Series '-'
+PRP Stock_1 '949449'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT2222ATPMSCT-ND'
+PRP Transition_Frequency '300MHz'
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '1.4mm'
+TOP 0 16.8925984 5.8927559 180 N 178 0 Q4-1
+TOP 1 16.9674015 5.8927559 180 N 103 4 Q4-2
+TOP 2 16.93 5.9872441 180 N 179 1 Q4-3
+#
+# CMP 202
+CMP 16 16.93 6.39 180 N Q3 IRF520NPBF ;0=2,1=0.7598
+PRP Case/Package 'TO-220-3'
+PRP Category 'MOSFETs'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/7935/irf1404-7935436.pdf?src-supplier=Element14'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/7935/irf1404-7935436.pdf?src-supplier=Element14'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/19479/1559551-19479743.pdf?src-supplier=Jameco'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/19479/1559551-19479743.pdf?src-supplier=Jameco'
+PRP ComponentLink3Description 'https://datasheet.ciiva.com/17323/irf1404pbf-17323123.pdf?src-supplier=Avnet+Europe'
+PRP ComponentLink3URL 'https://datasheet.ciiva.com/17323/irf1404pbf-17323123.pdf?src-supplier=Avnet+Europe'
+PRP ComponentLink4Description 'https://datasheet.ciiva.com/939/irf1404pbf-939787.pdf?src-supplier=Digi-Key'
+PRP ComponentLink4URL 'https://datasheet.ciiva.com/939/irf1404pbf-939787.pdf?src-supplier=Digi-Key'
+PRP ComponentLink5Description 'https://datasheet.ciiva.com/16378/irf1404pbf-16378907.pdf?src-supplier=Future+Electronics'
+PRP ComponentLink5URL 'https://datasheet.ciiva.com/16378/irf1404pbf-16378907.pdf?src-supplier=Future+Electronics'
+PRP Continuous_Drain_Current_(ID) '202A'
+PRP Current_Rating '162A'
+PRP Datasheet_URL 'http://www.infineon.com/dgdl/irf520npbf.pdf?fileId=5546d462533600a4015355e340711985'
+PRP Datasheet_Version 'Nov-03'
+PRP Drain_to_Source_Breakdown_Voltage '40V'
+PRP Drain_to_Source_Resistance '4mR'
+PRP Drain_to_Source_Voltage_(Vdss) '40V'
+PRP Drain-source_On_Resistance-Max '4mR'
+PRP Dual_Supply_Voltage '40V'
+PRP Element_Configuration 'Single'
+PRP Elements '1'
+PRP Fall_Time '33ns'
+PRP Frequency ''
+PRP Gate_to_Source_Voltage_(Vgs) '20V'
+PRP Height '8.77mm'
+PRP Input_Capacitance '330pF'
+PRP Lead_Free 'Lead Free'
+PRP Lead_Pitch '2.54mm'
+PRP Length '10.67mm'
+PRP Manufacturer 'International Rectifier'
+PRP Manufacturer_Part_Number 'IRF1404PBF'
+PRP Max_Operating_Temperature '175°C'
+PRP Max_Power_Dissipation '333W'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Through Hole'
+PRP Mounting_Technology 'TH'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Dual_Supply_Voltage '100V'
+PRP Nominal_Vgs '4V'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP On-State_Resistance '4mR'
+PRP Package_Description '3-Pin Flange Mount, Body 4.445 x 10.415 mm, Pitch 2.54 mm'
+PRP Package_Quantity '50'
+PRP Package_Reference 'TO-220AB'
+PRP Packaging 'Rail/Tube'
+PRP Pins '3'
+PRP Power '48W'
+PRP Power_Dissipation '333W'
+PRP Pricing_1 '1=1.79000, 10=1.54000, 100=1.26000, 500=1.12000, 1000=0.96000 (USD)'
+PRP Radiation_Hardening 'No'
+PRP Rds_On_Max '200mohm'
+PRP REACH_SVHC 'No SVHC'
+PRP Recovery_Time '117ns'
+PRP Rise_Time '190ns'
+PRP RoHS 'Yes'
+PRP RoHS_Compliant 'True'
+PRP Series 'HEXFET®'
+PRP Stock_1 '216'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '63J7187'
+PRP Termination 'Through Hole'
+PRP Threshold_Voltage '4V'
+PRP Transistor_Type ''
+PRP Turn-Off_Delay_Time '46ns'
+PRP Turn-On_Delay_Time '17ns'
+PRP Typical_Rise_Time '23ns'
+PRP Vgs_(Max) ''
+PRP Vgs(th)_(Max)_@_Id ''
+PRP Voltage_Rating_(DC) '40V'
+PRP Width '4.83mm'
+TOP 0 16.93 6.29 180 N 179 2 Q3-1
+TOP 1 16.93 6.39 180 N 166 1 Q3-2
+TOP 2 16.93 6.49 180 N 103 23 Q3-3
+#
+# CMP 203
+CMP 29 15.83 5.89 0 N Q2 TRANS_PNP_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '40V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '-250mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '400mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/6362/mmbt3906sot-23-6362513.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/6362/mmbt3906sot-23-6362513.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/15200/getdatasheetpartid-321202-15200524.pdf?src-supplier=Verical'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/15200/getdatasheetpartid-321202-15200524.pdf?src-supplier=Verical'
+PRP Current_Rating '-2A'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '5V'
+PRP Frequency '250MHz'
+PRP Gain_Bandwidth_Product '250MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '60'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3906-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '250MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '300mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'PNP'
+PRP Power_Dissipation '300mW'
+PRP Pricing_1 '1=0.14000, 10=0.09700, 25=0.09320, 100=0.05250, 500=0.04122, 1000=0.02862 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP Series '-'
+PRP Stock_1 '96763'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT3906RFGCT-ND'
+PRP Transition_Frequency '250MHz'
+PRP Voltage_Rating_(DC) '-40V'
+PRP Width '1.4mm'
+TOP 0 15.7827559 5.9274016 270 N 181 1 Q2-1
+TOP 1 15.7827559 5.8525985 270 N 106 7 Q2-2
+TOP 2 15.8772441 5.89 270 N 180 1 Q2-3
+#
+# CMP 204
+CMP 29 15.88 5.09 0 N Q1 TRANS_PNP_40V_0.2A_SOT23 ;0=1,1=0.0433
+PRP Case/Package 'SOT-23'
+PRP Category 'BJTs'
+PRP Collector_Base_Voltage_(VCBO) '40V'
+PRP Collector_Emitter_Breakdown_Voltage '40V'
+PRP Collector_Emitter_Saturation_Voltage '-250mV'
+PRP Collector_Emitter_Voltage_(VCEO) '40V'
+PRP Collector-emitter_Voltage-Max '400mV'
+PRP ComponentLink1Description 'https://datasheet.ciiva.com/6362/mmbt3906sot-23-6362513.pdf?src-supplier=Digi-Key'
+PRP ComponentLink1URL 'https://datasheet.ciiva.com/6362/mmbt3906sot-23-6362513.pdf?src-supplier=Digi-Key'
+PRP ComponentLink2Description 'https://datasheet.ciiva.com/15200/getdatasheetpartid-321202-15200524.pdf?src-supplier=Verical'
+PRP ComponentLink2URL 'https://datasheet.ciiva.com/15200/getdatasheetpartid-321202-15200524.pdf?src-supplier=Verical'
+PRP Current_Rating '-2A'
+PRP Element_Configuration 'Single'
+PRP Emitter_Base_Voltage_(VEBO) '5V'
+PRP Frequency '250MHz'
+PRP Gain_Bandwidth_Product '250MHz'
+PRP Height '1.12mm'
+PRP hFE_Min '60'
+PRP Lead_Free 'Lead Free'
+PRP Length '3.04mm'
+PRP Manufacturer 'MCC'
+PRP Manufacturer_Part_Number 'MMBT3906-TP'
+PRP Max_Breakdown_Voltage '40V'
+PRP Max_Collector_Current '200mA'
+PRP Max_Frequency '250MHz'
+PRP Max_Operating_Temperature '150°C'
+PRP Max_Power_Dissipation '300mW'
+PRP Min_Operating_Temperature '-55°C'
+PRP Mount 'Surface Mount'
+PRP Number_of_Elements '1'
+PRP Number_of_Pins '3'
+PRP Package_Quantity '1'
+PRP Packaging 'Tape and Reel'
+PRP Polarity 'PNP'
+PRP Power_Dissipation '300mW'
+PRP Pricing_1 '1=0.14000, 10=0.09700, 25=0.09320, 100=0.05250, 500=0.04122, 1000=0.02862 (USD)'
+PRP Radiation_Hardening 'No'
+PRP RoHS 'Yes'
+PRP Series '-'
+PRP Stock_1 '96763'
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'MMBT3906RFGCT-ND'
+PRP Transition_Frequency '250MHz'
+PRP Voltage_Rating_(DC) '-40V'
+PRP Width '1.4mm'
+TOP 0 15.8327559 5.1274016 270 N 182 1 Q1-1
+TOP 1 15.8327559 5.0525985 270 N 106 10 Q1-2
+TOP 2 15.9272441 5.09 270 N 185 3 Q1-3
+#
+# CMP 205
+CMP 18 11.6346457 6.925 0 N J2 0460150402 ;0=2,1=0.0000
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 'WM3844-ND'
+TOP 0 11.6346457 6.925 0 N 79 1 J2-1
+TOP 1 11.8 6.925 0 N 30 1 J2-2
+TOP 2 11.8 7.1415354 0 N 116 1 J2-3
+TOP 3 11.6346457 7.1415354 0 N 186 111 J2-4
+#
+# CMP 206
+CMP 8 17.17 1.4 270 N J1 10118194-0001LF ;0=1,1=0.0000
+PRP Assembly_Note ''
+PRP Assembly_Type 'SMD'
+PRP CreatedBy/Date 'Arnaud Samson - 09/07/18'
+PRP Cryo 'UNKNOWN'
+PRP Current_Rating '1.8A'
+PRP GRAMS_Lib_Spec '2.8'
+PRP HelpURL 'https://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/10118194.pdf'
+PRP Magnetic_Material 'YES'
+PRP Manufacturer_#1 'Amphenol FCI'
+PRP Manufacturer_#2 ''
+PRP Note ''
+PRP Package '5-SMD'
+PRP Part_Number_#1 '10118194-0001LF'
+PRP Part_Number_#2 ''
+PRP Polarized 'YES'
+PRP Power_Max ''
+PRP Supplier_1 'Digi-Key'
+PRP Supplier_Part_Number_1 '609-4618-1-ND'
+PRP Temperature '-30°C ~ 80°C'
+PRP Tolerance ''
+PRP Value 'USB - Micro B'
+PRP VerifiedBy 'Jonathan Bouchard 2018-07-12'
+PRP Voltage_Rating '100VAC'
+TOP 0 17.0637008 1.3488189 270 N 80 0 J1-1
+TOP 1 17.0637008 1.3744095 270 N 0 1 J1-2
+TOP 2 17.0637008 1.4 270 N 0 2 J1-3
+TOP 3 17.0637008 1.4255906 270 N 0 3 J1-4
+TOP 4 17.0637008 1.4511811 270 N 186 40 J1-5
+TOP 5 17.0637008 1.4984252 270 N 0 216 J1-6
+TOP 6 17.17 1.5377953 270 N 0 218 J1-7
+TOP 7 17.17 1.4393701 270 N 0 4 J1-8
+TOP 8 17.17 1.3606299 90 N 0 5 J1-9
+TOP 9 17.17 1.2622047 90 N 0 219 J1-10
+TOP 10 17.0637008 1.3015748 90 N 0 217 J1-11
+#
+# CMP 207
+CMP 6 2.25 5.4 90 N C5 CAP_-_0603 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg ''
+PRP Mfg_Part_Number ''
+PRP NI ''
+PRP Package '0603'
+PRP Power ''
+PRP Precision '10%'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '50V'
+TOP 0 2.25 5.4295 90 N 186 44 C5-1
+TOP 1 2.25 5.3705 90 N 183 0 C5-2
+#
+# CMP 208
+CMP 4 3.5 6.03 90 N C4 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6421-2-ND'
+PRP Value '47µF'
+TOP 0 3.5 5.8095276 0 N 184 2 C4-1
+TOP 1 3.5 6.03 0 N 186 92 C4-2
+#
+# CMP 209
+CMP 4 16.93 5.09 270 N C3 CAP_ALUM_POLY_47UF_20%_16V_SMD ;0=2,1=0.0000
+PRP HelpURL 'https://www.we-online.de/katalog/datasheet/875105344006.pdf'
+PRP Mfg 'Würth Elektronik'
+PRP Mfg_Part_Number '875105344006'
+PRP Supplier_1 'Digikey'
+PRP Supplier_Part_Number_1 '732-6421-2-ND'
+PRP Value '47µF'
+TOP 0 16.93 5.3104724 180 N 185 4 C3-1
+TOP 1 16.93 5.09 180 N 103 20 C3-2
+#
+# CMP 210
+CMP 6 16.53 5.64 180 N C2 CAP_-_0603 ;0=1,1=0.0000
+PRP CreatedBy 'Jonathan Bouchard'
+PRP Current ''
+PRP FootprintNameOK ''
+PRP HelpURL ''
+PRP Mfg ''
+PRP Mfg_Part_Number ''
+PRP NI ''
+PRP Package '0603'
+PRP Power ''
+PRP Precision '10%'
+PRP Temperature ''
+PRP Value '100nF'
+PRP VerifiedBy ''
+PRP Voltage '50V'
+TOP 0 16.5595 5.64 180 N 103 5 C2-1
+TOP 1 16.5005 5.64 180 N 138 0 C2-2
+#
