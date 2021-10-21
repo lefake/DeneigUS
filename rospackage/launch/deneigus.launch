@@ -48,10 +48,10 @@
   <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>	
 
 <!-- Static TF -->
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3 0.02 0.5 0.215 0 0 base_link sonar_f_0" />
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.3 -0.02 0.5 -0.215 0 0 base_link sonar_f_1" />
-<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" /> -->
-<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" /> -->
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3 0.0 0.5 0 0 0 base_link sonar_f_0" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.0 0.3 0.5 1.57 0 0 base_link sonar_f_1" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" />
 
 <!-- CostMap with move_base -->
 <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
