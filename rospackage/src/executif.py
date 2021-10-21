@@ -5,6 +5,7 @@ from enum import Enum
 import rospy
 from geometry_msgs.msg import Twist, Pose
 from sensor_msgs.msg import Range
+from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
@@ -33,6 +34,7 @@ class Executif:
 
         # In
         self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
+        self.odom_sub = rospy.Subscriber('/odom', Odometry, self.odom_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
@@ -50,9 +52,12 @@ class Executif:
 
         self.logger.debug("Finished executif init")
 
+    def odom_callback(self, msg):
+        self.logger.debug("Odom callback")
+
     def joy_echo(self, msg):
         throttle_left = msg.axes[1]
-        throttle_right = msg.axes[4]
+        throttle_right = msg.axes[3]
 
         if self.ctl_mode == control_modes.manual:
             self.cmd_vel_msg.linear.x = throttle_left
