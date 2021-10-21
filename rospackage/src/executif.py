@@ -4,7 +4,7 @@ from enum import Enum
 
 import rospy
 from geometry_msgs.msg import Twist, Pose
-from sensor_msgs.msg import Range
+from sensor_msgs.msg import Range, NavSatFix
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
@@ -39,8 +39,8 @@ class Executif:
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
-        self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
-        self.imu_data_sub = rospy.Subscriber('/imu_data', Twist, self.imu_data_callback)
+        self.gps_data_sub = rospy.Subscriber('/gps_data', NavSatFix, self.gps_data_callback)
+        self.odom_not_filtered_sub = rospy.Subscriber('/odom_not_filtered', Odometry, self.odom_not_filtered_callback)
         self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
         self.debug_arduino_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
 
@@ -102,8 +102,8 @@ class Executif:
     def gps_data_callback(self, msg):
         self.logger.debug("GPS data callback")
 
-    def imu_data_callback(self, msg):
-        self.logger.debug("IMU data callback")
+    def odom_not_filtered_callback(self, msg):
+        self.logger.debug("Odom_not_filtered_callback callback")
 
     def debug_arduino_data_callback(self, msg):
         self.logger.debug("Debug arduino callback")

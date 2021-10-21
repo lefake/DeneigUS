@@ -22,6 +22,9 @@
   <!-- python sonar2pc Node -->
   <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen"/>
 
+  <!-- python transformOdomMsg Node -->
+  <node pkg="deneigus" type="transformOdomMsg.py" name="transformOdomMsg" output="screen"/>
+
  <!-- python pb2ros Node -->
   <group if="$(arg has_ard)">
     <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
