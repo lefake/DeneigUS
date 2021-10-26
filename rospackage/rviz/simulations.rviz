@@ -59,6 +59,8 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
+        map:
+          Value: true
         sonar_f_0:
           Value: true
         sonar_f_1:
@@ -74,7 +76,16 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        map:
+          base_link:
+            sonar_f_0:
+              {}
+            sonar_f_1:
+              {}
+            sonar_f_2:
+              {}
+            sonar_f_3:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
@@ -190,17 +201,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.03190171718597412
-        Y: -3.300581455230713
-        Z: 1.3155470242054434e-06
+        X: 3.7594552040100098
+        Y: -1.174323558807373
+        Z: 2.7460584988148184e-06
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9203972816467285
+      Pitch: 0.8353973627090454
       Target Frame: map
-      Yaw: 4.758596420288086
+      Yaw: 5.733609676361084
     Saved: ~
 Window Geometry:
   Displays:
