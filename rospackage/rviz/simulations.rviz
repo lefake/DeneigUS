@@ -59,8 +59,6 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
-        map:
-          Value: true
         sonar_f_0:
           Value: true
         sonar_f_1:
@@ -76,16 +74,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          base_link:
-            sonar_f_0:
-              {}
-            sonar_f_1:
-              {}
-            sonar_f_2:
-              {}
-            sonar_f_3:
-              {}
+        {}
       Update Interval: 0
       Value: true
     - Alpha: 0.5
