@@ -6,7 +6,7 @@
   <arg name="joy_port" default="/dev/input/js2" />
   
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
-  <arg name="rviz_file" default="-d $(find deneigus)/rviz/costmap_test.rviz"/>
+  <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
 
   <param name="/use_sime_time" value="true"/>
 
