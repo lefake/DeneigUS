@@ -8,6 +8,7 @@ import numpy as np
 from sensor_msgs.msg import PointCloud2, Range, PointField
 from logging_utils import setup_logger, get_logger
 
+
 class Sonar2PC():
     def __init__(self):
         self.point_cloud_pub = rospy.Publisher('/point_cloud', PointCloud2, queue_size=10)

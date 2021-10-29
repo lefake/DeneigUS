@@ -10,7 +10,8 @@ from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
 from logging_utils import setup_logger, get_logger
-from temp import Temp
+from tf import TransformListener
+
 
 # Control mode values
 class control_modes(Enum):
@@ -54,6 +55,8 @@ class Executif:
 
         self.logger.debug("Finished executif init")
 
+        self.listener = TransformListener()
+
     def odom_callback(self, msg):
         self.logger.debug("Odom callback")
 
@@ -78,12 +81,19 @@ class Executif:
         self.r.min_range = 0.02
         self.r.max_range = 2.0
 
-        for x,_ in enumerate(msg.data):
-            # Publishes Range from all sonars on same Topic
-            self.r.header.stamp = rospy.Time.now()
-            self.r.header.frame_id = "sonar_f_"+str(x)
-            self.r.range = msg.data[x]
-            self.range_pub.publish(self.r)
+        now = rospy.Time.now()
+        try:
+            self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.2))
+
+            for x,_ in enumerate(msg.data):
+                # Publishes Range from all sonars on same Topic
+                self.r.header.stamp = now
+                self.r.header.frame_id = "sonar_f_"+str(x)
+                self.r.range = msg.data[x]
+                self.range_pub.publish(self.r)
+        except:
+            self.logger.debug("Transform between base_link and map is not availaible")
+
 
     def pos_callback(self, msg):
         self.logger.debug("Pos callback")

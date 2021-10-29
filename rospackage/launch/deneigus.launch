@@ -18,9 +18,6 @@
     </include>
   </group>
 
- <!-- python executif Node -->
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
-
   <!-- python sonar2pc Node -->
   <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen"/>
 
@@ -34,6 +31,9 @@
 
  <!-- python astar node -->
   <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
+
+ <!-- python executif Node -->
+  <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
 
 <!-- python tf_listener node -->
 <!--  <node pkg="deneigus" type="tf_listener.py" name="tf_listner" output="screen"/> -->
@@ -68,15 +68,16 @@
    <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
 </node>
 
-<!-- sudo apt-get install ros-noetic-robot_localization>
-    robot_localization odom to base_link -->
+
+<!-- sudo apt-get install ros-noetic-robot_localization> -->
+<!--    robot_localization odom to base_link -->
 
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
       clear_params="true">
   <param name="frequency" value="10."/>
   <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.1"/>
+  <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
   <param name="publish_tf" value="true"/>
   <param name="map_frame" value="map"/>
@@ -88,6 +89,7 @@
   <param name="odom0" value="/wheel/odometry"/>
   <param name="odom0_differential" value="false"/>
   <param name="odom0_relative" value="false"/>
+  <param name="imu0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
                               false, false, false,
                               true, true, true,
@@ -98,13 +100,12 @@
 </node>
 
 <!-- Robot localization map to base_link -->
-
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_global"
       clear_params="true">
   <param name="frequency" value="10."/>
   <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.1"/>
+  <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
   <param name="publish_tf" value="true"/>
   <param name="map_frame" value="map"/>
@@ -116,6 +117,7 @@
   <param name="imu0" value="/imu/data"/>
   <param name="imu0_differential" value="false"/>
   <param name="imu0_relative" value="false"/>
+  <param name="imu0_queue_size" value="5."/>
   <rosparam param="imu0_config">[false, false, false,
                               true, true, true,
                               false, false, false,
@@ -125,6 +127,7 @@
   <param name="odom0" value="/wheel/odometry"/>
   <param name="odom0_differential" value="false"/>
   <param name="odom0_relative" value="false"/>
+  <param name="odom0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
                               false, false, false,
                               true, true, true,
@@ -134,6 +137,7 @@
   <param name="odom1" value="/odometry/gps"/>
   <param name="odom1_differential" value="false"/>
   <param name="odom1_relative" value="false"/>
+    <param name="odom1_queue_size" value="5."/>
   <rosparam param="odom1_config">[true, true, false,
                               false, false, false,
                               false, false, false,
@@ -143,12 +147,9 @@
   <remap from="odometry/filtered" to="odometry/filtered/global"/>
 </node>
 
-<!-- navsat_transform_node
-<param name="wait_for_datum" value="true"/>
-  <rosparam param="datum">[45.37767355737077, -71.92495310609306, 0.0]</rosparam>
--->
+<!-- navsat_transform_node-->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
-  <param name="transform_timeout" value="0.1"/>
+  <param name="transform_timeout" value="0.2"/>
   <param name="magnetic_declination_radians" value="0.25346"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>
   <param name="broadcast_cartesian_transform" value="false"/>
@@ -158,32 +159,5 @@
 
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>
+
 </launch>
-<!--
-  <param name="odom0" value="/odometry/filtered"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
-  <rosparam param="odom0_config">[false, false, false,
-                              false, false, false,
-                              true, true, true,
-                              false, false, true,
-                              false, false, false]</rosparam>
-
-  <param name="imu0" value="/imu/data"/>
-  <param name="imu0_differential" value="false"/>
-  <param name="imu0_relative" value="false"/>
-  <rosparam param="imu0_config">[false, false, false,
-                              true, true, true,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
-
-  <param name="odom1" value="/gps/fix"/>
-  <param name="odom1_differential" value="false"/>
-  <param name="odom1_relative" value="false"/>
-  <rosparam param="odom1_config">[true, true, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
--->
