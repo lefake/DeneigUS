@@ -8,7 +8,7 @@
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
 
-  <param name="/use_sime_time" value="true"/>
+  <param name="/use_sim_time" value="true"/>
 
   <!-- rosbridge server -->
   <group if="$(arg has_web)">
@@ -149,7 +149,7 @@
 -->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
   <param name="transform_timeout" value="0.1"/>
-  <param name="magnetic_declination_radians" value="0"/>
+  <param name="magnetic_declination_radians" value="0.25346"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>
   <param name="broadcast_cartesian_transform" value="true"/>
   <param name="yaw_offset" value="0"/>

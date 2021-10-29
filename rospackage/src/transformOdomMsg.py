@@ -24,7 +24,7 @@ class TransformOdomMsg:
 
         self.p = Proj(init='epsg:3857')
 
-        self.x0, self.y0 = self.p(self.lattitude_studio , self.longitude_studio)
+        self.x0, self.y0 = self.p(self.longitude_studio, self.lattitude_studio) # longitude, lattitude
         self.z0 = self.altitude_studio
 
     def transform_callback(self, data):
@@ -40,15 +40,15 @@ class TransformOdomMsg:
         y = data.pose.pose.position.y + self.y0
         z = data.pose.pose.position.z + self.z0
 
-        rho, phi = self.p(x,y, inverse=True)
+        longitude, lattitude = self.p(x,y, inverse=True)
         altitude = z
 
         msg.header.seq =  data.header.seq
         msg.header.stamp = rospy.get_rostime()#data.header.stamp
         msg.header.frame_id = 'base_link'
         #msg.status = -1
-        msg.latitude = rho
-        msg.longitude = phi
+        msg.latitude = lattitude
+        msg.longitude = longitude
         msg.altitude = altitude
 
         self.gps_pub.publish(msg)
@@ -58,8 +58,8 @@ class TransformOdomMsg:
 
         msg.header.seq =  data.header.seq
         msg.header.stamp = rospy.get_rostime()#data.header.stamp
-        msg.header.frame_id = 'base_link'
-        #msg.child_frame_id = data.child_frame_id
+        #msg.header.frame_id = 'base_link'
+        msg.child_frame_id = 'base_link'
         msg.twist.twist.linear.x = data.twist.twist.linear.x
         msg.twist.twist.linear.y = data.twist.twist.linear.y
         msg.twist.twist.linear.z = data.twist.twist.linear.z
