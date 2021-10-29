@@ -10,6 +10,7 @@ from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
 from logging_utils import setup_logger, get_logger
+from temp import Temp
 
 # Control mode values
 class control_modes(Enum):
@@ -23,8 +24,8 @@ class Executif:
 
         self.logger.debug("Started executif init")
         # Out
-        self.cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
-        self.cmd_vel_msg = Twist()
+        self.cmd_vel_tank_pub = rospy.Publisher('/cmd_vel_tank', Twist, queue_size=10)
+        self.cmd_vel_tank_msg = Twist()
         self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
         self.cmd_tourelle_msg = Twist()
     
@@ -34,6 +35,7 @@ class Executif:
 
         # In
         self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
+        self.cmd_vel = rospy.Subscriber("/cmd_vel", Twist, self.cmd_vel_callback)
         self.odom_sub = rospy.Subscriber('/odom', Odometry, self.odom_callback)
         self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
@@ -56,13 +58,13 @@ class Executif:
         self.logger.debug("Odom callback")
 
     def joy_echo(self, msg):
-        throttle_left = msg.axes[1]
-        throttle_right = msg.axes[3]
+        throttle_left = msg.axes[4]
+        throttle_right = msg.axes[1]
 
         if self.ctl_mode == control_modes.manual:
-            self.cmd_vel_msg.linear.x = throttle_left
-            self.cmd_vel_msg.linear.y = throttle_right
-            self.cmd_vel_pub.publish(self.cmd_vel_msg)
+            self.cmd_vel_tank_msg.linear.x = throttle_left
+            self.cmd_vel_tank_msg.linear.y = throttle_right
+            self.cmd_vel_tank_pub.publish(self.cmd_vel_tank_msg)
 
 
     def coppelia_range_callback(self, msg):
@@ -84,6 +86,22 @@ class Executif:
     def pos_callback(self, msg):
         self.logger.debug("Pos callback")
 
+    def cmd_vel_callback(self, msg):
+        self.logger.debug("Cmd_vel callback")
+        
+        lin = msg.linear.x
+        ang = msg.angular.z * 1 # TODO : set distance
+
+        diff_left = lin - ang
+        diff_right =  lin + ang
+        max_diff = max(abs(diff_left), abs(diff_right))
+
+        if max_diff > 1:
+            self.cmd_vel_tank_msg.linear.x = diff_left / max_diff
+            self.cmd_vel_tank_msg.linear.y = diff_right / max_diff
+
+        self.cmd_vel_tank_pub.publish(self.cmd_vel_tank_msg)
+
     def estop_state_callback(self, msg):
         self.logger.debug("EStop state callback")
 
@@ -92,9 +110,6 @@ class Executif:
 
     def pos_tourelle_callback(self, msg):
         self.logger.debug("Pos tourelle callback")
-        t = Float32MultiArray()
-        t.data = msg.data
-        self.cmd_vel_pub.publish(t)
 
     def debug_mot_callback(self, msg):
         self.logger.debug("Debug mot callback")
