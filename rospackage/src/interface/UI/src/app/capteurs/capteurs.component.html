@@ -1,0 +1,15 @@
+
+<mat-label class = "battery">Charge de la batterie : {{battery}}</mat-label>
+
+<div class="mapDiv">
+    <google-map class="map" [options]="mapOptions" > 
+        <map-marker [position]="marker.position" [options]="marker.options"></map-marker>
+        <map-polyline [options] = "polylineOptions"></map-polyline>
+       
+    </google-map>
+</div>
+
+
+
+
+
