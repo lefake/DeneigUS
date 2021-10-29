@@ -21,18 +21,18 @@ def dir_traj_wind(v_out, v_wind, angle_elev, angle_rot, t_total, nbr_echantillon
         nbr_echantillons:
     '''
     
-    g = np.array([0,0,-9.81]) #m/s^2
-    m = 1 #kg
+    g = np.array([0,0,-9.81]) #  m/s^2 -> x,y,z
+    m = 1.25 #kg
     
-    Vflat = v_out*np.sin(angle_elev)
-    vlast_x = Vflat*np.cos(angle_rot) #m/s
-    vlast_y = Vflat*np.sin(angle_rot) #m/s
-    vlast_z = v_out*np.cos(angle_elev) #m/s
-    pos_0 = np.array([0, 0, 0.5, 0]) #m -> offset from the physical machine and time zero
+    vflat = v_out*np.cos(angle_elev)
+    vlast_x = vflat*np.cos(angle_rot) #m/s
+    vlast_y = vflat*np.sin(angle_rot) #m/s
+    vlast_z = v_out*np.sin(angle_elev) #m/s
+    pos_0 = np.array([0, 0, 0.01, 0]) #m -> offset from the physical machine and time zero
 
     dt = t_total/nbr_echantillons #s
     
-    pos = np.zeros((4, nbr_echantillons)) #m
+    pos = np.zeros((4, nbr_echantillons)) # [m, m, m, s]
     speed = np.zeros((3, nbr_echantillons))
     Fd = np.zeros((3, nbr_echantillons)) #N
     accel = np.zeros((3, nbr_echantillons))

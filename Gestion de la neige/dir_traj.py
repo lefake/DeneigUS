@@ -21,9 +21,9 @@ def dir_traj(v_out, angle_elev, angle_rot, t_total, nbr_echantillons):
     
     g = np.array([0,0,-9.81]) #m/s^2
     
-    Vflat = v_out*np.sin(angle_elev)
-    vlast_x = Vflat*np.cos(angle_rot) #m/s
-    vlast_y = Vflat*np.sin(angle_rot) #m/s
+    vflat = v_out*np.sin(angle_elev)
+    vlast_x = vflat*np.cos(angle_rot) #m/s
+    vlast_y = vflat*np.sin(angle_rot) #m/s
     vlast_z = v_out*np.cos(angle_elev) #m/s
     pos_0 = np.array([0, 0, 0.5, 0]) #m -> offset from the physical machine and time zero
 

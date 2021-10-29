@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 
 
 class GraphGeneration:
-    '''
+    """
         This class contains all functions to plot graph to simulate trajectory,
         forces, speed on the snow during simulation.
-    '''
+    """
     
     def __init__(self):
         print("GraphGeneration")
