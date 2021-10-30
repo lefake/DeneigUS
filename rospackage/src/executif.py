@@ -4,13 +4,14 @@ from enum import Enum
 
 import rospy
 from geometry_msgs.msg import Twist, Pose
-from sensor_msgs.msg import Range
+from sensor_msgs.msg import Range, NavSatFix
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32MultiArray
 from deneigus.srv import trajgen
 from sensor_msgs.msg import Joy
 from logging_utils import setup_logger, get_logger
-from temp import Temp
+from tf import TransformListener
+
 
 # Control mode values
 class control_modes(Enum):
@@ -41,8 +42,8 @@ class Executif:
         self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
         self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
         self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
-        self.gps_data_sub = rospy.Subscriber('/gps_data', Float32MultiArray, self.gps_data_callback)
-        self.imu_data_sub = rospy.Subscriber('/imu_data', Twist, self.imu_data_callback)
+        self.gps_data_sub = rospy.Subscriber('/gps/fix', NavSatFix, self.gps_data_callback)
+        self.odom_not_filtered_sub = rospy.Subscriber('/odom/not_filtered', Odometry, self.odom_not_filtered_callback)
         self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
         self.debug_arduino_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
 
@@ -54,12 +55,16 @@ class Executif:
 
         self.logger.debug("Finished executif init")
 
+        self.listener = TransformListener()
+
     def odom_callback(self, msg):
         self.logger.debug("Odom callback")
 
     def joy_echo(self, msg):
-        throttle_left = msg.axes[4]
-        throttle_right = msg.axes[1]
+
+        throttle_left = msg.axes[1]
+        throttle_right = msg.axes[4]
+
 
         if self.ctl_mode == control_modes.manual:
             self.cmd_vel_tank_msg.linear.x = throttle_left
@@ -76,12 +81,19 @@ class Executif:
         self.r.min_range = 0.02
         self.r.max_range = 2.0
 
-        for x,_ in enumerate(msg.data):
-            # Publishes Range from all sonars on same Topic
-            self.r.header.stamp = rospy.Time.now()
-            self.r.header.frame_id = "sonar_f_"+str(x)
-            self.r.range = msg.data[x]
-            self.range_pub.publish(self.r)
+        now = rospy.Time.now()
+        try:
+            self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.2))
+
+            for x,_ in enumerate(msg.data):
+                # Publishes Range from all sonars on same Topic
+                self.r.header.stamp = now
+                self.r.header.frame_id = "sonar_f_"+str(x)
+                self.r.range = msg.data[x]
+                self.range_pub.publish(self.r)
+        except:
+            self.logger.debug("Transform between base_link and map is not availaible")
+
 
     def pos_callback(self, msg):
         self.logger.debug("Pos callback")
@@ -117,8 +129,8 @@ class Executif:
     def gps_data_callback(self, msg):
         self.logger.debug("GPS data callback")
 
-    def imu_data_callback(self, msg):
-        self.logger.debug("IMU data callback")
+    def odom_not_filtered_callback(self, msg):
+        self.logger.debug("Odom_not_filtered_callback callback")
 
     def debug_arduino_data_callback(self, msg):
         self.logger.debug("Debug arduino callback")

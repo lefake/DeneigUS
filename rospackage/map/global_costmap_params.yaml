@@ -4,8 +4,8 @@ global_costmap:
    update_frequency: 1.0
    rolling_window: false
    resolution: 0.1
-   width: 20.0
-   height: 20.0
+   width: 15.0
+   height: 10.0
    transform_tolerance: 0.75
 
 plugins:
