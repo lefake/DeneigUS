@@ -4,6 +4,7 @@
   <arg name="has_ard" default="0"/>
   
   <arg name="joy_port" default="/dev/input/js2" />
+  <param name="joy_type" value="ps3" />
   
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
@@ -29,14 +30,8 @@
     <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
   </group>
 
- <!-- python astar node -->
-  <node pkg="deneigus" type="astar.py" name="astar" output="screen" clear_params="true"/>
-
  <!-- python executif Node -->
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen" clear_params="true"/>
-
-<!-- python tf_listener node -->
-<!--  <node pkg="deneigus" type="tf_listener.py" name="tf_listner" output="screen"/> -->
+  <node pkg="deneigus" required="true" type="executif.py" name="executif" output="screen" clear_params="true"/>
 
 <!-- joy node -->
   <group if="$(arg has_joy)">
@@ -44,7 +39,7 @@
       <param name="dev" type="string" value="$(arg joy_port)" />
       <param name="deadzone" value="0.12" />
     </node>
-  </group>	
+  </group>
 
 <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" clear_params="true"/>
 

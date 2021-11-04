@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 import logging
+from logging_utils import setup_logger, get_logger
 from enum import Enum
 
 import rospy
-from geometry_msgs.msg import Twist, Pose
-from sensor_msgs.msg import Range, NavSatFix
-from nav_msgs.msg import Odometry
-from std_msgs.msg import Float32MultiArray
-from deneigus.srv import trajgen
+from geometry_msgs.msg import Twist
+from std_msgs.msg import Float32MultiArray, Int8, Bool
 from sensor_msgs.msg import Joy
-from logging_utils import setup_logger, get_logger
-from tf import TransformListener
 
 # Control mode values
 class control_modes(Enum):
@@ -18,121 +14,166 @@ class control_modes(Enum):
     manual = 1
     auto = 2
 
-class Executif:
-    def __init__(self):
-        self.logger = get_logger("executif.main")
+supported_type = ["ps3", "ps4", "logi"]
+def joy_button_mapper(joy_type):
+    joy_indexes = {}
+        
+    if joy_type == "ps3":
+        # Axes
+        joy_indexes["prop_lin"] = 4
+        joy_indexes["prop_ang"] = 3
+        joy_indexes["chute_rot"] = 0
+        joy_indexes["chute_elev"] = 1
+        joy_indexes["soufl_speed"] = 5
 
-        self.logger.debug("Started executif init")
-        # Out
-        self.cmd_vel_tank_pub = rospy.Publisher('/cmd_vel_tank', Twist, queue_size=10)
-        self.cmd_vel_tank_msg = Twist()
-        self.cmd_tourelle_pub = rospy.Publisher('/cmd_tourelle', Twist, queue_size=10)
-        self.cmd_tourelle_msg = Twist()
+        # Buttons
+        joy_indexes["soufl_up"] = 2
+        joy_indexes["soufl_down"] = 0
+        joy_indexes["deadman"] = 4
+        joy_indexes["switch_mode"] = 3
+
+    elif joy_type == "ps4":
+        # Axes
+        joy_indexes["prop_lin"] = 4
+        joy_indexes["prop_ang"] = 3
+        joy_indexes["chute_rot"] = 0
+        joy_indexes["chute_elev"] = 1
+        joy_indexes["soufl_speed"] = 5
+
+        # Buttons
+        joy_indexes["soufl_up"] = 2
+        joy_indexes["soufl_down"] = 0
+        joy_indexes["deadman"] = 4
+        joy_indexes["switch_mode"] = 3
     
-        # Used for Sim
-        self.range_pub = rospy.Publisher('/range', Range, queue_size=10)
-        self.coppelia_range_sub = rospy.Subscriber('/ranges_data', Float32MultiArray, self.coppelia_range_callback)
+    elif joy_type == "logi":
+        # Axes
+        joy_indexes["prop_lin"] = 4
+        joy_indexes["prop_ang"] = 3
+        joy_indexes["chute_rot"] = 0
+        joy_indexes["chute_elev"] = 1
+        joy_indexes["soufl_speed"] = 5
 
-        # In
-        self.pos_sub = rospy.Subscriber('/pos', Twist, self.pos_callback)
-        self.cmd_vel = rospy.Subscriber("/cmd_vel", Twist, self.cmd_vel_callback)
-        self.odom_sub = rospy.Subscriber('/odom', Odometry, self.odom_callback)
-        self.estop_state_sub = rospy.Subscriber('/estop_state', Float32MultiArray, self.estop_state_callback)
-        self.tele_batt_sub = rospy.Subscriber('/tele_batt', Float32MultiArray, self.tele_batt_callback)
-        self.pos_tourelle_sub = rospy.Subscriber('/pos_tourelle', Float32MultiArray, self.pos_tourelle_callback)
-        self.debug_mot_sub = rospy.Subscriber('/debug_mot', Float32MultiArray, self.debug_mot_callback)
-        self.gps_data_sub = rospy.Subscriber('/gps/fix', NavSatFix, self.gps_data_callback)
-        self.odom_not_filtered_sub = rospy.Subscriber('/odom/not_filtered', Odometry, self.odom_not_filtered_callback)
-        self.joy_data_sub = rospy.Subscriber('/joy', Joy, self.joy_echo)
-        self.debug_arduino_sub = rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
+        # Buttons
+        joy_indexes["soufl_up"] = 3
+        joy_indexes["soufl_down"] = 0
+        joy_indexes["deadman"] = 4
+        joy_indexes["switch_mode"] = 2
 
-        # Services
-        self.traj_serv = rospy.ServiceProxy('/trajgen_srv', trajgen)
+    return joy_indexes
 
-        # Variables
-        self.ctl_mode = control_modes.manual
+
+class Executif:
+    def __init__(self, joy_indexes):
+        self.logger = get_logger("executif.main")
+        self.logger.debug("Started executif init")
+
+        self.joy_indexes = joy_indexes
+        self.stop_first_time_send = False
+        self.last_control_mode = None
+        self.control_mode = control_modes.stop
+
+        # Publisher for robot's control
+        self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
+        self.chute_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
+        self.soufflante_height_pub = rospy.Publisher('/soufflante_height', Int8, queue_size=10)
+        self.control_mode_pub = rospy.Publisher('control_mode', Int8, queue_size=10)
+        self.deadman_pub = rospy.Publisher('/deadman', Bool, queue_size=10)
+
+        # Subscriber from nodes or robot
+        rospy.Subscriber("/joy", Joy, self.joy_callback)
+        rospy.Subscriber('/debug_arduino_data', Float32MultiArray, self.debug_arduino_data_callback)
+
+        # Topics to be converted to the Arduinos
+        rospy.Subscriber("/cmd_vel", Twist, self.cmd_vel_callback)
 
         self.logger.debug("Finished executif init")
 
-        self.listener = TransformListener()
-
-    def odom_callback(self, msg):
-        self.logger.debug("Odom callback")
-
-    def joy_echo(self, msg):
-
-        throttle_left = msg.axes[1]
-        throttle_right = msg.axes[4]
-
-
-        if self.ctl_mode == control_modes.manual:
-            self.cmd_vel_tank_msg.linear.x = throttle_left
-            self.cmd_vel_tank_msg.linear.y = throttle_right
-            self.cmd_vel_tank_pub.publish(self.cmd_vel_tank_msg)
-
-
-    def coppelia_range_callback(self, msg):
-        #Building Range msg
-        self.logger.debug("Range coppelia callback")
-        self.r = Range()
-        self.r.radiation_type = 0
-        self.r.field_of_view = 0.3
-        self.r.min_range = 0.02
-        self.r.max_range = 2.0
-
-        now = rospy.Time(0)
-        try:
-            self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.1))
-
-            for x,_ in enumerate(msg.data):
-                # Publishes Range from all sonars on same Topic
-                self.r.header.stamp = now  # TODO: Add time in message from Coppelia and use it here
-                self.r.header.frame_id = "sonar_f_"+str(x)
-                self.r.range = msg.data[x]
-                self.range_pub.publish(self.r)
-        except Exception as e:
-            self.logger.warning(f"Execption when doing the transform for ranges sim: {e}")
-
-
-    def pos_callback(self, msg):
-        self.logger.debug("Pos callback")
-
     def cmd_vel_callback(self, msg):
-        self.logger.debug("Cmd_vel callback")
-        
-        lin = msg.linear.x
-        ang = msg.angular.z * 1 # TODO : set distance
-
-        diff_left = lin - ang
-        diff_right =  lin + ang
-        max_diff = max(abs(diff_left), abs(diff_right))
-
-        if max_diff > 1:
-            self.cmd_vel_tank_msg.linear.x = diff_left / max_diff
-            self.cmd_vel_tank_msg.linear.y = diff_right / max_diff
-
-        self.cmd_vel_tank_pub.publish(self.cmd_vel_tank_msg)
-
-    def estop_state_callback(self, msg):
-        self.logger.debug("EStop state callback")
-
-    def tele_batt_callback(self, msg):
-        self.logger.debug("Tele batt callback")
-
-    def pos_tourelle_callback(self, msg):
-        self.logger.debug("Pos tourelle callback")
-
-    def debug_mot_callback(self, msg):
-        self.logger.debug("Debug mot callback")
-
-    def gps_data_callback(self, msg):
-        self.logger.debug("GPS data callback")
-
-    def odom_not_filtered_callback(self, msg):
-        self.logger.debug("Odom_not_filtered_callback callback")
+        if self.control_mode == control_modes.auto:
+            prop = Float32MultiArray()
+            prop.data = self.lin_ang_2_tank(msg.linear.x, msg.angular.z)
+            self.cmd_vel_tank_pub.publish(prop)
+        else:
+            self.logger.debug(f"Cmd_vel recieved but ignored. Robot's mode is {self.control_mode}")
 
     def debug_arduino_data_callback(self, msg):
-        self.logger.debug("Debug arduino callback")
+        self.logger.info(f"Debug arduino callback: {msg}")
+
+    def joy_callback(self, msg):
+        prop = Float32MultiArray()
+        prop.data = [0, 0]
+        chute = Float32MultiArray()
+        chute.data = [0, 0, 0]
+        soufflante_height = Int8()
+        deadman = Bool()
+
+        deadman.data = msg.buttons[self.joy_indexes["deadman"]]
+
+        if not deadman.data:
+            self.control_mode = control_modes.stop
+        
+        if self.control_mode == control_modes.stop and deadman.data:
+            if self.last_control_mode is None:
+                self.control_mode = control_modes.manual
+                self.last_control_mode = self.control_mode
+            else:
+                self.control_mode = self.last_control_mode
+            self.control_mode_pub.publish(self.control_mode.value)
+
+        if not self.control_mode == control_modes.stop and msg.buttons[self.joy_indexes["switch_mode"]]:
+            self.control_mode = control_modes.auto if self.control_mode == control_modes.manual else control_modes.manual
+            self.last_control_mode = self.control_mode
+            self.control_mode_pub.publish(self.control_mode.value)
+
+
+        if self.control_mode == control_modes.manual:
+            self.stop_first_time_send = True
+            prop.data = self.lin_ang_2_tank(msg.axes[self.joy_indexes["prop_lin"]], msg.axes[self.joy_indexes["prop_ang"]])
+
+            speed = abs(msg.axes[self.joy_indexes["soufl_speed"]] - 1) * 3 # TODO : Change the range
+            chute.data = [msg.axes[self.joy_indexes["chute_rot"]], (msg.axes[self.joy_indexes["chute_elev"]]), speed]
+
+            if msg.buttons[self.joy_indexes["soufl_up"]]:
+                soufflante_height.data = 1
+            elif msg.buttons[self.joy_indexes["soufl_down"]]:
+                soufflante_height.data = -1
+            else:
+                soufflante_height.data = 0
+
+            self.prop_pub.publish(prop)
+            self.chute_pub.publish(chute)
+            self.soufflante_height_pub.publish(soufflante_height)
+            self.deadman_pub.publish(deadman)
+
+        if self.control_mode == control_modes.auto:
+            self.stop_first_time_send = True
+            self.deadman_pub.publish(deadman)
+
+        if self.control_mode == control_modes.stop and self.stop_first_time_send:
+            prop = Float32MultiArray()
+            prop.data = [0, 0]
+            chute = Float32MultiArray()
+            chute.data = [0, 0, 0]        # TODO : Fix angles shit 
+            soufflante_height = Int8()
+
+            self.prop_pub.publish(prop)
+            self.chute_pub.publish(chute)
+            self.soufflante_height_pub.publish(soufflante_height)
+            self.control_mode_pub.publish(self.control_mode.value)
+            self.deadman_pub.publish(deadman)
+
+            self.stop_first_time_send = False
+
+    def lin_ang_2_tank(self, lin, ang):
+        # https://home.kendra.com/mauser/Joystick.html
+        v = (1-abs(ang)) * (lin/1) + lin
+        w = (1-abs(lin)) * (ang/1) + ang
+
+        right_vel = (v+w) / 2
+        left_vel = (v-w) / 2
+
+        return [left_vel, right_vel]
 
 if __name__ == "__main__":
     rospy.init_node('executif', anonymous=False)
@@ -141,8 +182,16 @@ if __name__ == "__main__":
     logger = get_logger("executif")
     logger.info("Executif main Started")
 
-    node = Executif()
-    rospy.spin()
+    if not rospy.has_param("joy_type"):
+        logger.fatal("Please set a param named joy_type")
+    else:
+        controller_type = rospy.get_param("joy_type")
+
+        if controller_type in supported_type :
+            Executif(joy_button_mapper(controller_type))
+            rospy.spin()
+        else:
+            logger.fatal("Controller not supported")
 
     logger.info("Executif main Stopped")
 
