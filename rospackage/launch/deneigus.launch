@@ -19,55 +19,50 @@
   </group>
 
   <!-- python sonar2pc Node -->
-  <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen"/>
+  <node pkg="deneigus" type="sonar2pc.py" name="sonar2pc" output="screen" clear_params="true"/>
 
   <!-- python transformOdomMsg Node -->
-  <node pkg="deneigus" type="transformOdomMsg.py" name="transformOdomMsg" output="screen"/>
+  <node pkg="deneigus" type="transformOdomMsg.py" name="transformOdomMsg" output="screen" clear_params="true"/>
 
  <!-- python pb2ros Node -->
   <group if="$(arg has_ard)">
-    <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
+    <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
   </group>
 
  <!-- python astar node -->
-  <node pkg="deneigus" type="astar.py" name="astar" output="screen"/>
+  <node pkg="deneigus" type="astar.py" name="astar" output="screen" clear_params="true"/>
 
  <!-- python executif Node -->
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
+  <node pkg="deneigus" type="executif.py" name="executif" output="screen" clear_params="true"/>
 
 <!-- python tf_listener node -->
 <!--  <node pkg="deneigus" type="tf_listener.py" name="tf_listner" output="screen"/> -->
 
-<!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-
 <!-- joy node -->
   <group if="$(arg has_joy)">
-    <node respawn="true" pkg="joy" type="joy_node" name="raw_joy">
+    <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
       <param name="dev" type="string" value="$(arg joy_port)" />
       <param name="deadzone" value="0.12" />
     </node>
-  </group>
+  </group>	
 
-<!-- RVIZ -->
-  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>	
+<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" clear_params="true"/>
 
 <!-- Static TF -->
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3 0.0 0.5 0 0 0 base_link sonar_f_0" />
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.0 0.3 0.5 1.57 0 0 base_link sonar_f_1" />
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" />
-<node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.3 0.0 0.5 0 0 0 base_link sonar_f_0" clear_params="true"/>
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="0.0 0.3 0.5 1.57 0 0 base_link sonar_f_1" clear_params="true"/>
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="0.0 -0.3 0.5 -1.57  0 0 base_link sonar_f_2" clear_params="true"/>
+<node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.3 0.0 0.5 3.14  0 0  base_link sonar_f_3" clear_params="true"/>
 
-<!-- CostMap with move_base -->
-<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
-   <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
-   <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
-   <param name="local_costmap/width" value="10.0"/>
-   <param name="local_costmap/height" value="10.0"/>
-   <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
+<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+    <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/map/base_local_planner_params.yaml" command="load"/>
 </node>
 
+<node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
 <!-- sudo apt-get install ros-noetic-robot_localization> -->
 <!--    robot_localization odom to base_link -->
@@ -148,7 +143,7 @@
 </node>
 
 <!-- navsat_transform_node-->
-<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
+<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
   <param name="transform_timeout" value="0.2"/>
   <param name="magnetic_declination_radians" value="0.25346"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>

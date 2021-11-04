@@ -1,0 +1,10 @@
+<launch>
+  <param name="joy_type" value="ps3" />
+
+  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
+    <param name="dev" type="string" value="/dev/input/js2" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+  <node pkg="deneigus" required="true" type="joyHandler.py" name="joyHandler" output="screen" clear_params="true" />
+</launch>

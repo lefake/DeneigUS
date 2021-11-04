@@ -12,7 +12,6 @@ from sensor_msgs.msg import Joy
 from logging_utils import setup_logger, get_logger
 from tf import TransformListener
 
-
 # Control mode values
 class control_modes(Enum):
     stop = 0
@@ -74,25 +73,25 @@ class Executif:
 
     def coppelia_range_callback(self, msg):
         #Building Range msg
-        self.logger.debug("Range callback")
+        self.logger.debug("Range coppelia callback")
         self.r = Range()
         self.r.radiation_type = 0
         self.r.field_of_view = 0.3
         self.r.min_range = 0.02
         self.r.max_range = 2.0
 
-        now = rospy.Time.now()
+        now = rospy.Time(0)
         try:
-            self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.2))
+            self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.1))
 
             for x,_ in enumerate(msg.data):
                 # Publishes Range from all sonars on same Topic
-                self.r.header.stamp = now
+                self.r.header.stamp = now  # TODO: Add time in message from Coppelia and use it here
                 self.r.header.frame_id = "sonar_f_"+str(x)
                 self.r.range = msg.data[x]
                 self.range_pub.publish(self.r)
-        except:
-            self.logger.debug("Transform between base_link and map is not availaible")
+        except Exception as e:
+            self.logger.warning(f"Execption when doing the transform for ranges sim: {e}")
 
 
     def pos_callback(self, msg):
