@@ -1,5 +1,5 @@
 <launch>
-  <param name="joy_type" value="ps3" />
+  <param name="joy_type" value="ps4" />
 
   <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
     <param name="dev" type="string" value="/dev/input/js2" />

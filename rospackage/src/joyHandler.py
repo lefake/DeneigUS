@@ -76,15 +76,25 @@ def joy_button_mapper(joy_type):
         joy_indexes["prop_ang"] = 3
         joy_indexes["chute_rot"] = 0
         joy_indexes["chute_elev"] = 1
+        joy_indexes["soufl_speed"] = 5
 
         # Buttons
         joy_indexes["soufl_up"] = 13
         joy_indexes["soufl_down"] = 14
-        joy_indexes["soufl_speed"] = 5
         joy_indexes["deadman"] = 4
 
     elif joy_type == "ps4":
-        logger.error("Not yet supported")
+        # Axes
+        joy_indexes["prop_lin"] = 4
+        joy_indexes["prop_ang"] = 3
+        joy_indexes["chute_rot"] = 0
+        joy_indexes["chute_elev"] = 1
+        joy_indexes["soufl_speed"] = 5
+
+        # Buttons
+        joy_indexes["soufl_up"] = 2
+        joy_indexes["soufl_down"] = 0
+        joy_indexes["deadman"] = 5
 
     return joy_indexes
 
