@@ -68,13 +68,16 @@
 
 <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
+<!-- python SimpleCmdMoveBase Node -->
+<node pkg="deneigus" type="SimpleCmdMoveBase.py" name="simpleCmdMoveBase" output="screen" clear_params="true"/>
+
 <!-- sudo apt-get install ros-noetic-robot_localization> -->
 <!--    robot_localization odom to base_link -->
 
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
       clear_params="true">
-  <param name="frequency" value="10."/>
+  <param name="frequency" value="20."/>
   <param name="sensor_timeout" value="0.2"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
@@ -102,7 +105,7 @@
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_global"
       clear_params="true">
-  <param name="frequency" value="5."/>
+  <param name="frequency" value="20."/>
   <param name="sensor_timeout" value="0.2"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
