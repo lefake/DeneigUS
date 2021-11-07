@@ -93,7 +93,7 @@ class Executif:
         if self.control_mode == control_modes.auto:
             prop = Float32MultiArray()
             prop.data = self.lin_ang_2_tank(msg.linear.x, msg.angular.z)
-            self.cmd_vel_tank_pub.publish(prop)
+            self.prop_pub.publish(prop)
         else:
             self.logger.debug(f"Cmd_vel recieved but ignored. Robot's mode is {self.control_mode}")
 

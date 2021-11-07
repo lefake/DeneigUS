@@ -8,7 +8,6 @@ import numpy as np
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Float32MultiArray
 from logging_utils import setup_logger, get_logger
-from tf import TransformListener
 
 class Sonar2LaserScan:
     def __init__(self):
@@ -23,8 +22,6 @@ class Sonar2LaserScan:
         ]
 
         self.range_sub = rospy.Subscriber('/sonar_pairs', Float32MultiArray, self.sonar_callback, queue_size=10)
-
-        #self.listener = TransformListener()
 
         self.msg = LaserScan()
         self.msg.angle_min = -25*np.pi/180
@@ -47,13 +44,15 @@ class Sonar2LaserScan:
 
         if range1>=self.msg.range_max:
             range1 = float("inf")
+        elif range1<self.msg.range_min:
+            range1 = self.msg.range_min
+
         if range2>=self.msg.range_max:
             range2 = float("inf")
+        elif range2<self.msg.range_min:
+            range2 = self.msg.range_min
 
-        #now = rospy.Time(0)
-        #self.listener.waitForTransform("/base_link", "/map", now, rospy.Duration(0.1))
-
-        self.msg.header.stamp = rospy.Time.now()#data.data[0]
+        self.msg.header.stamp = rospy.Time.now()
         self.msg.header.frame_id =frame_id
         self.msg.ranges = [range1]*self.nb_point_per_sonar + [range2]*self.nb_point_per_sonar
 
