@@ -6,5 +6,5 @@
     <param name="deadzone" value="0.12" />
   </node>
 
-  <node pkg="deneigus" required="true" type="joyHandler.py" name="joyHandler" output="screen" clear_params="true" />
+  <node pkg="deneigus" type="executif.py" name="executif" output="screen" clear_params="true"/>
 </launch>

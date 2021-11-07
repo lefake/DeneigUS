@@ -4,7 +4,8 @@
   <arg name="has_ard" default="0"/>
   
   <arg name="joy_port" default="/dev/input/js2" />
-  
+  <param name="joy_type" value="ps3" />
+
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
 
@@ -29,15 +30,8 @@
     <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
   </group>
 
- <!-- python astar node -->
-  <node pkg="deneigus" type="astar.py" name="astar" output="screen" clear_params="true"/>
-
- <!-- python joy Node -->
-  <param name="joy_type" value="ps4" />
-  <node pkg="deneigus" type="joyHandler.py" name="joyHandler" output="screen" clear_params="true"/>
-
-<!-- python tf_listener node -->
-<!--  <node pkg="deneigus" type="tf_listener.py" name="tf_listner" output="screen"/> -->
+ <!-- python executif Node -->
+  <node pkg="deneigus" required="true" type="executif.py" name="executif" output="screen" clear_params="true"/>
 
 <!-- joy node -->
   <group if="$(arg has_joy)">
@@ -77,7 +71,7 @@
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
       clear_params="true">
-  <param name="frequency" value="20."/>
+  <param name="frequency" value="10."/>
   <param name="sensor_timeout" value="0.2"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
@@ -105,7 +99,7 @@
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_global"
       clear_params="true">
-  <param name="frequency" value="20."/>
+  <param name="frequency" value="10."/>
   <param name="sensor_timeout" value="0.2"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
@@ -139,7 +133,7 @@
   <param name="odom1" value="/odometry/gps"/>
   <param name="odom1_differential" value="false"/>
   <param name="odom1_relative" value="false"/>
-    <param name="odom1_queue_size" value="2."/>
+    <param name="odom1_queue_size" value="5."/>
   <rosparam param="odom1_config">[true, true, false,
                               false, false, false,
                               false, false, false,
@@ -163,4 +157,3 @@
 </node>
 
 </launch>
-
