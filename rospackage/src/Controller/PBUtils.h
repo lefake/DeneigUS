@@ -25,18 +25,20 @@ struct Topic {
 };
 
 enum TOPICS
-{
+{ 
+  // OUT
   DEBUG_ARDUINO = 0,
-  CMD_VEL,
-  CMD_TOURELLE,
-  POS,
-  OBS_POS,
+  ENC,
+  IMU,
+  GPS,
+  SONAR_PAIRS,
   ESTOP_STATE,
-  TELE_BATT,
-  POS_TOURELLE,
-  DEBUG_MOT,
-  GPS_DATA,
-  IMU_DATA,
+
+  // IN
+  PROP,
+  CHUTE,
+  SOUFFLANTE_HEIGHT,
+  DEADMAN,
 
   _NBS_TOPICS
 };

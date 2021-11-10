@@ -1,58 +1,58 @@
 import threading
 import time
-import rospy
 
 from logging_utils import get_logger
-from msg_utils import MsgFactory
+from msg_utils import default_converters
 
 class Topic:
-    '''
-    Use ros_obj when doing a One to One conversion (ex: Twist -> Twist)
-    Use the obj_type only when changing the type (ex: Pose -> Float32MultiArray)
-        The obj_type name should be the ROS name to work with the map
-    '''
-    def __init__(self, id, ros_obj, dst=None, dst_obj_type=None):
-        factory = MsgFactory()
-        is_pub = True if isinstance(ros_obj, rospy.Publisher) else False
-        class_name = ros_obj.data_class.__name__ if dst_obj_type is None else dst_obj_type
-        converters = factory.getMsg(class_name)[1]
-
-        # TODO DUS-500 : Test with diff dst_obj_type
-
+    def __init__(self, id, name, converter):
         self._id = id
-        self._dst = dst
-        self._name = ros_obj.name
-        self._obj = factory.getMsg(class_name)[0]
-
-        if is_pub:
-            self._converter = converters[0]
-        else:
-            self._converter = converters[1]
-        self._pub = ros_obj if is_pub else None
+        self._name = name
+        self._converter = converter
 
     @property
     def id(self):
         return self._id
 
     @property
-    def dst(self):
-        return self._dst
-
-    @property
     def name(self):
         return self._name
-
-    @property
-    def obj(self):
-        return self._obj
 
     @property
     def converter(self):
         return self._converter
 
+class PubTopic(Topic):
+    def __init__(self, id, ros_pub, input_type=None, converter=None):
+        if input_type is None:
+            input_type = default_converters[ros_pub.data_class.__name__][0]
+
+        if converter is None:
+            converter = default_converters[ros_pub.data_class.__name__][1][0]
+
+        super().__init__(id, ros_pub.name, converter)
+        self._input_type = input_type
+        self._pub = ros_pub
+
+    @property
+    def input_type(self):
+        return self._input_type
+
     @property
     def pub(self):
         return self._pub
+
+class SubTopic(Topic):
+    def __init__(self, id, ros_sub, arduino_dst, converter=None):
+        if converter is None:
+            converter = default_converters[ros_sub.data_class.__name__][1][1]
+
+        super().__init__(id, ros_sub.name, converter)
+        self._dst = arduino_dst
+
+    @property
+    def dst(self):
+        return self._dst
 
 # Serialization utils
 class PBSerializationHandler:
@@ -92,9 +92,9 @@ class PBSerializationHandler:
                         self._logger.error("Unknown topic id: " + str(msg_id))
                         continue
 
-                    obj = current_topic.obj
-                    obj.ParseFromString(bytearray.fromhex(raw_msg))
-                    object_list.append([msg_id, obj])
+                    input_type = current_topic.input_type
+                    input_type.ParseFromString(bytearray.fromhex(raw_msg))
+                    object_list.append([msg_id, input_type])
 
         except Exception as e:
             self._logger.error("deserialize error " + str(e))
@@ -142,7 +142,7 @@ class ArduinoReadHandler(threading.Thread):
 
 
 class PBSerialHandler:
-    def __init__(self, serial, temp_id, msg_callback, status_callback, serializer, sleeptime=0.01):
+    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
         self._serial = serial
@@ -150,13 +150,15 @@ class PBSerialHandler:
         self._msg_callback = msg_callback
         self._status_callback = status_callback
 
-        self._id = temp_id
+        self._id = ""
         self._interlock = False
         self._response = None
 
         self._serializer = serializer
         self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
         self._worker.start()
+
+        self.acknowledge_arduino()
 
     def set_arduino_id(self, id):
         self._id = id
@@ -182,20 +184,23 @@ class PBSerialHandler:
                 buffer = self._serial.read_until(b'}')
                 self._serial.flush()
                 self._response = b'{' + buffer
-                self._status_callback(self._id, self._response)
+
+                if len(self._response.decode()[1:-1].split(';')) == 1:
+                    self._id = self._response.decode()[1:-1]
+                    self._logger.info(f"Ack to {self._id}")
+                else:
+                    self._status_callback(self._id, self._response)
 
         except Exception as e:
             self._logger.error("Read call back error " + str(e))
 
 
-    def acknowledge_arduino(self, status_type):
+    def acknowledge_arduino(self):
         while self._interlock:
             time.sleep(self._sleeptime)
 
-        msg = "{" + status_type + ";" + self._id + "}"
-
         self._interlock = True
-        self._serial.write(msg.encode("ascii"))
+        self._serial.write("{42}".encode("ascii"))
         self._serial.flush()
         self._interlock = False
 

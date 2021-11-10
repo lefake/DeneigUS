@@ -24,24 +24,21 @@ void Sonars::init(int trigger[], int echo[])
   }
 }
 
-float Sonars::dist(int n)
+void Sonars::readPair(int p, FloatArray* msg)
 {
-  digitalWrite(triggerPins[n], LOW);
-  delayMicroseconds(2);
-  digitalWrite(triggerPins[n], HIGH);
-  delayMicroseconds(10);
-  digitalWrite(triggerPins[n], LOW);
-  
-  noInterrupts();
-  float d = pulseIn(echoPins[n], HIGH, pusleTimeout);
-  interrupts();
-
-  float distanceM = d / 2000000.0 * soundSpeed;
-  
-  if (distanceM <= MIN_DIST_DETECTION_M) 
-    return -1.0;
-  else if (distanceM > MAX_DIST_DETECTION_M)
-    return -2.0 ;
-  else
-    return distanceM;
+  msg->data_count = 3;
+  msg->data[0] = p;
+  for (int i = 0; i < 2; ++i)
+  {
+    digitalWrite(triggerPins[p+i], LOW);
+    delayMicroseconds(2);
+    digitalWrite(triggerPins[p+i], HIGH);
+    delayMicroseconds(10);
+    digitalWrite(triggerPins[p+i], LOW);
+    
+    noInterrupts();
+    float d = pulseIn(echoPins[p+i], HIGH, pusleTimeout);
+    interrupts(); 
+    msg->data[i+1] = d / 2000000.0 * soundSpeed;  // Test with range min values
+  }
 }

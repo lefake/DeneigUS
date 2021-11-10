@@ -1,6 +1,6 @@
-python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py range.proto
 python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py floatarray.proto
 python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py twist.proto
+python3 ~/snap/arduino/current/Arduino/libraries/nanopb/generator/nanopb_generator.py int32.proto
 
 rm ../src/Controller/*.pb.*
 rm ~/catkin_ws/src/deneigus/src/Controller/*.pb.*

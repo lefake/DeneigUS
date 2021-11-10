@@ -5,7 +5,7 @@ from enum import Enum
 
 import rospy
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float32MultiArray, Int8, Bool
+from std_msgs.msg import Float32MultiArray, Int32
 from sensor_msgs.msg import Joy
 
 # Control mode values
@@ -76,9 +76,9 @@ class Executif:
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
-        self.soufflante_height_pub = rospy.Publisher('/soufflante_height', Int8, queue_size=10)
-        self.control_mode_pub = rospy.Publisher('control_mode', Int8, queue_size=10)
-        self.deadman_pub = rospy.Publisher('/deadman', Bool, queue_size=10)
+        self.soufflante_height_pub = rospy.Publisher('/soufflante_height', Int32, queue_size=10)
+        self.control_mode_pub = rospy.Publisher('control_mode', Int32, queue_size=10)
+        self.deadman_pub = rospy.Publisher('/deadman', Int32, queue_size=10)
 
         # Subscriber from nodes or robot
         rospy.Subscriber("/joy", Joy, self.joy_callback)
@@ -105,8 +105,8 @@ class Executif:
         prop.data = [0, 0]
         chute = Float32MultiArray()
         chute.data = [0, 0, 0]
-        soufflante_height = Int8()
-        deadman = Bool()
+        soufflante_height = Int32()
+        deadman = Int32()
 
         deadman.data = msg.buttons[self.joy_indexes["deadman"]]
 
@@ -155,7 +155,7 @@ class Executif:
             prop.data = [0, 0]
             chute = Float32MultiArray()
             chute.data = [0, 0, 0]        # TODO : Fix angles shit 
-            soufflante_height = Int8()
+            soufflante_height = Int32()
 
             self.prop_pub.publish(prop)
             self.chute_pub.publish(chute)
@@ -188,7 +188,7 @@ if __name__ == "__main__":
         controller_type = rospy.get_param("joy_type")
 
         if controller_type in supported_type :
-            Executif(joy_button_mapper(controller_type))
+            Executif(joy_button_mapper("logi"))
             rospy.spin()
         else:
             logger.fatal("Controller not supported")
