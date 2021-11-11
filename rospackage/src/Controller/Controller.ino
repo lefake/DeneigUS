@@ -131,8 +131,8 @@ void setup()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorPwmLeft);
-  motorRight.init(motorForwardRight, motorPwmRight);
+  motorLeft.init(motorForwardLeft, motorPwmLeft, CS_ENCODER2);
+  motorRight.init(motorForwardRight, motorPwmRight, CS_ENCODER1);
 #endif
 
 #ifdef HAS_IMU
@@ -143,18 +143,39 @@ void setup()
   gps.init();
 #endif
 
-#ifdef HAS_ENCODERS
+/*fdef HAS_ENCODERS
   encoders.init(encoderCSPins);
 #endif
+*/
 
 #ifdef HAS_SERVOS
   servos.init(servoPins);
 #endif
 
+ pinMode(53, OUTPUT);
+ digitalWrite(53,LOW);
+ 
+  motorLeft.setPID(13.0, 11.0, 0.7);
+  motorRight.setPID(13.0, 11.0, 0.7);
+
+  motorLeft.commandSpeed(0.5);
+  motorRight.commandSpeed(0.5);
+
 }
 
 void loop()
 {
+  //motorLeft.computePID();
+  //motorRight.computePID();
+
+  motorLeft.setVoltage(12);
+  motorRight.setVoltage(0);
+
+  Serial.print(motorLeft.getSpeed());Serial.print(" ");
+  Serial.println(motorRight.getSpeed());
+  
+  delay(100);
+  /*
   if (ackRecieved)
   {
     if (millis() - lastTime > delayInterval)
@@ -171,8 +192,8 @@ void loop()
 #endif
 
 #ifdef HAS_ENCODERS
-      posMsg.lx = encoders.getEncVel(0, delayInterval);
-      posMsg.ly = encoders.getEncVel(1, delayInterval);
+      posMsg.lx = encoders.getEncVel(delayInterval);
+      posMsg.ly = encoders.getEncVel(delayInterval);
       pbUtils.pbSend(1, POS);
 #endif
 
@@ -253,7 +274,7 @@ void loop()
   {
     sendStatus(ERROR, SERIAL_COMMUNICATION);
     msgDiscardedLength = false;
-  }
+  }*/
 }
 
 // ======================================== CALLBACKS ========================================
@@ -263,8 +284,8 @@ void cmdVelCallback ()
 #ifdef HAS_MOTOR_PROP
   motorVelLeft = cmdVelMsg.lx;
   motorVelRight = cmdVelMsg.ly;
-  motorLeft.setSpeed(motorVelLeft);
-  motorRight.setSpeed(motorVelRight);
+  motorLeft.commandSpeed(motorVelLeft);
+  motorRight.commandSpeed(motorVelRight);
 #endif
 }
 

@@ -20,12 +20,19 @@
 
 // ======================= ENCODERS ==================================
 #define NBS_ENCODERS                        2
+#define CS_ENCODER1                         25
+#define CS_ENCODER2                         29
 #define NOP_A5                              0x00
 #define RD_POS                              0x10
 #define WAIT                                0xA5
 #define NBS_TICK_PER_REV                    4096.0
 #define TICK_SAFTY_RATIO                    1.15
 #define MAX_SPEED_RPM                       90.0
+
+// ======================= MOTORS ===================================
+
+#define RADIUS 0.2159/2
+#define M_PI 3.14159
 
 // ======================= Servos ===================================
 #define NBR_SERVOS                          2

@@ -4,54 +4,49 @@ Encoder::Encoder(){ }
 
 Encoder::~Encoder(){ }
 
-void Encoder::init(int enc[])
+void Encoder::init(int enc)
 {
-  encPins = enc;
+  encPin = enc;
 
   pinMode(clkPin, OUTPUT);
   pinMode(mosiPin, OUTPUT);
   pinMode(misoPin, INPUT);
 
-  for (int i = 0; i < NBS_ENCODERS; i++)
-  {
-    pinMode(encPins[i], OUTPUT);
-    digitalWrite(encPins[i], HIGH);
-  }
-
+  pinMode(encPin, OUTPUT);
+  digitalWrite(encPin, HIGH);
+    
   SPI.setDataMode(SPI_MODE0);
   SPI.setClockDivider(SPI_CLOCK_DIV16);
   SPI.begin();
 
-  for (int i = 0; i < NBS_ENCODERS; i++)
-  {
-    lastRead[i] = getEncValue(i);
-  }
+  lastRead = getEncValue();
+ 
 }
 
-double Encoder::getEncVel(int n, long dt)
+double Encoder::getEncVel(long dt)
 {
   double maxTickCount = MAX_TICK_SAMPLE_SAFE(dt);
-  int current = getEncValue(n);
-  double diff = current - lastRead[n];
+  int current = getEncValue();
+  double diff = current - lastRead;
   
   // A turn
   if (abs(diff)/maxTickCount > 1)
   {
     if (diff > 0)
-      diff = -lastRead[n]-(NBS_TICK_PER_REV-1.0-current);
+      diff = -lastRead-(NBS_TICK_PER_REV-1.0-current);
     else
-      diff = (NBS_TICK_PER_REV-1.0-lastRead[n])+current;
+      diff = (NBS_TICK_PER_REV-1.0-lastRead)+current;
   }
 
-  lastRead[n] = current;
+  lastRead = current;
   
   double deg = diff * 360.0 / NBS_TICK_PER_REV;
   return deg * 1000.0 / dt;
 }
 
-int Encoder::getEncValue(int n)
+int Encoder::getEncValue()
 {
-  int encCurrPin = encPins[n];
+  int encCurrPin = encPin;
   uint8_t receivedMessage = WAIT;
   uint16_t pos = -1;
   
@@ -70,7 +65,7 @@ int Encoder::getEncValue(int n)
   }
   else
   {
-    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(n) + " bad read (" + receivedMessage + ")");
+    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
   }
 
   return pos;

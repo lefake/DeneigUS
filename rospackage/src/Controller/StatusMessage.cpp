@@ -21,5 +21,5 @@ void sendStatusWithMessage(int level, int type, String msg)
   Serial.print(type);
   Serial.print(";");
   Serial.print(msg);
-  Serial.print("}");
+  Serial.println("}");
 }
