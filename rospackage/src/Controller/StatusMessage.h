@@ -3,9 +3,6 @@
 
 #include <Arduino.h>
 
-#define ACK_REQUEST_ID    42
-
-
 void sendStatus(int level, int type);
 void sendStatusWithMessage(int level, int type, String msg);
 void sendStatusNotInitialized(int type);

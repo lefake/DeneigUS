@@ -76,7 +76,7 @@ class Executif:
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
-        self.soufflante_height_pub = rospy.Publisher('/soufflante_height', Int32, queue_size=10)
+        self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
         self.control_mode_pub = rospy.Publisher('control_mode', Int32, queue_size=10)
         self.deadman_pub = rospy.Publisher('/deadman', Int32, queue_size=10)
 
@@ -105,7 +105,7 @@ class Executif:
         prop.data = [0, 0]
         chute = Float32MultiArray()
         chute.data = [0, 0, 0]
-        soufflante_height = Int32()
+        soufflante_cmd = Int32()
         deadman = Int32()
 
         deadman.data = msg.buttons[self.joy_indexes["deadman"]]
@@ -135,15 +135,15 @@ class Executif:
             chute.data = [msg.axes[self.joy_indexes["chute_rot"]], (msg.axes[self.joy_indexes["chute_elev"]]), speed]
 
             if msg.buttons[self.joy_indexes["soufl_up"]]:
-                soufflante_height.data = 1
+                soufflante_cmd.data = 1
             elif msg.buttons[self.joy_indexes["soufl_down"]]:
-                soufflante_height.data = -1
+                soufflante_cmd.data = -1
             else:
-                soufflante_height.data = 0
+                soufflante_cmd.data = 0
 
             self.prop_pub.publish(prop)
             self.chute_pub.publish(chute)
-            self.soufflante_height_pub.publish(soufflante_height)
+            self.soufflante_cmd_pub.publish(soufflante_cmd)
             self.deadman_pub.publish(deadman)
 
         if self.control_mode == control_modes.auto:
@@ -155,11 +155,11 @@ class Executif:
             prop.data = [0, 0]
             chute = Float32MultiArray()
             chute.data = [0, 0, 0]        # TODO : Fix angles shit 
-            soufflante_height = Int32()
+            soufflante_cmd = Int32()
 
             self.prop_pub.publish(prop)
             self.chute_pub.publish(chute)
-            self.soufflante_height_pub.publish(soufflante_height)
+            self.soufflante_cmd_pub.publish(soufflante_cmd)
             self.control_mode_pub.publish(self.control_mode.value)
             self.deadman_pub.publish(deadman)
 

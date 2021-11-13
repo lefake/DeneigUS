@@ -38,7 +38,11 @@ void Sonars::readPair(int p, FloatArray* msg)
     
     noInterrupts();
     float d = pulseIn(echoPins[p+i], HIGH, pusleTimeout);
-    interrupts(); 
+    interrupts();
+
+    if (d > pusleTimeout)
+      d = MAX_DIST_DETECTION_M + 0.5;
+    
     msg->data[i+1] = d / 2000000.0 * soundSpeed;  // Test with range min values
   }
 }

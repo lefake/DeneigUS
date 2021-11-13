@@ -55,7 +55,7 @@ class SubTopic(Topic):
         return self._dst
 
 # Serialization utils
-class PBSerializationHandler:
+class PBSerializationHelper:
     def __init__(self, topics):
         self._logger = get_logger("pb2ros.PBSerializationHandler")
         self._logger.debug("PBSerializationHandler started")
@@ -101,107 +101,40 @@ class PBSerializationHandler:
 
         return object_list
 
-
-
-
-# Serial communication utils
-
-class ArduinoReadHandler(threading.Thread):
-    def __init__(self, sleeptime, readfunc):
-        self._logger = get_logger("pb2ros.ArduinoReadHandler")
-        self._logger.debug("ArduinoReadHandler started")
-        self._sleeptime = sleeptime
-        self._readfunc = readfunc
+class PBSerialHandler(threading.Thread):
+    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01, ack_query="{42}"):
         threading.Thread.__init__(self)
-        self._runflag = threading.Event()
-        self._runflag.clear()
-        self._run = True
-
-    def run(self):
-        self._runflag.set()
-        self.worker()
-
-    def worker(self):
-        while self._run:
-            if self._runflag.is_set():
-                self._readfunc()
-            time.sleep(self._sleeptime)
-
-    def pause(self):
-        self._runflag.clear()
-
-    def resume(self):
-        self._runflag.set()
-
-    def running(self):
-        return self._runflag.is_set()
-
-    def kill(self):
-        self._runflag.clear()
-        self._run = False  
-
-
-class PBSerialHandler:
-    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01):
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
+
         self._serial = serial
-        self._sleeptime = float(sleeptime)
         self._msg_callback = msg_callback
         self._status_callback = status_callback
+        self._serializer = serializer
+        self._sleeptime = sleeptime
+        self._ack_query = ack_query
 
         self._id = ""
         self._interlock = False
         self._response = None
+        self._run = False
 
-        self._serializer = serializer
-        self._worker = ArduinoReadHandler(self._sleeptime, self.read_callback)
-        self._worker.start()
-
+        # Need to make sure the thread is reading 
+        # the inputs before sending anything
+        # otherwise the communication is bricked
+        time.sleep(1)
         self.acknowledge_arduino()
-
-    def set_arduino_id(self, id):
-        self._id = id
 
     @property
     def id(self):
         return self._id
 
-    def kill(self):
-        self._worker.kill()
-
-    def read_callback(self):
-        try:
-            input = self._serial.read()
-
-            if input == b'<':
-                buffer = self._serial.read_until(b'>')
-                self._serial.flush()
-                self._response = b'<' + buffer
-                self._msg_callback(self._response)
-
-            elif input == b'{':
-                buffer = self._serial.read_until(b'}')
-                self._serial.flush()
-                self._response = b'{' + buffer
-
-                if len(self._response.decode()[1:-1].split(';')) == 1:
-                    self._id = self._response.decode()[1:-1]
-                    self._logger.info(f"Ack to {self._id}")
-                else:
-                    self._status_callback(self._id, self._response)
-
-        except Exception as e:
-            self._logger.error("Read call back error " + str(e))
-
-
     def acknowledge_arduino(self):
         while self._interlock:
-            time.sleep(self._sleeptime)
+            pass
 
         self._interlock = True
-        self._serial.write("{42}".encode("ascii"))
-        self._serial.flush()
+        self._to_send = self._ack_query
         self._interlock = False
 
     def write_pb_msg(self, id, msg):
@@ -211,10 +144,52 @@ class PBSerialHandler:
         encoded_msg = self._serializer.encode_msgs(ids, msgs)
 
         while self._interlock:
-            time.sleep(self._sleeptime)
+            pass
 
         self._interlock = True
-        self._serial.write(encoded_msg.encode("ascii"))
-        self._serial.flush()
+        self._to_send = encoded_msg
         self._interlock = False
 
+    def run(self):
+        self._run = True
+        self.worker()
+
+    def kill(self):
+        self._run = False  
+
+    def worker(self):
+        while self._run:
+            # There's something to read
+            if self._serial.in_waiting > 0:     
+                try:
+                    input = self._serial.read()
+
+                    if input == b'<':
+                        buffer = self._serial.read_until(b'>')
+                        self._serial.flush()
+                        self._response = b'<' + buffer
+                        self._msg_callback(self._response)
+
+                    elif input == b'{':
+                        buffer = self._serial.read_until(b'}')
+                        self._serial.flush()
+                        self._response = b'{' + buffer
+
+                        if len(self._response.decode()[1:-1].split(';')) == 1:
+                            self._id = self._response.decode()[1:-1]
+                            self._logger.info(f"Ack to {self._id}")
+                        else:
+                            self._status_callback(self._id, self._response)
+
+                except Exception as e:
+                    self._logger.error("Read call back error " + str(e))
+
+            # There's something to write
+            elif self._to_send != "" and not self._interlock:
+                self._interlock = True
+                self._serial.write(self._to_send.encode("ascii"))
+                self._serial.flush()
+                self._to_send = ""
+                self._interlock = False
+
+            time.sleep(self._sleeptime)
