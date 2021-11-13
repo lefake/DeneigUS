@@ -62,12 +62,11 @@
 
 <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
+
 <!-- python SimpleCmdMoveBase Node -->
-<node pkg="deneigus" type="SimpleMoveBaseSquarePath.py" name="SimpleMoveBaseSquarePath" output="screen" clear_params="true"/>
+<node pkg="deneigus" type="behaviorTree.py" name="behaviorTree" output="screen" clear_params="true"/>
 
-<!-- sudo apt-get install ros-noetic-robot_localization> -->
 <!--    robot_localization odom to base_link -->
-
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
       clear_params="true">
