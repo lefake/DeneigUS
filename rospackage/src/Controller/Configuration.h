@@ -30,8 +30,9 @@
 // ==================== SERVOS ================================
 // #define HAS_SERVOS
 
+
 // ==================== ENCODERS ==============================
-#define HAS_ENCODERS
+// #define HAS_ENCODERS
 
 
 
@@ -41,7 +42,7 @@
 // Will only calibrate sensors and write values to EEPROM
 // #define CONFIGURATION_MODE
 
-// #define DEBUGGING
+#define DEBUGGING
 
 
 

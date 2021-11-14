@@ -175,11 +175,8 @@ void setup()
 
 void loop()
 {
-  if (inCmdComplete && inCmdType == STATUS_MSGS && !ackHandler.acknowldgeArduino(inCmd))
-  {
-    inCmdType = -1;
-    inCmdComplete = false;
-  }
+  if (inCmdComplete && inCmdType == STATUS_MSGS)
+    inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
   
 #ifndef CONFIGURATION_MODE
   if (ackHandler.getId() == CONTROLLER)
