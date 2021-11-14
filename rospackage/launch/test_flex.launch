@@ -82,8 +82,8 @@
   <param name="transform_time_offset" value="1e-7"/>
 
   <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
+  <param name="odom0_differential" value="true"/>
+  <param name="odom0_relative" value="true"/>
   <param name="imu0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
                               false, false, false,
@@ -120,7 +120,7 @@
                               false, false, false]</rosparam>
 
   <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
+  <param name="odom0_differential" value="true"/>
   <param name="odom0_relative" value="false"/>
   <param name="odom0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
@@ -142,10 +142,10 @@
   <remap from="odometry/filtered" to="odometry/filtered/global"/>
 </node>
 
-<!-- navsat_transform_node-->
+<!-- navsat_transform_node  -0.25949167467707 -->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
   <param name="transform_timeout" value="0.2"/>
-  <param name="magnetic_declination_radians" value="0.25346"/>
+  <param name="magnetic_declination_radians" value="0.0"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>
   <param name="broadcast_cartesian_transform" value="false"/>
   <param name="yaw_offset" value="0"/>
