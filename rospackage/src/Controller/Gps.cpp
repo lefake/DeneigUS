@@ -105,14 +105,11 @@ void Gps::getCoordinates( FloatArray* msg )
   {
     updateLon();
     updateLat();
-    
-    msg->data_count = NBS_DATA_SENT;
-    msg->data[0] = getX();               //x
-    msg->data[1] = getY();               //y
-    msg->data[2] = getZ();               //z
-    msg->data[3] = latitude;             //lat
-    msg->data[4] = longitude;            //lon
-    msg->data[5] = myGPS.getAltitude();  //alt
+
+    msg->data_count = 3;
+    msg->data[0] = latitude;             //lat
+    msg->data[1] = longitude;            //lon
+    msg->data[2] = myGPS.getAltitude();  //alt
   }
   else
     sendStatusNotInitialized(GPS_DEVICE);

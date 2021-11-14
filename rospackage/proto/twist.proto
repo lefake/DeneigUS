@@ -1,7 +1,0 @@
-syntax = "proto2";
-
-message Twist {
-	required float lx = 1;
-	required float ly = 2;
-	required float az = 3;
-}

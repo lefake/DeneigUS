@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 #include "Constants.h"
+#include "floatarray.pb.h"
+#include "StatusMessage.h"
+
+#define TIMEOUT_SAFETY_RATIO  1.25
 
 class Sonars
 {
@@ -11,14 +15,14 @@ class Sonars
     ~Sonars();
     
     void init(int trigger[], int echo[]);
-    float dist(int n);
+    void readPair(int p, FloatArray* msg);
 
   private:
-    int* triggerPins;     // TODO : Why dynamically assigned?
+    int* triggerPins;
     int* echoPins;
 
     const float soundSpeed = 331.3 + 0.606 * TEMPERATURE;
-    const float pusleTimeout = 1.1 * (((MAX_DIST_DETECTION_M * 2) / soundSpeed) * 1000000);
+    const unsigned long pusleTimeout = TIMEOUT_SAFETY_RATIO * (((MAX_DIST_DETECTION_M * 2.0) / soundSpeed) * 1000000.0);
 };
 
 #endif // _SONARS_H
