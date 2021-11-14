@@ -54,7 +54,7 @@ class Sonar2LaserScan:
 
         self.msg.header.stamp = rospy.Time.now()
         self.msg.header.frame_id =frame_id
-        self.msg.ranges = [range1]*self.nb_point_per_sonar + [range2]*self.nb_point_per_sonar
+        self.msg.ranges = [range2]*self.nb_point_per_sonar + [range1]*self.nb_point_per_sonar
 
         self.pub[id].publish(self.msg)
 

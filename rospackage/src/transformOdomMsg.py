@@ -14,7 +14,7 @@ class TransformOdomMsg:
     def __init__(self):
         self.odom_sub = rospy.Subscriber('/odom_sim', Odometry, self.transform_callback)
 
-        self.imu_enc = rospy.Publisher('/wheel/odometry', Odometry, queue_size=10) #modifier le nom
+        self.enc_pub = rospy.Publisher('/wheel/odometry', Odometry, queue_size=10)
         self.imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self.gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)
 
@@ -22,10 +22,12 @@ class TransformOdomMsg:
         self.longitude_studio = -71.92495310609306 # phi
         self.altitude_studio = 170
 
-        self.p = Proj(init='epsg:3857')
+        self.p = Proj(init='epsg:3857', ellps='WGS84')
 
         self.x0, self.y0 = self.p(self.longitude_studio, self.lattitude_studio) # longitude, lattitude
         self.z0 = self.altitude_studio
+
+        self.scale = 1.42
 
     def transform_callback(self, data):
         self.transform_gps(data)
@@ -36,17 +38,16 @@ class TransformOdomMsg:
     def transform_gps(self, data):
         msg = NavSatFix()
 
-        x = data.pose.pose.position.x + self.x0
-        y = data.pose.pose.position.y + self.y0
+        x = data.pose.pose.position.x*self.scale + self.x0
+        y = data.pose.pose.position.y*self.scale + self.y0
         z = data.pose.pose.position.z + self.z0
 
         longitude, lattitude = self.p(x,y, inverse=True)
         altitude = z
 
         msg.header.seq =  data.header.seq
-        msg.header.stamp = rospy.get_rostime()#data.header.stamp
+        msg.header.stamp = rospy.get_rostime()
         msg.header.frame_id = 'base_link'
-        #msg.status = -1
         msg.latitude = lattitude
         msg.longitude = longitude
         msg.altitude = altitude
@@ -57,15 +58,14 @@ class TransformOdomMsg:
         msg = Odometry()
 
         msg.header.seq =  data.header.seq
-        msg.header.stamp = rospy.get_rostime()#data.header.stamp
-        #msg.header.frame_id = 'base_link'
-        msg.child_frame_id = 'base_link'
+        msg.header.stamp = rospy.get_rostime()
+        msg.header.frame_id = 'base_link'
         msg.twist.twist.linear.x = data.twist.twist.linear.x
         msg.twist.twist.linear.y = data.twist.twist.linear.y
         msg.twist.twist.linear.z = data.twist.twist.linear.z
         msg.twist.twist.angular.z = data.twist.twist.angular.z
 
-        self.imu_enc.publish(msg)
+        self.enc_pub.publish(msg)
 
     def transform_imu(self, data):
         msg = Imu()
@@ -73,7 +73,6 @@ class TransformOdomMsg:
         msg.header.seq =  data.header.seq
         msg.header.stamp = rospy.get_rostime()#data.header.stamp
         msg.header.frame_id = 'base_link'
-        #msg.child_frame_id = data.child_frame_id
         msg.orientation = data.pose.pose.orientation
 
         self.imu_pub.publish(msg)
