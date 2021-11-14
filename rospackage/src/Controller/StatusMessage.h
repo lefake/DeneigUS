@@ -9,8 +9,7 @@ void sendStatusNotInitialized(int type);
 
 enum STATUS_LVL 
 {
-  NONE = 0,
-  FATAL,
+  FATAL = 0,
   ERROR,
   WARNING,
   INFO,
@@ -32,8 +31,6 @@ enum STATUS_TYPE
   MOTOR_PROP_DEVICE,
   SERVOS_DEVICE,
   ENCODER_DEVICE,
-  ACKNOWLEDGE,
-  ID,
   OTHER,
 
   _NBS_TYPE

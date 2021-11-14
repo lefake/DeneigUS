@@ -1,5 +1,6 @@
-rm -r ../src/proto_gen_classes/*
-rm -r ~/catkin_ws/src/deneigus/src/proto_gen_classes/*
+rm -r ../src/proto_gen_classes
+rm -r ~/catkin_ws/src/deneigus/src/proto_gen_classes
+mkdir ~/catkin_ws/src/deneigus/src/proto_gen_classes
 mkdir ../src/proto_gen_classes
 
 protoc --proto_path=. --python_out=../src/proto_gen_classes *.proto

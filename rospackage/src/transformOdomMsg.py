@@ -5,7 +5,7 @@ import rospy
 import time
 import numpy as np
 
-from sensor_msgs.msg import NavSatFix, Imu#
+from sensor_msgs.msg import NavSatFix, Imu
 from nav_msgs.msg import Odometry
 from logging_utils import setup_logger, get_logger
 from pyproj import Proj
