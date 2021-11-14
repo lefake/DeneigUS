@@ -53,11 +53,11 @@ class PB2ROS:
         self._serializer = PBSerializationHelper(self._topics)
 
         self._status_log_level_map = {
-            1: self._logger.fatal,
-            2: self._logger.error,
-            3: self._logger.warning,
-            4: self._logger.info,
-            5: self._logger.debug
+            0: self._logger.fatal,
+            1: self._logger.error,
+            2: self._logger.warning,
+            3: self._logger.info,
+            4: self._logger.debug
         }
 
         self._status_type_map = {

@@ -18,21 +18,7 @@ supported_type = ["ps3", "ps4", "logi"]
 def joy_button_mapper(joy_type):
     joy_indexes = {}
         
-    if joy_type == "ps3":
-        # Axes
-        joy_indexes["prop_lin"] = 4
-        joy_indexes["prop_ang"] = 3
-        joy_indexes["chute_rot"] = 0
-        joy_indexes["chute_elev"] = 1
-        joy_indexes["soufl_speed"] = 5
-
-        # Buttons
-        joy_indexes["soufl_up"] = 2
-        joy_indexes["soufl_down"] = 0
-        joy_indexes["deadman"] = 4
-        joy_indexes["switch_mode"] = 3
-
-    elif joy_type == "ps4":
+    if joy_type == "ps3" or joy_type == "ps4":
         # Axes
         joy_indexes["prop_lin"] = 4
         joy_indexes["prop_ang"] = 3
@@ -188,11 +174,9 @@ if __name__ == "__main__":
         controller_type = rospy.get_param("joy_type")
 
         if controller_type in supported_type :
-            Executif(joy_button_mapper("logi"))
+            Executif(joy_button_mapper(controller_type))
             rospy.spin()
         else:
             logger.fatal("Controller not supported")
 
     logger.info("Executif main Stopped")
-
-

@@ -57,12 +57,10 @@ class MsgConverter:
     def enc_converter(pb):
         msg = Odometry()
 
-        # Fuck
-
         msg.header.stamp = rospy.get_rostime()
         msg.child_frame_id = 'base_link'
-        #msg.twist.twist.linear.x = pb.data[0].twist.twist.linear.x 
-        #msg.twist.twist.angular.z = data.twist.twist.angular.z
+        msg.twist.twist.linear.x = pb.data[0]
+        msg.twist.twist.angular.z = pb.data[1]
 
         return msg
 

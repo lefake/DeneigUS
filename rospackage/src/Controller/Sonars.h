@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include "Constants.h"
 #include "floatarray.pb.h"
-
 #include "StatusMessage.h"
 
 #define TIMEOUT_SAFETY_RATIO  1.25

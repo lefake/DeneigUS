@@ -41,6 +41,8 @@
 #define ID_EEPROM_ADDRESS                   0x00
 #define IMU_EEPROM_ADDRESS                  0x10
 
+// ======================= ROBOT  ===================================
+#define TRACK_WIDTH                         0.546
 
 
 #endif // _CONSTANTS_H

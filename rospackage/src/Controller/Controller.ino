@@ -3,11 +3,8 @@
 #include <pb.h>
 #include <pb_encode.h>
 #include <pb_decode.h>
-#include "twist.pb.h"
 #include "floatarray.pb.h"
 #include "int32.pb.h"
-
-#include <EEPROM.h>
 
 #include "Configuration.h"
 #include "Constants.h"
@@ -45,8 +42,7 @@
 // ======================================== FUNCTIONS ========================================
 void propCallback();
 void chuteCallback();
-void soufflanteHeightCallback();
-void controlModeCallback();
+void soufflanteCmdCallback();
 void deadmanCallback();
 
 void loopSonars();
@@ -179,8 +175,11 @@ void setup()
 
 void loop()
 {
-  if (inCmdComplete && inCmdType == STATUS_MSGS)
-    inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
+  if (inCmdComplete && inCmdType == STATUS_MSGS && !ackHandler.acknowldgeArduino(inCmd))
+  {
+    inCmdType = -1;
+    inCmdComplete = false;
+  }
   
 #ifndef CONFIGURATION_MODE
   if (ackHandler.getId() == CONTROLLER)
@@ -223,7 +222,7 @@ void chuteCallback()
 #endif
 }
 
-void soufflanteHeightCallback()
+void soufflanteCmdCallback()
 {
   // TODO
 }
@@ -281,8 +280,10 @@ void loopController()
   {
     lastTime = millis();
 #ifdef HAS_ENCODERS
-    encMsg.data[0] = encoders.getEncVel(0, delayInterval);
-    encMsg.data[1] = encoders.getEncVel(1, delayInterval);
+    float leftSpeed = encoders.getEncVel(0, delayInterval);
+    float rightSpeed = encoders.getEncVel(1, delayInterval);
+    encMsg.data[0] = (leftSpeed + rightSpeed) / 2;
+    encMsg.data[1] = (leftSpeed - rightSpeed) / TRACK_WIDTH;
     pbUtils.pbSend(1, ENC);
 #endif
 
@@ -323,7 +324,7 @@ void loopController()
               break;
 
             case SOUFFLANTE_CMD:
-              soufflanteHeightCallback();
+              soufflanteCmdCallback();
               break;
 
             case DEADMAN:
@@ -346,46 +347,49 @@ void loopController()
 // SONARS
 void loopSonars()
 {
-  if (inCmdComplete)
-  {
-    inCmdComplete = false;
-    bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
-    
-    if (status && nbsNewMsgs > 0)
-    {
-      for (int i = 0; i < nbsNewMsgs; ++i)
-      {
-        switch (newMsgsIds[i])
-        {
-          case PROP:
-          case CHUTE:
-          case SOUFFLANTE_HEIGHT:
-            break;
-
-          case DEADMAN:
-            deadmanCallback();
-            break;
-            
-          default:
-            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
-            break;
-        }
-      }
-    }
-    else
-      sendStatus(ERROR, DECODING_PB);
-    inCmdType = -1;
-  }
-  
-#ifdef HAS_SONARS
   if (millis() - lastTimeSonar > delayIntervalSonar)
   {
     lastTimeSonar = millis();
+
+#ifdef HAS_SONARS
     for (int i = 0; i < NBS_SONARS/2; ++i)
     {
       sonars.readPair(i, &sonarPairsMsg);
       pbUtils.pbSend(1, SONAR_PAIRS);
     }
-  }
 #endif
+    
+    if (inCmdComplete)
+    {
+      inCmdComplete = false;
+      bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+      
+      if (status && nbsNewMsgs > 0)
+      {
+        for (int i = 0; i < nbsNewMsgs; ++i)
+        {
+          switch (newMsgsIds[i])
+          {
+            case PROP:
+            case CHUTE:
+            case SOUFFLANTE_HEIGHT:
+              break;
+  
+            case DEADMAN:
+              deadmanCallback();
+              break;
+              
+            default:
+              sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+              break;
+          }
+        }
+      }
+      else
+        sendStatus(ERROR, DECODING_PB);
+      inCmdType = -1;
+    }
+  }
+  
+
 }

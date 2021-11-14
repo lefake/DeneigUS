@@ -186,9 +186,9 @@ class PBSerialHandler(threading.Thread):
 
             # There's something to write
             elif self._to_send != "" and not self._interlock:
-                self._interlock = True
                 self._serial.write(self._to_send.encode("ascii"))
                 self._serial.flush()
+                self._interlock = True
                 self._to_send = ""
                 self._interlock = False
 

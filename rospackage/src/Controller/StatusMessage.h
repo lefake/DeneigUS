@@ -9,8 +9,7 @@ void sendStatusNotInitialized(int type);
 
 enum STATUS_LVL 
 {
-  NONE = 0,
-  FATAL,
+  FATAL = 0,
   ERROR,
   WARNING,
   INFO,

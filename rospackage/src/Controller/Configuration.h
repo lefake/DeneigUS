@@ -31,7 +31,7 @@
 // #define HAS_SERVOS
 
 // ==================== ENCODERS ==============================
-// #define HAS_ENCODERS
+#define HAS_ENCODERS
 
 
 
