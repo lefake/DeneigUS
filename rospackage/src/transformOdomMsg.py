@@ -38,7 +38,7 @@ class TransformOdomMsg:
     def transform_gps(self, data):
         msg = NavSatFix()
 
-        x = data.pose.pose.position.x*self.scale+ self.x0
+        x = data.pose.pose.position.x*self.scale + self.x0
         y = data.pose.pose.position.y*self.scale + self.y0
         z = data.pose.pose.position.z + self.z0
 
