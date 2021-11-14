@@ -65,9 +65,9 @@ void Motor::computePID()
   last_v = v_act;
 
   float C = kp*e_v + ki*e_p + kd*e_a;
-  
-  setPWM(C);  
-}
+
+  setVoltage(C);
+} 
 
 void Motor::setVoltage(float volt)
 {
