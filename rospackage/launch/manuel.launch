@@ -1,7 +1,10 @@
 <launch>
-  <rosparam file="$(find deneigus)/configs/joy_params.yaml" />
+  <param name="joy_type" value="logi" />
 
-  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" />
+  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
+    <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
+  </node>
+
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
   <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
 </launch>
