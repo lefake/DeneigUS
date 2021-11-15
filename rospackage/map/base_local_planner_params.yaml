@@ -6,6 +6,6 @@ TrajectoryPlannerROS:
 
   acc_lim_theta: 1.0
   acc_lim_x: 1.0
-  acc_lim_y: 1.0
+  acc_lim_y: 0
   
   meter_scoring: true
