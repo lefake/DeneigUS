@@ -3,12 +3,10 @@
   <arg name="has_joy" default="1"/>
   <arg name="has_ard" default="0"/>
   
-  <arg name="joy_port" default="/dev/input/js2" />
-  <param name="joy_type" value="ps3" />
-  
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
 
+  <param name="joy_type" value="logi"/>
   <param name="/use_sim_time" value="true"/>
 
   <!-- rosbridge server -->
@@ -35,9 +33,8 @@
 
 <!-- joy node -->
   <group if="$(arg has_joy)">
-    <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
-      <param name="dev" type="string" value="$(arg joy_port)" />
-      <param name="deadzone" value="0.12" />
+    <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true" >
+      <rosparam file="$(find deneigus)/configs/joy_params.yaml" command="load"/>
     </node>
   </group>
 
@@ -61,92 +58,20 @@
 
 <!-- sudo apt-get install ros-noetic-robot_localization> -->
 <!--    robot_localization odom to base_link -->
-
-<node pkg="robot_localization" type="ekf_localization_node"
-      name="robot_localization_ekf_node_local"
-      clear_params="true">
-  <param name="frequency" value="10."/>
-  <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.2"/>
-  <param name="two_d_mode" value="true"/>
-  <param name="publish_tf" value="true"/>
-  <param name="map_frame" value="map"/>
-  <param name="odom_frame" value="odom"/>
-  <param name="base_link_frame" value="base_link"/>
-  <param name="world_frame" value="odom"/>
-  <param name="transform_time_offset" value="1e-7"/>
-
-  <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
-  <param name="imu0_queue_size" value="5."/>
-  <rosparam param="odom0_config">[false, false, false,
-                              false, false, false,
-                              true, true, true,
-                              false, false, true,
-                              false, false, false]</rosparam>
-
+<node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_local" clear_params="true">
+  <rosparam file="$(find deneigus)/configs/robot_local_odom_params.yaml" command="load" /> 
   <remap from="odometry/filtered" to="odometry/filtered/local"/>
 </node>
 
 <!-- Robot localization map to base_link -->
-<node pkg="robot_localization" type="ekf_localization_node"
-      name="robot_localization_ekf_node_global"
-      clear_params="true">
-  <param name="frequency" value="10."/>
-  <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.2"/>
-  <param name="two_d_mode" value="true"/>
-  <param name="publish_tf" value="true"/>
-  <param name="map_frame" value="map"/>
-  <param name="odom_frame" value="odom"/>
-  <param name="base_link_frame" value="base_link"/>
-  <param name="world_frame" value="map"/>
-  <param name="transform_time_offset" value="1e-7"/>
-
-  <param name="imu0" value="/imu/data"/>
-  <param name="imu0_differential" value="false"/>
-  <param name="imu0_relative" value="false"/>
-  <param name="imu0_queue_size" value="5."/>
-  <rosparam param="imu0_config">[false, false, false,
-                              true, true, true,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
-
-  <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
-  <param name="odom0_queue_size" value="5."/>
-  <rosparam param="odom0_config">[false, false, false,
-                              false, false, false,
-                              true, true, true,
-                              false, false, true,
-                              false, false, false]</rosparam>
-
-  <param name="odom1" value="/odometry/gps"/>
-  <param name="odom1_differential" value="false"/>
-  <param name="odom1_relative" value="false"/>
-    <param name="odom1_queue_size" value="5."/>
-  <rosparam param="odom1_config">[true, true, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
-
+<node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_global" clear_params="true">
+  <rosparam file="$(find deneigus)/configs/robot_local_map_params.yaml" command="load" /> 
   <remap from="odometry/filtered" to="odometry/filtered/global"/>
 </node>
 
 <!-- navsat_transform_node-->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
-  <param name="transform_timeout" value="0.2"/>
-  <param name="magnetic_declination_radians" value="0.25346"/>
-  <param name="navsat_transform_node's zero_altitude" value="true"/>
-  <param name="broadcast_cartesian_transform" value="false"/>
-  <param name="yaw_offset" value="0"/>
-  <param name="publish_filtered_gps" value="true"/>
-  <param name="wait_for_datum" value="false"/>
-
+  <rosparam file="$(find deneigus)/configs/robot_local_navsat_params.yaml" command="load" /> 
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>
 

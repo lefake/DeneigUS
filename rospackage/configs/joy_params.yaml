@@ -1,3 +1,2 @@
-joy_type: logi
 dev: /dev/input/js2
 deadzone: 0.12
