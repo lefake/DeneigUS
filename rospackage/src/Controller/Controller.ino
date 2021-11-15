@@ -12,6 +12,7 @@
 #include "StatusMessage.h"
 #include "PBUtils.h"
 #include "Pins.h"
+#include "Actuator.h"
 
 // ======================================== CONDITIONNAL INCLUDES ========================================
 
