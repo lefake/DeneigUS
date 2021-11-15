@@ -16,7 +16,7 @@ def matriceRot(vecteur, angle):
     R = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
     return R @ vecteur
 
-def model_inverse(xCible, yCible, v_wind, ro_snow):
+def model_inverse(xCible, yCible, v_wind, ro_snow, force_45):
     # Snow attributes
     r = 0.1  # m
     A = r**2 * np.pi  # m^2
@@ -44,7 +44,7 @@ def model_inverse(xCible, yCible, v_wind, ro_snow):
     print(f'distance max avec vitesse nom: {d_max}')
 
     # Blow strategy
-    if d < d_max:
+    if d < d_max and not force_45:
         phi_0 = 0.5 * np.arcsin((d * g) / (v_out**2))
         tf = 2 * v_out * np.sin(phi_0) / g
 

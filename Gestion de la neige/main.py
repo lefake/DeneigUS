@@ -12,7 +12,7 @@ from model_inverse import model_inverse
 
     
 if __name__ == '__main__':
-    theta, phi, v_out = model_inverse(20, 0, [20,0], 300)
+    theta, phi, v_out = model_inverse(20, 0, [20,0], 300, force_45=False)
     print(f'theta: {np.rad2deg(theta)}')
     print(f'phi: {np.rad2deg(phi)}')
     print(f'v_out: {v_out}')
