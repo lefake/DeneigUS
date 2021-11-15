@@ -150,7 +150,7 @@
   <param name="broadcast_cartesian_transform" value="false"/>
   <param name="yaw_offset" value="0"/>
   <param name="publish_filtered_gps" value="true"/>
-  <param name="wait_for_datum" value="false"/>
+  <param name="wait_for_datum" value="true"/>
 
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>
