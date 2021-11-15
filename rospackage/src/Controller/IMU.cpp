@@ -1,12 +1,12 @@
 #include "IMU.h"
 
-IMU::IMU() : velX(0), posX(0), velY(0), posY(0) {
-  Wire.begin();
+IMU::IMU() {
   setupDone = false;
 }
 
 void IMU::init()
 {
+  Wire.begin();
   setupDone = imu.setup(IMU_ADDRESS);
   
   if (setupDone)
@@ -25,19 +25,16 @@ void IMU::init()
 }
 
 
-void IMU::getValues( Twist* msg, float periodMs )
+void IMU::getValues( FloatArray* msg )
 {
   if (setupDone)
   {
     imu.update();
-    velX += imu.getLinearAccX() * (periodMs / 1000.0);
-    posX += velX * (periodMs / 1000.0);
-    velY += imu.getLinearAccY() * (periodMs / 1000.0);
-    posY += velY * (periodMs / 1000.0);
-
-    msg->lx = posX/1000;
-    msg->ly = posY/1000;
-    msg->az = imu.getGyroZ()/180*3.145;
+    msg->data_count = 4;
+    msg->data[0] = imu.getQuaternionX();
+    msg->data[1] = imu.getQuaternionY();
+    msg->data[2] = imu.getQuaternionZ();
+    msg->data[3] = imu.getQuaternionW();
   }
   else
     sendStatusNotInitialized(IMU_DEVICE);

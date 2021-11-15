@@ -2,27 +2,22 @@
 #define _IMU_H
 
 #include <EEPROM.h>
-#include "Arduino.h"
+#include <Arduino.h>
 #include "MPU9250.h"
-#include "StatusMessage.h"
-#include "twist.pb.h"
 #include "Constants.h"
+#include "StatusMessage.h"
+#include "floatarray.pb.h"
 
 class IMU {
   public:
     IMU();
     
     void init();
-    void getValues( Twist*, float );
+    void getValues( FloatArray*);
 
   private:
     bool setupDone;
     MPU9250 imu;
-
-    float velX;
-    float posX;
-    float velY;
-    float posY;
 
     struct IMUCalibration {
       float accBias[3];
