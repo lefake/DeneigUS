@@ -61,6 +61,8 @@ catkin_python_setup()
 add_service_files(
   FILES
   trajgen.srv
+  acknowledge.srv
+  set_paths.srv
 #   Service2.srv
 )
 

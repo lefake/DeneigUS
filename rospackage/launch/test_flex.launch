@@ -66,6 +66,9 @@
 <!-- python SimpleCmdMoveBase Node -->
 <node pkg="deneigus" type="behaviorTree.py" name="behaviorTree" output="screen" clear_params="true"/>
 
+<!-- python stateManagement Services-->
+<node pkg="deneigus" type="stateManagement.py" name="stateManagement" output="screen" clear_params="true"/>
+
 <!--    robot_localization odom to base_link -->
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
