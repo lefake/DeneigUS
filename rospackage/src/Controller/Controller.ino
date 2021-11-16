@@ -24,7 +24,7 @@
 #endif
 
 #ifdef HAS_IMU
-#include "IMU.h"
+#include "MPU.h"
 #endif
 
 #ifdef HAS_GPS
@@ -51,12 +51,14 @@ void loopController();
 // ======================================== VARIABLES ========================================
 
 // ==================== TIMERS ====================
-int val = 0;
 long lastTime = 0;
 long delayInterval = 100;
 
 long lastTimeSonar = 0;
 long delayIntervalSonar = 1500;
+
+long lastTimeImu = 0;
+long delayIntervalImu = 10;
 
 // ==================== TOPICS ====================
 // Out
@@ -120,7 +122,7 @@ int sonarsMsgSeq = 0;
 #endif
 
 #ifdef HAS_IMU
-IMU imu;
+MPU imu;
 #endif
 
 #ifdef HAS_GPS
@@ -158,6 +160,9 @@ void setup()
 
 #ifdef HAS_IMU
   imu.init();
+#ifdef CONFIGURATION_MODE
+  imu.doCalibration();
+#endif
 #endif
 
 #ifdef HAS_GPS
@@ -273,6 +278,23 @@ void serialEvent()
 // CONTROLLER
 void loopController()
 {
+#ifdef HAS_IMU
+  long period = millis() - lastTimeImu;
+  if (period > delayIntervalImu)
+  {
+    if (period > 10*delayIntervalImu)
+    {
+      sendStatusWithMessage(FATAL, IMU_DEVICE, "Frequency was not met");
+    }
+    else
+    {
+      imu.getValues(&imuMsg);
+      pbUtils.pbSend(1, IMU);
+    }
+    lastTimeImu = millis();
+  }
+#endif
+  
   if (millis() - lastTime > delayInterval)
   {
     lastTime = millis();
@@ -282,11 +304,6 @@ void loopController()
     encMsg.data[0] = (leftSpeed + rightSpeed) / 2;
     encMsg.data[1] = (leftSpeed - rightSpeed) / TRACK_WIDTH;
     pbUtils.pbSend(1, ENC);
-#endif
-
-#ifdef HAS_IMU
-    imu.getValues(&imuMsg);
-    pbUtils.pbSend(1, IMU);
 #endif
 
 #ifdef HAS_GPS
