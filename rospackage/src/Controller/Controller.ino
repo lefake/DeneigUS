@@ -162,6 +162,8 @@ void setup()
   imu.init();
 #ifdef CONFIGURATION_MODE
   imu.doCalibration();
+#else
+  imu.loadCalibration();
 #endif
 #endif
 
@@ -282,7 +284,7 @@ void loopController()
   long period = millis() - lastTimeImu;
   if (period > delayIntervalImu)
   {
-    if (period > 10*delayIntervalImu)
+    if (period > 50)
     {
       sendStatusWithMessage(FATAL, IMU_DEVICE, "Frequency was not met");
     }

@@ -58,6 +58,7 @@ class Executif:
         self.stop_first_time_send = False
         self.last_control_mode = None
         self.control_mode = control_modes.stop
+        self.last_deadman_state = 0
 
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
@@ -130,11 +131,17 @@ class Executif:
             self.prop_pub.publish(prop)
             self.chute_pub.publish(chute)
             self.soufflante_cmd_pub.publish(soufflante_cmd)
-            self.deadman_pub.publish(deadman)
+
+            # Send only the deadman state on a change
+            if not self.last_deadman_state:
+                self.deadman_pub.publish(deadman)
 
         if self.control_mode == control_modes.auto:
             self.stop_first_time_send = True
-            self.deadman_pub.publish(deadman)
+
+            # Send only the deadman state on a change
+            if not self.last_deadman_state:
+                self.deadman_pub.publish(deadman)
 
         if self.control_mode == control_modes.stop and self.stop_first_time_send:
             prop = Float32MultiArray()
@@ -150,6 +157,8 @@ class Executif:
             self.deadman_pub.publish(deadman)
 
             self.stop_first_time_send = False
+
+        self.last_deadman_state = deadman.data
 
     def lin_ang_2_tank(self, lin, ang):
         # https://home.kendra.com/mauser/Joystick.html

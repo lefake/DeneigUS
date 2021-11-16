@@ -47,7 +47,7 @@ class PB2ROS:
             SubTopic(7, self._prop_sub, ["CONTROLLER"]),
             SubTopic(8, self._chute_sub, ["CONTROLLER"]),
             SubTopic(9, self._soufflante_cmd_sub, ["CONTROLLER"]),
-            SubTopic(10, self._deadman_sub, ["CONTROLLER"]),
+            SubTopic(10, self._deadman_sub, ["CONTROLLER", "SENSORS"]),
         ]
         self._topics = self._sub_topics + self._pub_topics
         self._serializer = PBSerializationHelper(self._topics)
@@ -116,13 +116,21 @@ class PB2ROS:
             self._logger.fatal("Unknown topic reference")
             return
 
-        current_serial = next((serial for serial in self._serials if serial.id in current_topic.dst), None)
+        serialToSend = []
 
-        if current_serial is None:
+        for serial in self._serials:
+            if serial.id in current_topic.dst:
+                serialToSend.append(serial)
+
+        #current_serial = next((serial for serial in self._serials if serial.id in current_topic.dst), None)
+
+        if len(serialToSend) == 0:
             self._logger.fatal("Arduino not acknowledged yet")
             return
 
-        current_serial.write_pb_msg(current_topic.id, current_topic.converter(msg))
+
+        for s in serialToSend:
+            s.write_pb_msg(current_topic.id, current_topic.converter(msg))
 
     def kill(self):
         for s in self._serials:
@@ -133,7 +141,7 @@ if __name__ == "__main__":
     arduinos = [
         #serial.Serial('/dev/pts/4', 9600, timeout=0.05),
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
-        serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
+        #serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
         #serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
     ]
     rospy.init_node('pb2ros', anonymous=False)

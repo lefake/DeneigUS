@@ -16,7 +16,7 @@
 // #define HAS_GPS
 
 // ==================== IMU ===================================
-// #define HAS_IMU
+#define HAS_IMU
 
 // ==================== SONARS ================================
 // #define HAS_SONARS
@@ -31,7 +31,7 @@
 // #define HAS_SERVOS
 
 // ==================== ENCODERS ==============================
-#define HAS_ENCODERS
+// #define HAS_ENCODERS
 
 
 

@@ -23,20 +23,12 @@ class MPU
   private:
     MPU9250 mpu;
     bool setupDone = false;
-    
-    void writeByte(int address, byte value);
-    void writeFloat(int address, float value);
-    byte readByte(int address);
-    float readFloat(int address);
-    void clearCalibration();
-    bool isCalibrated();
 
-    enum EEP_ADDR {
-      EEP_CALIB_FLAG = 0x00,
-      EEP_ACC_BIAS = 0x01,
-      EEP_GYRO_BIAS = 0x0D,
-      EEP_MAG_BIAS = 0x19,
-      EEP_MAG_SCALE = 0x25
+    struct IMUCalibration {
+      float accBias[3];
+      float gyroBias[3];
+      float magBias[3];
+      float magScale[3];
     };
 };
 
@@ -48,9 +40,7 @@ void MPU::init()
   delay(1000);
   
   setupDone = mpu.setup(IMU_ADDRESS);
-  if (setupDone)
-    loadCalibration();
-  else
+  if (!setupDone)
     sendStatusNotInitialized(IMU_DEVICE);
 }
 
@@ -69,95 +59,49 @@ void MPU::getValues(FloatArray* msg)
 }
 
 void MPU::saveCalibration() {
-    sendStatusWithMessage(DEBUG, IMU_DEVICE, "Writing config to EEPROM");
-    
-    writeByte(EEP_CALIB_FLAG, 1);
-    writeFloat(EEP_ACC_BIAS + 0, mpu.getAccBias(0));
-    writeFloat(EEP_ACC_BIAS + 4, mpu.getAccBias(1));
-    writeFloat(EEP_ACC_BIAS + 8, mpu.getAccBias(2));
-    writeFloat(EEP_GYRO_BIAS + 0, mpu.getGyroBias(0));
-    writeFloat(EEP_GYRO_BIAS + 4, mpu.getGyroBias(1));
-    writeFloat(EEP_GYRO_BIAS + 8, mpu.getGyroBias(2));
-    writeFloat(EEP_MAG_BIAS + 0, mpu.getMagBias(0));
-    writeFloat(EEP_MAG_BIAS + 4, mpu.getMagBias(1));
-    writeFloat(EEP_MAG_BIAS + 8, mpu.getMagBias(2));
-    writeFloat(EEP_MAG_SCALE + 0, mpu.getMagScale(0));
-    writeFloat(EEP_MAG_SCALE + 4, mpu.getMagScale(1));
-    writeFloat(EEP_MAG_SCALE + 8, mpu.getMagScale(2));
+  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Writing config to EEPROM");
+  
+  IMUCalibration calibration = {
+    .accBias = {mpu.getAccBias(0), mpu.getAccBias(1), mpu.getAccBias(2)},
+    .gyroBias = {mpu.getGyroBias(0), mpu.getGyroBias(1), mpu.getGyroBias(2)},
+    .magBias = {mpu.getMagBias(0), mpu.getMagBias(1), mpu.getMagBias(2)},
+    .magScale = {mpu.getMagScale(0), mpu.getMagScale(1), mpu.getMagScale(2)}
+  };
+  EEPROM.put(IMU_EEPROM_ADDRESS, calibration);
+  
+  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Done writing config to EEPROM");
 }
 
 void MPU::loadCalibration() {
-    sendStatusWithMessage(DEBUG, IMU_DEVICE, "Reading config to EEPROM");
-    if (isCalibrated()) 
-    {
-        mpu.setAccBias(
-            readFloat(EEP_ACC_BIAS + 0),
-            readFloat(EEP_ACC_BIAS + 4),
-            readFloat(EEP_ACC_BIAS + 8));
-        mpu.setGyroBias(
-            readFloat(EEP_GYRO_BIAS + 0),
-            readFloat(EEP_GYRO_BIAS + 4),
-            readFloat(EEP_GYRO_BIAS + 8));
-        mpu.setMagBias(
-            readFloat(EEP_MAG_BIAS + 0),
-            readFloat(EEP_MAG_BIAS + 4),
-            readFloat(EEP_MAG_BIAS + 8));
-        mpu.setMagScale(
-            readFloat(EEP_MAG_SCALE + 0),
-            readFloat(EEP_MAG_SCALE + 4),
-            readFloat(EEP_MAG_SCALE + 8));
-    } 
-    else 
-    {
-        mpu.setAccBias(0., 0., 0.);
-        mpu.setGyroBias(0., 0., 0.);
-        mpu.setMagBias(0., 0., 0.);
-        mpu.setMagScale(1., 1., 1.);
-    }
+  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Reading config to EEPROM");
+
+  IMUCalibration calibration;
+  EEPROM.get(IMU_EEPROM_ADDRESS, calibration);
+  
+  mpu.setAccBias(calibration.accBias[0], calibration.accBias[1], calibration.accBias[2]);
+  mpu.setGyroBias(calibration.gyroBias[0], calibration.gyroBias[1], calibration.gyroBias[2]);
+  mpu.setMagBias(calibration.magBias[0], calibration.magBias[1], calibration.magBias[2]);
+  mpu.setMagScale(calibration.magScale[0], calibration.magScale[1], calibration.magScale[2]);
+  mpu.setMagneticDeclination(IMU_MAG_DECLINATION);
+  
+  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Done reading config to EEPROM");
 }
 
 void MPU::doCalibration()
 {
      // calibrate anytime you want to
-    sendStatusWithMessage(INFO, IMU_DEVICE, "Accel Gyro calibration will start in 5sec.");
     sendStatusWithMessage(INFO, IMU_DEVICE, "Please leave the device still on the flat plane.");
     delay(1000);
     mpu.calibrateAccelGyro();
 
-    sendStatusWithMessage(INFO, IMU_DEVICE, "Mag calibration will start in 5sec.");
     sendStatusWithMessage(INFO, IMU_DEVICE, "Please Wave device in a figure eight until done.");
+    
     delay(2000);
     mpu.calibrateMag();
     saveCalibration();
     loadCalibration();
-}
 
-void MPU::writeByte(int address, byte value) {
-    EEPROM.put(address, value);
-}
-
-void MPU::writeFloat(int address, float value) {
-    EEPROM.put(address, value);
-}
-
-byte MPU::readByte(int address) {
-    byte valueIn = 0;
-    EEPROM.get(address, valueIn);
-    return valueIn;
-}
-
-float MPU::readFloat(int address) {
-    float valueIn = 0;
-    EEPROM.get(address, valueIn);
-    return valueIn;
-}
-
-void MPU::clearCalibration() {
-    writeByte(EEP_CALIB_FLAG, 0);
-}
-
-bool MPU::isCalibrated() {
-    return (readByte(EEP_CALIB_FLAG) == 0x01);
+    sendStatusWithMessage(INFO, IMU_DEVICE, "Calibration done.");
 }
 
 #endif //_MPU_H
