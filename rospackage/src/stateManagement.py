@@ -5,6 +5,8 @@ import logging
 
 from deneigus.srv import acknowledge,set_paths
 from logging_utils import setup_logger, get_logger
+from geometry_msgs.msg import PoseStamped
+from std_msgs.msg import Float32
 
 import numpy as np
 
@@ -20,6 +22,10 @@ class StateManagement:
         self.path_mbf = []
         self.path_chute = []
         self.path_soufflante = []
+
+        self.mbf_pub = rospy.Publisher('/mbf_new_goal', PoseStamped, queue_size=10)
+        self.chute_pub = rospy.Publisher('/chute_new_goal', Float32, queue_size=10)
+        self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Float32, queue_size=10)
 
     def acknowledge_callback(self, msg):
         # example: rosservice call /acknowledge "MBF" 1
@@ -45,16 +51,21 @@ class StateManagement:
 
     def send_new_objectives(self):
         logger.info('Send new objectives done')
+
+        self.mbf_pub.publish(self.path_mbf.pop(0))
+        self.chute_pub.publish(self.path_chute.pop(0))
+        self.soufflante_pub.publish(self.path_soufflante.pop(0))
+
         self.acknowledge_soufflante = False
         self.acknowledge_mbf = False
         return False
 
     def set_paths_callback(self, paths):
-        # example: rosservice call /set_paths [0.0,1.0] [0.0,1.0] [0.0,0.0] [0]
         try:
-            self.path_mbf = np.array([paths.mbf_x, paths.mbf_y])
-            self.path_chute = paths.chute
-            self.path_soufflante = paths.soufflante
+            self.path_mbf = paths.mbf
+            self.path_chute = list(paths.chute)
+            self.path_soufflante = list(paths.soufflante)
+
             success = True
             logger.info('Set paths success')
         except:

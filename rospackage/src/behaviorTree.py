@@ -25,6 +25,9 @@ import sys
 import geometry_msgs.msg as geometry_msgs
 import mbf_msgs.msg as mbf_msgs
 
+from geometry_msgs.msg import PoseStamped
+from deneigus.srv import acknowledge
+
 
 ##############################################################################
 # Actions
@@ -46,6 +49,10 @@ class GetPath(py_trees_ros.actions.ActionClient):
         status = super(GetPath, self).update()
         if status == py_trees.Status.SUCCESS:
             py_trees.blackboard.Blackboard().set("path", self.action_client.get_result().path)
+            rospy.wait_for_service('acknowledge')
+            path_func = rospy.ServiceProxy('acknowledge', acknowledge)
+            path_func('MBF', 1)
+
         return status
 
 class ExePath(py_trees_ros.actions.ActionClient):
@@ -90,7 +97,7 @@ def create_root():
     fallback = py_trees.composites.Selector("Fallback")
     navigate = py_trees.composites.Sequence("Navigate")
     new_goal = py_trees_ros.subscribers.ToBlackboard(name="NewGoal",
-                                                     topic_name="/move_base_simple/goal",
+                                                     topic_name="/mbf_new_goal",
                                                      topic_type=geometry_msgs.PoseStamped,
                                                      blackboard_variables = {'target_pose': None})
     have_goal = py_trees.blackboard.CheckBlackboardVariable(name="HaveGoal", variable_name="target_pose")
@@ -121,6 +128,11 @@ if __name__ == '__main__':
     rospy.init_node("mbf_bt_demo")
     root = create_root()
     behaviour_tree = py_trees_ros.trees.BehaviourTree(root)
+
+    rospy.wait_for_service('acknowledge')
+    path_func = rospy.ServiceProxy('acknowledge', acknowledge)
+    path_func('MBF', 1)
+
     rospy.on_shutdown(functools.partial(shutdown, behaviour_tree))
     if not behaviour_tree.setup(timeout=15):
         console.logerror("failed to setup the tree, aborting.")

@@ -1,5 +1,4 @@
-float32[] mbf_x
-float32[] mbf_y
+geometry_msgs/PoseStamped[] mbf
 float32[] chute
 float32[] soufflante
 ---
