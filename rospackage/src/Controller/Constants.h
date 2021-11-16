@@ -27,7 +27,7 @@
 #define WAIT                                0xA5
 #define NBS_TICK_PER_REV                    4096.0
 #define TICK_SAFTY_RATIO                    1.15
-#define MAX_SPEED_RPM                       90.0
+#define MAX_SPEED_RPM                       130.0
 
 // ======================= MOTORS ===================================
 

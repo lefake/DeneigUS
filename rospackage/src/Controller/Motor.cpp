@@ -25,15 +25,13 @@ void Motor::setPID(float P, float I, float D)
   kd = D;  
 }
 
-double Motor::getSpeed()
+float Motor::getSpeed()
 {
-  updatedt();
-  return SPIEncoder.getEncVel(dt);
+  return v_act;
 }
 
 void Motor::updatedt()
 {
-  
   dt = millis() - lastMillis;
   lastMillis = millis();
 }
@@ -46,12 +44,13 @@ void Motor::commandSpeed(float command)
 
 void Motor::computePID()
 {
+  updatedt();
   
-  v_act = getSpeed()*RADIUS;  
+  v_act = SPIEncoder.getEncVel(dt)*RADIUS;
   if(v_act < -2 || v_act > 2)
     v_act = last_v;
 
-  double e_v = v_des - v_act;
+  float e_v = v_des - v_act;
   //if(e_v < 0.05 && e_v > -0.05) //dead band
   //  e_v =0;
   
@@ -65,6 +64,9 @@ void Motor::computePID()
   last_v = v_act;
 
   float C = kp*e_v + ki*e_p + kd*e_a;
+
+  Serial.print(v_act); Serial.print(" ");
+  Serial.print(v_des); Serial.print(" ");
 
   setVoltage(C);
 } 

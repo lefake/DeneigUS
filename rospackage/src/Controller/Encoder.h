@@ -17,7 +17,7 @@ class Encoder
 
     void init(int enc);
     int getEncValue();
-    double getEncVel(long dt);
+    float getEncVel(long dt);
 
   private:
     int encPin;
