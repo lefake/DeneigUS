@@ -110,8 +110,6 @@ AckHandler ackHandler;
 // ==================== DEVICES ====================
 #ifdef HAS_MOTOR_PROP
 Motor motorLeft, motorRight;
-float motorVelLeft = 0;
-float motorVelRight = 0;
 #endif
 
 #ifdef HAS_SONARS
@@ -152,8 +150,10 @@ void setup()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorPwmLeft);
-  motorRight.init(motorForwardRight, motorPwmRight);
+  motorLeft.init(motorForwardLeft, motorPwmLeft, csEncoderL);
+  motorRight.init(motorForwardRight, motorPwmRight, csEncoderR);
+  motorLeft.setPID(13.0, 11.0, 0.7);
+  motorRight.setPID(13.0, 11.0, 0.7);
 #endif
 
 #ifdef HAS_IMU
@@ -164,13 +164,12 @@ void setup()
   gps.init();
 #endif
 
-#ifdef HAS_ENCODERS
-  encoders.init(encoderCSPins);
-#endif
-
 #ifdef HAS_SERVOS
   servos.init(servoPins);
 #endif
+
+ pinMode(53, OUTPUT);
+ digitalWrite(53,LOW);
 }
 
 void loop()
@@ -202,8 +201,8 @@ void loop()
 void propCallback()
 {
 #ifdef HAS_MOTOR_PROP
-  motorLeft.setSpeed(propMsg.data[0]);
-  motorRight.setSpeed(propMsg.data[1]);
+  motorLeft.commandSpeed(propMsg.data[0]);
+  motorRight.commandSpeed(propMsg.data[1]);
 #endif
 }
 
@@ -276,13 +275,6 @@ void loopController()
   if (millis() - lastTime > delayInterval)
   {
     lastTime = millis();
-#ifdef HAS_ENCODERS
-    float leftSpeed = encoders.getEncVel(0, delayInterval);
-    float rightSpeed = encoders.getEncVel(1, delayInterval);
-    encMsg.data[0] = (leftSpeed + rightSpeed) / 2;
-    encMsg.data[1] = (leftSpeed - rightSpeed) / TRACK_WIDTH;
-    pbUtils.pbSend(1, ENC);
-#endif
 
 #ifdef HAS_IMU
     imu.getValues(&imuMsg);
