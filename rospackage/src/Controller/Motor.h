@@ -11,7 +11,7 @@ class Motor {
     ~Motor();
 
     void init(const int, const int, const int EncoderPin);
-    double getSpeed();
+    float getSpeed();
     void setPID(float P, float I, float D);
     void commandSpeed(float command);
     void computePID(); 
@@ -27,12 +27,12 @@ class Motor {
     long dt = 0;
     long lastMillis = 0;
 
-    double v_act = 0;
-    double v_des = 0;
-    double e_p = 0;
-    double e_a = 0;
-    double last_v = 0;
-    double last_e_v = 0;
+    float v_act = 0;
+    float v_des = 0;
+    float e_p = 0;
+    float e_a = 0;
+    float last_v = 0;
+    float last_e_v = 0;
     
     Encoder SPIEncoder;
 

@@ -131,8 +131,8 @@ void setup()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorPwmLeft, CS_ENCODER2);
-  motorRight.init(motorForwardRight, motorPwmRight, CS_ENCODER1);
+  motorLeft.init(motorForwardLeft, motorPwmLeft, CS_ENCODER1);
+  motorRight.init(motorForwardRight, motorPwmRight, CS_ENCODER2);
 #endif
 
 #ifdef HAS_IMU
@@ -158,22 +158,24 @@ void setup()
   motorLeft.setPID(13.0, 11.0, 0.7);
   motorRight.setPID(13.0, 11.0, 0.7);
 
-  motorLeft.commandSpeed(0.5);
-  motorRight.commandSpeed(0.5);
+  motorLeft.commandSpeed(0.0);
+  motorRight.commandSpeed(0.0);
 
 }
 
 void loop()
 {
-  //motorLeft.computePID();
-  //motorRight.computePID();
+  motorLeft.computePID();
+  motorRight.computePID();
 
-  motorLeft.setVoltage(12);
-  motorRight.setVoltage(0);
+  Serial.println(" ");
 
-  Serial.print(motorLeft.getSpeed());Serial.print(" ");
-  Serial.println(motorRight.getSpeed());
-  
+//  motorLeft.setVoltage(0);
+//  motorRight.setVoltage(0);
+
+/*  Serial.print(motorLeft.getSpeed());Serial.print(" ");
+  Serial.println(motorRight.getSpeed());*/
+   
   delay(100);
   /*
   if (ackRecieved)

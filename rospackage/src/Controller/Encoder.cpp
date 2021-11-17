@@ -25,11 +25,11 @@ void Encoder::init(int enc)
  
 }
 
-double Encoder::getEncVel(long dt)
+float Encoder::getEncVel(long dt)
 {
-  double maxTickCount = MAX_TICK_SAMPLE_SAFE(dt);
+  float maxTickCount = MAX_TICK_SAMPLE_SAFE(dt);
   int current = getEncValue();
-  double diff = current - lastRead;
+  float diff = current - lastRead;
   
   // A turn
   if (abs(diff)/maxTickCount > 1)
@@ -42,7 +42,7 @@ double Encoder::getEncVel(long dt)
 
   lastRead = current;
   
-  double deg = diff * 360.0 / NBS_TICK_PER_REV;
+  float deg = diff * 2 * M_PI / NBS_TICK_PER_REV;
   return deg * 1000.0 / dt;
 }
 
