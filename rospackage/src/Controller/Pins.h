@@ -11,7 +11,8 @@ const int sonarsEchoPins[NBS_SONARS] { 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 4
 const int mosiPin = 51;
 const int misoPin = 50;
 const int clkPin = 52;
-const int encoderCSPins[NBS_ENCODERS] { 53 };
+const int csEncoderL = 29;
+const int csEncoderR = 25;
 
 // ----------------------- Servos pins ----------------------
 const int servoPins[NBR_SERVOS] { 2, 3 }; // Elevation, rotation

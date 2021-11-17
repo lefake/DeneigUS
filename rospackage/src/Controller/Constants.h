@@ -19,8 +19,6 @@
 
 // ======================= ENCODERS ==================================
 #define NBS_ENCODERS                        2
-#define CS_ENCODER1                         29
-#define CS_ENCODER2                         25
 #define NOP_A5                              0x00
 #define RD_POS                              0x10
 #define WAIT                                0xA5
