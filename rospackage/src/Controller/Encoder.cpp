@@ -19,6 +19,8 @@ void Encoder::init(int enc)
   SPI.setClockDivider(SPI_CLOCK_DIV16);
   SPI.begin();
 
+  delay(75);
+
   lastRead = getEncValue();
  
 }
@@ -62,6 +64,10 @@ int Encoder::getEncValue()
     uint8_t msbPosition = sendByte(NOP_A5, encCurrPin);
     uint8_t lsbPosition = sendByte(NOP_A5, encCurrPin);
     pos = msbPosition << 8 | lsbPosition;
+  }
+  else if (pos > NBS_TICK_PER_REV || pos < 0)
+  {
+    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
   }
   else
   {
