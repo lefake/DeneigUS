@@ -1,0 +1,12 @@
+<launch>
+  <param name="joy_type" value="ps4" />
+
+  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
+    <param name="dev" type="string" value="/dev/input/js2" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+  <node pkg="deneigus" type="executif.py" name="executif" output="screen" clear_params="true"/>
+  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
+
+</launch>

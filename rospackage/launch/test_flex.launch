@@ -2,7 +2,7 @@
   <arg name="has_web" default="0"/>
   <arg name="has_joy" default="1"/>
   <arg name="has_ard" default="0"/>
-  
+
   <arg name="joy_port" default="/dev/input/js2" />
   <param name="joy_type" value="ps3" />
 
@@ -13,7 +13,7 @@
 
   <!-- rosbridge server -->
   <group if="$(arg has_web)">
-    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
       <arg name="port" value="9090"/>
       <arg name="output" value="log"/>
     </include>
@@ -52,20 +52,21 @@
 <node pkg="tf2_ros" type="static_transform_publisher" name="sf5_broadcaster" args="-0.22 0.32 0.73484 1.5446 0 0 base_link sonar_f_5" clear_params="true"/>
 <node pkg="tf2_ros" type="static_transform_publisher" name="sf6_broadcaster" args="0.13 0.32 0.73484 0.6108 0 0 base_link sonar_f_6" clear_params="true"/>
 
-<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+<node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base_flex" output="screen" clear_params="true">
     <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
     <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
-    <rosparam file="$(find deneigus)/map/base_local_planner_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/map/move_base_flex.yaml" command="load"/>
 </node>
 
 <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
 
-<!-- sudo apt-get install ros-noetic-robot_localization> -->
-<!--    robot_localization odom to base_link -->
+<!-- python SimpleCmdMoveBase Node -->
+<node pkg="deneigus" type="behaviorTree.py" name="behaviorTree" output="screen" clear_params="true"/>
 
+<!--    robot_localization odom to base_link -->
 <node pkg="robot_localization" type="ekf_localization_node"
       name="robot_localization_ekf_node_local"
       clear_params="true">
@@ -141,15 +142,15 @@
   <remap from="odometry/filtered" to="odometry/filtered/global"/>
 </node>
 
-<!-- navsat_transform_node-->
+<!-- navsat_transform_node  -0.25949167467707 -->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
   <param name="transform_timeout" value="0.2"/>
-  <param name="magnetic_declination_radians" value="0.25346"/>
+  <param name="magnetic_declination_radians" value="0.0"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>
   <param name="broadcast_cartesian_transform" value="false"/>
   <param name="yaw_offset" value="0"/>
   <param name="publish_filtered_gps" value="true"/>
-  <param name="wait_for_datum" value="false"/>
+  <param name="wait_for_datum" value="true"/>
 
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>

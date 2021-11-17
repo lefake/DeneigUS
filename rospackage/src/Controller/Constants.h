@@ -2,14 +2,13 @@
 #define _CONSTANTS_H
 
 // ======================= Sonars ===================================
-#define NBS_SONARS                          2
+#define NBS_SONARS                          14
 #define MIN_DIST_DETECTION_M                0.02
-#define MAX_DIST_DETECTION_M                2
-#define TEMPERATURE                         20
+#define MAX_DIST_DETECTION_M                2.0
+#define TEMPERATURE                         20.0
 
 // ======================= IMU ======================================
 #define IMU_ADDRESS                         0x68
-#define IMU_EEPROM_ADDRESS                  0x00
 #define IMU_MAG_DECLINATION                 14.926      //https://www.geomag.nrcan.gc.ca/calc/mdcal-en.php
 
 // ======================= GPS ======================================
@@ -45,8 +44,12 @@
 #define DATA_MSGS                           0
 #define STATUS_MSGS                         1
 
-// ======================= Protobuf constants =======================
+// ======================= EEPROM  ==================================
+#define ID_EEPROM_ADDRESS                   0x00
+#define IMU_EEPROM_ADDRESS                  0x10
 
+// ======================= ROBOT  ===================================
+#define TRACK_WIDTH                         0.546
 
 
 #endif // _CONSTANTS_H

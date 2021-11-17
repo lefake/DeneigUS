@@ -3,17 +3,15 @@
 #include <pb.h>
 #include <pb_encode.h>
 #include <pb_decode.h>
-#include "twist.pb.h"
 #include "floatarray.pb.h"
-#include "range.pb.h"
+#include "int32.pb.h"
 
 #include "Configuration.h"
 #include "Constants.h"
+#include "Acknowledge.h"
 #include "StatusMessage.h"
 #include "PBUtils.h"
 #include "Pins.h"
-
-// Make 2 classes for each arduino loops
 
 // ======================================== CONDITIONNAL INCLUDES ========================================
 
@@ -42,11 +40,13 @@
 #endif
 
 // ======================================== FUNCTIONS ========================================
-void cmdVelCallback();
-void cmdTourelleCallback();
-void broadcastId();
-void acknowldgeArduino();
-bool parseAcknowledgeMessage(char* msg);
+void propCallback();
+void chuteCallback();
+void soufflanteCmdCallback();
+void deadmanCallback();
+
+void loopSonars();
+void loopController();
 
 // ======================================== VARIABLES ========================================
 
@@ -59,26 +59,41 @@ long lastTimeSonar = 0;
 long delayIntervalSonar = 1500;
 
 // ==================== TOPICS ====================
+// Out
 FloatArray debugArduinoMsg = FloatArray_init_zero;
-Twist cmdVelMsg = Twist_init_zero;
-Twist cmdTourelleMsg = Twist_init_zero;
-Twist posMsg = Twist_init_zero;
-Range obsPosMsg = Range_init_zero;
-Twist imuDataMsg = Twist_init_zero;
+FloatArray encMsg = FloatArray_init_zero;
+FloatArray imuMsg = FloatArray_init_zero;
+FloatArray gpsMsg = FloatArray_init_zero;
+FloatArray sonarPairsMsg = FloatArray_init_zero;
+Int32 soufflanteHeightMsg = Int32_init_zero;
+Int32 estopMsg = Int32_init_zero;
+
+// In
+FloatArray propMsg = FloatArray_init_zero;
+FloatArray chuteMsg = FloatArray_init_zero;
+Int32 soufflanteCmdMsg = Int32_init_zero;
+Int32 deadmanMsg = Int32_init_zero;
 
 const Topic topics[] = {
+      // Out
       {DEBUG_ARDUINO, FloatArray_fields, &debugArduinoMsg},
-      {CMD_VEL, Twist_fields, &cmdVelMsg},
-      {CMD_TOURELLE, Twist_fields, &cmdTourelleMsg},
-      {POS, Twist_fields, &posMsg},
-      {OBS_POS, Range_fields, &obsPosMsg},
-      {IMU_DATA, Twist_fields, &imuDataMsg},
+      {ENC, FloatArray_fields, &encMsg},
+      {IMU, FloatArray_fields, &imuMsg},
+      {GPS, FloatArray_fields, &gpsMsg},
+      {SONAR_PAIRS, FloatArray_fields, &sonarPairsMsg},
+      {SOUFFLANTE_HEIGHT, Int32_fields, &soufflanteHeightMsg},      
+      {ESTOP_STATE, Int32_fields, &estopMsg},
+
+      // In
+      {PROP, FloatArray_fields, &propMsg},
+      {CHUTE, FloatArray_fields, &chuteMsg},
+      {SOUFFLANTE_CMD, Int32_fields, &soufflanteCmdMsg},
+      {DEADMAN, Int32_fields, &deadmanMsg},
     };
 
 // ==================== SERIAL COMMUNICATION ====================
 const String START_DELIMITER = "<{";
 const String END_DELIMITER = ">}";
-const String ARDUINO_ID = "CONTROLLER"; // Put in EEPROM ?
 
 bool recvInProgress = false;
 int inCmdIndex = 0;
@@ -87,10 +102,10 @@ bool inCmdComplete = false;
 int inCmdType = -1;
 int nbsNewMsgs = 0;
 int newMsgsIds[MAX_NBS_MSG];
-PBUtils pbUtils(topics);
-
-bool ackRecieved = false;
 bool msgDiscardedLength = false;
+
+PBUtils pbUtils(topics);
+AckHandler ackHandler;
 
 // ==================== DEVICES ====================
 #ifdef HAS_MOTOR_PROP
@@ -125,6 +140,12 @@ Servos servos;
 void setup()
 {
   Serial.begin(115200);
+
+#ifdef CONFIGURATION_MODE
+  ackHandler.writeIdToEEPROM(); // Left empty to force compile error and make sure the right id is writen
+#else
+  ackHandler.readIdFromEEPROM();
+#endif
   
 #ifdef HAS_SONARS
   sonars.init(sonarsTriggerPin, sonarsEchoPins);
@@ -133,6 +154,8 @@ void setup()
 #ifdef HAS_MOTOR_PROP
   motorLeft.init(motorForwardLeft, motorPwmLeft, CS_ENCODER1);
   motorRight.init(motorForwardRight, motorPwmRight, CS_ENCODER2);
+  motorLeft.setPID(13.0, 11.0, 0.7);
+  motorRight.setPID(13.0, 11.0, 0.7);
 #endif
 
 #ifdef HAS_IMU
@@ -143,145 +166,41 @@ void setup()
   gps.init();
 #endif
 
-/*fdef HAS_ENCODERS
-  encoders.init(encoderCSPins);
-#endif
-*/
-
 #ifdef HAS_SERVOS
   servos.init(servoPins);
 #endif
 
  pinMode(53, OUTPUT);
  digitalWrite(53,LOW);
- 
-  motorLeft.setPID(13.0, 11.0, 0.7);
-  motorRight.setPID(13.0, 11.0, 0.7);
-
-  motorLeft.commandSpeed(0.0);
-  motorRight.commandSpeed(0.0);
-
 }
 
 void loop()
 {
-  motorLeft.computePID();
-  motorRight.computePID();
-
-  Serial.println(" ");
-
-//  motorLeft.setVoltage(0);
-//  motorRight.setVoltage(0);
-
-/*  Serial.print(motorLeft.getSpeed());Serial.print(" ");
-  Serial.println(motorRight.getSpeed());*/
-   
-  delay(100);
-  /*
-  if (ackRecieved)
-  {
-    if (millis() - lastTime > delayInterval)
-    {
-#ifdef DEBUGGING
-      // To create the Map TF in tf_broadcaster
-      // This is a patch in the case there's no IMU/Encoder connected
-      pbUtils.pbSend(1, POS);
-#endif
-
-#ifdef HAS_IMU
-      imu.getValues(&imuDataMsg, delayInterval);
-      pbUtils.pbSend(1, IMU_DATA);
-#endif
-
-#ifdef HAS_ENCODERS
-      posMsg.lx = encoders.getEncVel(delayInterval);
-      posMsg.ly = encoders.getEncVel(delayInterval);
-      pbUtils.pbSend(1, POS);
-#endif
-
-      if (inCmdComplete)
-      {
-        inCmdComplete = false;
-
-        switch (inCmdType)
-        {
-          case DATA_MSGS:
-            bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
-            
-            if (status && nbsNewMsgs > 0)
-            {
-              for (int i = 0; i < nbsNewMsgs; ++i)
-              {
-                switch (newMsgsIds[i])
-                {
-                  case CMD_VEL:
-  #ifdef HAS_MOTOR_PROP
-                    cmdVelCallback();
-  #endif
-                    sendStatusWithMessage(INFO, OTHER, "Allo from cmd_vel");
-                    break;
-                    
-                  case CMD_TOURELLE:
-                    cmdTourelleCallback();
-                    break;
-                    
-                  default:
-                    sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
-                    break;
-                }
-              }
-            }
-            else
-            {
-              sendStatus(ERROR, DECODING_PB);
-            }
-            break;
-
-          case STATUS_MSGS:
-            break;
-
-          default:
-            sendStatusWithMessage(WARNING, SERIAL_COMMUNICATION, "Unknown message type");
-            break;
-        }
-        inCmdType = -1;
-      }
-      lastTime = millis();
-    }
-
-
-// ======================================== SONARS LOOP ========================================
-// Will be move to another arduino
-#ifdef HAS_SONARS
-    if (millis() - lastTimeSonar > delayIntervalSonar)
-    {
-      lastTimeSonar = millis();
-      char frameId[50] = "";
-      for (int i = 0; i < NBS_SONARS; ++i)
-      {
-        (String("sonar_f_") + String(i)).toCharArray(frameId, sizeof(frameId));
-        obsPosMsg.range = sonars.dist(i);
-        obsPosMsg.seq = sonarsMsgSeq++;
-        memcpy(obsPosMsg.frame_id, frameId, sizeof(frameId)/sizeof(frameId[0]));
-        pbUtils.pbSend(1, OBS_POS);
-      }
-    }
-#endif
-  }
-  else
-    acknowldgeArduino();
+  if (inCmdComplete && inCmdType == STATUS_MSGS)
+    inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
   
+#ifndef CONFIGURATION_MODE
+  if (ackHandler.getId() == CONTROLLER)
+    loopController();
+  else if (ackHandler.getId() == SENSORS)
+    loopSonars();
+  else if (ackHandler.getId() == BATTERY)
+    sendStatusWithMessage(ERROR, OTHER, "No loop for the battery arduino yet");
+  else
+    sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+#endif
+
   // Send status if any errors
   if(msgDiscardedLength)
   {
     sendStatus(ERROR, SERIAL_COMMUNICATION);
     msgDiscardedLength = false;
-  }*/
+  }
 }
 
 // ======================================== CALLBACKS ========================================
 
-void cmdVelCallback ()
+void propCallback()
 {
 #ifdef HAS_MOTOR_PROP
   motorVelLeft = cmdVelMsg.lx;
@@ -291,36 +210,26 @@ void cmdVelCallback ()
 #endif
 }
 
-void cmdTourelleCallback ()
+void chuteCallback()
 {
+#ifdef HAS_SERVOS
+  servos.setPos(ROTATION, chuteMsg.data[0]);
+  servos.setPos(ELEVATION, chuteMsg.data[1]);
+#endif
 
+#ifdef HAS_MOTOR_BLOW
+  // TODO : Set motor speed
+#endif
 }
 
-// ======================================== ACKNOWLEDGE ========================================
-
-void acknowldgeArduino()
+void soufflanteCmdCallback()
 {
-  if (inCmdComplete && inCmdType == STATUS_MSGS)
-  {
-    inCmdComplete = false;
-    inCmdType = -1;
-
-    if (parseAcknowledgeMessage(inCmd))
-      ackRecieved = true;
-  }
-
-  sendStatusWithMessage(NONE, ID, ARDUINO_ID);
-  delay(ID_BROADCAST_DELAY);
+  // TODO
 }
 
-bool parseAcknowledgeMessage(char* msg)
+void deadmanCallback()
 {
-  char* type = strtok(msg, ";");
-  char* id = strtok(NULL, ";");
-  if (String(type).toInt() == ACKNOWLEDGE && String(id).equals(ARDUINO_ID))
-    return true;
-
-  return false;
+  // TODO
 }
 
 // ======================================== SERIAL ========================================
@@ -358,4 +267,129 @@ void serialEvent()
     else if (startDelimIndex != -1)
       recvInProgress = true;
   }
+}
+
+
+
+// ======================================== LOOPS ========================================
+
+// CONTROLLER
+void loopController()
+{
+  if (millis() - lastTime > delayInterval)
+  {
+    lastTime = millis();
+#ifdef HAS_ENCODERS
+    float leftSpeed = encoders.getEncVel(0, delayInterval);
+    float rightSpeed = encoders.getEncVel(1, delayInterval);
+    encMsg.data[0] = (leftSpeed + rightSpeed) / 2;
+    encMsg.data[1] = (leftSpeed - rightSpeed) / TRACK_WIDTH;
+    pbUtils.pbSend(1, ENC);
+#endif
+
+#ifdef HAS_IMU
+    imu.getValues(&imuMsg);
+    pbUtils.pbSend(1, IMU);
+#endif
+
+#ifdef HAS_GPS
+    gps.getCoordinates(&gpsMsg);
+    pbUtils.pbSend(1, GPS);
+#endif
+
+#ifdef DEBUGGING
+    encMsg.data_count = 2;
+    encMsg.data[0] = 1;
+    encMsg.data[1] = 3;
+    pbUtils.pbSend(1, ENC);
+#endif
+
+    if (inCmdComplete)
+    {
+      inCmdComplete = false;
+      bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+      
+      if (status && nbsNewMsgs > 0)
+      {
+        for (int i = 0; i < nbsNewMsgs; ++i)
+        {
+          switch (newMsgsIds[i])
+          {
+            case PROP:
+              propCallback();
+              break;
+              
+            case CHUTE:
+              chuteCallback();
+              break;
+
+            case SOUFFLANTE_CMD:
+              soufflanteCmdCallback();
+              break;
+
+            case DEADMAN:
+              deadmanCallback();
+              break;
+              
+            default:
+              sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+              break;
+          }
+        }
+      }
+      else
+        sendStatus(ERROR, DECODING_PB);
+      inCmdType = -1;
+    }
+  }
+}
+
+// SONARS
+void loopSonars()
+{
+  if (millis() - lastTimeSonar > delayIntervalSonar)
+  {
+    lastTimeSonar = millis();
+
+#ifdef HAS_SONARS
+    for (int i = 0; i < NBS_SONARS/2; ++i)
+    {
+      sonars.readPair(i, &sonarPairsMsg);
+      pbUtils.pbSend(1, SONAR_PAIRS);
+    }
+#endif
+    
+    if (inCmdComplete)
+    {
+      inCmdComplete = false;
+      bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+      
+      if (status && nbsNewMsgs > 0)
+      {
+        for (int i = 0; i < nbsNewMsgs; ++i)
+        {
+          switch (newMsgsIds[i])
+          {
+            case PROP:
+            case CHUTE:
+            case SOUFFLANTE_HEIGHT:
+              break;
+  
+            case DEADMAN:
+              deadmanCallback();
+              break;
+              
+            default:
+              sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+              break;
+          }
+        }
+      }
+      else
+        sendStatus(ERROR, DECODING_PB);
+      inCmdType = -1;
+    }
+  }
+  
+
 }

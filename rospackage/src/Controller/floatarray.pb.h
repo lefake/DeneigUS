@@ -12,7 +12,7 @@
 /* Struct definitions */
 typedef struct _FloatArray { 
     pb_size_t data_count;
-    float data[50]; 
+    float data[5]; 
 } FloatArray;
 
 
@@ -21,8 +21,8 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define FloatArray_init_default                  {0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
-#define FloatArray_init_zero                     {0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
+#define FloatArray_init_default                  {0, {0, 0, 0, 0, 0}}
+#define FloatArray_init_zero                     {0, {0, 0, 0, 0, 0}}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define FloatArray_data_tag                      1
@@ -39,7 +39,7 @@ extern const pb_msgdesc_t FloatArray_msg;
 #define FloatArray_fields &FloatArray_msg
 
 /* Maximum encoded size of messages (where known) */
-#define FloatArray_size                          250
+#define FloatArray_size                          25
 
 #ifdef __cplusplus
 } /* extern "C" */
