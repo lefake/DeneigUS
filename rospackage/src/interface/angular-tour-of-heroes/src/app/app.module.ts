@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { NgxRoslibService } from 'ngx-roslib';
 import { NgxJoystickModule } from 'ngx-joystick';
 import {GoogleMapsModule} from '@angular/google-maps';
+import { NgTerminalModule } from 'ng-terminal';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -13,9 +15,12 @@ import {GoogleMapsModule} from '@angular/google-maps';
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     AppRoutingModule,
     NgxJoystickModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgTerminalModule,
+    
 
   ],
   providers: [NgxRoslibService],

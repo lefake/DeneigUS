@@ -12,9 +12,9 @@ import { RosTopic, RosoutMessage } from 'ngx-roslib';
 export class RosServiceService {
 
   rbServer: Rosbridge;
-  deadManActivated =false;
 
     constructor(public roslibService: NgxRoslibService) {
+     
         this.rbServer = this.roslibService.connect('http://localhost:9090/');  // Enter your Rosbridge URL here
     }
 
@@ -44,16 +44,13 @@ export class RosServiceService {
     joy.advertise();
  
     joy.subscribe(() => {
-      this.deadManActivated = false;
+     
      
     });
   
       
       joy.publish(request);
       joy.unsubscribe();
-   
-   
-    
     
   
     }
@@ -81,7 +78,7 @@ export class RosServiceService {
       joy.publish(isTrue);
       joy.unsubscribe();
 
-      this.deadManActivated=true;
+
    
     
       }

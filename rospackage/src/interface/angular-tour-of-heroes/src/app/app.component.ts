@@ -14,6 +14,7 @@ import { JoyMessage, NumberArrayMessage } from 'ngx-roslib';
 
 export class AppComponent {
   title = 'angular-tour-of-heroes';
+  deadManActivated = false;
   @ViewChild('staticJoystic') staticJoystick: NgxJoystickComponent | undefined;
 
 
@@ -21,6 +22,7 @@ export class AppComponent {
   @HostListener('document:keydown.space', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     this.service.deadMan();
+    this.deadManActivated=true;
   }
  
   constructor(private service: RosServiceService) { }
@@ -38,9 +40,13 @@ export class AppComponent {
     this.position[1]=event.data.raw.position.y;
     this.output.axes=this.position;
  
-    this.service.sendPos(this.output);
-    console.log('la position est ' + this.position);
-    console.log('le output est ' + this.output.axes);
+    if(this.deadManActivated){
+      this.service.sendPos(this.output);
+      console.log('la position est ' + this.position);
+      console.log('le output est ' + this.output.axes);
+      this.deadManActivated=false;
+    }
+    
   }
 
   public battery ="10%" //this.ControlesService.listenTopicDebugMot();
