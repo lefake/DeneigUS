@@ -5,12 +5,13 @@
 #include <EEPROM.h>
 #include "Constants.h"
 
-#define ACK_REQUEST_ID    42 
+#define ACK_REQUEST_ID    42
+#define ARDUINO_ID        CONTROLLER
 
 enum ID {
   CONTROLLER = 0,
   SENSORS,
-  BATTERY,
+  SAFETY,
 
   _NBS_ID
 };
@@ -19,15 +20,9 @@ class AckHandler
 {
   public:
     AckHandler();
-  
     bool acknowldgeArduino(char* msg);
-    int getId();
-    
-    void writeIdToEEPROM(int id);
-    void readIdFromEEPROM();
   
   private:
-    int id;
     String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "BATTERY" };
 };
 

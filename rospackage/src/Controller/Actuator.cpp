@@ -3,65 +3,71 @@
 Actuator::Actuator() {}
 Actuator::~Actuator() {}
     
-void Actuator::init(const int fPin, const int bPin, const int r1Pin, const int r2Pin)
+void Actuator::init(const int upPin, const int downPin, const int rUpPin, const int rDownPin)
 {
-  forwardLSPin = fPin;
-  backwardLSPin = bPin;
+  upSwitchPin = upPin;
+  downSwitchPin = downPin;
 
-  relay1Pin = r1Pin;
-  relay2Pin = r2Pin;
+  relayUpPin = rUpPin;
+  relayDownPin = rDownPin;
 
-  pinMode(forwardLSPin, INPUT);
-  pinMode(backwardLSPin, INPUT);
+  pinMode(upSwitchPin, INPUT);
+  pinMode(downSwitchPin, INPUT);
 
-  pinMode(relay1Pin, OUTPUT);
-  pinMode(relay2Pin, OUTPUT);
+  pinMode(relayUpPin, OUTPUT);
+  pinMode(relayDownPin, OUTPUT);
 }
 
-void Actuator::enable(int dir)
+void Actuator::setDir(int dir)
 {
-  if(dir == 1)
+  cmd = dir;
+  if(dir == UP)
   {
-    digitalWrite(relay1Pin, HIGH);
-    digitalWrite(relay2Pin, LOW);
+    digitalWrite(relayUpPin, HIGH);
+    digitalWrite(relayDownPin, LOW);
   }
-  else if( dir == -1)
+  else if(dir == DOWN)
   {
-    digitalWrite(relay1Pin, LOW);
-    digitalWrite(relay2Pin, HIGH); 
+    digitalWrite(relayUpPin, LOW);
+    digitalWrite(relayDownPin, HIGH); 
+  }
+  else if (dir == UNKOWN)
+  {
+    disable();     
   }
   else
   {
-    disable();    
-//    error msg wrong dir 
+    sendStatusWithMessage(ERROR, ACTUATOR_DEVICE, "No a valid command");
   }
 }
 
 int Actuator::getPos()
 {
-  if( digitalRead(forwardLSPin) == LOW && digitalRead(backwardLSPin) == LOW)
+  if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == LOW)
   {
-    return 0;
+    return UNKOWN;
   } 
-  else if( digitalRead(forwardLSPin) == HIGH && digitalRead(backwardLSPin) == LOW)
+  else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == LOW)
   {
-    disable();
-    return 1;
+    if (cmd != UP)
+      disable();
+    return DOWN;
   }
-  else if( digitalRead(forwardLSPin) == LOW && digitalRead(backwardLSPin) == HIGH)
+  else if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == HIGH)
   {
-    disable();
-    return -1;
+    if (cmd != DOWN)
+      disable();
+    return UP;
   }  
-  else if( digitalRead(forwardLSPin) == HIGH && digitalRead(backwardLSPin) == HIGH)
+  else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == HIGH)
   {
-//    error msg wrong pos
     disable();
+    sendStatusWithMessage(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
   }
 }
 
 void Actuator::disable()
 {
-  digitalWrite(relay1Pin, LOW);
-  digitalWrite(relay2Pin, LOW); 
+  digitalWrite(relayUpPin, LOW);
+  digitalWrite(relayDownPin, LOW); 
 }

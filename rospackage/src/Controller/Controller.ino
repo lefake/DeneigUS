@@ -12,7 +12,6 @@
 #include "StatusMessage.h"
 #include "PBUtils.h"
 #include "Pins.h"
-#include "Actuator.h"
 
 // ======================================== CONDITIONNAL INCLUDES ========================================
 
@@ -38,6 +37,10 @@
 
 #ifdef HAS_SERVOS
 #include "Servos.h"
+#endif
+
+#ifdef HAS_ACTUATOR
+#include "Actuator.h"
 #endif
 
 // ======================================== FUNCTIONS ========================================
@@ -136,48 +139,65 @@ Encoder encoders;
 Servos servos;
 #endif
 
+#ifdef HAS_ACTUATOR
+Actuator actuator;
+#endif
+
 // ======================================== MAIN ========================================
 
 void setup()
 {
   Serial.begin(115200);
 
-#ifdef CONFIGURATION_MODE
-  ackHandler.writeIdToEEPROM(); // Left empty to force compile error and make sure the right id is writen
-#else
-  ackHandler.readIdFromEEPROM();
-#endif
+// ==== Controller ====
+
+#if ARDUINO_ID == CONTROLLER
+
+  #ifdef HAS_MOTOR_PROP
+    // Make sure the arduino is not in SPI slave mode
+    pinMode(53, OUTPUT);
+    digitalWrite(53,LOW);
   
-#ifdef HAS_SONARS
-  sonars.init(sonarsTriggerPin, sonarsEchoPins);
-#endif
+    motorLeft.init(motorForwardLeftPin, motorPwmLeftPin, csEncoderL);
+    motorRight.init(motorForwardRightPin, motorPwmRightPin, csEncoderR);
+    motorLeft.setPID(13.0, 11.0, 0.7);
+    motorRight.setPID(13.0, 11.0, 0.7);
+  #endif
+  
+  #ifdef HAS_IMU
+    imu.init();
+  #ifdef CONFIGURATION_MODE
+    imu.doCalibration();
+  #else
+    imu.loadCalibration();
+  #endif
+  #endif
+  
+  #ifdef HAS_GPS
+    gps.init();
+  #endif
+  
+  #ifdef HAS_SERVOS
+    servos.init(servoPins);
+  #endif
+  
+  #ifdef HAS_ACTUATOR
+    actuator.init(actuatorSwitchUpPin, actuatorSwitchDownPin, actuatorUpPin, actuatorDownPin);
+  #endif
+  
+// ==== Sensors ====
+  
+#elif ARDUINO_ID == SENSORS
+  
+  #ifdef HAS_SONARS
+    sonars.init(sonarsTriggerPin, sonarsEchoPins);
+  #endif
 
-#ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorPwmLeft, csEncoderL);
-  motorRight.init(motorForwardRight, motorPwmRight, csEncoderR);
-  motorLeft.setPID(13.0, 11.0, 0.7);
-  motorRight.setPID(13.0, 11.0, 0.7);
-#endif
+// ==== Safety ====
 
-#ifdef HAS_IMU
-  imu.init();
-#ifdef CONFIGURATION_MODE
-  imu.doCalibration();
-#else
-  imu.loadCalibration();
+#elif ARDUINO_ID == SAFETY
+  // TODO : Estop pin
 #endif
-#endif
-
-#ifdef HAS_GPS
-  gps.init();
-#endif
-
-#ifdef HAS_SERVOS
-  servos.init(servoPins);
-#endif
-
- pinMode(53, OUTPUT);
- digitalWrite(53,LOW);
 }
 
 void loop()
@@ -186,11 +206,11 @@ void loop()
     inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
   
 #ifndef CONFIGURATION_MODE
-  if (ackHandler.getId() == CONTROLLER)
+  if (ARDUINO_ID == CONTROLLER)
     loopController();
-  else if (ackHandler.getId() == SENSORS)
+  else if (ARDUINO_ID == SENSORS)
     loopSonars();
-  else if (ackHandler.getId() == BATTERY)
+  else if (ARDUINO_ID == SAFETY)
     sendStatusWithMessage(ERROR, OTHER, "No loop for the battery arduino yet");
   else
     sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
@@ -228,7 +248,9 @@ void chuteCallback()
 
 void soufflanteCmdCallback()
 {
-  // TODO
+#ifdef HAS_ACTUATOR
+  actuator.setDir(soufflanteCmdMsg.data);
+#endif
 }
 
 void deadmanCallback()
@@ -278,6 +300,7 @@ void serialEvent()
 // ======================================== LOOPS ========================================
 
 // CONTROLLER
+#if ARDUINO_ID == CONTROLLER
 void loopController()
 {
 #ifdef HAS_IMU
@@ -353,7 +376,9 @@ void loopController()
   }
 }
 
-// SONARS
+#endif
+
+#if ARDUINO_ID == SENSORS
 void loopSonars()
 {
   if (millis() - lastTimeSonar > delayIntervalSonar)
@@ -399,6 +424,5 @@ void loopSonars()
       inCmdType = -1;
     }
   }
-  
-
 }
+#endif

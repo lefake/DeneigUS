@@ -6,5 +6,5 @@
   </node>
 
   <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
-  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen"/>
+  <node pkg="deneigus" required="true" type="pb2ros.py" name="pb2ros" output="screen"/>
 </launch>

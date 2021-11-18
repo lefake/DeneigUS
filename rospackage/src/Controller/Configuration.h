@@ -28,15 +28,7 @@
  #define HAS_MOTOR_PROP
 
 // ==================== SERVOS ================================
-<<<<<<< HEAD
-// #define HAS_SERVOS
-
-// ==================== ENCODERS ==============================
-// #define HAS_ENCODERS
-
-=======
  #define HAS_SERVOS
->>>>>>> master
 
 
 // ==================== STATE OF THE ROBOT ====================

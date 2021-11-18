@@ -72,12 +72,13 @@ class PB2ROS:
             8: "MOTOR_PROP_DEVICE",
             9: "SERVOS_DEVICE",
             10: "ENCODER_DEVICE",
-            11: "OTHER",
+            11: "ACTUATOR_DEVICE",
+            12: "OTHER",
         }
 
         self._serials = []  
         for s in serials:
-            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self.new_status_callback, self._serializer))
+            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self.new_status_callback, self.id_error_callback, self._serializer, "{42}"))
             self._serials[-1].start()
 
     def new_msg_callback(self, response):
@@ -122,15 +123,17 @@ class PB2ROS:
             if serial.id in current_topic.dst:
                 serialToSend.append(serial)
 
-        #current_serial = next((serial for serial in self._serials if serial.id in current_topic.dst), None)
-
         if len(serialToSend) == 0:
             self._logger.fatal("Arduino not acknowledged yet")
             return
 
-
         for s in serialToSend:
             s.write_pb_msg(current_topic.id, current_topic.converter(msg))
+
+    def id_error_callback(self):
+        self._logger.fatal("Some arduinos have the same ids")
+        self.kill()
+        rospy.signal_shutdown("Some arduinos have the same ids")
 
     def kill(self):
         for s in self._serials:
@@ -141,7 +144,7 @@ if __name__ == "__main__":
     arduinos = [
         #serial.Serial('/dev/pts/4', 9600, timeout=0.05),
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
-        #serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
+        serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
         #serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
     ]
     rospy.init_node('pb2ros', anonymous=False)

@@ -102,7 +102,8 @@ class PBSerializationHelper:
         return object_list
 
 class PBSerialHandler(threading.Thread):
-    def __init__(self, serial, msg_callback, status_callback, serializer, sleeptime=0.01, ack_query="{42}"):
+    id_list = []
+    def __init__(self, serial, msg_callback, status_callback, id_error_callback, serializer, ack_query, sleeptime=0.01):
         threading.Thread.__init__(self)
         self._logger = get_logger("pb2ros.PBSerialHandler")
         self._logger.debug("PBSerialHandler started")
@@ -110,6 +111,7 @@ class PBSerialHandler(threading.Thread):
         self._serial = serial
         self._msg_callback = msg_callback
         self._status_callback = status_callback
+        self._id_error_callback = id_error_callback
         self._serializer = serializer
         self._sleeptime = sleeptime
         self._ack_query = ack_query
@@ -177,7 +179,11 @@ class PBSerialHandler(threading.Thread):
 
                         if len(self._response.decode()[1:-1].split(';')) == 1:
                             self._id = self._response.decode()[1:-1]
+                            self.id_list.append(self._id)
                             self._logger.info(f"Ack to {self._id}")
+                            # Test if duplicate in list
+                            if len(self.id_list) != len(set(self.id_list)):
+                                self._id_error_callback()
                         else:
                             self._status_callback(self._id, self._response)
 

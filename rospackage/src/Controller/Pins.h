@@ -19,9 +19,15 @@ const int csEncoderR = 25;
 const int servoPins[NBR_SERVOS] { 2, 3 }; // Elevation, rotation
 
 // ----------------------- Motors pins -----------------------
-const int motorForwardRight = 9;
-const int motorPwmRight = 5;
-const int motorForwardLeft = 10;
-const int motorPwmLeft = 6;
+const int motorForwardRightPin = 9;
+const int motorPwmRightPin = 5;
+const int motorForwardLeftPin = 10;
+const int motorPwmLeftPin = 6;
+
+// ----------------------- Actuator pins -----------------------
+const int actuatorUpPin = 0;
+const int actuatorDownPin = 0;
+const int actuatorSwitchDownPin = 0;
+const int actuatorSwitchUpPin = 0;
 
 #endif // _PINS_H
