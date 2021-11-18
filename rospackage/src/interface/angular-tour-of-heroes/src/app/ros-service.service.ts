@@ -76,10 +76,7 @@ export class RosServiceService {
        
       });
       joy.publish(isTrue);
-      joy.unsubscribe();
-
-
-   
+      joy.unsubscribe();   
     
       }
 }

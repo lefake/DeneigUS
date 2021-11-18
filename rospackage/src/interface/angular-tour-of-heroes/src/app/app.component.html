@@ -68,35 +68,27 @@
   .containerMap{
     position: relative;
     bottom: 60 px;
-    top: 50%;
+    top: 20%;
 
   }
 
   .containerJoystick{
     position: relative;
-    right: -40% ;
-    top: -10%;
+    right: 0% ;
+    top: -50%;
 
   }
   .containerTerminal{
     position: relative;
     bottom: 60 px;
-    top: 50%;
-
+    top: 30%;
+    
   }
   
 
-
-
 </style>
 
-
-
-
 <!-- Toolbar -->
-
-
-  
 
 <div class="toolbar" role="banner">
   <img
@@ -114,22 +106,24 @@
         <map-marker [position]="marker.position" [options]="marker.options"></map-marker>
         <map-polyline [options] = "polylineOptions"></map-polyline>
        
-    </google-map>
+      </google-map>
     </div>
     <div class="col-sm">
       
-  <ngx-joystick class = 'containerJoystick' #staticJoystic (move)="onMoveStatic($event)"></ngx-joystick>
+      <ngx-joystick class = 'containerJoystick' #staticJoystic (move)="onMoveStatic($event)"></ngx-joystick>
     </div>
+   
+  </div>
+  <div class="row">
     <div class="col-sm">
-      
-      <div class="row-sm">
-<ng-terminal  class = 'containerTerminal' #term ></ng-terminal> 
-</div>
+
+      <ng-terminal  class = 'containerTerminal' #term ></ng-terminal> 
     </div>
   </div>
 </div>
 
 
 
-</div>
+
+
 
