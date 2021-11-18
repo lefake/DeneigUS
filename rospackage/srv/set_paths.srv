@@ -1,5 +1,5 @@
-geometry_msgs/PoseStamped[] mbf
-float32[] chute
-float32[] soufflante
+mbf_msg[] mbf
+int8[] soufflante
+chute_msg[] chute
 ---
 bool success

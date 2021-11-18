@@ -6,7 +6,8 @@ import logging
 from deneigus.srv import acknowledge,set_paths
 from logging_utils import setup_logger, get_logger
 from geometry_msgs.msg import PoseStamped
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Int8
+from deneigus.msg import chute_msg, mbf_msg
 
 import numpy as np
 
@@ -24,17 +25,18 @@ class StateManagement:
         self.path_soufflante = []
 
         self.mbf_pub = rospy.Publisher('/mbf_new_goal', PoseStamped, queue_size=10)
-        self.chute_pub = rospy.Publisher('/chute_new_goal', Float32, queue_size=10)
-        self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Float32, queue_size=10)
+        self.chute_pub = rospy.Publisher('/chute_new_goal', chute_msg, queue_size=10)
+        self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int8, queue_size=10)
 
     def acknowledge_callback(self, msg):
         # example: rosservice call /acknowledge "MBF" 1
         # example: rosservice call /acknowledge "Soufflante" 1
         if msg.finish==True:
-            if msg.name=="Soufflante":
+            logger.info(f'Got acknowledge from {msg.name}')
+            if msg.name=='Soufflante':
                 self.acknowledge_soufflante = True
                 success = True
-            elif msg.name=="MBF":
+            elif msg.name=='MBF':
                 self.acknowledge_mbf = True
                 success = True
             else:
@@ -44,21 +46,24 @@ class StateManagement:
         else:
             success = False
 
-        if self.acknowledge_soufflante and self.acknowledge_mbf:
+        if len(self.path_mbf) != 0:
             self.send_new_objectives()
 
         return success
 
     def send_new_objectives(self):
-        logger.info('Send new objectives done')
+        if self.acknowledge_soufflante and self.acknowledge_mbf:
+            logger.info('Send new objectives done')
 
-        self.mbf_pub.publish(self.path_mbf.pop(0))
-        self.chute_pub.publish(self.path_chute.pop(0))
-        self.soufflante_pub.publish(self.path_soufflante.pop(0))
+            # TODO Progress bar
+            mbf = self.path_mbf.pop(0)
 
-        self.acknowledge_soufflante = False
-        self.acknowledge_mbf = False
-        return False
+            self.mbf_pub.publish(mbf.pose)
+            self.chute_pub.publish(self.path_chute.pop(0))
+            self.soufflante_pub.publish(self.path_soufflante.pop(0))
+
+            self.acknowledge_soufflante = False
+            self.acknowledge_mbf = False
 
     def set_paths_callback(self, paths):
         try:
@@ -71,6 +76,8 @@ class StateManagement:
         except:
             logger.info('Set path failed')
             success = False
+
+        self.send_new_objectives()
 
         return success
 

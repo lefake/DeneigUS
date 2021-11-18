@@ -3,11 +3,12 @@
 import rospy
 import logging
 
-from deneigus.srv import acknowledge,set_paths
+from deneigus.srv import acknowledge, set_paths
+from deneigus.msg import chute_msg, mbf_msg
 from logging_utils import setup_logger, get_logger
 from geometry_msgs.msg import PoseStamped
 
-def createPose(x,y,z,xx,yy,zz,ww):
+def createMBF(x,y,z,xx,yy,zz,ww, v_max, v_min):
     p = PoseStamped()
     p.header.frame_id = 'map'
     p.header.stamp = rospy.get_rostime()
@@ -18,7 +19,20 @@ def createPose(x,y,z,xx,yy,zz,ww):
     p.pose.orientation.y = yy
     p.pose.orientation.z = zz
     p.pose.orientation.w = ww
-    return p
+
+    msg = mbf_msg()
+    msg.pose = p
+    msg.v_max = v_max
+    msg.v_min = v_min
+
+    return msg
+
+def createChuteMsg(x,y,force45):
+    msg = chute_msg()
+    msg.x = x
+    msg.y = y
+    msg.force45 = force45
+    return msg
 
 if __name__ == '__main__':
     rospy.init_node('simpleSetPath', anonymous=False)
@@ -28,23 +42,26 @@ if __name__ == '__main__':
     logger.info("simpleSetPath main Started")
 
     path_mbf = []
-    path_mbf.append(createPose(6,3,0, 0,0,0,1))
-    path_mbf.append(createPose(10,3,0, 0,0,0,1))
-    path_mbf.append(createPose(10,6,0, 0,0,1,0))
+    path_mbf.append(createMBF(6,3,0, 0,0,0,1,  1,0.3))
+    path_mbf.append(createMBF(6,3,0, 0,0,0,1,  1,0.3))
+    path_mbf.append(createMBF(10,3,0, 0,0,0,1, 1,0.3))
+    path_mbf.append(createMBF(10,6,0, 0,0,1,0, 1,0.3))
 
     path_chute = []
-    path_chute.append(45)
-    path_chute.append(45)
-    path_chute.append(45)
+    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(0,0,False))
 
     path_soufflante = []
     path_soufflante.append(-1)
-    path_soufflante.append(-1)
+    path_soufflante.append(1)
+    path_soufflante.append(1)
     path_soufflante.append(-1)
 
     rospy.wait_for_service('set_paths')
     set_func = rospy.ServiceProxy('set_paths', set_paths)
-    success = set_func(path_mbf, path_chute, path_soufflante)
+    success = set_func(path_mbf, path_soufflante, path_chute)
 
     logger.info(success)
 

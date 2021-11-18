@@ -21,17 +21,22 @@ import py_trees_ros
 import py_trees.console as console
 import rospy
 import sys
+import logging
+import typing
+
 
 import geometry_msgs.msg as geometry_msgs
 import mbf_msgs.msg as mbf_msgs
 
 from geometry_msgs.msg import PoseStamped
 from deneigus.srv import acknowledge
+from logging_utils import setup_logger, get_logger
 
 
 ##############################################################################
 # Actions
 ##############################################################################
+
 
 class GetPath(py_trees_ros.actions.ActionClient):
 
@@ -47,11 +52,9 @@ class GetPath(py_trees_ros.actions.ActionClient):
         On success, set the resulting path on the blackboard, so ExePath can use it
         """
         status = super(GetPath, self).update()
+
         if status == py_trees.Status.SUCCESS:
             py_trees.blackboard.Blackboard().set("path", self.action_client.get_result().path)
-            rospy.wait_for_service('acknowledge')
-            path_func = rospy.ServiceProxy('acknowledge', acknowledge)
-            path_func('MBF', 1)
 
         return status
 
@@ -85,6 +88,35 @@ class Recovery(py_trees_ros.actions.ActionClient):
             self._behaviors = rospy.get_param("/move_base_flex/recovery_behaviors")
             return py_trees.Status.FAILURE
 
+class ToBlackboard(py_trees_ros.subscribers.ToBlackboard):
+    def __init__(self,
+                 topic_name: str,
+                 topic_type: typing.Any,
+                 blackboard_variables: typing.Dict[str, typing.Any] = {},  # e.g. {"chatter": None}
+                 name=py_trees.common.Name.AUTO_GENERATED,
+                 ):
+        super(ToBlackboard, self).__init__(
+            topic_name=topic_name,
+            topic_type=topic_type,
+            blackboard_variables=blackboard_variables,
+            name=name,
+        )
+        self.acknowledge = False
+
+    def update(self):
+        status = super(ToBlackboard, self).update()
+
+        if status == py_trees.Status.RUNNING and not self.acknowledge:
+            rospy.wait_for_service('acknowledge')
+            path_func = rospy.ServiceProxy('acknowledge', acknowledge)
+            path_func('MBF', 1)
+
+            self.acknowledge = True
+
+        if status == py_trees.Status.SUCCESS and self.acknowledge:
+            self.acknowledge = False
+
+        return status
 
 ##############################################################################
 # Behaviours
@@ -96,10 +128,10 @@ def create_root():
     get_goal = py_trees.composites.Selector("GetGoal")
     fallback = py_trees.composites.Selector("Fallback")
     navigate = py_trees.composites.Sequence("Navigate")
-    new_goal = py_trees_ros.subscribers.ToBlackboard(name="NewGoal",
-                                                     topic_name="/mbf_new_goal",
-                                                     topic_type=geometry_msgs.PoseStamped,
-                                                     blackboard_variables = {'target_pose': None})
+    new_goal = ToBlackboard(name="NewGoal",
+                             topic_name="/mbf_new_goal",
+                             topic_type=geometry_msgs.PoseStamped,
+                             blackboard_variables = {'target_pose': None})
     have_goal = py_trees.blackboard.CheckBlackboardVariable(name="HaveGoal", variable_name="target_pose")
     clr_goal1 = py_trees.blackboard.ClearBlackboardVariable(name="ClearGoal", variable_name="target_pose")
     clr_goal2 = py_trees.blackboard.ClearBlackboardVariable(name="ClearGoal", variable_name="target_pose")
@@ -113,6 +145,7 @@ def create_root():
                         action_namespace="/move_base_flex/recovery",
                         action_spec=mbf_msgs.RecoveryAction)
 
+
     # Compose tree
     bt_root.add_children([get_goal, fallback])
     get_goal.add_children([have_goal, new_goal])
@@ -125,13 +158,15 @@ def shutdown(behaviour_tree):
     behaviour_tree.interrupt()
 
 if __name__ == '__main__':
-    rospy.init_node("mbf_bt_demo")
+    rospy.init_node("mbf_behavior_tree", anonymous=False)
+
+    setup_logger(__file__, print_level=logging.INFO)
+    logger = get_logger("mbf_behavior_tree")
+
+    logger.info("mbf_behavior_tree main Started")
+
     root = create_root()
     behaviour_tree = py_trees_ros.trees.BehaviourTree(root)
-
-    rospy.wait_for_service('acknowledge')
-    path_func = rospy.ServiceProxy('acknowledge', acknowledge)
-    path_func('MBF', 1)
 
     rospy.on_shutdown(functools.partial(shutdown, behaviour_tree))
     if not behaviour_tree.setup(timeout=15):
@@ -139,3 +174,5 @@ if __name__ == '__main__':
         sys.exit(1)
 
     behaviour_tree.tick_tock(500)
+
+    logger.info("MbfNode main Stopped")
