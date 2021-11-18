@@ -14,6 +14,15 @@ class control_modes(Enum):
     manual = 1
     auto = 2
 
+# Behavior for auto mode values
+behavior_choices = {
+    "semi_auto": 0,
+    "nord": 1,
+    "est": 2,
+    "sud": 3,
+    "west": 4,
+    "centre": 5}
+
 supported_type = ["ps3", "ps4", "logi"]
 def joy_button_mapper(joy_type):
     joy_indexes = {}
@@ -31,6 +40,7 @@ def joy_button_mapper(joy_type):
         joy_indexes["soufl_down"] = 0
         joy_indexes["deadman"] = 4
         joy_indexes["switch_mode"] = 3
+        joy_indexes["switch_behavior"] = 1
     
     elif joy_type == "logi":
         # Axes
@@ -45,6 +55,7 @@ def joy_button_mapper(joy_type):
         joy_indexes["soufl_down"] = 0
         joy_indexes["deadman"] = 4
         joy_indexes["switch_mode"] = 2
+        joy_indexes["switch_behavior"] = 1
 
     return joy_indexes
 
@@ -58,6 +69,7 @@ class Executif:
         self.stop_first_time_send = False
         self.last_control_mode = None
         self.control_mode = control_modes.stop
+        self.behavior_active = behavior_choices.get("nord")
 
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
@@ -65,6 +77,7 @@ class Executif:
         self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
         self.control_mode_pub = rospy.Publisher('control_mode', Int32, queue_size=10)
         self.deadman_pub = rospy.Publisher('/deadman', Int32, queue_size=10)
+        self.behavior_pub = rospy.Publisher('behavior', Int32, queue_size=10)
 
         # Subscriber from nodes or robot
         rospy.Subscriber("/joy", Joy, self.joy_callback)
@@ -132,9 +145,14 @@ class Executif:
             self.soufflante_cmd_pub.publish(soufflante_cmd)
             self.deadman_pub.publish(deadman)
 
+            # Cycle through all the behaviors -> TODO : make the choice dependant of the data from the interface
+            if msg.buttons[self.joy_indexes["switch_behavior"]]:
+                self.behavior_active = (self.behavior_active + 1) % len(behavior_choices.keys())
+
         if self.control_mode == control_modes.auto:
             self.stop_first_time_send = True
             self.deadman_pub.publish(deadman)
+            self.behavior_pub.publish(self.behavior_active)     # publish only when getting in auto mode
 
         if self.control_mode == control_modes.stop and self.stop_first_time_send:
             prop = Float32MultiArray()

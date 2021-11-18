@@ -4,7 +4,7 @@
   <arg name="has_ard" default="0"/>
 
   <arg name="joy_port" default="/dev/input/js2" />
-  <param name="joy_type" value="ps3" />
+  <param name="joy_type" value="logi" />
 
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
