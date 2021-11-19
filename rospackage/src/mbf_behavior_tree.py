@@ -52,6 +52,7 @@ class GetPath(py_trees_ros.actions.ActionClient):
 
         #client.update_configuration({"max_vel_x": msg.v_max, "min_vel_x": msg.v_min})
 
+        #self.action_goal = mbf_msgs.GetPathGoal(target_pose=msg)
         self.action_goal = mbf_msgs.GetPathGoal(target_pose=msg.pose)
         super(GetPath, self).initialise()
 
@@ -136,7 +137,9 @@ def create_root():
     fallback = py_trees.composites.Selector("Fallback")
     navigate = py_trees.composites.Sequence("Navigate")
     new_goal = ToBlackboard(name="NewGoal",
+                             #topic_name="/move_base_simple/goal",
                              topic_name="/mbf_new_goal",
+                             #topic_type=PoseStamped,
                              topic_type=mbf_msg,
                              blackboard_variables = {'target_pose': None})
     have_goal = py_trees.blackboard.CheckBlackboardVariable(name="HaveGoal", variable_name="target_pose")
