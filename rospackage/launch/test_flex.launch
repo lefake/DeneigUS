@@ -38,6 +38,7 @@
     <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
       <param name="dev" type="string" value="$(arg joy_port)" />
       <param name="deadzone" value="0.12" />
+      <param name="default_trig_val" value="true" />
     </node>
   </group>
 
@@ -66,6 +67,7 @@
 <!-- python SimpleCmdMoveBase Node -->
 <!--node pkg="deneigus" type="mbf_node.py" name="mbf_node" output="screen" clear_params="true"/-->
 <node pkg="deneigus" type="mbf_behavior_tree.py" name="mbf_behavior_tree" output="screen" clear_params="true"/>
+<node pkg="deneigus" type="chute_node.py" name="chute_node" output="screen" clear_params="true"/>
 <node pkg="deneigus" type="soufflante_node.py" name="soufflante_node" output="screen" clear_params="true"/>
 
 <!-- python stateManagement Services-->
