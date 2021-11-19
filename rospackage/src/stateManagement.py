@@ -24,7 +24,7 @@ class StateManagement:
         self.path_chute = []
         self.path_soufflante = []
 
-        self.mbf_pub = rospy.Publisher('/mbf_new_goal', PoseStamped, queue_size=10)
+        self.mbf_pub = rospy.Publisher('/mbf_new_goal', mbf_msg, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute_new_goal', chute_msg, queue_size=10)
         self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int8, queue_size=10)
 
@@ -56,9 +56,7 @@ class StateManagement:
             logger.info('Send new objectives done')
 
             # TODO Progress bar
-            mbf = self.path_mbf.pop(0)
-
-            self.mbf_pub.publish(mbf.pose)
+            self.mbf_pub.publish(self.path_mbf.pop(0))
             self.chute_pub.publish(self.path_chute.pop(0))
             self.soufflante_pub.publish(self.path_soufflante.pop(0))
 

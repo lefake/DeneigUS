@@ -12,12 +12,8 @@ import numpy as np
 
 class SoufflanteNode:
     def __init__(self):
-
-        # TODO: cmd=0 don't move
-        self.last_height = 0
-        self.new_height = 0
-
-        self.goal_reach = False
+        self.goal = 1
+        self.goal_reach = True
 
         self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
         self.soufflante_new_goal_sub = rospy.Subscriber('/soufflante_new_goal', Int8, self.soufflante_goal_callback)
@@ -28,20 +24,18 @@ class SoufflanteNode:
         path_func('Soufflante', 1)
 
     def soufflante_goal_callback(self, msg):
-        self.last_height = self.new_height
-        self.new_height = msg.data
-
-        if self.new_height==self.last_height:
+        if msg.data==0:
             rospy.wait_for_service('acknowledge')
             path_func = rospy.ServiceProxy('acknowledge', acknowledge)
             path_func('Soufflante', 1)
             self.goal_reach = True
         else:
-            self.soufflante_cmd_pub.publish(self.new_height)
+            self.soufflante_cmd_pub.publish(msg.data)
             self.goal_reach = False
+            self.goal = msg.data
 
     def soufflante_height_callback(self, msg):
-        if self.goal_reach==False and msg.data==self.new_height:
+        if self.goal_reach==False and msg.data==self.goal:
             rospy.wait_for_service('acknowledge')
             path_func = rospy.ServiceProxy('acknowledge', acknowledge)
             path_func('Soufflante', 1)

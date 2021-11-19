@@ -149,6 +149,7 @@
 
 <!-- navsat_transform_node  -0.25949167467707 -->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
+<param name="frequency" value="10.0"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="magnetic_declination_radians" value="0.0"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>

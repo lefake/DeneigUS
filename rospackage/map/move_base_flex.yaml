@@ -6,44 +6,37 @@ planners:
 
 #----------------------------------Controllers---------------------------------------------------
 controllers:
-  - name: "dwa"
-    type: dwa_local_planner/DWAPlannerROS
+  - name: "teb"
+    type: teb_local_planner/TebLocalPlannerROS
 
-dwa:
-    acc_lim_x: 5
-    acc_lim_y: 0
-    acc_lim_th: 0.5
 
-    max_vel_x : 1.0
-    min_vel_x : 0.3
+teb:
+  odom_topic: "/odometry/filtered/global"
+  map_frame: "map"
 
-    max_vel_trans: 1.0
-    min_vel_trans: 0.3
+  xy_goal_tolerance: 0.1
+  yaw_goal_tolerance: 0.05
 
-    max_vel_y: 0
-    min_vel_y: 0
+  acc_lim_x: 0.25
+  acc_lim_theta: 0.05
 
-    max_vel_theta: 1.57/3
-    min_vel_theta: 0.05
+  max_vel_x: 0.7
+  max_vel_x_backwards: 0.7
+  max_vel_theta: 0.1
 
-    yaw_goal_tolerance: 0.05
-    xy_goal_tolerance: 0.1
+  #max_global_plan_lookahead_dist: 10
 
-    oscillation_reset_dist: 0.3
+  allow_init_with_backwards_motion: True
 
-    sim_time: 2.0
-    sim_granularity: 0.025
+  inflation_dist: 0.1
+  min_obstacle_dist: 0.1
 
-    path_distance_bias: 32.0
-    goal_distance_bias: 24.0
-    occdist_scale: 0.01
-    forward_point_distance: 0.325
-    stop_time_buffer: 0.2
-    scaling_speed: 0.25
-    max_scaling_factor: 0.2
-    publish_cost_grid: false
+  weight_inflation: 0.25
+  weight_obstacle: 100
 
-    latch_xy_goal_tolerance: false
+  footprint_model:
+    type: "polygon"
+    vertices: [[0.85, 0.35],[0.85, -0.35], [-0.4, -0.35], [-0.4, 0.35]]
 
 #----------------------------------Recovery---------------------------------------------------
 recovery_behaviors:
@@ -60,7 +53,7 @@ recovery_patience: 10.0
 controller_frequency: 10.0
 controller_patience: 10.0
 
-planner_frequency: 2.0
+planner_frequency: 10.0
 planner_patience: 10.0
 
 oscillation_timeout: 60.0

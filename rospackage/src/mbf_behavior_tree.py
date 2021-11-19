@@ -23,12 +23,13 @@ import rospy
 import sys
 import logging
 import typing
-
+import dynamic_reconfigure.client
 
 import geometry_msgs.msg as geometry_msgs
 import mbf_msgs.msg as mbf_msgs
 
 from geometry_msgs.msg import PoseStamped
+from deneigus.msg import mbf_msg
 from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger
 
@@ -39,12 +40,19 @@ from logging_utils import setup_logger, get_logger
 
 
 class GetPath(py_trees_ros.actions.ActionClient):
-
     def initialise(self):
         """
         Get target pose from the blackboard to create an action goal
         """
-        self.action_goal = mbf_msgs.GetPathGoal(target_pose=py_trees.blackboard.Blackboard().get("target_pose"))
+        #logger.info(py_trees.blackboard.Blackboard().get("target_pose"))
+
+        msg = py_trees.blackboard.Blackboard().get("target_pose")
+
+        #client = dynamic_reconfigure.client.Client("/move_base_flex/blp", timeout=0.1)
+
+        #client.update_configuration({"max_vel_x": msg.v_max, "min_vel_x": msg.v_min})
+
+        self.action_goal = mbf_msgs.GetPathGoal(target_pose=msg.pose)
         super(GetPath, self).initialise()
 
     def update(self):
@@ -59,7 +67,6 @@ class GetPath(py_trees_ros.actions.ActionClient):
         return status
 
 class ExePath(py_trees_ros.actions.ActionClient):
-
     def initialise(self):
         """
         Get path from the blackboard to create an action goal
@@ -130,7 +137,7 @@ def create_root():
     navigate = py_trees.composites.Sequence("Navigate")
     new_goal = ToBlackboard(name="NewGoal",
                              topic_name="/mbf_new_goal",
-                             topic_type=geometry_msgs.PoseStamped,
+                             topic_type=mbf_msg,
                              blackboard_variables = {'target_pose': None})
     have_goal = py_trees.blackboard.CheckBlackboardVariable(name="HaveGoal", variable_name="target_pose")
     clr_goal1 = py_trees.blackboard.ClearBlackboardVariable(name="ClearGoal", variable_name="target_pose")
