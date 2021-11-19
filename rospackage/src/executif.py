@@ -45,6 +45,8 @@ def joy_button_mapper(joy_type):
         joy_indexes["soufl_down"] = 0
         joy_indexes["deadman"] = 4
         joy_indexes["switch_mode"] = 2
+        joy_indexes["light"] = 1
+        joy_indexes["estop"] = 7
 
     return joy_indexes
 
@@ -59,6 +61,10 @@ class Executif:
         self.last_control_mode = None
         self.control_mode = control_modes.stop
         self.last_deadman_state = 0
+        self.last_estop_state = 1
+        self.light_value = 0
+        self.light_color = 0
+        self.last_servo_pos = [0, 0, 0]
 
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
@@ -66,6 +72,8 @@ class Executif:
         self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
         self.control_mode_pub = rospy.Publisher('control_mode', Int32, queue_size=10)
         self.deadman_pub = rospy.Publisher('/deadman', Int32, queue_size=10)
+        self.estop_pub = rospy.Publisher('/estop', Int32, queue_size=10)
+        self.light_pub = rospy.Publisher('/light', Float32MultiArray, queue_size=10)
 
         # Subscriber from nodes or robot
         rospy.Subscriber("/joy", Joy, self.joy_callback)
@@ -94,6 +102,20 @@ class Executif:
         chute.data = [0, 0, 0]
         soufflante_cmd = Int32()
         deadman = Int32()
+        estop = Int32()
+        light = Float32MultiArray()
+
+        estop.data = msg.buttons[self.joy_indexes["estop"]]
+        if estop.data:
+            self.last_estop_state = not self.last_estop_state
+            estop.data = self.last_estop_state 
+            self.estop_pub.publish(estop)
+
+        if msg.buttons[self.joy_indexes["light"]]:
+            self.light_color = (self.light_color + 1) % 3
+            self.light_value = (self.light_value + 1) % 2
+            light.data = [self.light_color, self.light_value]
+            self.light_pub.publish(light)
 
         deadman.data = msg.buttons[self.joy_indexes["deadman"]]
 
@@ -119,7 +141,8 @@ class Executif:
             prop.data = self.lin_ang_2_tank(msg.axes[self.joy_indexes["prop_lin"]], msg.axes[self.joy_indexes["prop_ang"]])
 
             speed = abs(msg.axes[self.joy_indexes["soufl_speed"]] - 1) * 3 # TODO : Change the range
-            chute.data = [msg.axes[self.joy_indexes["chute_rot"]], (msg.axes[self.joy_indexes["chute_elev"]]), speed]
+            self.last_servo_pos = [(msg.axes[self.joy_indexes["chute_rot"]])*90, (msg.axes[self.joy_indexes["chute_elev"]]+1)*45, speed] 
+            chute.data = self.last_servo_pos
 
             if msg.buttons[self.joy_indexes["soufl_up"]]:
                 soufflante_cmd.data = 1
@@ -147,7 +170,7 @@ class Executif:
             prop = Float32MultiArray()
             prop.data = [0, 0]
             chute = Float32MultiArray()
-            chute.data = [0, 0, 0]        # TODO : Fix angles shit 
+            chute.data = self.last_servo_pos
             soufflante_cmd = Int32()
 
             self.prop_pub.publish(prop)

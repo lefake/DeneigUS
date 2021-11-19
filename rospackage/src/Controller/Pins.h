@@ -16,7 +16,7 @@ const int csEncoderL = 29;
 const int csEncoderR = 25;
 
 // ----------------------- Servos pins ----------------------
-const int servoPins[NBR_SERVOS] { 2, 3 }; // Elevation, rotation
+const int servoPins[NBR_SERVOS] { 2, 3 }; // Rotation, Elevation
 
 // ----------------------- Motors pins -----------------------
 const int motorForwardRightPin = 9;
@@ -25,9 +25,17 @@ const int motorForwardLeftPin = 10;
 const int motorPwmLeftPin = 6;
 
 // ----------------------- Actuator pins -----------------------
-const int actuatorUpPin = 0;
-const int actuatorDownPin = 0;
-const int actuatorSwitchDownPin = 0;
-const int actuatorSwitchUpPin = 0;
+// J34
+const int actuatorUpPin = 26;
+const int actuatorDownPin = 28;
+const int actuatorSwitchDownPin = A2;
+const int actuatorSwitchUpPin = A3;
+
+// ----------------------- Light pins --------------------------
+const int lightPins[3] = {A0,A1,A2};
+
+// ----------------------- EStop pins --------------------------
+const int estopPin = 23;
+const int estopStatePin = 8;
 
 #endif // _PINS_H

@@ -51,11 +51,8 @@ void Motor::computePID()
     v_act = last_v;
 
   float e_v = v_des - v_act;
-  //if(e_v < 0.05 && e_v > -0.05) //dead band
-  //  e_v =0;
-  
   e_p = e_p + e_v*dt/1000.0;
-  if(v_act == 0)
+  if(abs(v_act) < 0.001)
     e_p = 0;
   
   e_a = (last_e_v - e_v)*1000.0/dt;
@@ -64,24 +61,25 @@ void Motor::computePID()
   last_v = v_act;
 
   float C = kp*e_v + ki*e_p + kd*e_a;
-
-  Serial.print(v_act); Serial.print(" ");
-  Serial.print(v_des); Serial.print(" ");
+  if(C < 2.5 && C > -2.5) //dead band
+    C = 0;
 
   setVoltage(C);
 } 
 
 void Motor::setVoltage(float volt)
 {
-
-  if( volt < 0 ){
-      digitalWrite(forwardPin, HIGH);
-      volt = -volt;
+  if( volt < 0 )
+  {
+    digitalWrite(forwardPin, HIGH);
+    volt = -volt;
   }
-  if( volt > 0 ){
-      digitalWrite(forwardPin, LOW);
+  else 
+  {
+    digitalWrite(forwardPin, LOW);
   }
-  if( volt > 24)
+  
+  if(volt > 24)
     volt = 24;
     
   analogWrite(speedPin, convert(volt));

@@ -21,6 +21,12 @@ void Actuator::init(const int upPin, const int downPin, const int rUpPin, const 
 void Actuator::setDir(int dir)
 {
   cmd = dir;
+  if (dir  == pos)
+  {
+    disable();
+    return; 
+  }
+    
   if(dir == UP)
   {
     digitalWrite(relayUpPin, HIGH);
@@ -45,25 +51,27 @@ int Actuator::getPos()
 {
   if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == LOW)
   {
-    return UNKOWN;
+    pos = UNKOWN;
   } 
   else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == LOW)
   {
     if (cmd != UP)
       disable();
-    return DOWN;
+    pos = DOWN;
   }
   else if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == HIGH)
   {
     if (cmd != DOWN)
       disable();
-    return UP;
+    pos = UP;
   }  
   else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == HIGH)
   {
     disable();
     sendStatusWithMessage(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
   }
+
+  return pos;
 }
 
 void Actuator::disable()

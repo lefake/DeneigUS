@@ -22,6 +22,7 @@ class Actuator{
     int relayDownPin;
 
     int cmd;
+    int pos;
 
   enum Position
   {

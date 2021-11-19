@@ -3,12 +3,13 @@
 
 #include <Arduino.h>
 #include "Constants.h"
+#include "StatusMessage.h"
 #include <Servo.h>
 
 enum SERVOS 
 {
-  ELEVATION = 0,
-  ROTATION,
+  ROTATION = 0,
+  ELEVATION
 };
 
 class Servos {
@@ -27,7 +28,7 @@ class Servos {
 
     const int MIN_PWM = 16;  // Sur 255
     const int MAX_PWM = 76;  // Sur 255
-    const int MIN_ANGLE[NBR_SERVOS] = {0, -90};
+    const int MIN_ANGLE[NBR_SERVOS] = {-90, 0};
     const int MAX_ANGLE[NBR_SERVOS] = {90, 90};
     const int INIT_ANGLE[NBR_SERVOS] = {INIT_ELEVATION, INIT_ROTATION};
     int deg2pwm(int n, int angle);

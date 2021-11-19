@@ -42,6 +42,10 @@
 #define DATA_MSGS                           0
 #define STATUS_MSGS                         1
 
+#define CONTROLLER                          0
+#define SENSORS                             1
+#define SAFETY                              2
+
 // ======================= EEPROM  ==================================
 #define ID_EEPROM_ADDRESS                   0x00
 #define IMU_EEPROM_ADDRESS                  0x10

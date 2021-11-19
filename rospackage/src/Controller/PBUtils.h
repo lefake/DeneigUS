@@ -40,6 +40,8 @@ enum TOPICS
   CHUTE,
   SOUFFLANTE_CMD,
   DEADMAN,
+  ESTOP,
+  LIGHT,
 
   _NBS_TOPICS
 };

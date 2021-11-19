@@ -23,6 +23,8 @@ class PB2ROS:
         self._chute_sub = rospy.Subscriber('/chute', Float32MultiArray, self.sub_callback, ('/chute'))
         self._soufflante_cmd_sub = rospy.Subscriber('/soufflante_cmd', Int32, self.sub_callback, ('/soufflante_cmd'))
         self._deadman_sub = rospy.Subscriber('/deadman', Int32, self.sub_callback, ('/deadman'))
+        self._estop_sub = rospy.Subscriber('/estop', Int32, self.sub_callback, ('/estop'))
+        self._light_sub = rospy.Subscriber('/light', Float32MultiArray, self.sub_callback, ('/light'))
 
         # In Executif, Out Arduino
         self._debug_arduino_pub = rospy.Publisher('/debug_arduino_data', Float32MultiArray, queue_size=10)
@@ -30,10 +32,18 @@ class PB2ROS:
         self._gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)
         self._imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self._sonar_pairs_pub = rospy.Publisher('/sonar_pairs', Float32MultiArray, queue_size=10)
-        self._soufflante_height_pub = rospy.Subscriber('/soufflante_height', Int32, self.sub_callback, ('/soufflante_height'))
+        self._soufflante_height_pub = rospy.Publisher('/soufflante_height', Int32, queue_size=10)
         self._estop_state_pub = rospy.Publisher('/estop_state', Int32, queue_size=10)
         
         # Topic IDs much be the same in the Arduino enum (in constants.h)
+        self._sub_topics = [
+            SubTopic(7, self._prop_sub, ["CONTROLLER"]),
+            SubTopic(8, self._chute_sub, ["CONTROLLER"]),
+            SubTopic(9, self._soufflante_cmd_sub, ["CONTROLLER"]),
+            SubTopic(10, self._deadman_sub, ["CONTROLLER", "SENSORS"]),
+            SubTopic(11, self._estop_sub, ["SAFETY"]),
+            SubTopic(12, self._light_sub, ["SENSORS"]),
+        ]
         self._pub_topics = [
             PubTopic(0, self._debug_arduino_pub),
             PubTopic(1, self._enc_pub, floatarray_pb2.FloatArray(), MsgConverter.enc_converter), # Might need to remove () on FloatArray
@@ -42,12 +52,6 @@ class PB2ROS:
             PubTopic(4, self._sonar_pairs_pub),
             PubTopic(5, self._soufflante_height_pub),
             PubTopic(6, self._estop_state_pub),
-        ]
-        self._sub_topics = [
-            SubTopic(7, self._prop_sub, ["CONTROLLER"]),
-            SubTopic(8, self._chute_sub, ["CONTROLLER"]),
-            SubTopic(9, self._soufflante_cmd_sub, ["CONTROLLER"]),
-            SubTopic(10, self._deadman_sub, ["CONTROLLER", "SENSORS"]),
         ]
         self._topics = self._sub_topics + self._pub_topics
         self._serializer = PBSerializationHelper(self._topics)
@@ -145,7 +149,7 @@ if __name__ == "__main__":
         #serial.Serial('/dev/pts/4', 9600, timeout=0.05),
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
         serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
-        #serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
+        serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
     ]
     rospy.init_node('pb2ros', anonymous=False)
 

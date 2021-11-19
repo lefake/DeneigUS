@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "Constants.h"
+#include "StatusMessage.h"
 #include "Encoder.h"
 
 class Motor {

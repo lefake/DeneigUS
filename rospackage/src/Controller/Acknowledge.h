@@ -2,19 +2,10 @@
 #define _ACKNOWLEDGE_H
 
 #include <Arduino.h>
-#include <EEPROM.h>
 #include "Constants.h"
 
 #define ACK_REQUEST_ID    42
 #define ARDUINO_ID        CONTROLLER
-
-enum ID {
-  CONTROLLER = 0,
-  SENSORS,
-  SAFETY,
-
-  _NBS_ID
-};
 
 class AckHandler
 {
@@ -23,7 +14,7 @@ class AckHandler
     bool acknowldgeArduino(char* msg);
   
   private:
-    String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "BATTERY" };
+    String IdName[3] = { "CONTROLLER", "SENSORS", "SAFETY" };
 };
 
 #endif // _ACKNOWLEDGE_H
