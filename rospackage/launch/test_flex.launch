@@ -4,7 +4,7 @@
   <arg name="has_ard" default="0"/>
 
   <arg name="joy_port" default="/dev/input/js2" />
-  <param name="joy_type" value="logi" />
+  <param name="joy_type" value="ps4" />
 
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
@@ -38,6 +38,7 @@
     <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
       <param name="dev" type="string" value="$(arg joy_port)" />
       <param name="deadzone" value="0.12" />
+      <param name="default_trig_val" value="true" />
     </node>
   </group>
 
@@ -64,7 +65,13 @@
 
 
 <!-- python SimpleCmdMoveBase Node -->
-<node pkg="deneigus" type="behaviorTree.py" name="behaviorTree" output="screen" clear_params="true"/>
+<!--node pkg="deneigus" type="mbf_node.py" name="mbf_node" output="screen" clear_params="true"/-->
+<node pkg="deneigus" type="mbf_behavior_tree.py" name="mbf_behavior_tree" output="screen" clear_params="true"/>
+<node pkg="deneigus" type="chute_node.py" name="chute_node" output="screen" clear_params="true"/>
+<node pkg="deneigus" type="soufflante_node.py" name="soufflante_node" output="screen" clear_params="true"/>
+
+<!-- python stateManagement Services-->
+<node pkg="deneigus" type="stateManagement.py" name="stateManagement" output="screen" clear_params="true"/>
 
 <!--    robot_localization odom to base_link -->
 <node pkg="robot_localization" type="ekf_localization_node"
@@ -75,19 +82,19 @@
   <param name="transform_timeout" value="0.2"/>
   <param name="two_d_mode" value="true"/>
   <param name="publish_tf" value="true"/>
-  <param name="map_frame" value="map"/>
+  <!--param name="map_frame" value="map"/-->
   <param name="odom_frame" value="odom"/>
   <param name="base_link_frame" value="base_link"/>
   <param name="world_frame" value="odom"/>
   <param name="transform_time_offset" value="1e-7"/>
 
   <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="true"/>
-  <param name="odom0_relative" value="true"/>
-  <param name="imu0_queue_size" value="5."/>
+  <param name="odom0_differential" value="false"/>
+  <param name="odom0_relative" value="false"/>
+  <param name="odom0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
                               false, false, false,
-                              true, true, true,
+                              true, false, false,
                               false, false, true,
                               false, false, false]</rosparam>
 
@@ -104,7 +111,7 @@
   <param name="two_d_mode" value="true"/>
   <param name="publish_tf" value="true"/>
   <param name="map_frame" value="map"/>
-  <param name="odom_frame" value="odom"/>
+  <!--param name="odom_frame" value="odom"/-->
   <param name="base_link_frame" value="base_link"/>
   <param name="world_frame" value="map"/>
   <param name="transform_time_offset" value="1e-7"/>
@@ -120,7 +127,7 @@
                               false, false, false]</rosparam>
 
   <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="true"/>
+  <param name="odom0_differential" value="false"/>
   <param name="odom0_relative" value="false"/>
   <param name="odom0_queue_size" value="5."/>
   <rosparam param="odom0_config">[false, false, false,
@@ -144,13 +151,14 @@
 
 <!-- navsat_transform_node  -0.25949167467707 -->
 <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
+  <param name="frequency" value="10.0"/>
   <param name="transform_timeout" value="0.2"/>
   <param name="magnetic_declination_radians" value="0.0"/>
   <param name="navsat_transform_node's zero_altitude" value="true"/>
   <param name="broadcast_cartesian_transform" value="false"/>
   <param name="yaw_offset" value="0"/>
   <param name="publish_filtered_gps" value="true"/>
-  <param name="wait_for_datum" value="false"/>
+  <param name="wait_for_datum" value="true"/>
 
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>

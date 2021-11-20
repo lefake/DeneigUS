@@ -62,8 +62,6 @@
 
 <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
-<!-- python SimpleCmdMoveBase Node -->
-<node pkg="deneigus" type="SimpleCmdMoveBase.py" name="simpleCmdMoveBase" output="screen" clear_params="true"/>
 
 <!-- sudo apt-get install ros-noetic-robot_localization> -->
 <!--    robot_localization odom to base_link -->
