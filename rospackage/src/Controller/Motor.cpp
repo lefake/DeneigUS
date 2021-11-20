@@ -47,6 +47,7 @@ void Motor::computePID()
   updatedt();
   
   v_act = SPIEncoder.getEncVel(dt)*RADIUS;
+  sendStatusWithMessage(INFO, MOTOR_PROP_DEVICE, String(v_act));
   if(v_act < -2 || v_act > 2)
     v_act = last_v;
 
@@ -61,15 +62,12 @@ void Motor::computePID()
   last_v = v_act;
 
   float C = kp*e_v + ki*e_p + kd*e_a;
-  if(C < 2.5 && C > -2.5) //dead band
-    C = 0;
-
   setVoltage(C);
 } 
 
 void Motor::setVoltage(float volt)
 {
-  if( volt < 0)
+  if(volt < -2.5)
   {
     if(v_act < 0.05)
     {
@@ -81,7 +79,7 @@ void Motor::setVoltage(float volt)
       volt = 0;
     }
   }
-  else
+  else if (volt > 2.5)
   {
     if(v_act > -0.05)
     {
@@ -91,6 +89,10 @@ void Motor::setVoltage(float volt)
     {
       volt = 0;
     }
+  }
+  else
+  {
+    volt = 0;
   }
 
   if(volt > 24)
