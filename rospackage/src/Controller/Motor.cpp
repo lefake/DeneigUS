@@ -69,16 +69,30 @@ void Motor::computePID()
 
 void Motor::setVoltage(float volt)
 {
-  if( volt < 0 )
+  if( volt < 0)
   {
-    digitalWrite(forwardPin, HIGH);
-    volt = -volt;
+    if(v_act < 0.05)
+    {
+      digitalWrite(forwardPin, HIGH);
+      volt = -volt;
+    }
+    else
+    {
+      volt = 0;
+    }
   }
-  else 
+  else
   {
-    digitalWrite(forwardPin, LOW);
+    if(v_act > -0.05)
+    {
+      digitalWrite(forwardPin, LOW);
+    }
+    else
+    {
+      volt = 0;
+    }
   }
-  
+
   if(volt > 24)
     volt = 24;
     
