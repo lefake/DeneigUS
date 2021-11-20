@@ -17,6 +17,9 @@ from robot_localization.srv import *
 
 class TransformOdomMsg:
     def __init__(self):
+        self.logger = get_logger("transformOdomMsg")
+        self.logger.debug("Started transformOdomMsg init")
+
         self.enc_pub = rospy.Publisher('/wheel/odometry', Odometry, queue_size=10)
         self.imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self.gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)

@@ -34,6 +34,99 @@ def createChuteMsg(x,y,force45):
     msg.force45 = force45
     return msg
 
+def complete():
+    path_mbf = []
+    # Aller
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    #Tourner
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    # Retour
+    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    # Tourner
+    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    # Première passe
+    path_mbf.append(createMBF(3.5, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+
+
+    path_chute = []
+    # Aller
+    path_chute.append(createChuteMsg(0,-5,True))
+    path_chute.append(createChuteMsg(0,0,False))
+    # Tourner
+    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(5, 0, True))
+    path_chute.append(createChuteMsg(0, 0, False))
+    path_chute.append(createChuteMsg(0, 0, False))
+    path_chute.append(createChuteMsg(0, 0, False))
+    # Retour
+    path_chute.append(createChuteMsg(0, -5, True))
+    path_chute.append(createChuteMsg(0, 0, False))
+    # Tourner
+    path_chute.append(createChuteMsg(0, 0, False))
+    path_chute.append(createChuteMsg(0, 0, False))
+    # Première passe
+    path_chute.append(createChuteMsg(5, 0, True))
+    path_chute.append(createChuteMsg(0, 0, False))
+    path_chute.append(createChuteMsg(0, 0, False))
+
+
+
+    path_soufflante = []
+    # Aller
+    path_soufflante.append(-1)
+    path_soufflante.append(1)
+    # Tourner
+    path_soufflante.append(1)
+    path_soufflante.append(-1)
+    path_soufflante.append(-1)
+    path_soufflante.append(1)
+    path_soufflante.append(1)
+    path_soufflante.append(-1)
+    # Retour
+    path_soufflante.append(-1)
+    path_soufflante.append(1)
+    # Tourner
+    path_soufflante.append(1)
+    path_soufflante.append(-1)
+    # Première passe
+    path_soufflante.append(-1)
+    path_soufflante.append(1)
+    path_soufflante.append(1)
+
+
+    for x in range(9):
+        path_mbf.append(createMBF(4.5+x, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+        path_mbf.append(createMBF(4.5+x, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+        path_mbf.append(createMBF(4.5+x, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+        path_mbf.append(createMBF(4.5+x, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+        path_mbf.append(createMBF(4.5+x, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+        path_mbf.append(createMBF(4.5+x, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+
+        path_chute.append(createChuteMsg(0, 0, False))
+        path_chute.append(createChuteMsg(0, 0, False))
+        path_chute.append(createChuteMsg(5, 0, True))
+        path_chute.append(createChuteMsg(0, 0, False))
+        path_chute.append(createChuteMsg(0, 0, False))
+        path_chute.append(createChuteMsg(0, 0, False))
+
+        path_soufflante.append(1)
+        path_soufflante.append(-1)
+        path_soufflante.append(-1)
+        path_soufflante.append(1)
+        path_soufflante.append(1)
+        path_soufflante.append(1)
+
 if __name__ == '__main__':
     rospy.init_node('simpleSetPath', anonymous=False)
 
@@ -42,59 +135,50 @@ if __name__ == '__main__':
     logger.info("simpleSetPath main Started")
 
     path_mbf = []
-    path_mbf.append(createMBF(11.25, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
-    path_mbf.append(createMBF(11.25, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    # Aller
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    #Tourner
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
+    # Retour
     path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 6.5, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
-
 
     path_chute = []
+    # Aller
+    path_chute.append(createChuteMsg(0,-5,True))
+    path_chute.append(createChuteMsg(0,0,False))
+    # Tourner
     path_chute.append(createChuteMsg(0,0,False))
     path_chute.append(createChuteMsg(0,0,False))
-    path_chute.append(createChuteMsg(0,0,False))
-    path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(5, 0, True))
     path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
-    path_chute.append(createChuteMsg(0, 0, False))
+    # Retour
+    path_chute.append(createChuteMsg(0, -5, True))
     path_chute.append(createChuteMsg(0, 0, False))
 
     path_soufflante = []
+    # Aller
     path_soufflante.append(-1)
     path_soufflante.append(1)
-    path_soufflante.append(1)
-    path_soufflante.append(-1)
-    path_soufflante.append(-1)
-    path_soufflante.append(1)
+    # Tourner
     path_soufflante.append(1)
     path_soufflante.append(-1)
     path_soufflante.append(-1)
     path_soufflante.append(1)
     path_soufflante.append(1)
     path_soufflante.append(-1)
+    # Retour
     path_soufflante.append(-1)
     path_soufflante.append(1)
-    path_soufflante.append(1)
-    path_soufflante.append(-1)
+
 
     rospy.wait_for_service('set_paths')
     set_func = rospy.ServiceProxy('set_paths', set_paths)

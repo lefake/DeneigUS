@@ -44,12 +44,10 @@ class GetPath(py_trees_ros.actions.ActionClient):
         """
         Get target pose from the blackboard to create an action goal
         """
-        #logger.info(py_trees.blackboard.Blackboard().get("target_pose"))
-
         msg = py_trees.blackboard.Blackboard().get("target_pose")
 
+        # TODO: Changing v-max and v_min dynamically?
         #client = dynamic_reconfigure.client.Client("/move_base_flex/blp", timeout=0.1)
-
         #client.update_configuration({"max_vel_x": msg.v_max, "min_vel_x": msg.v_min})
 
         #self.action_goal = mbf_msgs.GetPathGoal(target_pose=msg)

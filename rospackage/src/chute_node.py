@@ -12,6 +12,9 @@ from model_inverse import model_inverse
 
 class ChuteNode:
     def __init__(self):
+        self.logger = get_logger("ChuteNode")
+        self.logger.debug("Started ChuteNode init")
+
         # TODO: load wind (vector) and snow density params
         self.v_wind = [0, 0]  # No wind
         self.ro_snow = 300  # Light snow
@@ -32,6 +35,10 @@ class ChuteNode:
             chute_cmd.data = model_inverse(x_target, y_target, self.v_wind, self.ro_snow, force45)
             logger.info(chute_cmd.data)
             self.chute_cmd_pub.publish(chute_cmd)
+        else:
+            chute_cmd.data = [0,0,0]
+            self.chute_cmd_pub.publish(chute_cmd)
+
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 mbf_msg[] mbf
-int8[] soufflante
+int32[] soufflante
 chute_msg[] chute
 ---
 bool success

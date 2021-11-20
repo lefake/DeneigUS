@@ -6,7 +6,7 @@ import logging
 from deneigus.srv import acknowledge,set_paths
 from logging_utils import setup_logger, get_logger
 from geometry_msgs.msg import PoseStamped
-from std_msgs.msg import Float32, Int8
+from std_msgs.msg import Float32, Int32
 from deneigus.msg import chute_msg, mbf_msg
 
 import numpy as np
@@ -14,6 +14,9 @@ import numpy as np
 
 class StateManagement:
     def __init__(self):
+        self.logger = get_logger("ChuteNode")
+        self.logger.debug("Started StateManagement init")
+
         self.acknowledge_srv = rospy.Service('acknowledge', acknowledge, self.acknowledge_callback)
         self.set_paths_srv = rospy.Service('set_paths', set_paths, self.set_paths_callback)
 
@@ -26,7 +29,7 @@ class StateManagement:
 
         self.mbf_pub = rospy.Publisher('/mbf_new_goal', mbf_msg, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute_new_goal', chute_msg, queue_size=10)
-        self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int8, queue_size=10)
+        self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int32, queue_size=10)
 
     def acknowledge_callback(self, msg):
         # example: rosservice call /acknowledge "MBF" 1
