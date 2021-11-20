@@ -27,6 +27,7 @@ behavior_choices = {
     "centre": 5}
 
 
+'''
 class global_target:
     def __init__(self, pose, soufflante, chute):
         self._pose = pose
@@ -44,6 +45,7 @@ class global_target:
     @property
     def chute(self):
         return self._chute
+'''
 
 
 class GlobalPlan:
@@ -55,19 +57,17 @@ class GlobalPlan:
         self.slice_width = 0.4   # distance between passe (m)
         self.map_grid = []
         self.map_resolution = 0
+        self.max_costmap = 100
+        # v_ext not used anymore
         self.v_ext_forward = [1, 0.3]
         self.v_ext_backward = [-1, -0.3]
         self.v_ext_none = [0, 0]
-        self.empty_mbf_pose = self.createPose(None, None, None, None, None, None, None, self.v_ext_none[0], self.v_ext_none[1])
-
-        # Publisher for robot's control TODO: change to service set_paths
-        self.global_target = rospy.Publisher('/global_target', Float32MultiArray, queue_size=10)
+        self.empty_mbf_pose = self.create_pose(None, None, None, None, None, None, None)
 
         # load config -> start, side_street, snow_out_area
         config_utils = ConfigUtils()
         self.map_config = config_utils.load_yaml(origine_path=os.getcwd() + '/../catkin_ws/src/deneigus/map/config.yaml')
         # TODO : get params to wind (vector) and snow density
-
 
         # Subscriber from nodes or robot
         rospy.Subscriber('behavior', Int32, self.auto_plan_callback)
@@ -77,7 +77,7 @@ class GlobalPlan:
 
         self.logger.debug("Finished global_planner init")
 
-    def createPose(self, x, y, z, xx, yy, zz, ww, vmax, vmin):
+    def create_pose(self, x, y, z, xx, yy, zz, ww):
         p = PoseStamped()
         p.header.frame_id = 'map'
         p.header.stamp = rospy.get_rostime()
@@ -91,11 +91,11 @@ class GlobalPlan:
 
         a = MBFcmd()
         a.pose = p
-        a.v_max = vmax
-        a.v_min = vmin
+        a.v_max = 0
+        a.v_min = 0
         return a
 
-    def createChute(self, x, y, force45):
+    def create_chute(self, x, y, force45):
         c = chute_msg()
         c.x = x
         c.y = y
@@ -114,15 +114,21 @@ class GlobalPlan:
 
         width_driveway = 0
         index_pos_live = round(start_pos / self.map_resolution)
-        while index_pos_live[1] != 0:  # TODO: validate 0 values in costmap
+        while index_pos_live[1] != self.max_costmap:  # TODO: validate 100 values in costmap -> done -> test in simulation
             width_driveway += self.map_resolution
             index_pos_live[1] += 1
 
         len_driveway = 0
         index_pos_live = round(start_pos / self.map_resolution)
-        while index_pos_live[0] != 0:
+        while index_pos_live[0] != self.max_costmap:
             len_driveway += self.map_resolution
             index_pos_live[0] += 1
+
+        max_dist_x = len_driveway - self.turn_radius
+        max_dist_y = width_driveway - self.turn_radius
+
+        nbr_slice_x = math.ceil(len_driveway / self.slice_width)
+        nbr_slice_y = math.ceil(width_driveway / self.slice_width)
 
         # Planning
         if msg.data == behavior_choices.get("semi_auto"):
@@ -132,7 +138,7 @@ class GlobalPlan:
             self.logger.warning(f"Behavior {msg.data}, not implemented yet")
 
         elif msg.data == behavior_choices.get("est"):
-            path_mbf, path_soufflante, path_chute = self.plan_est(start_pos, width_driveway, len_driveway)
+            path_mbf, path_soufflante, path_chute = self.plan_2slice_back_and_fort(start_pos, max_dist_x, max_dist_y, nbr_slice_x)
             self.logger.warning(f"Behavior {msg.data}, in progress")
 
         elif msg.data == behavior_choices.get("sud"):
@@ -147,88 +153,79 @@ class GlobalPlan:
         else:
             self.logger.fatal(f"Behavior {msg.data} not supported")
 
-        rospy.wait_for_service('set_paths')
+        # Send to state manager
+        try:
+            rospy.wait_for_service('set_paths', timeout=10)     # 10 sec timeout
+        except rospy.ROSException:
+            self.logger.fatal(f'Set_path service not reached')
         set_func = rospy.ServiceProxy('set_paths', set_paths)
         success = set_func(path_mbf, path_soufflante,  path_chute)
-
         self.logger.info(success)
 
+    def plan_2slice_back_and_fort(self, sp, max_dist_x, max_dist_y, nbr_slice):
+        pos_targets = []
+        soufflante_targets = []
+        chute_targets = []
 
-    def plan_est(self, sp, width_driveway, len_driveway):
-        list_pos_target = []
-        list_soufflante_target = []
-        list_chute_target = []
+        start_x, start_y, start_angle = sp
 
-        # Dont move and stop chute
-        list_pos_target.append(self.empty_mbf_pose)
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Dont move and up soufflante
-        list_pos_target.append(self.empty_mbf_pose)
-        list_soufflante_target.append(1)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Go to start point
-        list_pos_target.append(self.createPose(sp[0], sp[1], sp[2], sp[3], sp[4], sp[5], sp[6], self.v_ext_forward[0], self.v_ext_forward[1]))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
+        # Start point
+        pos_targets, soufflante_targets, chute_targets = self.goto_no_blow(pos_targets, soufflante_targets, chute_targets, start_x, start_y, start_angle)
 
-        # Down soufflante
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(-1)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Start blow left
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 2, False))
-        # Go to first point while blowing
-        q = tf.transformations.quaternion_from_euler(0, 0, 0)  # roll, pitch, yaw
-        list_pos_target.append(self.createPose(len_driveway-self.turn_radius, sp[1], 0, q[0], q[1], q[2], q[3], self.v_ext_forward[0], self.v_ext_forward[1]))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 2, False))
+        # First slice
+        pos_targets, soufflante_targets, chute_targets = self.goto_blow(pos_targets, soufflante_targets, chute_targets, max_dist_x, start_y, start_angle, 0, 5, False)
 
-        # Stop blow
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Up soufflante
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(1)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Turn 90deg and slide
-        q = tf.transformations.quaternion_from_euler(0, 0, 180)  # roll, pitch, yaw
-        list_pos_target.append(self.createPose(len_driveway - self.turn_radius, sp[1]+self.slice_width, 0, q[0], q[1], q[2], q[3], self.v_ext_forward[0], self.v_ext_forward[1]))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
+        # rotate 180deg and slide
+        pos_targets, soufflante_targets, chute_targets = self.slide_zigzag(pos_targets, soufflante_targets, chute_targets, max_dist_x, start_y+self.slice_width, start_angle+180)
 
-        # Down soufflante
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(-1)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, 0, False))
-        # Start blow right
-        list_pos_target.append(self.createPose(self.empty_mbf_pose))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, -2, False))
-        # Go to second point while blowing
-        list_pos_target.append(self.createPose(sp[0], sp[1]+self.slice_width, 0, q[0], q[1], q[2], q[3], self.v_ext_forward[0], self.v_ext_forward[1]))
-        list_soufflante_target.append(0)  # down=-1, stop=0, up=1
-        list_chute_target.append(self.createChute(0, -2, False))
+        # Second slice
+        pos_targets, soufflante_targets, chute_targets = self.goto_blow(pos_targets, soufflante_targets, chute_targets, start_x, start_y+self.slice_width, start_angle+180, 0, -5, False)
+
+        # Prep for rest of the driveway
+        pos_targets, soufflante_targets, chute_targets = self.goto_no_blow(pos_targets, soufflante_targets, chute_targets, start_x, start_y+self.slice_width, start_angle+90)
 
         # Rest of the driveway
-        # nbr_slice = math.ceil(len_driveway/self.slice_width)
-        # for i in range(nbr_slice):
-        #     list_pos_target.append()
-        #     list_soufflante_target.append()
-        #     list_chute_target.append()
+        for i in range(nbr_slice):
+            pos_targets, soufflante_targets, chute_targets = self.goto_blow(pos_targets, soufflante_targets, chute_targets, start_x+(i*self.slice_width), max_dist_y, start_angle+90, 6, 0, True)
+            if i < nbr_slice:
+                pos_targets, soufflante_targets, chute_targets = self.slide_backnext(pos_targets, soufflante_targets, chute_targets, start_x+((i+1)*self.slice_width), start_y+self.slice_width, start_angle+90)
 
-        return list_pos_target, list_soufflante_target, list_chute_target
+        return pos_targets, soufflante_targets, chute_targets
 
-    def goto_no_blow(self):
+    # niv 1
+    def append_path(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, souffl_h, chute_x, chute_y, chute_45):
+        q = tf.transformations.quaternion_from_euler(0, 0, pose_rot)  # roll, pitch, yaw
+        Lpose.append(self.create_pose(pose_x, pose_y, 0, q[0], q[1], q[2], q[3]))
+        Lsouffl.append(souffl_h)  # down=-1, stop=0, up=1
+        Lchute.append(self.create_chute(chute_x, chute_y, chute_45))
+        return Lpose, Lsouffl, Lchute
 
-        return False
+    # niv 2
+    def goto_no_blow(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot):
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, None, None, None, 0, 0, 0, False)  # Dont move and stop chute
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, None, None, None, 1, 0, 0, False)  # Dont move and up soufflante
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, 0, 0, 0, False)  # Go to point
+        return Lpose, Lsouffl, Lchute
 
-    def goto_blow(self):
+    # niv 2
+    def goto_blow(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, blow_x, blow_y, blowout):
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, None, None, None, -1, 0, 0, False)
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, None, None, None, 0, blow_x, blow_y, blowout)
+        Lpose, Lsouffl, Lchute = self.append_path(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, 0, blow_x, blow_y, blowout)
+        return Lpose, Lsouffl, Lchute
 
-        return False
+    # niv 3
+    def slide_zigzag(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot):
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y-self.slice_width, pose_rot-90)
+        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot-90)
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot)
+        return Lpose, Lsouffl, Lchute
+
+    # niv 3
+    def slide_backnext(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot):
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x-self.slice_width, pose_y-self.slice_width, pose_rot-90)
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot - 90)
+        return Lpose, Lsouffl, Lchute
 
 
 if __name__ == "__main__":
@@ -238,9 +235,7 @@ if __name__ == "__main__":
     logger = get_logger("global_planner")
     logger.info("Global_planner main Started")
 
-
     GlobalPlan()
     rospy.spin()
-
 
     logger.info("Global_planner main Stopped")

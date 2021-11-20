@@ -69,7 +69,7 @@ class Executif:
         self.stop_first_time_send = False
         self.last_control_mode = None
         self.control_mode = control_modes.stop
-        self.behavior_active = behavior_choices.get("nord")
+        self.behavior_active = behavior_choices.get("est")
 
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)

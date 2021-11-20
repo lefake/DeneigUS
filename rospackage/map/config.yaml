@@ -1,6 +1,3 @@
-start: [3, 3, 0, 0, 0, 0, 1]
+start: [3, 3, 0]
 
-side_street: 'sud'
-
-zone1_begin: [3, 8]
-zone1_end: [12, 8]
+side_street: 0
