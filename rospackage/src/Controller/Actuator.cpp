@@ -16,66 +16,71 @@ void Actuator::init(const int upPin, const int downPin, const int rUpPin, const 
 
   pinMode(relayUpPin, OUTPUT);
   pinMode(relayDownPin, OUTPUT);
+
+  readPosition();
 }
 
 void Actuator::setDir(int dir)
 {
-  cmd = dir;
-  if (dir  == pos)
-  {
-    disable();
-    return; 
-  }
-    
-  if(dir == UP)
-  {
-    digitalWrite(relayUpPin, HIGH);
-    digitalWrite(relayDownPin, LOW);
-  }
-  else if(dir == DOWN)
-  {
-    digitalWrite(relayUpPin, LOW);
-    digitalWrite(relayDownPin, HIGH); 
-  }
-  else if (dir == UNKOWN)
-  {
-    disable();     
-  }
+  if (dir == currentPos)
+    currentCmd = UNKNOWN;
   else
-  {
-    sendStatusWithMessage(ERROR, ACTUATOR_DEVICE, "No a valid command");
-  }
+    currentCmd = dir;
+  
+  if(currentCmd == UP)
+    setUp();
+  else if(currentCmd == DOWN)
+    setDown(); 
+  else
+    disable();
 }
 
-int Actuator::getPos()
+int Actuator::getCurrentPos()
 {
-  if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == LOW)
-  {
-    pos = UNKOWN;
-  } 
-  else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == LOW)
-  {
-    if (cmd != UP)
-      disable();
-    pos = DOWN;
-  }
-  else if( digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == HIGH)
-  {
-    if (cmd != DOWN)
-      disable();
-    pos = UP;
-  }  
-  else if( digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == HIGH)
-  {
-    disable();
-    sendStatusWithMessage(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
-  }
-
-  return pos;
+  readPosition();
+  return currentPos;
 }
 
 void Actuator::disable()
 {
   digitalWrite(relayUpPin, LOW);
   digitalWrite(relayDownPin, LOW); 
+}
+
+void Actuator::setDown()
+{
+  disable();
+  digitalWrite(relayDownPin, HIGH);
+}
+
+void Actuator::setUp()
+{
+  disable();
+  digitalWrite(relayUpPin, HIGH);
+}
+
+void Actuator::readPosition()
+{
+  if(digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == LOW)
+  {
+    currentPos = UNKNOWN;
+  } 
+  else if(digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == LOW)
+  {
+    if (currentCmd != UP)
+      disable();
+    currentPos = DOWN;
+  }
+  else if(digitalRead(downSwitchPin) == LOW && digitalRead(upSwitchPin) == HIGH)
+  {
+    if (currentCmd != DOWN)
+      disable();
+    currentPos = UP;
+  }  
+  else if(digitalRead(downSwitchPin) == HIGH && digitalRead(upSwitchPin) == HIGH)
+  {
+    currentPos = UNKNOWN;
+    disable();
+    sendStatusWithMessage(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
+  }
 }

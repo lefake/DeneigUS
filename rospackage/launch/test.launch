@@ -4,7 +4,4 @@
   <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
     <rosparam file="$(find deneigus)/configs/joy_params.yaml" />
   </node>
-
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen" clear_params="true" />
-  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
 </launch>

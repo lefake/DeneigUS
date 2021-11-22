@@ -28,7 +28,7 @@
  #define HAS_MOTOR_PROP
 
 // ==================== SERVOS ================================
- #define HAS_SERVOS
+// #define HAS_SERVOS
 
 // ==================== ACTUATOR  =============================
  #define HAS_ACTUATOR

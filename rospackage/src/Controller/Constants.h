@@ -28,7 +28,7 @@
 
 // ======================= MOTORS ===================================
 
-#define RADIUS 0.2159/2
+#define RADIUS 0.24/2
 #define M_PI 3.14159
 
 // ======================= Servos ===================================
@@ -41,10 +41,6 @@
 #define ID_BROADCAST_DELAY                  500
 #define DATA_MSGS                           0
 #define STATUS_MSGS                         1
-
-#define CONTROLLER                          0
-#define SENSORS                             1
-#define SAFETY                              2
 
 // ======================= EEPROM  ==================================
 #define ID_EEPROM_ADDRESS                   0x00

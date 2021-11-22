@@ -19,6 +19,7 @@ class MPU
     void doCalibration();
     void loadCalibration();
     void saveCalibration();
+    void hardcodeCalibration();
 
   private:
     MPU9250 mpu;
@@ -85,6 +86,15 @@ void MPU::loadCalibration() {
   mpu.setMagneticDeclination(IMU_MAG_DECLINATION);
   
   sendStatusWithMessage(DEBUG, IMU_DEVICE, "Done reading config to EEPROM");
+}
+
+void MPU::hardcodeCalibration()
+{
+  mpu.setAccBias(-3553.30, 4414.70, -3685.60);
+  mpu.setGyroBias(659.65, -4.80, -3407.55);
+  mpu.setMagBias(198.29, 448.69, 238.54);
+  mpu.setMagScale(1.09, 0.74, 1.39);
+  mpu.setMagneticDeclination(IMU_MAG_DECLINATION);
 }
 
 void MPU::doCalibration()

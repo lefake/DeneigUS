@@ -15,8 +15,8 @@ Description: Header file of the nanopb communication protocol
 #include <pb_decode.h>
 #include "StatusMessage.h"
 
-#define MAX_MSG_LEN                         100
-#define MAX_NBS_MSG                         1
+#define MAX_MSG_LEN                         125
+#define MAX_NBS_MSG                         6
 
 struct Topic {
   int id;
@@ -34,6 +34,7 @@ enum TOPICS
   SONAR_PAIRS,
   SOUFFLANTE_HEIGHT,
   ESTOP_STATE,
+  DEBUG_MOT,
 
   // IN
   PROP,
@@ -42,6 +43,7 @@ enum TOPICS
   DEADMAN,
   ESTOP,
   LIGHT,
+  PID_CST,
 
   _NBS_TOPICS
 };

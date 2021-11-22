@@ -12,8 +12,7 @@ class Actuator{
 
     void init(const int, const int, const int, const int);
     void setDir(int);
-    void disable();
-    int getPos();
+    int getCurrentPos();
 
   private:
     int downSwitchPin;
@@ -21,16 +20,20 @@ class Actuator{
     int relayUpPin;
     int relayDownPin;
 
-    int cmd;
-    int pos;
+    int currentCmd;
+    int currentPos;
 
-  enum Position
-  {
-    DOWN = -1,
-    UNKOWN = 0,
-    UP = 1,
-  };
+    void disable();
+    void setDown();
+    void setUp();
+    void readPosition();
 
+    enum Position
+    {
+      DOWN = -1,
+      UNKNOWN = 0,
+      UP = 1,
+    };
 };
 
 #endif // _MOTOR_H

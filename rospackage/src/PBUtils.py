@@ -1,8 +1,11 @@
 import threading
 import time
+import copy
 
 from logging_utils import get_logger
 from msg_utils import default_converters
+
+millis = lambda: int(time.time() * 1000)
 
 class Topic:
     def __init__(self, id, name, converter):
@@ -101,6 +104,60 @@ class PBSerializationHelper:
 
         return object_list
 
+class TimedBuffer(threading.Thread):
+    def __init__(self, nbs_msg_max, send_callback, d=100):
+        self._logger = get_logger("TimedBuffer.main")
+        self._logger.debug("Started TimedBuffer init")
+        threading.Thread.__init__(self)
+
+        self.msgs = {}
+        self.nbs_msg_max = nbs_msg_max
+        self.is_ready_to_send = False
+        self.has_priority = True
+        self.is_writing = False
+
+        self.last_time = millis()
+        self.delay = d
+        self.send_callback = send_callback
+        self.lock = False
+        self.running = False
+
+    def add(self, name, val):
+        while self.running and self.lock:
+            pass
+
+        self.lock = True
+        self.is_ready_to_send = self.msgs.__contains__(name) # Could be dependant on topic name
+        self.msgs[name] = val  # Will override but trigger a send
+        self.is_ready_to_send = self.is_ready_to_send or len(self.msgs) == self.nbs_msg_max
+        self.lock = False
+
+    def watcher(self):
+        while self.running:
+            if len(self.msgs) != 0 and (self.is_ready_to_send or (millis() - self.last_time) > self.delay):
+                while self.running and self.lock:
+                    pass
+
+                self.lock = True
+                msgs_copy = copy.copy(self.msgs)
+                self.msgs.clear()
+                self.is_ready_to_send = False
+                self.lock = False
+                
+                self.is_writing = True
+                self.send_callback(list(msgs_copy.keys()), list(msgs_copy.values()))
+                self.is_writing = False
+                self.last_time = millis()
+            else:
+                time.sleep(0.001)
+
+    def run(self):
+        self.running = True
+        self.watcher()
+
+    def kill(self):
+        self.running = False
+
 class PBSerialHandler(threading.Thread):
     id_list = []
     def __init__(self, serial, msg_callback, status_callback, id_error_callback, serializer, ack_query, sleeptime=0.01):
@@ -115,6 +172,9 @@ class PBSerialHandler(threading.Thread):
         self._serializer = serializer
         self._sleeptime = sleeptime
         self._ack_query = ack_query
+
+        self.timedBuffer = TimedBuffer(4, self.__write_pb_msgs) 
+        self.timedBuffer.start()
 
         self._id = ""
         self._interlock = False
@@ -139,10 +199,18 @@ class PBSerialHandler(threading.Thread):
         self._to_send = self._ack_query
         self._interlock = False
 
-    def write_pb_msg(self, id, msg):
-        self.write_pb_msgs([id], [msg])
+    def write_fast(self, id, msg):
+        while self.timedBuffer.is_writing:
+            pass
 
-    def write_pb_msgs(self, ids, msgs):
+        self.timedBuffer.has_priority = False
+        self.__write_pb_msgs([id], [msg])
+        self.timedBuffer.has_priority = True
+
+    def write_msg(self, id, msg):
+        self.timedBuffer.add(id, msg)
+
+    def __write_pb_msgs(self, ids, msgs):
         encoded_msg = self._serializer.encode_msgs(ids, msgs)
 
         while self._interlock:
@@ -158,6 +226,7 @@ class PBSerialHandler(threading.Thread):
 
     def kill(self):
         self._run = False  
+        self.timedBuffer.kill()
 
     def worker(self):
         while self._run:
@@ -181,6 +250,7 @@ class PBSerialHandler(threading.Thread):
                             self._id = self._response.decode()[1:-1]
                             self.id_list.append(self._id)
                             self._logger.info(f"Ack to {self._id}")
+
                             # Test if duplicate in list
                             if len(self.id_list) != len(set(self.id_list)):
                                 self._id_error_callback()

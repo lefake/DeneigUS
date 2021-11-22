@@ -1,0 +1,9 @@
+<launch>
+  <param name="joy_type" value="logi" />
+
+  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
+    <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
+  </node>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
+</launch>

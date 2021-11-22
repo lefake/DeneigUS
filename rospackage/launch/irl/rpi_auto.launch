@@ -1,0 +1,69 @@
+<launch>
+  <arg name="has_web" default="0"/>
+
+  <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
+  <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
+
+  <param name="/use_sim_time" value="true"/>
+
+  <!-- rosbridge server -->
+  <group if="$(arg has_web)">
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+      <arg name="port" value="9090"/>
+      <arg name="output" value="log"/>
+    </include>
+  </group>
+
+  <!-- python sonar2laserscan Node -->
+  <node pkg="deneigus" type="sonar2laserscan.py" name="sonar2laserscan" output="screen" clear_params="true"/>
+
+  <!-- python transformOdomMsg Node -->
+  <node pkg="deneigus" type="transformOdomMsg.py" name="transformOdomMsg" output="screen" clear_params="true"/>
+
+  <!-- python pb2ros Node -->
+  <group if="$(arg has_ard)">
+  <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
+  </group>
+
+  <!-- python executif Node -->
+  <node pkg="deneigus" required="true" type="executif.py" name="executif" output="screen" clear_params="true"/>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" clear_params="true"/>
+
+  <!-- Static TF -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf0_broadcaster" args="0.34 -0.13 0.73484 0 0 0 base_link sonar_f_0" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf1_broadcaster" args="0.08 -0.32 0.73484 -0.9337 0 0 base_link sonar_f_1" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf2_broadcaster" args="-0.235 -0.32 0.73484 -1.8325 0 0 base_link sonar_f_2" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf3_broadcaster" args="-0.38 -0.16 0.73484 -2.8361 0 0 base_link sonar_f_3" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf4_broadcaster" args="-0.38 0.19 0.73484 2.574 0 0 base_link sonar_f_4" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf5_broadcaster" args="-0.22 0.32 0.73484 1.5446 0 0 base_link sonar_f_5" clear_params="true"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="sf6_broadcaster" args="0.13 0.32 0.73484 0.6108 0 0 base_link sonar_f_6" clear_params="true"/>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+    <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/map/base_local_planner_params.yaml" command="load"/>
+  </node>
+
+  <!-- sudo apt-get install ros-noetic-robot_localization> -->
+  <!--    robot_localization odom to base_link -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_local" clear_params="true">
+    <rosparam file="$(find deneigus)/configs/robot_local_odom_params.yaml" command="load" /> 
+    <remap from="odometry/filtered" to="odometry/filtered/local"/>
+  </node>
+
+  <!-- Robot localization map to base_link -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_global" clear_params="true">
+    <rosparam file="$(find deneigus)/configs/robot_local_map_params.yaml" command="load" /> 
+    <remap from="odometry/filtered" to="odometry/filtered/global"/>
+  </node>
+
+  <!-- navsat_transform_node-->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
+    <rosparam file="$(find deneigus)/configs/robot_local_navsat_params.yaml" command="load" /> 
+    <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+  </node>
+
+</launch>
