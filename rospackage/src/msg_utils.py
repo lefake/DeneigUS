@@ -1,34 +1,12 @@
-from proto_gen_classes import floatarray_pb2, twist_pb2, int32_pb2
+from proto_gen_classes import floatarray_pb2, int32_pb2
 
 import rospy
-from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray, Int32
 from sensor_msgs.msg import NavSatFix, Imu
 from nav_msgs.msg import Odometry
 
 
 class MsgConverter:
-    @staticmethod
-    def twist_pb2ros(pb):
-        twist = Twist()
-
-        twist.linear.x = pb.lx
-        twist.linear.y = pb.ly
-        twist.linear.z = 0
-        twist.angular.x = 0
-        twist.angular.y = 0
-        twist.angular.z = pb.az
-        return twist
-
-    @staticmethod
-    def twist_ros2pb(ros):
-        twist = twist_pb2.Twist()
-
-        twist.lx = ros.linear.x
-        twist.ly = ros.linear.y
-        twist.az = ros.angular.z
-        return twist
-
     @staticmethod
     def floatarray_pb2ros(pb):
         fa = Float32MultiArray()
