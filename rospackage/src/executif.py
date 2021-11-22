@@ -16,12 +16,12 @@ class control_modes(Enum):
 
 # Behavior for auto mode values
 behavior_choices = {
-    "semi_auto": 0,
-    "nord": 1,
-    "est": 2,
-    "sud": 3,
-    "west": 4,
-    "centre": 5}
+    "BF": 0,
+    "BFM": 1,
+    "RE": 2,
+    "REM": 3,
+    "ZZ": 4,
+    "ZZM": 5}
 
 supported_type = ["ps3", "ps4", "logi"]
 def joy_button_mapper(joy_type):
@@ -69,7 +69,7 @@ class Executif:
         self.stop_first_time_send = False
         self.last_control_mode = None
         self.control_mode = control_modes.stop
-        self.behavior_active = behavior_choices.get("est")
+        self.behavior_active = behavior_choices.get("BF")
 
         # Publisher for robot's control
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
@@ -125,6 +125,9 @@ class Executif:
             self.last_control_mode = self.control_mode
             self.control_mode_pub.publish(self.control_mode.value)
 
+            if self.control_mode == control_modes.auto:
+                self.behavior_pub.publish(self.behavior_active)  # publish only when getting in auto mode
+
 
         if self.control_mode == control_modes.manual:
             self.stop_first_time_send = True
@@ -152,7 +155,6 @@ class Executif:
         if self.control_mode == control_modes.auto:
             self.stop_first_time_send = True
             self.deadman_pub.publish(deadman)
-            self.behavior_pub.publish(self.behavior_active)     # publish only when getting in auto mode
 
         if self.control_mode == control_modes.stop and self.stop_first_time_send:
             prop = Float32MultiArray()

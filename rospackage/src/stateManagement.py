@@ -59,12 +59,14 @@ class StateManagement:
             logger.info('Send new objectives done')
 
             # TODO Progress bar
-            self.mbf_pub.publish(self.path_mbf.pop(0))
+            mbf_now = self.path_mbf.pop(0)
+            if mbf_now.pose.pose.orientation.x != 0 or mbf_now.pose.pose.orientation.y != 0 or mbf_now.pose.pose.orientation.z != 0 or mbf_now.pose.pose.orientation.w != 0:
+                self.mbf_pub.publish(mbf_now)
+                self.acknowledge_mbf = False
+
             self.chute_pub.publish(self.path_chute.pop(0))
             self.soufflante_pub.publish(self.path_soufflante.pop(0))
-
             self.acknowledge_soufflante = False
-            self.acknowledge_mbf = False
 
     def set_paths_callback(self, paths):
         try:
