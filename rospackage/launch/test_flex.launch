@@ -83,6 +83,9 @@
 <!-- ProgressMap -->
 <node pkg="deneigus" type="progressMap.py" name="progressMap" output="screen" clear_params="true"/>
 
+<!-- GlobalPlanner -->
+<node pkg="deneigus" type="global_planner.py" name="global_planner" output="screen" clear_params="true"/>
+
 <!-- robot_localization_ekf_node_local -->
 <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_local" clear_params="true">
   <rosparam file="$(find deneigus)/configs/ekf_localization_local_params.yaml" command="load"/>

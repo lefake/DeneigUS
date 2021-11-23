@@ -63,16 +63,19 @@ class StateManagement:
 
     def send_new_objectives(self):
         if self.acknowledge_soufflante and self.acknowledge_mbf and self.acknowledge_chute:
-            self.mbf_pub.publish(self.path_mbf.pop(0))
+            mbf_now = self.path_mbf.pop(0)
+            if mbf_now.pose.pose.orientation.x != 0 or mbf_now.pose.pose.orientation.y != 0 or mbf_now.pose.pose.orientation.z != 0 or mbf_now.pose.pose.orientation.w != 0:
+                self.mbf_pub.publish(mbf_now)
+                self.acknowledge_mbf = False
+
             self.chute_pub.publish(self.path_chute.pop(0))
+            self.acknowledge_chute = False
+
             self.soufflante_pub.publish(self.path_soufflante.pop(0))
+            self.acknowledge_soufflante = False
 
             progress = len(self.path_mbf)/self.len_path*100
             self.progress_pub.publish(progress)
-
-            self.acknowledge_soufflante = False
-            self.acknowledge_mbf = False
-            self.acknowledge_chute = False
 
             logger.info('Send new objectives done')
 
