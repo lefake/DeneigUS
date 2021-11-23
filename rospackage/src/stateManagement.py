@@ -22,14 +22,18 @@ class StateManagement:
 
         self.acknowledge_mbf = False
         self.acknowledge_soufflante = False
+        self.acknowledge_chute = False
 
         self.path_mbf = []
         self.path_chute = []
         self.path_soufflante = []
 
+        self.len_path = 0
+
         self.mbf_pub = rospy.Publisher('/mbf_new_goal', mbf_msg, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute_new_goal', chute_msg, queue_size=10)
         self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int32, queue_size=10)
+        self.progress_pub = rospy.Publisher('/progress_bar', Float32, queue_size=10)
 
     def acknowledge_callback(self, msg):
         # example: rosservice call /acknowledge "MBF" 1
@@ -41,6 +45,9 @@ class StateManagement:
                 success = True
             elif msg.name=='MBF':
                 self.acknowledge_mbf = True
+                success = True
+            elif msg.name=='Chute':
+                self.acknowledge_chute = True
                 success = True
             else:
                 logger.info('Bad name')
@@ -55,16 +62,19 @@ class StateManagement:
         return success
 
     def send_new_objectives(self):
-        if self.acknowledge_soufflante and self.acknowledge_mbf:
-            logger.info('Send new objectives done')
-
-            # TODO Progress bar
+        if self.acknowledge_soufflante and self.acknowledge_mbf and self.acknowledge_chute:
             self.mbf_pub.publish(self.path_mbf.pop(0))
             self.chute_pub.publish(self.path_chute.pop(0))
             self.soufflante_pub.publish(self.path_soufflante.pop(0))
 
+            progress = len(self.path_mbf)/self.len_path*100
+            self.progress_pub.publish(progress)
+
             self.acknowledge_soufflante = False
             self.acknowledge_mbf = False
+            self.acknowledge_chute = False
+
+            logger.info('Send new objectives done')
 
     def set_paths_callback(self, paths):
         try:
@@ -72,10 +82,12 @@ class StateManagement:
             self.path_chute = list(paths.chute)
             self.path_soufflante = list(paths.soufflante)
 
+            self.len_path = len(self.path_mbf)
+
             success = True
-            logger.info('Set paths success')
+            self.logger.info('Set paths success')
         except:
-            logger.info('Set path failed')
+            self.logger.info('Set path failed')
             success = False
 
         self.send_new_objectives()

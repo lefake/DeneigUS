@@ -24,7 +24,7 @@ class TransformOdomMsg:
         self.imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self.gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)
 
-        origin_path = os.getcwd() + '/../catkin_ws/src/deneigus/map/origin_sim.yaml'
+        origin_path = os.getcwd() + '/../catkin_ws/src/deneigus/configs/origin_sim.yaml'
         origin = self.load_yaml(origin_path)
 
         self.set_datum(origin)
@@ -49,7 +49,7 @@ class TransformOdomMsg:
             try:
                 data = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                logger.info(exc)
+                self.logger.info(exc)
 
         return data
 
@@ -70,7 +70,7 @@ class TransformOdomMsg:
             geo_pose = rospy.ServiceProxy('datum', SetDatum)
             geo_pose(msg)
         except rospy.ServiceException as e:
-            logger.info("Service call for datum failed: %s" % e)
+            self.logger.info("Service call for datum failed: %s" % e)
 
     def transform_callback(self, data):
         self.transform_gps(data)

@@ -136,47 +136,68 @@ if __name__ == '__main__':
 
     path_mbf = []
     # Aller
+    path_mbf.append(createMBF(3.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    path_mbf.append(createMBF(3.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0, 1, 1.0, 0.1))
     #Tourner
     path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 3, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 0.7071068, 0.7071068, 1.0, 0.1))
+    path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     path_mbf.append(createMBF(11.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     # Retour
+    path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
     path_mbf.append(createMBF(3.5, 4, 0, 0, 0, 1, 0, 1.0, 0.1))
 
     path_chute = []
     # Aller
+    path_chute.append(createChuteMsg(0, 0, False))
+    path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0,-5,True))
+    path_chute.append(createChuteMsg(0, -5, True))
     path_chute.append(createChuteMsg(0,0,False))
+    path_chute.append(createChuteMsg(0, 0, False))
     # Tourner
     path_chute.append(createChuteMsg(0,0,False))
     path_chute.append(createChuteMsg(0,0,False))
     path_chute.append(createChuteMsg(5, 0, True))
+    path_chute.append(createChuteMsg(5, 0, True))
+    path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0, 0, False))
     path_chute.append(createChuteMsg(0, 0, False))
     # Retour
     path_chute.append(createChuteMsg(0, -5, True))
+    path_chute.append(createChuteMsg(0, -5, True))
     path_chute.append(createChuteMsg(0, 0, False))
 
     path_soufflante = []
     # Aller
+    path_soufflante.append(1)
     path_soufflante.append(-1)
+    path_soufflante.append(0)
+    path_soufflante.append(0)
+    path_soufflante.append(0)
     path_soufflante.append(1)
     # Tourner
-    path_soufflante.append(1)
+    path_soufflante.append(0)
     path_soufflante.append(-1)
-    path_soufflante.append(-1)
+    path_soufflante.append(0)
+    path_soufflante.append(0)
+    path_soufflante.append(0)
     path_soufflante.append(1)
-    path_soufflante.append(1)
+    path_soufflante.append(0)
     path_soufflante.append(-1)
     # Retour
-    path_soufflante.append(-1)
+    path_soufflante.append(0)
+    path_soufflante.append(0)
     path_soufflante.append(1)
 
 
