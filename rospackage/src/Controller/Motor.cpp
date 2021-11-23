@@ -69,7 +69,8 @@ void Motor::computePID()
   
   e_a = (last_e_v - e_v)*1000.0/dt;
 
-  float C = kp*e_v + ki*e_p + kd*e_a; 
+  float C = kp*e_v + ki*e_p + kd*e_a;
+  current_c = C;
   setVoltage(C);
 
   last_e_v = e_v;
@@ -78,9 +79,8 @@ void Motor::computePID()
 
 void Motor::setVoltage(float volt)
 {
-  sendStatusWithMessage(INFO, OTHER, "Mot : " + String(backwardPin) + " cmd: " + String(volt));
   // Test sign
-  if ((last_c * volt) < 0)
+  if ((last_c * volt) < 0 && abs(volt) > 1)
   {
     analogWrite(speedPin, 0);
     if (abs(v_act) < 0.01)
@@ -106,7 +106,7 @@ float Motor::getCurrentCmd()
 
 float Motor::getCurrentOutput()
 {
-  return last_c;
+  return current_c;
 }
 
 float Motor::getDir()

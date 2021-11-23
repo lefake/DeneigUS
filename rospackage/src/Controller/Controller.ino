@@ -193,8 +193,8 @@ void setup()
     
       motorLeft.init(motorBackwardLeftPin, motorPwmLeftPin, csEncoderL, motorLatchLeftPin, true);
       motorRight.init(motorBackwardRightPin, motorPwmRightPin, csEncoderR, motorLatchRightPin, false);
-      motorLeft.setPID(13.0, 11.0, 0);
-      motorRight.setPID(42.0, 11.0, 0);
+      motorLeft.setPID(9.0, 11.0, 0);
+      motorRight.setPID(60.0, 11.0, 0);
       
       motorLeft.setVoltage(0);
       motorRight.setVoltage(0);
@@ -334,7 +334,7 @@ void estopCallback()
 void lightCallback()
 {
 #ifdef HAS_LIGHTTOWER
-  lightTower.toggle(lightMsg);
+  lightTower.toggle(lightMsg.data[0], lightMsg.data[1]);
 #endif
 }
 
@@ -343,10 +343,10 @@ void pidCstCallback()
 #ifdef HAS_MOTOR_PROP
   sendStatusWithMessage(INFO, MOTOR_PROP_DEVICE, "Setting PID for motor " + String(pidCstMsg.data[0]));
 
-  if (pidCstMsg.data[0] = 0)
+  if (pidCstMsg.data[0] = 0.0)
     motorLeft.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
     
-  if (pidCstMsg.data[0] = 1)
+  if (pidCstMsg.data[0] = 1.0)
     motorRight.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
 #endif
 }

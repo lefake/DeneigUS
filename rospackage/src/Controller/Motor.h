@@ -43,6 +43,7 @@ class Motor {
 
     float sens = 0;
     float last_c = 1;   // Init as positive value
+    float current_c;
 
     int lastLatch = 0;
     

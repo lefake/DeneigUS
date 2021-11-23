@@ -2,7 +2,6 @@
 #define _LIGHTTOWER_H
 
 #include <Arduino.h>
-#include "floatarray.pb.h"
 #include "Constants.h"
 
 enum COLORS {
@@ -16,11 +15,11 @@ class LightTower {
     LightTower();
     ~LightTower();
 
-    void init(int pins[]);
-    void LightTower::toggle(FloatArray);
+    void init(const int [3]);
+    void toggle(const int , const int );
 
   private:
-    int* lightPins;
+    const int* lightPins;
 };
 
 #endif // _LIGHTTOWER_H

@@ -4,15 +4,15 @@ LightTower::LightTower() {}
 
 LightTower::~LightTower() {}
 
-void LightTower::init(int pins[])
+void LightTower::init(const int pins[3])
 {
   lightPins = pins;
-  pinMode(lightPins[RED], OUTPUT);
-  pinMode(lightPins[YELLOW], OUTPUT);
-  pinMode(lightPins[GREEN], OUTPUT);
+
+  for (int i = 0; i < 3; ++i)
+    pinMode(lightPins[i], OUTPUT);
 }
 
-void LightTower::toggle(FloatArray cmd)
+void LightTower::toggle(const int pin, const int state)
 {
-  digitalWrite(lightPins[(int) cmd.data[0]], cmd.data[1]);
+  digitalWrite(lightPins[pin], state);
 }

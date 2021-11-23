@@ -1,4 +1,4 @@
 # floatarray.options
-FloatArray.data         max_count:5
+FloatArray.data         max_count:8
 FloatArray.data         fixed_length:true
 
