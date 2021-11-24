@@ -72,6 +72,9 @@ long delayIntervalSonar = 1500;
 long lastTimeImu = 0;
 long delayIntervalImu = 10;
 
+long lastTimeGps = 0;
+long delayIntervalGps = 200;
+
 long lastDebounceTime = 0;
 long delayDebounceInterval = 50;
 
@@ -193,8 +196,8 @@ void setup()
     
       motorLeft.init(motorBackwardLeftPin, motorPwmLeftPin, csEncoderL, motorLatchLeftPin, true);
       motorRight.init(motorBackwardRightPin, motorPwmRightPin, csEncoderR, motorLatchRightPin, false);
-      motorLeft.setPID(9.0, 11.0, 0);
-      motorRight.setPID(60.0, 11.0, 0);
+      motorLeft.setPID(10.0, 0.0, 0);
+      motorRight.setPID(24.0, 0.0, 0);
       
       motorLeft.setVoltage(0);
       motorRight.setVoltage(0);
@@ -413,16 +416,19 @@ void loopController()
     lastTimeImu = millis();
   }
 #endif
+#ifdef HAS_GPS
+  if (millis() - lastTimeGps > delayIntervalGps)
+  {
+    gps.getCoordinates(&gpsMsg);
+    pbUtils.pbSend(1, GPS);
+    lastTimeGps = millis();
+  }
+#endif
+
   
   if (millis() - lastTime > delayInterval)
   {
     lastTime = millis();
-
-#ifdef HAS_GPS
-    gps.getCoordinates(&gpsMsg);
-    pbUtils.pbSend(1, GPS);
-#endif
-
 #ifdef HAS_ACTUATOR
     if (actuator.getCurrentPos() != soufflanteHeightMsg.data)
     {
@@ -440,7 +446,7 @@ void loopController()
     encMsg.data[1] = motorRight.getSpeed();
     pbUtils.pbSend(1, ENC);
 
-    debugMotMsg.data_count = 8;
+    /*debugMotMsg.data_count = 8;
     debugMotMsg.data[0] = encMsg.data[0];   // Vitesse
     debugMotMsg.data[1] = motorLeft.getCurrentCmd();
     debugMotMsg.data[2] = motorLeft.getCurrentOutput();
@@ -449,7 +455,7 @@ void loopController()
     debugMotMsg.data[5] = motorRight.getCurrentCmd();
     debugMotMsg.data[6] = motorRight.getCurrentOutput();
     debugMotMsg.data[7] = motorRight.getDir();
-    pbUtils.pbSend(1, DEBUG_MOT);
+    pbUtils.pbSend(1, DEBUG_MOT);*/
 #endif
   }
 

@@ -231,41 +231,44 @@ class PBSerialHandler(threading.Thread):
     def worker(self):
         while self._run:
             # There's something to read
-            if self._serial.in_waiting > 0:     
-                try:
-                    input = self._serial.read()
+            try:
+                if self._serial.in_waiting > 0:     
+                    try:
+                        input = self._serial.read()
 
-                    if input == b'<':
-                        buffer = self._serial.read_until(b'>')
-                        self._serial.flush()
-                        self._response = b'<' + buffer
-                        self._msg_callback(self._response)
+                        if input == b'<':
+                            buffer = self._serial.read_until(b'>')
+                            self._serial.flush()
+                            self._response = b'<' + buffer
+                            self._msg_callback(self._response)
 
-                    elif input == b'{':
-                        buffer = self._serial.read_until(b'}')
-                        self._serial.flush()
-                        self._response = b'{' + buffer
+                        elif input == b'{':
+                            buffer = self._serial.read_until(b'}')
+                            self._serial.flush()
+                            self._response = b'{' + buffer
 
-                        if len(self._response.decode()[1:-1].split(';')) == 1:
-                            self._id = self._response.decode()[1:-1]
-                            self.id_list.append(self._id)
-                            self._logger.info(f"Ack to {self._id}")
+                            if len(self._response.decode()[1:-1].split(';')) == 1:
+                                self._id = self._response.decode()[1:-1]
+                                self.id_list.append(self._id)
+                                self._logger.info(f"Ack to {self._id}")
 
-                            # Test if duplicate in list
-                            if len(self.id_list) != len(set(self.id_list)):
-                                self._id_error_callback()
-                        else:
-                            self._status_callback(self._id, self._response)
+                                # Test if duplicate in list
+                                if len(self.id_list) != len(set(self.id_list)):
+                                    self._id_error_callback()
+                            else:
+                                self._status_callback(self._id, self._response)
 
-                except Exception as e:
-                    self._logger.error("Read call back error " + str(e))
+                    except Exception as e:
+                        self._logger.error("Read call back error " + str(e))
 
-            # There's something to write
-            elif self._to_send != "" and not self._interlock:
-                self._serial.write(self._to_send.encode("ascii"))
-                self._serial.flush()
-                self._interlock = True
-                self._to_send = ""
-                self._interlock = False
+                # There's something to write
+                elif self._to_send != "" and not self._interlock:
+                    self._serial.write(self._to_send.encode("ascii"))
+                    self._serial.flush()
+                    self._interlock = True
+                    self._to_send = ""
+                    self._interlock = False
 
-            time.sleep(self._sleeptime)
+                time.sleep(self._sleeptime)
+            except Exception as e:
+                pass
