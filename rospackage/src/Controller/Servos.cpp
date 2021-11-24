@@ -1,6 +1,10 @@
 #include "Servos.h"
 
-Servos::Servos() {}
+Servos::Servos(ErrorHandler* e) 
+{
+  errorHandler = e;
+}
+
 Servos::~Servos() {}
     
 void Servos::init(int pins[])

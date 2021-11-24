@@ -37,8 +37,6 @@ class PB2ROS:
         self._soufflante_height_pub = rospy.Publisher('/soufflante_height', Int32, queue_size=10)
         self._estop_state_pub = rospy.Publisher('/estop_state', Int32, queue_size=10)
         self._debug_motor_pub = rospy.Publisher('/debug_mot', Float32MultiArray, queue_size=10)
-        
-        self.fast_msgs = []#['/deadman', '/estop']
 
         # Topic IDs much be the same in the Arduino enum (in constants.h)
         self._sub_topics = [
@@ -138,11 +136,8 @@ class PB2ROS:
             self._logger.fatal("Arduino not acknowledged yet")
             return
 
-        for s in serialToSend:
-            if current_topic.name in self.fast_msgs:
-                s.write_fast(current_topic.id, current_topic.converter(msg))
-            else:  
-                s.write_msg(current_topic.id, current_topic.converter(msg))
+        for s in serialToSend: 
+            s.write_msg(current_topic.id, current_topic.converter(msg))
 
     def id_error_callback(self):
         self._logger.fatal("Some arduinos have the same ids")

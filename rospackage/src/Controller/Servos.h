@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "Constants.h"
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include <Servo.h>
 
 enum SERVOS 
@@ -14,7 +14,7 @@ enum SERVOS
 
 class Servos {
   public:
-    Servos();
+    Servos(ErrorHandler* e);
     ~Servos();
 
     void init(int pins[]);
@@ -23,6 +23,7 @@ class Servos {
 
   private:
     Servo servosArray[NBR_SERVOS];
+    ErrorHandler* errorHandler;
     int pins[NBR_SERVOS];
     int posArray[NBR_SERVOS] = {0}; // angle elevation, angle rotation
 

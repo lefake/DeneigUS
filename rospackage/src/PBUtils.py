@@ -113,8 +113,6 @@ class TimedBuffer(threading.Thread):
         self.msgs = {}
         self.nbs_msg_max = nbs_msg_max
         self.is_ready_to_send = False
-        self.has_priority = True
-        self.is_writing = False
 
         self.last_time = millis()
         self.delay = d
@@ -144,9 +142,7 @@ class TimedBuffer(threading.Thread):
                 self.is_ready_to_send = False
                 self.lock = False
                 
-                self.is_writing = True
                 self.send_callback(list(msgs_copy.keys()), list(msgs_copy.values()))
-                self.is_writing = False
                 self.last_time = millis()
             else:
                 time.sleep(0.001)
@@ -173,7 +169,7 @@ class PBSerialHandler(threading.Thread):
         self._sleeptime = sleeptime
         self._ack_query = ack_query
 
-        self.timedBuffer = TimedBuffer(4, self.__write_pb_msgs) 
+        self.timedBuffer = TimedBuffer(6, self.__write_pb_msgs) 
         self.timedBuffer.start()
 
         self._id = ""
@@ -198,14 +194,6 @@ class PBSerialHandler(threading.Thread):
         self._interlock = True
         self._to_send = self._ack_query
         self._interlock = False
-
-    def write_fast(self, id, msg):
-        while self.timedBuffer.is_writing:
-            pass
-
-        self.timedBuffer.has_priority = False
-        self.__write_pb_msgs([id], [msg])
-        self.timedBuffer.has_priority = True
 
     def write_msg(self, id, msg):
         self.timedBuffer.add(id, msg)

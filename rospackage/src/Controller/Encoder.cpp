@@ -1,6 +1,9 @@
 #include "Encoder.h"
 
-Encoder::Encoder(){ }
+Encoder::Encoder(ErrorHandler* e) 
+{
+  errorHandler = e;
+}
 
 Encoder::~Encoder(){ }
 
@@ -68,11 +71,11 @@ int Encoder::getEncValue()
   }
   else if (pos > NBS_TICK_PER_REV || pos < 0)
   {
-    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
+    errorHandler->sendStatus(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
   }
   else
   {
-    sendStatusWithMessage(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
+    errorHandler->sendStatus(ERROR, ENCODER_DEVICE, "Encoder #" + String(encPin) + " bad read (" + receivedMessage + ")");
   }
 
   return pos;

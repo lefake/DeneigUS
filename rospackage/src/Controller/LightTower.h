@@ -17,7 +17,7 @@ class LightTower {
     ~LightTower();
 
     void init(int pins[]);
-    void LightTower::toggle(FloatArray);
+    void toggle(FloatArray);
 
   private:
     int* lightPins;

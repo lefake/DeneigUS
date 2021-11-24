@@ -68,6 +68,5 @@ class MsgConverter:
         return msg
 
 default_converters = {"Float32MultiArray":(floatarray_pb2.FloatArray(), [MsgConverter.floatarray_pb2ros, MsgConverter.floatarray_ros2pb]),
-                        "Twist":(twist_pb2.Twist(), [MsgConverter.twist_pb2ros, MsgConverter.twist_ros2pb]),
                         "Int32":(int32_pb2.Int32(), [MsgConverter.int32_pb2ros, MsgConverter.int32_ros2pb]),
                         }
