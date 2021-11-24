@@ -1,0 +1,13 @@
+
+
+
+<mat-button-toggle (click)="clickMe()">click me</mat-button-toggle>
+<div class="terminal">
+<ng-terminal   #term [dataSource]="data"></ng-terminal> 
+</div>
+
+<h1 class = "progressBar">Avancement du trajet
+    <mat-progress-bar  [color]="color"  mode="determinate" value="40"></mat-progress-bar>
+    </h1>
+
+
