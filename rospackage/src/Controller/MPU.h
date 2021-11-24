@@ -5,13 +5,13 @@
 #include <Arduino.h>
 #include "MPU9250.h"
 #include "Constants.h"
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include "floatarray.pb.h"
 
 class MPU
 {
   public:
-    MPU();
+    MPU(ErrorHandler* e);
     
     void init();
     void getValues( FloatArray* );
@@ -24,6 +24,7 @@ class MPU
   private:
     MPU9250 mpu;
     bool setupDone = false;
+    ErrorHandler* errorHandler;
 
     struct IMUCalibration {
       float accBias[3];
@@ -33,7 +34,10 @@ class MPU
     };
 };
 
-MPU::MPU() { }
+MPU::MPU(ErrorHandler* e) 
+{
+  errorHandler = e;
+}
 
 void MPU::init()
 {
@@ -42,7 +46,7 @@ void MPU::init()
   
   setupDone = mpu.setup(IMU_ADDRESS);
   if (!setupDone)
-    sendStatusNotInitialized(IMU_DEVICE);
+    errorHandler->sendNotInit(IMU_DEVICE);
 }
 
 void MPU::getValues(FloatArray* msg)
@@ -56,11 +60,11 @@ void MPU::getValues(FloatArray* msg)
     msg->data[3] = mpu.getQuaternionW();
   }
   else
-    sendStatusWithMessage(ERROR, IMU_DEVICE, "Unable to update IMU values");
+    errorHandler->sendStatus(ERROR, IMU_DEVICE, "Unable to update IMU values");
 }
 
 void MPU::saveCalibration() {
-  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Writing config to EEPROM");
+  errorHandler->sendStatus(DEBUG, IMU_DEVICE, "Writing config to EEPROM");
   
   IMUCalibration calibration = {
     .accBias = {mpu.getAccBias(0), mpu.getAccBias(1), mpu.getAccBias(2)},
@@ -70,11 +74,11 @@ void MPU::saveCalibration() {
   };
   EEPROM.put(IMU_EEPROM_ADDRESS, calibration);
   
-  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Done writing config to EEPROM");
+  errorHandler->sendStatus(DEBUG, IMU_DEVICE, "Done writing config to EEPROM");
 }
 
 void MPU::loadCalibration() {
-  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Reading config to EEPROM");
+  errorHandler->sendStatus(DEBUG, IMU_DEVICE, "Reading config to EEPROM");
 
   IMUCalibration calibration;
   EEPROM.get(IMU_EEPROM_ADDRESS, calibration);
@@ -85,7 +89,7 @@ void MPU::loadCalibration() {
   mpu.setMagScale(calibration.magScale[0], calibration.magScale[1], calibration.magScale[2]);
   mpu.setMagneticDeclination(IMU_MAG_DECLINATION);
   
-  sendStatusWithMessage(DEBUG, IMU_DEVICE, "Done reading config to EEPROM");
+  errorHandler->sendStatus(DEBUG, IMU_DEVICE, "Done reading config to EEPROM");
 }
 
 void MPU::hardcodeCalibration()
@@ -99,19 +103,19 @@ void MPU::hardcodeCalibration()
 
 void MPU::doCalibration()
 {
-     // calibrate anytime you want to
-    sendStatusWithMessage(INFO, IMU_DEVICE, "Please leave the device still on the flat plane.");
-    delay(1000);
-    mpu.calibrateAccelGyro();
+   // calibrate anytime you want to
+  errorHandler->sendStatus(INFO, IMU_DEVICE, "Please leave the device still on the flat plane.");
+  delay(1000);
+  mpu.calibrateAccelGyro();
 
-    sendStatusWithMessage(INFO, IMU_DEVICE, "Please Wave device in a figure eight until done.");
-    
-    delay(2000);
-    mpu.calibrateMag();
-    saveCalibration();
-    loadCalibration();
+  errorHandler->sendStatus(INFO, IMU_DEVICE, "Please Wave device in a figure eight until done.");
+  
+  delay(2000);
+  mpu.calibrateMag();
+  saveCalibration();
+  loadCalibration();
 
-    sendStatusWithMessage(INFO, IMU_DEVICE, "Calibration done.");
+  errorHandler->sendStatus(INFO, IMU_DEVICE, "Calibration done.");
 }
 
 #endif //_MPU_H

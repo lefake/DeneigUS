@@ -2,6 +2,10 @@
   <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
     <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
   </node>
+  
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+    <arg name="port" value="9090"/>
+    <arg name="output" value="log"/>
+  </include>
 
-  <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 </launch>

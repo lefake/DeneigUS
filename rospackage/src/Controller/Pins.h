@@ -37,7 +37,9 @@ const int actuatorSwitchUpPin = A3;
 const int lightPins[3] = {A0,A1,A2};
 
 // ----------------------- EStop pins --------------------------
-const int estopPin = 23;
-const int estopStatePin = 8;
+const int eStopPin = 23;
+const int eStopControllerPin = A13;
+const int eStopSensorPin = A14;
+const int eStopStatePin = 8;
 
 #endif // _PINS_H

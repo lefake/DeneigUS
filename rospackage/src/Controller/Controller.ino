@@ -9,7 +9,7 @@
 #include "Configuration.h"
 #include "Constants.h"
 #include "Acknowledge.h"
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include "PBUtils.h"
 #include "Pins.h"
 
@@ -132,41 +132,36 @@ int nbsNewMsgs = 0;
 int newMsgsIds[MAX_NBS_MSG];
 bool msgDiscardedLength = false;
 
-PBUtils pbUtils(topics);
+ErrorHandler errorHandler;
+PBUtils pbUtils(topics, &errorHandler);
 AckHandler ackHandler;
 
 // ==================== Safety=======================
-bool lastEstopState = false;
-bool estopState = false;
 bool deadmanActive = false;
 
 // ==================== DEVICES ====================
 #ifdef HAS_MOTOR_PROP
-Motor motorLeft, motorRight;
+Motor motorLeft(&errorHandler), motorRight(&errorHandler);
 #endif
 
 #ifdef HAS_IMU
-MPU imu;
+MPU imu(&errorHandler);
 #endif
 
 #ifdef HAS_GPS
-Gps gps;
-#endif
-
-#ifdef HAS_ENCODERS
-Encoder encoders;
+Gps gps(&errorHandler);
 #endif
 
 #ifdef HAS_SERVOS
-Servos servos;
+Servos servos(&errorHandler);
 #endif
 
 #ifdef HAS_ACTUATOR
-Actuator actuator;
+Actuator actuator(&errorHandler);
 #endif
   
 #ifdef HAS_SONARS
-Sonars sonars;
+Sonars sonars(&errorHandler);
 #endif
 
 #ifdef HAS_LIGHTTOWER
@@ -189,6 +184,7 @@ void setup()
 
   if(ackHandler.getId() == CONTROLLER)
   {
+    errorHandler.initController(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
     #ifdef HAS_MOTOR_PROP
       // Make sure the arduino is not in SPI slave mode
       pinMode(53, OUTPUT);
@@ -233,6 +229,7 @@ void setup()
 // ==== Sensors ====
   else if (ackHandler.getId() == SENSORS)
   {
+    errorHandler.initSensors(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
     #ifdef HAS_SONARS
       sonars.init(sonarsTriggerPin, sonarsEchoPins);
     #endif
@@ -245,19 +242,15 @@ void setup()
 // ==== Safety ====
   else if (ackHandler.getId() == SAFETY)
   {
-    pinMode(estopPin, OUTPUT);
-    digitalWrite(estopPin, LOW);
-    pinMode(estopStatePin, INPUT);
-    
-    estopState = digitalRead(estopStatePin);
-    estopStateMsg.data = estopState;
+    errorHandler.initController(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
+    estopStateMsg.data = digitalRead(eStopPin);
     pbUtils.pbSend(1, ESTOP_STATE);
   }
 
 // ==== Unknown ====
   else
   {
-    sendStatusWithMessage(FATAL, OTHER, "Arduino has no valid ID");
+    errorHandler.sendStatus(FATAL, OTHER, "Arduino has no valid ID");
     while(1);
   }
 }
@@ -266,6 +259,8 @@ void loop()
 {
   if (inCmdComplete && inCmdType == STATUS_MSGS)
     inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
+
+  errorHandler.readDebouncedEStop();
   
 #ifndef CONFIGURATION_MODE
   if (ackHandler.getId() == CONTROLLER)
@@ -275,13 +270,13 @@ void loop()
   else if (ackHandler.getId() == SAFETY)
     loopSafety();
   else
-    sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+    errorHandler.sendStatus(FATAL, OTHER, "Arduino ID not valid");
 #endif
 
   // Send status if any errors
   if(msgDiscardedLength)
   {
-    sendStatus(ERROR, SERIAL_COMMUNICATION);
+    errorHandler.sendStatus(ERROR, SERIAL_COMMUNICATION);
     msgDiscardedLength = false;
   }
 }
@@ -331,7 +326,7 @@ void deadmanCallback()
 
 void estopCallback()
 {
-  digitalWrite(estopPin, estopMsg.data);
+  errorHandler.setEStop(estopMsg.data);
 }
 
 void lightCallback()
@@ -344,12 +339,12 @@ void lightCallback()
 void pidCstCallback()
 {
 #ifdef HAS_MOTOR_PROP
-  sendStatusWithMessage(INFO, MOTOR_PROP_DEVICE, "Setting PID for motor " + String(pidCstMsg.data[0]));
+  errorHandler.sendStatus(INFO, MOTOR_PROP_DEVICE, "Setting PID for motor " + String(pidCstMsg.data[0]));
 
-  if (pidCstMsg.data[0] = 0.0)
+  if (pidCstMsg.data[0] < 5)    // Send id : 0
     motorLeft.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
     
-  if (pidCstMsg.data[0] = 1.0)
+  if (pidCstMsg.data[0] > 5)    // Send id : 10
     motorRight.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
 #endif
 }
@@ -391,13 +386,13 @@ void serialEvent()
   }
 }
 
-
-
 // ======================================== LOOPS ========================================
 
 // CONTROLLER
 void loopController()
 {
+  errorHandler.sendStatus(INFO, OTHER, String(errorHandler.getEStopState()));
+  errorHandler.readDebouncedEStop();
 #ifdef HAS_IMU
   long period = millis() - lastTimeImu;
   if (period > delayIntervalImu)
@@ -406,7 +401,7 @@ void loopController()
     {
       String msg = "Frequency was not met";
       msg += period;
-      sendStatusWithMessage(FATAL, IMU_DEVICE, msg);
+      errorHandler.sendStatus(FATAL, IMU_DEVICE, msg);
     }
     else
     {
@@ -438,24 +433,40 @@ void loopController()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-    motorLeft.computePID();
-    motorRight.computePID();
+    if (errorHandler.getEStopState())
+    {
+      motorLeft.commandSpeed(0);
+      motorRight.commandSpeed(0);
 
+      motorLeft.setVoltage(0);
+      motorRight.setVoltage(0);
+    }
+    else
+    {
+      motorLeft.computePID();
+      motorRight.computePID();
+    }
+      
     encMsg.data_count = 2;
     encMsg.data[0] = motorLeft.getSpeed();
     encMsg.data[1] = motorRight.getSpeed();
     pbUtils.pbSend(1, ENC);
 
-    /*debugMotMsg.data_count = 8;
-    debugMotMsg.data[0] = encMsg.data[0];   // Vitesse
-    debugMotMsg.data[1] = motorLeft.getCurrentCmd();
-    debugMotMsg.data[2] = motorLeft.getCurrentOutput();
-    debugMotMsg.data[3] = motorLeft.getDir();
-    debugMotMsg.data[4] = encMsg.data[1];
-    debugMotMsg.data[5] = motorRight.getCurrentCmd();
-    debugMotMsg.data[6] = motorRight.getCurrentOutput();
-    debugMotMsg.data[7] = motorRight.getDir();
-    pbUtils.pbSend(1, DEBUG_MOT);*/
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[1] = 0.0;
+    debugMotMsg.data[1] = motorLeft.getSpeed();
+    debugMotMsg.data[2] = motorLeft.getCurrentCmd();
+    debugMotMsg.data[3] = motorLeft.getCurrentOutput();
+    debugMotMsg.data[4] = motorLeft.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
+
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[1] = 10.0;
+    debugMotMsg.data[1] = motorRight.getSpeed();
+    debugMotMsg.data[2] = motorRight.getCurrentCmd();
+    debugMotMsg.data[3] = motorRight.getCurrentOutput();
+    debugMotMsg.data[4] = motorRight.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
 #endif
   }
 
@@ -495,19 +506,20 @@ void loopController()
             break;
             
           default:
-            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            errorHandler.sendStatus(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
             break;
         }
       }
     }
     else
-      sendStatus(ERROR, DECODING_PB);
+      errorHandler.sendStatus(ERROR, DECODING_PB);
     inCmdType = -1;
   }
 }
 
 void loopSonars()
 {
+  errorHandler.readDebouncedEStop();
   if (millis() - lastTimeSonar > delayIntervalSonar)
   {
     lastTimeSonar = millis();
@@ -548,33 +560,26 @@ void loopSonars()
             break;
             
           default:
-            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            errorHandler.sendStatus(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
             break;
         }
       }
     }
     else
-      sendStatus(ERROR, DECODING_PB);
+      errorHandler.sendStatus(ERROR, DECODING_PB);
     inCmdType = -1;
   }
 }
 
 void loopSafety()
 {
-  bool state = digitalRead(estopStatePin);
-  if (lastEstopState != state)
+  bool lastState = errorHandler.getEStopState();
+  errorHandler.readDebouncedEStop();
+  if (lastState != errorHandler.getEStopState())
   {
-    lastDebounceTime = millis();
-  }
-
-  if(state != estopState && (millis() - lastDebounceTime) > delayDebounceInterval)
-  {
-    estopState = state;
-    estopStateMsg.data = state;
+    estopStateMsg.data = errorHandler.getEStopState();
     pbUtils.pbSend(1, ESTOP_STATE);
   }
-
-  lastEstopState = state;
   
   if (inCmdComplete)
   {
@@ -600,13 +605,13 @@ void loopSafety()
             break;
             
           default:
-            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            errorHandler.sendStatus(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
             break;
         }
       }
     }
     else
-      sendStatus(ERROR, DECODING_PB);
+      errorHandler.sendStatus(ERROR, DECODING_PB);
     inCmdType = -1;
   }
 }

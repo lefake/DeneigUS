@@ -1,9 +1,10 @@
 #include "Motor.h"
 #include "Encoder.h"
 
-Motor::Motor() 
+Motor::Motor(ErrorHandler* e) 
 {
-  SPIEncoder = Encoder();
+  SPIEncoder = new Encoder(e);
+  errorHandler = e;
 }
 
 Motor::~Motor() {}
@@ -14,7 +15,7 @@ void Motor::init(const int bPin, const int sPin, const int encoderPin, const int
   speedPin = sPin;
   latchPin = latch;
   
-  SPIEncoder.init(encoderPin, reverse);
+  SPIEncoder->init(encoderPin, reverse);
   pinMode(backwardPin, OUTPUT);
   pinMode(speedPin, OUTPUT);
   pinMode(latchPin, INPUT);
@@ -50,7 +51,7 @@ void Motor::computePID()
 {
   updatedt();
   
-  v_act = SPIEncoder.getEncVel(dt)*RADIUS;
+  v_act = SPIEncoder->getEncVel(dt)*RADIUS;
   
   if(v_act < -2 || v_act > 2)
     v_act = last_v;
@@ -79,6 +80,7 @@ void Motor::computePID()
 
 void Motor::setVoltage(float volt)
 {
+  current_c = volt;
   // Test sign
   if ((last_c * volt) < 0 && abs(volt) > 1)
   {

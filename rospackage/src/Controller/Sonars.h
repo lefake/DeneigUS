@@ -4,20 +4,22 @@
 #include <Arduino.h>
 #include "Constants.h"
 #include "floatarray.pb.h"
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 
 #define TIMEOUT_SAFETY_RATIO  1.25
 
 class Sonars
 {
   public:
-    Sonars();
+    Sonars(ErrorHandler* e);
     ~Sonars();
     
     void init(int trigger[], int echo[]);
     void readPair(int p, FloatArray* msg);
 
   private:
+    ErrorHandler* errorHandler;
+  
     int* triggerPins;
     int* echoPins;
 

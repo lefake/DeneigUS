@@ -1,6 +1,9 @@
 #include "Gps.h"
 
-Gps::Gps() {}
+Gps::Gps(ErrorHandler* e) 
+{
+  errorHandler = e;
+}
 
 Gps::~Gps(){}
 
@@ -15,7 +18,7 @@ void Gps::init()
     myGPS.saveConfiguration();
   }
   else
-    sendStatusNotInitialized(GPS_DEVICE);
+    errorHandler->sendNotInit(GPS_DEVICE);
 }
 
 void Gps::getCoordinates( FloatArray* msg )
@@ -28,5 +31,5 @@ void Gps::getCoordinates( FloatArray* msg )
     msg->data[2] = myGPS.getAltitude();
   }
   else
-    sendStatusNotInitialized(GPS_DEVICE);
+    errorHandler->sendNotInit(GPS_DEVICE);
 }
