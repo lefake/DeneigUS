@@ -169,7 +169,6 @@ LightTower lightTower;
 void setup()
 {
   Serial.begin(115200);
-      // EStop pin is on all arduinos
 
 #ifdef CONFIGURATION_MODE
   ackHandler.writeIdToEEPROM(); // Left empty to force compile error and make sure the right id is writen
@@ -182,6 +181,7 @@ void setup()
 
   if(ackHandler.getId() == CONTROLLER)
   {
+    errorHandler.initController(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
     #ifdef HAS_MOTOR_PROP
       // Make sure the arduino is not in SPI slave mode
       pinMode(53, OUTPUT);
@@ -226,6 +226,7 @@ void setup()
 // ==== Sensors ====
   else if (ackHandler.getId() == SENSORS)
   {
+    errorHandler.initSensors(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
     #ifdef HAS_SONARS
       sonars.init(sonarsTriggerPin, sonarsEchoPins);
     #endif
@@ -237,9 +238,9 @@ void setup()
   
 // ==== Safety ====
   else if (ackHandler.getId() == SAFETY)
-  { 
-    int state = errorHandler.readEStop();
-    estopStateMsg.data = state;
+  {
+    errorHandler.initController(eStopPin, eStopStatePin, eStopControllerPin, eStopSensorPin);
+    estopStateMsg.data = digitalRead(eStopPin);
     pbUtils.pbSend(1, ESTOP_STATE);
   }
 
@@ -387,6 +388,7 @@ void serialEvent()
 // CONTROLLER
 void loopController()
 {
+  errorHandler.readDebouncedEStop();
 #ifdef HAS_IMU
   long period = millis() - lastTimeImu;
   if (period > delayIntervalImu)
@@ -424,7 +426,7 @@ void loopController()
 #endif
 
 #ifdef HAS_MOTOR_PROP
-    if (errorHandler.getEStop())
+    if (errorHandler.getEStopState())
     {
       motorLeft.commandSpeed(0);
       motorRight.commandSpeed(0);
@@ -510,6 +512,7 @@ void loopController()
 
 void loopSonars()
 {
+  errorHandler.readDebouncedEStop();
   if (millis() - lastTimeSonar > delayIntervalSonar)
   {
     lastTimeSonar = millis();
@@ -563,10 +566,11 @@ void loopSonars()
 
 void loopSafety()
 {
-  int state = errorHandler.readDebouncedEStop();
-  if (state > -1)
+  bool lastState = errorHandler.getEStopState();
+  errorHandler.readDebouncedEStop();
+  if (lastState != errorHandler.getEStopState())
   {
-    estopStateMsg.data = state;
+    estopStateMsg.data = errorHandler.getEStopState();
     pbUtils.pbSend(1, ESTOP_STATE);
   }
   

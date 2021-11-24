@@ -41,26 +41,41 @@ class ErrorHandler
     ErrorHandler();
     ~ErrorHandler();
 
-    void init();
-  
+    void initSafety(const int, const int, const int, const int);
+    void initController(const int, const int, const int, const int);
+    void initSensors(const int, const int, const int, const int);
+
+    // Status Message
     void sendStatus(int level, int type, String msg);
     void sendStatus(int level, int type);
     void sendNotInit(int type);
 
+    bool getEStopState();
+    
+    // Read actual EStop State
+    void readDebouncedEStop();
+
+    // Set EStop output
     void setEStop(bool);
-    bool readEStop();
-    int readDebouncedEStop();
-    bool getEStop();
+
+    // Safety : Read forwarded estop
+    void readForwardedEStop();
     
   private:
-    bool eStopState;
+    void setCommonPins(const int, const int, const int, const int);
+  
+    bool currentEStopState;
     bool lastEStopState;
+
+    int eStopPin;
+    int eStopStatePin;
+
+    // Safety : Forwarded pins
+    int controllerEStopPin;
+    int sensorEStopPin;
 
     long lastDebounceTime = 0;
     long delayDebounceInterval = 50;
-    
-    const int eStopStatePin;
-    const int eStopPin;
 };
 
 #endif // _ERROR_HANDLER_H
