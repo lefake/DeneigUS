@@ -163,7 +163,7 @@ class GlobalPlan:
         # First slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y, start_angle, 0, self.snow_throw_dist*M, False)
         # rotate 180deg and slide
-        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), M)
+        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), M, M)
         # Second slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, start_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), 0, -self.snow_throw_dist*M, False)
         # Prep for rest of the driveway
@@ -175,6 +175,9 @@ class GlobalPlan:
 
             if i < nbr_slice_x:
                 p_targets, s_targets, c_targets = self.slide_backnext(p_targets, s_targets, c_targets, start_x+((i+1)*self.slice_width), start_y+(self.slice_width*M), start_angle+(d2r(90)*M), M)
+
+            elif i == nbr_slice_y:
+                p_targets, s_targets, c_targets = self.goto_no_blow(p_targets, s_targets, c_targets, start_x,  start_y, start_angle)
 
         return p_targets, s_targets, c_targets
 
@@ -195,7 +198,7 @@ class GlobalPlan:
         # First slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y, start_angle, 0, self.snow_throw_dist*M, False)
         # rotate 180deg and slide
-        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), M)
+        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), M, M)
         # Second slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), 0, -self.snow_throw_dist*M, False)
         # Prep for rest of the driveway
@@ -228,11 +231,14 @@ class GlobalPlan:
         # Rest of the driveway
         for i in range(nbr_slice_y):
             if i%2 == 0:  # even number
-                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), M)
+                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), M, M)
                 p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, start_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), 0, -self.snow_throw_dist*M, False)
             else:
-                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, start_x, start_y+((i+1)*self.slice_width*M), start_angle, -M)
-                p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y+((i+1)*self.slice_width*M), start_angle, 0, self.snow_throw_dist*M, False)
+                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, start_x, start_y + ((i+1)*self.slice_width*M), start_angle, M, -M)
+                p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle, 0, self.snow_throw_dist*M, False)
+
+            if i == nbr_slice_y-1:
+                p_targets, s_targets, c_targets = self.goto_no_blow(p_targets, s_targets, c_targets, start_x,  start_y, start_angle)
 
         return p_targets, s_targets, c_targets
 
@@ -265,9 +271,9 @@ class GlobalPlan:
         return Lpose, Lsouffl, Lchute
 
     # niv 3
-    def slide_zigzag(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, M):
-        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y-(self.slice_width*M), pose_rot-(d2r(90)*M))
-        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot-(d2r(90)*M), 4, 0, False)
+    def slide_zigzag(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, M, F):
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y-(self.slice_width*M), pose_rot-(d2r(90)*F))
+        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot-(d2r(90)*F), 4, 0, False)
         Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot)
         return Lpose, Lsouffl, Lchute
 

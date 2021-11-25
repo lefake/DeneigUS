@@ -42,13 +42,14 @@ class StateManagement:
         rospy.Subscriber("/control_mode", Int32, self.control_mode_callback)
 
     def control_mode_callback(self, msg):
-        self.actif_mode = msg
+        self.actif_mode = control_modes(msg.data)
 
-        if msg == control_modes.auto:
+        if self.actif_mode == control_modes.auto:
             if self.last_mbf.pose.pose.orientation.x != 0 or self.last_mbf.pose.pose.orientation.y != 0 or \
                self.last_mbf.pose.pose.orientation.z != 0 or self.last_mbf.pose.pose.orientation.w != 0:
                 self.mbf_pub.publish(self.last_mbf)
                 self.acknowledge_mbf = False
+                self.logger.info('Fake aknowledge from mbf')
 
             self.chute_pub.publish(self.last_chute)
             self.acknowledge_chute = False
@@ -74,12 +75,11 @@ class StateManagement:
             else:
                 logger.info('Bad name')
                 success = False
-
         else:
             success = False
 
-            if len(self.path_mbf) != 0 and self.actif_mode == control_modes.auto:
-                self.send_new_objectives()
+        if len(self.path_mbf) != 0 and self.actif_mode == control_modes.auto:
+            self.send_new_objectives()
 
         return success
 

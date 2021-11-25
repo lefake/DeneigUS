@@ -49,7 +49,6 @@ class Ctrl_manuel:
         self.soufflante_cmd_pub.publish(soufflante_cmd)
 
 
-
 class Executif:
     def __init__(self, joy_indexes):
         self.logger = get_logger("executif.main")
@@ -73,7 +72,7 @@ class Executif:
         self.prop_pub = rospy.Publisher('/prop', Float32MultiArray, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
         self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
-        self.control_mode_pub = rospy.Publisher('control_mode', Int32, queue_size=10)
+        self.control_mode_pub = rospy.Publisher('/control_mode', Int32, queue_size=10)
         self.deadman_pub = rospy.Publisher('/deadman', Int32, queue_size=10)
         self.behavior_pub = rospy.Publisher('behavior', Int32, queue_size=10)
         self.estop_pub = rospy.Publisher('/estop', Int32, queue_size=10)
