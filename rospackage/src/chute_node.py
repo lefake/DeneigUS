@@ -54,7 +54,8 @@ class ChuteNode:
             path_func('Chute', 1)
 
         elif x_target != 0.0 or y_target != 0.0:
-            self.chute_cmd.data = model_inverse(x_target, y_target, self.v_wind, self.ro_snow, force45)
+            cmd_ele, cmd_rot, cmd_speed = model_inverse(x_target, y_target, self.v_wind, self.ro_snow, force45)
+            self.chute_cmd.data = [np.rad2deg(cmd_ele), np.rad2deg(cmd_rot), cmd_speed]
 
         else:
             self.chute_cmd.data = [self.chute_cmd.data[0], self.chute_cmd.data[1], 0]

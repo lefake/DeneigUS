@@ -2,6 +2,8 @@
 
 import rospy
 import logging
+import imageio
+import os
 import numpy as np
 
 from numpy import sin as s
@@ -13,7 +15,7 @@ from geometry_msgs.msg import PolygonStamped, PoseStamped
 from std_msgs.msg import Float32, Int32, Bool, Float32MultiArray
 from deneigus.msg import chute_msg, mbf_msg
 from nav_msgs.msg import OccupancyGrid, Odometry
-
+from nav_msgs.srv import GetMap
 
 class ProgressMap:
     def __init__(self):
@@ -28,24 +30,35 @@ class ProgressMap:
         self.souffl_height = 0.3
         self.souffl_width = 0.69
 
-        global_map = rospy.wait_for_message("/move_base_flex/global_costmap/costmap", OccupancyGrid)
-        self.progress_map.info = global_map.info
-        self.map = np.reshape(global_map.data, (self.progress_map.info.height,self.progress_map.info.width))
+        self.path = os.getcwd() + '/../catkin_ws/src/deneigus/map/progressMap.png'
 
         self.progress_map_pub = rospy.Publisher("/progress_map", OccupancyGrid, queue_size=5)
+
+        rospy.wait_for_service('static_map')
+        static_map_func = rospy.ServiceProxy('static_map', GetMap)
+        self.static_map = static_map_func()
+
+        self.progress_map = self.static_map.map
+
+        self.map = np.reshape(self.progress_map.data, (self.progress_map.info.height, self.progress_map.info.width))
 
         rospy.Subscriber("/reset", Bool, self.reset_callback)
         rospy.Subscriber("/chute", Float32MultiArray, self.chute_callback)
         rospy.Subscriber("/move_base_flex/global_costmap/footprint", PolygonStamped, self.footprint_callback)
+        #rospy.Subscriber("/odometry/filtered/global", Odometry, self.odom_callback)
 
     def reset_callback(self):
         self.logger.info("Reset")
+        self.progress_map = self.static_map.map
 
     def chute_callback(self, msg):
         if msg.data[2]>0:
             self.in_function = True
         else:
             self.in_function = False
+
+    #def odom_callback(self, msg):
+    #    pts_c = msg.pose.pose.position
 
     def footprint_callback(self, msg):
         if self.in_function :
@@ -68,6 +81,10 @@ class ProgressMap:
         self.progress_map.data = tuple(self.map.flatten())
         self.progress_map_pub.publish(self.progress_map)
 
+        np_data = np.array([self.color_converter(e) for e in self.progress_map.data])
+        reshaped = np.flipud(np.reshape(np_data, (self.progress_map.info.height, self.progress_map.info.width))[25:75,25:125])
+        imageio.imwrite(self.path, reshaped, format='png', optimize=False, quantize=4)
+
     def is_on_right_side(self, x, y, xy0, xy1):
         x0, y0 = xy0
         x1, y1 = xy1
@@ -82,6 +99,11 @@ class ProgressMap:
         all_left = not any(is_right)
         all_right = all(is_right)
         return all_left or all_right
+
+    def color_converter(self, value):
+        if value == -1:
+            return 0xcd / 0xff
+        return (100 - value) / 100.0
 
 
 if __name__ == '__main__':

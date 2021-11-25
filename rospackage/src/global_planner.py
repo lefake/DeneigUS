@@ -14,6 +14,7 @@ from nav_msgs.msg import OccupancyGrid
 from geometry_msgs.msg import PoseStamped
 from deneigus.msg import chute_msg, mbf_msg
 from deneigus.srv import set_paths
+from nav_msgs.srv import GetMap
 
 from config_utils import ConfigUtils
 
@@ -55,7 +56,7 @@ class GlobalPlan:
         self.logger.debug("Started global_planner init")
 
         self.turn_radius = 1.0   # turn radius of the robot (m)
-        self.slice_width = 0.5   # distance between passe (m) -> environ 20po
+        self.slice_width = 0.6   # distance between passe (m) -> environ 20po
         self.snow_throw_dist = 6 # m
         # v_ext for future use
         self.v_ext_forward = [1, 0.3]
@@ -67,12 +68,12 @@ class GlobalPlan:
         self.map_config = config_utils.load_yaml(path=os.getcwd() + '/../catkin_ws/src/deneigus/map/global_planner_params.yaml')
         # TODO : get params to wind (vector) and snow density
 
-        global_map = rospy.wait_for_message("/move_base_flex/global_costmap/costmap", OccupancyGrid)
-        self.map_grid = np.reshape(global_map.data, (global_map.info.height, global_map.info.width))
-        self.map_resolution = global_map.info.resolution
+        rospy.wait_for_service('static_map')
+        static_map_func = rospy.ServiceProxy('static_map', GetMap)
+        static_map = static_map_func().map
+        self.map_grid = np.reshape(static_map.data, (static_map.info.height, static_map.info.width))
+        self.map_resolution = static_map.info.resolution
         self.map_obstacle_value = 100
-        self.logger.debug("First global costmap recieved")
-        rospy.Subscriber('/move_base_flex/global_costmap/costmap', OccupancyGrid, self.map_callback)
 
         # Subscriber from nodes or robot
         rospy.Subscriber('behavior', Int32, self.auto_plan_callback)
@@ -103,11 +104,6 @@ class GlobalPlan:
         c.y = y
         c.force45 = force45
         return c
-
-    def map_callback(self, msg):
-        self.map_resolution = msg.info.resolution
-        self.map_grid = np.reshape(msg.data, (msg.info.height, msg.info.width))
-        self.logger.debug("New global costmap recieved")
 
     def auto_plan_callback(self, msg):
         # Planning

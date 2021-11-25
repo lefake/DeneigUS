@@ -158,7 +158,7 @@ def create_root():
     bt_root.add_children([get_goal, fallback])
     get_goal.add_children([have_goal, new_goal])
     navigate.add_children([get_path, exe_path, clr_goal1])
-    fallback.add_children([navigate, recovery, clr_goal2])
+    fallback.add_children([navigate, clr_goal2]) #fallback.add_children([navigate, recovery, clr_goal2])
     return bt_root
 
 
