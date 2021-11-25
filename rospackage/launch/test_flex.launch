@@ -4,7 +4,7 @@
   <arg name="has_ard" default="0"/>
 
   <arg name="joy_port" default="/dev/input/js2" />
-  <param name="joy_type" value="ps4" />
+  <param name="joy_type" value="logi" />
 
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
@@ -36,9 +36,7 @@
 <!-- joy node -->
   <group if="$(arg has_joy)">
     <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
-      <param name="dev" type="string" value="$(arg joy_port)" />
-      <param name="deadzone" value="0.12" />
-      <param name="default_trig_val" value="true" />
+      <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
     </node>
   </group>
 

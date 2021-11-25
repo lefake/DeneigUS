@@ -42,10 +42,9 @@ class ProgressMap:
 
         self.map = np.reshape(self.progress_map.data, (self.progress_map.info.height, self.progress_map.info.width))
 
-        rospy.Subscriber("/reset", Bool, self.reset_callback)
+        rospy.Subscriber("/reset_plan", Bool, self.reset_callback)
         rospy.Subscriber("/chute", Float32MultiArray, self.chute_callback)
         rospy.Subscriber("/move_base_flex/global_costmap/footprint", PolygonStamped, self.footprint_callback)
-        #rospy.Subscriber("/odometry/filtered/global", Odometry, self.odom_callback)
 
     def reset_callback(self):
         self.logger.info("Reset")
@@ -56,9 +55,6 @@ class ProgressMap:
             self.in_function = True
         else:
             self.in_function = False
-
-    #def odom_callback(self, msg):
-    #    pts_c = msg.pose.pose.position
 
     def footprint_callback(self, msg):
         if self.in_function :

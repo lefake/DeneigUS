@@ -31,7 +31,7 @@ class ChuteNode:
         self.rot_odom = 0
         self.rot_start = 0
 
-        self.chute_cmd_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
+        self.chute_cmd_pub = rospy.Publisher('/chute_auto', Float32MultiArray, queue_size=10)
         self.chute_new_goal_sub = rospy.Subscriber('/chute_new_goal', chute_msg, self.chute_goal_callback)
         self.odom_sub = rospy.Subscriber('/odometry/filtered/global', Odometry, self.odom_callback)
         self.soufflante_speed_sub = rospy.Subscriber('/soufflante_speed', Float32, self.soufflante_start_callback)
@@ -77,15 +77,11 @@ class ChuteNode:
         #cmd.data = [new_cmd_rot, cmd.data[1], cmd.data[2]]
         self.chute_cmd_pub.publish(self.chute_cmd)
 
-
     def soufflante_start_callback(self, msg):
         # TODO: Acknowledge only if the goal is reach
         rospy.wait_for_service('acknowledge')
         path_func = rospy.ServiceProxy('acknowledge', acknowledge)
         path_func('Chute', 1)
-
-
-
 
 
 if __name__ == '__main__':
