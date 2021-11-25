@@ -1,4 +1,4 @@
-joy_type: logi
 dev: /dev/input/js2
-deadzone: 0.12
+deadzone: 0.05
+coalesce_interval: 0.1
 default_trig_val: True

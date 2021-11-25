@@ -34,7 +34,7 @@ class ProgressMap:
 
         self.progress_map_pub = rospy.Publisher("/progress_map", OccupancyGrid, queue_size=5)
 
-        rospy.Subscriber("/reset", Bool, self.reset_callback)
+        rospy.Subscriber("/reset_plan", Bool, self.reset_callback)
         rospy.Subscriber("/chute", Float32MultiArray, self.chute_callback)
         rospy.Subscriber("/move_base_flex/global_costmap/footprint", PolygonStamped, self.footprint_callback)
 

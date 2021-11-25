@@ -18,7 +18,7 @@ class SoufflanteNode:
         self.goal = 1
         self.goal_reach = True
 
-        self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
+        self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd_auto', Int32, queue_size=10)
         self.soufflante_new_goal_sub = rospy.Subscriber('/soufflante_new_goal', Int32, self.soufflante_goal_callback)
         self.soufflante_height_sub = rospy.Subscriber('/soufflante_height', Int32, self.soufflante_height_callback)
 

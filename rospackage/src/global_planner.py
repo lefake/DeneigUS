@@ -15,38 +15,7 @@ from geometry_msgs.msg import PoseStamped
 from deneigus.msg import chute_msg, mbf_msg
 from deneigus.srv import set_paths
 
-from config_utils import ConfigUtils
-
-
-# Behavior for auto mode values
-behavior_choices = {
-    "BF": 0,
-    "BFM": 1,
-    "RE": 2,
-    "REM": 3,
-    "ZZ": 4,
-    "ZZM": 5}
-
-
-'''
-class global_target:
-    def __init__(self, pose, soufflante, chute):
-        self._pose = pose
-        self._soufflante = soufflante
-        self._chute = chute
-
-    @property
-    def pose(self):
-        return self._pose
-
-    @property
-    def soufflante(self):
-        return self._soufflante
-
-    @property
-    def chute(self):
-        return self._chute
-'''
+from common_utils import ConfigYaml, behavior_choices
 
 
 class GlobalPlan:
@@ -63,7 +32,7 @@ class GlobalPlan:
         self.v_ext_none = [0, 0]
 
         # load config -> start, side_street, snow_out_area
-        config_utils = ConfigUtils()
+        config_utils = ConfigYaml()
         self.map_config = config_utils.load_yaml(path=os.getcwd() + '/../catkin_ws/src/deneigus/map/global_planner_params.yaml')
         # TODO : get params to wind (vector) and snow density
 
