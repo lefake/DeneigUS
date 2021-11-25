@@ -196,8 +196,8 @@ void setup()
     
       motorLeft.init(motorBackwardLeftPin, motorPwmLeftPin, csEncoderL, motorLatchLeftPin, true);
       motorRight.init(motorBackwardRightPin, motorPwmRightPin, csEncoderR, motorLatchRightPin, false);
-      motorLeft.setPID(10.0, 0.0, 0);
-      motorRight.setPID(24.0, 0.0, 0);
+      motorLeft.setPID(10.0, 3.0, 0);
+      motorRight.setPID(24.0, 5.0, 0);
       
       motorLeft.setVoltage(0);
       motorRight.setVoltage(0);
@@ -266,16 +266,19 @@ void loop()
 {
   if (inCmdComplete && inCmdType == STATUS_MSGS)
     inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
-  
+
+  if (ackHandler.getAcked())
+  {
 #ifndef CONFIGURATION_MODE
-  if (ackHandler.getId() == CONTROLLER)
-    loopController();
-  else if (ackHandler.getId() == SENSORS)
-    loopSonars();
-  else if (ackHandler.getId() == SAFETY)
-    loopSafety();
-  else
-    sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+    if (ackHandler.getId() == CONTROLLER)
+      loopController();
+    else if (ackHandler.getId() == SENSORS)
+      loopSonars();
+    else if (ackHandler.getId() == SAFETY)
+      loopSafety();
+    else
+      sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+  }
 #endif
 
   // Send status if any errors
@@ -346,10 +349,10 @@ void pidCstCallback()
 #ifdef HAS_MOTOR_PROP
   sendStatusWithMessage(INFO, MOTOR_PROP_DEVICE, "Setting PID for motor " + String(pidCstMsg.data[0]));
 
-  if (pidCstMsg.data[0] = 0.0)
+  if (pidCstMsg.data[0] < 5)
     motorLeft.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
     
-  if (pidCstMsg.data[0] = 1.0)
+  if (pidCstMsg.data[0] >  5)
     motorRight.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
 #endif
 }
@@ -445,17 +448,24 @@ void loopController()
     encMsg.data[0] = motorLeft.getSpeed();
     encMsg.data[1] = motorRight.getSpeed();
     pbUtils.pbSend(1, ENC);
+    
 
-    /*debugMotMsg.data_count = 8;
-    debugMotMsg.data[0] = encMsg.data[0];   // Vitesse
-    debugMotMsg.data[1] = motorLeft.getCurrentCmd();
-    debugMotMsg.data[2] = motorLeft.getCurrentOutput();
-    debugMotMsg.data[3] = motorLeft.getDir();
-    debugMotMsg.data[4] = encMsg.data[1];
-    debugMotMsg.data[5] = motorRight.getCurrentCmd();
-    debugMotMsg.data[6] = motorRight.getCurrentOutput();
-    debugMotMsg.data[7] = motorRight.getDir();
-    pbUtils.pbSend(1, DEBUG_MOT);*/
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[0] = 0.0;
+    debugMotMsg.data[1] = motorLeft.getSpeed();   // Vitesse
+    debugMotMsg.data[2] = motorLeft.getCurrentCmd();
+    debugMotMsg.data[3] = motorLeft.getCurrentOutput();
+    debugMotMsg.data[4] = motorLeft.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
+
+
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[0] = 10.0;
+    debugMotMsg.data[1] = motorRight.getSpeed();   // Vitesse
+    debugMotMsg.data[2] = motorRight.getCurrentCmd();
+    debugMotMsg.data[3] = motorRight.getCurrentOutput();
+    debugMotMsg.data[4] = motorRight.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
 #endif
   }
 
@@ -464,7 +474,7 @@ void loopController()
     inCmdComplete = false;
     bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
     
-    if (status && nbsNewMsgs > 0)
+    if (status && DECODING_PB > 0)
     {
       for (int i = 0; i < nbsNewMsgs; ++i)
       {
@@ -501,7 +511,9 @@ void loopController()
       }
     }
     else
-      sendStatus(ERROR, DECODING_PB);
+    {
+      sendStatusWithMessage(ERROR, DECODING_PB, inCmd);
+    }
     inCmdType = -1;
   }
 }

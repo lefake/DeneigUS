@@ -22,12 +22,14 @@ class AckHandler
   
     bool acknowldgeArduino(char* msg);
     int getId();
+    bool getAcked();
     
     void writeIdToEEPROM(int id);
     void readIdFromEEPROM();
   
   private:
     int id;
+    bool acked = false;
     String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "SAFETY" };
 };
 
