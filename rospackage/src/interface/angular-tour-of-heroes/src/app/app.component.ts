@@ -3,8 +3,7 @@ import { NgxJoystickComponent,JoystickEvent } from 'ngx-joystick';
 import { RosServiceService } from './ros-service.service';
 
 
-import {  JoystickOutputData } from 'nipplejs';
-import { JoyMessage, NumberArrayMessage } from 'ngx-roslib';
+import { NumberArrayMessage, NumberMessage } from 'ngx-roslib';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +16,25 @@ export class AppComponent {
   deadManActivated = false;
   @ViewChild('staticJoystic') staticJoystick: NgxJoystickComponent | undefined;
 
+  isTrue :NumberMessage = {
+    data: 1
+  }
+
+  position: number[] = [];
+  output: NumberArrayMessage = {
+    data:[]
+  };
+
+  angle: NumberArrayMessage = {
+    data: [2.0],
+  }
 
 
-  @HostListener('document:keydown.space', ['$event'])
+  @HostListener('window:keydown.space', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    this.service.deadMan();
+    event.preventDefault();
+    this.isTrue.data=1;
+    this.service.deadMan(this.isTrue);
     this.deadManActivated=true;
   }
  
@@ -30,23 +43,37 @@ export class AppComponent {
      this.service.subscribeTopic();
      
   }
-    position: number[] = [];
-    output: JoyMessage = {
-      header: { }
-    };
+
   onMoveStatic(event: JoystickEvent) {
 
-    this.position[0]=event.data.raw.position.x;
-    this.position[1]=event.data.raw.position.y;
-    this.output.axes=this.position;
- 
+    
+
+    this.position[1]=event.data.vector.x;
+    this.position[0]=event.data.vector.y;
+    this.output.data=this.position;
+    
+
     if(this.deadManActivated){
       this.service.sendPos(this.output);
-      console.log('la position est ' + this.position);
-      console.log('le output est ' + this.output.axes);
       this.deadManActivated=false;
     }
-    
+  }
+
+  onEndStatic(event:JoystickEvent){
+
+    console.log("release")
+    this.output.data = [0,0];
+    this.service.sendPos(this.output);
+  
+    this.isTrue.data=0;
+    this.service.deadMan(this.isTrue);
+  }
+
+  onMoveStaticChute(event: JoystickEvent) {
+
+    this.angle.data[0]=event.data.angle.degree;
+    this.service.sendAngle(this.angle);
+ 
   }
 
   public battery ="10%" //this.ControlesService.listenTopicDebugMot();

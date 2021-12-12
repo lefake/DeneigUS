@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JoyMessage, NgxRoslibService, NumberMessage, Rosbridge } from 'ngx-roslib';
+import {  NgxRoslibService, NumberArrayMessage, NumberMessage, Rosbridge } from 'ngx-roslib';
 import { RosTopic, RosoutMessage } from 'ngx-roslib';
 
 
@@ -31,14 +31,12 @@ export class RosServiceService {
     }
 
   
-    public sendPos(joyData:any){
-    let request = joyData;
-     
-
-      const joy = new RosTopic<JoyMessage>({
+    public sendPos(joyData:NumberArrayMessage){
+   
+      const joy = new RosTopic<NumberArrayMessage>({
         ros: this.rbServer,
-        name: '/prop2',
-        messageType:'sensor_msgs/Joy',
+        name: '/prop',
+        messageType:'std_msgs/float32multiarray',
         
     });
     joy.advertise();
@@ -49,16 +47,16 @@ export class RosServiceService {
     });
   
       
-      joy.publish(request);
+      joy.publish(joyData);
+
+      console.log("la position publiée est: " + joyData.data)
       joy.unsubscribe();
     
   
     }
 
-    public deadMan(){
-      const isTrue :NumberMessage = {
-        data: 1
-      }
+    public deadMan(data:NumberMessage){
+     
        
   
         const joy = new RosTopic<NumberMessage>({
@@ -75,8 +73,33 @@ export class RosServiceService {
           
        
       });
-      joy.publish(isTrue);
+      joy.publish(data);
+      console.log("deadman publie : " + data.data)
       joy.unsubscribe();   
     
       }
+
+      
+    public sendAngle(angle:any){
+     
+  
+      const joy = new RosTopic<NumberArrayMessage>({
+        ros: this.rbServer,
+        name: '/chute',
+        messageType:'std_msgs/float32multiarray',
+        
+    });
+
+  
+    joy.advertise();
+ 
+    joy.subscribe(() => {
+        
+     
+    });
+    joy.publish(angle);
+    joy.unsubscribe();   
+  
+  }
+
 }

@@ -1,5 +1,5 @@
 <launch>
-  <arg name="has_web" default="0"/>
+  <arg name="has_web" default="1"/>
   <arg name="has_joy" default="1"/>
   <arg name="has_ard" default="0"/>
 

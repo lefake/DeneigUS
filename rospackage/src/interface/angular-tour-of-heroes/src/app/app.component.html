@@ -60,8 +60,9 @@
 
   .container{
     position: absolute;
+    size: autofit;
     bottom: 60 px;
-    top :-25%;
+    top :0%;
 
   }
 
@@ -74,21 +75,47 @@
 
   .containerJoystick{
     position: relative;
-    right: 0% ;
-    top: -50%;
+    right: -50% ;
+    top: -45%;
 
   }
+
+  .labelRobot{
+    position: relative;
+    right: -50% ;
+    top: -70%;
+
+  }
+
+  .containerJoystick2{
+    position: relative;
+    right: -50% ;
+    top: 100%;
+
+  }
+
+  .labelChute{
+    position: relative;
+    right: -40% ;
+    top: 95%;
+
+  }
+
   .containerTerminal{
     position: relative;
     bottom: 60 px;
     top: 30%;
     
   }
-  
+  .btn-primary{
+    right: 100%;
+  }
 
 </style>
 
 <!-- Toolbar -->
+
+
 
 <div class="toolbar" role="banner">
   <img
@@ -97,8 +124,11 @@
     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
   />
   <span>DeneigUS</span>
+   
 
 
+
+</div>
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -109,20 +139,25 @@
       </google-map>
     </div>
     <div class="col-sm">
-      
-      <ngx-joystick class = 'containerJoystick' #staticJoystic (move)="onMoveStatic($event)"></ngx-joystick>
+      <label class="labelRobot">Position du robot</label>
+      <ngx-joystick class = 'containerJoystick' #staticJoystic (end)="onEndStatic($event)" (move)="onMoveStatic($event)"></ngx-joystick>
     </div>
    
   </div>
+
   <div class="row">
     <div class="col-sm">
 
       <ng-terminal  class = 'containerTerminal' #term ></ng-terminal> 
+      
+    </div>
+
+    <div class="col-sm">
+      <label class="labelChute">Position de la chute</label>
+      <ngx-joystick class = 'containerJoystick2'   (move)="onMoveStaticChute($event)" #staticJoystic></ngx-joystick>
     </div>
   </div>
 </div>
-
-
 
 
 
