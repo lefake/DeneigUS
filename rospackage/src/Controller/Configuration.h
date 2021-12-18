@@ -13,7 +13,7 @@
  */
 
 // ==================== GPS CONSTANTS =========================
-// #define HAS_GPS
+ #define HAS_GPS
 
 // ==================== IMU ===================================
 // #define HAS_IMU
@@ -22,18 +22,13 @@
 #define HAS_SONARS
 
 // ==================== MOTOR_BLOW ============================
-// #define HAS_MOTOR_BLOW
+ #define HAS_MOTOR_BLOW
 
 // ==================== MOTOR_PROP ============================
-// #define HAS_MOTOR_PROP
+ #define HAS_MOTOR_PROP
 
 // ==================== SERVOS ================================
-// #define HAS_SERVOS
-
-
-// ==================== ENCODERS ==============================
-// #define HAS_ENCODERS
-
+ #define HAS_SERVOS
 
 
 // ==================== STATE OF THE ROBOT ====================
