@@ -47,52 +47,46 @@ ros.on('close', function() {
 // ROS Topics
 //---------------------------------------------------------
 
-var pos_topic = new ROSLIB.Topic({
+var vitesse_odom_topic = new ROSLIB.Topic({
     ros : ros,
-    name : '/pos',
+    name : '/wheel/odometry',
+    messageType : 'nav_msgs/Odometry'
+}); 
+
+var debug_mot_topic = new ROSLIB.Topic({
+    ros : ros,
+    name : '/debug_mot',
     messageType : 'std_msgs/Float32MultiArray'
 }); 
 
-var obs_pos_topic = new ROSLIB.Topic({
+var sonar_pairs_topic = new ROSLIB.Topic({
     ros : ros,
-    name : '/obs_pos',
+    name : '/sonar_pairs',
     messageType : 'std_msgs/Float32MultiArray'
 });
 
 var estop_state_topic = new ROSLIB.Topic({
     ros : ros,
     name : '/estop_state',
-    messageType : 'std_msgs/Float32MultiArray'
+    messageType : 'std_msgs/Int32'
 });
 
-var tele_batt_topic = new ROSLIB.Topic({
+var soufflante_height_topic = new ROSLIB.Topic({
     ros : ros,
-    name : '/tele_batt',
-    messageType : 'std_msgs/Float32MultiArray'
-});
-
-var pos_tourellee_topic = new ROSLIB.Topic({
-    ros : ros,
-    name : '/pos_tourelle',
-    messageType : 'std_msgs/Float32MultiArray'
-});
-
-var debug_mot_topic = new ROSLIB.Topic({
-    ros : ros,
-    name : '/debug_mot',
-    messageType : 'std_msgs/Float32MultiArray'
+    name : '/soufflante_height',
+    messageType : 'std_msgs/Int32'
 });
 
 var gps_data_topic = new ROSLIB.Topic({
     ros : ros,
-    name : '/gps_data',
-    messageType : 'std_msgs/Float32MultiArray'
+    name : '/gps/fix',
+    messageType : 'sensor_msgs/NavSatFix'
 });
 
 var imu_data_topic = new ROSLIB.Topic({
     ros : ros,
-    name : '/imu_data',
-    messageType : 'std_msgs/Float32MultiArray'
+    name : '/imu/data',
+    messageType : 'sensor_msgs/Imu'
 });
 
 //---------------------------------------------------------
@@ -100,29 +94,22 @@ var imu_data_topic = new ROSLIB.Topic({
 //---------------------------------------------------------
     
 // We fill the HTML tables at the same time...
-pos_topic.subscribe(function(message) {
-    console.log('Received message on ' + pos_topic.name + ': ' + message.data);
-    var i;
-    
-    pos_table = document.getElementById('Position');
-    for (i = 0; i < 3; i++)
-    {
-    	pos_table.rows[1].cells[i].innerHTML = message.data[i].toFixed(2);
-    }    
+vitesse_odom_topic.subscribe(function(message) {
+    console.log('Received message on ' + vitesse_odom_topic.name + ': ' + message.data);
+    pos_table = document.getElementById('vitesse');
+    pos_table.rows[1].cells[0].innerHTML = message.twist.twist.linear.x.toFixed(2);
+    pos_table.rows[1].cells[1].innerHTML = message.twist.twist.linear.z.toFixed(2);
 });
 
-obs_pos_topic.subscribe(function(message) {
-    console.log('Received message on ' + obs_pos_topic.name + ': ' + message.data);
-    var i;
-    var j;
+sonar_pairs_topic.subscribe(function(message) {
+    console.log('Received message on ' + sonar_pairs_topic.name + ': ' + message.data);
+    var i = message.data[0].toFixed(2);
     
     sonars_table = document.getElementById('Sonars');
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < 2; i++)
     {
-    	for (j = 0; j < 2; j++)
-    	{
-	    sonars_table.rows[i+1].cells[j+1].innerHTML = message.data[i*2+j].toFixed(2);
-	}
+        sonars_table.rows[message.data[0]+1+i].cells[1].innerHTML = message.data[i+1] < 2.0;
+        sonars_table.rows[message.data[0]+1+i].cells[2].innerHTML = message.data[i+1].toFixed(2);
     }    
 });
 
@@ -131,29 +118,10 @@ estop_state_topic.subscribe(function(message) {
     
     alarm_message = document.getElementById('Alarms');
     
-    if (message.data[0] > 0)
+    if (message.data > 0)
     {
         alarm_message.innerHTML+= '\n> ' + date_time + ': EStop State : ' + message.data[0].toFixed(0);
     }
-});
-
-tele_batt_topic.subscribe(function(message) {
-    console.log('Received message on ' + tele_batt_topic.name + ': ' + message.data);
-    var i;
-    var j;
-    
-    batt_table = document.getElementById('Batteries');
-    for (i = 0; i < 2; i++)
-    {
-    	for (j = 0; j < 4; j++)
-    	{
-	    batt_table.rows[i+1].cells[j+1].innerHTML = message.data[i*4+j].toFixed(2);
-	}
-    }      
-});
-
-pos_tourellee_topic.subscribe(function(message) {
-    console.log('Received message on ' + pos_tourellee_topic.name + ': ' + message.data);    
 });
 
 debug_mot_topic.subscribe(function(message) {
@@ -162,68 +130,40 @@ debug_mot_topic.subscribe(function(message) {
     var j;
     
     motors_table = document.getElementById('Motors');
-    for (i = 0; i < 5; i++)
+    if (message.data[0] < 5)
     {
-    	for (j = 0; j < 5; j++)
-    	{
-	    motors_table.rows[i+1].cells[j+1].innerHTML = message.data[i*5+j].toFixed(2);
-	}
-    }      
+        i = 2;
+    }
+    else
+    {
+        i = 3;
+    }
+
+    for (j = 1; j < 5; j++)
+    {
+        motors_table.rows[i].cells[j].innerHTML = message.data[j].toFixed(2);
+    }
 });
 
 gps_data_topic.subscribe(function(message) {
     console.log('Received message on ' + gps_data_topic.name + ': ' + message.data);
-    var i;
-    
     gps_table = document.getElementById('GPS');
-    for (i = 0; i < 3; i++)
-    {
-	gps_table.rows[1].cells[i+3].innerHTML = message.data[i].toFixed(2);
-    }      
+    gps_table.rows[1].cells[0].innerHTML = message.longitude.toFixed(2);
+    gps_table.rows[1].cells[1].innerHTML = message.latitude.toFixed(2);
+    gps_table.rows[1].cells[2].innerHTML = message.altitude.toFixed(2);
 });
 
 imu_data_topic.subscribe(function(message) {
     console.log('Received message on ' + imu_data_topic.name + ': ' + message.data);
-    var i;
     
     imu_table = document.getElementById('IMU');
-    for (i = 0; i < 9; i++)
-    {
-	imu_table.rows[1].cells[i].innerHTML = message.data[i].toFixed(2);
-    }      
+    imu_table.rows[1].cells[0].innerHTML = message.orientation.x.toFixed(2);
+    imu_table.rows[1].cells[1].innerHTML = message.orientation.y.toFixed(2);
+    imu_table.rows[1].cells[2].innerHTML = message.orientation.z.toFixed(2);
+    imu_table.rows[1].cells[3].innerHTML = message.orientation.w.toFixed(2);
 });
 
-
-
-/*pos_topic.subscribe(function(message) {
-    console.log('Received message on ' + general_topic.name + ': ' + message.data);
-
-    gen_stats_table = document.getElementById('Gen_Stats');
-    gen_stats_table.rows[0].cells[1].innerHTML = message.data;
-    gen_stats_table.rows[1].cells[1].innerHTML = message.data;
-    gen_stats_table.rows[2].cells[1].innerHTML = message.data;
-
-    gps_table = document.getElementById('GPS');
-    gps_table.rows[1].cells[0].innerHTML = message.data;
-    gps_table.rows[1].cells[1].innerHTML = message.data;
-    gps_table.rows[1].cells[2].innerHTML = message.data;
-    gps_table.rows[1].cells[3].innerHTML = message.data;
-    gps_table.rows[1].cells[4].innerHTML = message.data;
-    gps_table.rows[1].cells[5].innerHTML = message.data;
-
-    
-    imu_table = document.getElementById('IMU');
-    imu_table.rows[1].cells[0].innerHTML = message.data;
-    imu_table.rows[1].cells[1].innerHTML = message.data;
-    imu_table.rows[1].cells[2].innerHTML = message.data;
-    imu_table.rows[1].cells[3].innerHTML = message.data;
-    imu_table.rows[1].cells[4].innerHTML = message.data;
-    imu_table.rows[1].cells[5].innerHTML = message.data;
-    imu_table.rows[1].cells[6].innerHTML = message.data;
-    imu_table.rows[1].cells[7].innerHTML = message.data;
-    imu_table.rows[1].cells[8].innerHTML = message.data;
-}); 
-*/
+// TODO : Souffl Height
 
 // Other alarms
 

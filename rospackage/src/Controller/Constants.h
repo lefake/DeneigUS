@@ -28,8 +28,10 @@
 
 // ======================= MOTORS ===================================
 
-#define RADIUS 0.2159/2
+#define RADIUS 0.24/2
+#ifndef M_PI
 #define M_PI 3.14159
+#endif
 
 // ======================= Servos ===================================
 #define NBR_SERVOS                          2

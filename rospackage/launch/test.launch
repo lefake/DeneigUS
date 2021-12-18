@@ -1,0 +1,7 @@
+<launch>
+  <param name="joy_type" value="logi"/>
+
+  <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
+    <rosparam file="$(find deneigus)/configs/joy_params.yaml" />
+  </node>
+</launch>

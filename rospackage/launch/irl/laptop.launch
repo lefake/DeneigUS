@@ -1,10 +1,11 @@
 <launch>
-  <param name="joy_type" value="logi" />
-
   <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
     <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
   </node>
-
-  <node pkg="deneigus" type="executif.py" name="executif" output="screen"/>
+  
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
+    <arg name="port" value="9090"/>
+    <arg name="output" value="log"/>
+  </include>
 
 </launch>

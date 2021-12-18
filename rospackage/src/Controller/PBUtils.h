@@ -13,14 +13,14 @@ Description: Header file of the nanopb communication protocol
 #include <pb.h>
 #include <pb_encode.h>
 #include <pb_decode.h>
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 
-#define MAX_MSG_LEN                         100
-#define MAX_NBS_MSG                         1
+#define MAX_MSG_LEN                         200
+#define MAX_NBS_MSG                         6
 
 struct Topic {
   int id;
-  pb_msgdesc_t* type;
+  const pb_msgdesc_t* type;
   void* msg;
 };
 
@@ -34,12 +34,16 @@ enum TOPICS
   SONAR_PAIRS,
   SOUFFLANTE_HEIGHT,
   ESTOP_STATE,
+  DEBUG_MOT,
 
   // IN
   PROP,
   CHUTE,
   SOUFFLANTE_CMD,
   DEADMAN,
+  ESTOP,
+  LIGHT,
+  PID_CST,
 
   _NBS_TOPICS
 };
@@ -47,7 +51,7 @@ enum TOPICS
 class PBUtils
 {
   public:
-    PBUtils(Topic*);
+    PBUtils(Topic*, ErrorHandler*);
     ~PBUtils();
     bool decodePb(char* , int *, int &);
     void pbSend(int, ...);
@@ -57,8 +61,10 @@ class PBUtils
     void charsToBytes(char* , uint8_t*);
     uint8_t charToHex(char, char);
     
-    pb_msgdesc_t *idToType[_NBS_TOPICS];
+    const pb_msgdesc_t *idToType[_NBS_TOPICS];
     void* idToMsg[_NBS_TOPICS];
+
+    ErrorHandler* errorHandler;
 };
 
 
