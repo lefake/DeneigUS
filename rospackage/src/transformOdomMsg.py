@@ -17,11 +17,14 @@ from robot_localization.srv import *
 
 class TransformOdomMsg:
     def __init__(self):
+        self.logger = get_logger("transformOdomMsg")
+        self.logger.debug("Started transformOdomMsg init")
+
         self.enc_pub = rospy.Publisher('/wheel/odometry', Odometry, queue_size=10)
         self.imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self.gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)
 
-        origin_path = os.getcwd() + '/../catkin_ws/src/deneigus/map/origin_sim.yaml'
+        origin_path = os.getcwd() + '/../catkin_ws/src/deneigus/configs/origin_sim.yaml'
         origin = self.load_yaml(origin_path)
 
         self.set_datum(origin)
@@ -46,7 +49,7 @@ class TransformOdomMsg:
             try:
                 data = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                logger.info(exc)
+                self.logger.info(exc)
 
         return data
 
@@ -67,13 +70,10 @@ class TransformOdomMsg:
             geo_pose = rospy.ServiceProxy('datum', SetDatum)
             geo_pose(msg)
         except rospy.ServiceException as e:
-            logger.info("Service call for datum failed: %s" % e)
+            self.logger.info("Service call for datum failed: %s" % e)
 
     def transform_callback(self, data):
         self.transform_gps(data)
-        self.transform_imu(data)
-        self.transform_enc(data)
-
 
     def transform_gps(self, data):
         msg = NavSatFix()
@@ -93,29 +93,6 @@ class TransformOdomMsg:
         msg.altitude = altitude
 
         self.gps_pub.publish(msg)
-
-    def transform_enc(self, data):
-        msg = Odometry()
-
-        msg.header.seq =  data.header.seq
-        msg.header.stamp = rospy.get_rostime()
-        msg.header.frame_id = 'base_link'
-        msg.twist.twist.linear.x = data.twist.twist.linear.x
-        msg.twist.twist.linear.y = data.twist.twist.linear.y
-        msg.twist.twist.linear.z = data.twist.twist.linear.z
-        msg.twist.twist.angular.z = data.twist.twist.angular.z
-
-        self.enc_pub.publish(msg)
-
-    def transform_imu(self, data):
-        msg = Imu()
-
-        msg.header.seq =  data.header.seq
-        msg.header.stamp = rospy.get_rostime()#data.header.stamp
-        msg.header.frame_id = 'base_link'
-        msg.orientation = data.pose.pose.orientation
-
-        self.imu_pub.publish(msg)
 
 
 if __name__ == '__main__':
