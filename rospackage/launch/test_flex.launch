@@ -4,7 +4,7 @@
   <arg name="has_ard" default="0"/>
 
   <arg name="joy_port" default="/dev/input/js2" />
-  <param name="joy_type" value="ps3" />
+  <param name="joy_type" value="logi" />
 
   <arg name="map_file" default="$(find deneigus)/map/map.yaml"/>
   <arg name="rviz_file" default="-d $(find deneigus)/rviz/simulations.rviz"/>
@@ -19,13 +19,13 @@
     </include>
   </group>
 
-  <!-- python sonar2laserscan Node -->
+  <!-- sonar2laserscan -->
   <node pkg="deneigus" type="sonar2laserscan.py" name="sonar2laserscan" output="screen" clear_params="true"/>
 
   <!-- python transformOdomMsg Node -->
   <node pkg="deneigus" type="transformOdomMsg.py" name="transformOdomMsg" output="screen" clear_params="true"/>
 
- <!-- python pb2ros Node -->
+ <!-- pb2ros -->
   <group if="$(arg has_ard)">
     <node pkg="deneigus" type="pb2ros.py" name="pb2ros" output="screen" clear_params="true"/>
   </group>
@@ -36,11 +36,11 @@
 <!-- joy node -->
   <group if="$(arg has_joy)">
     <node respawn="true" pkg="joy" type="joy_node" name="raw_joy" clear_params="true">
-      <param name="dev" type="string" value="$(arg joy_port)" />
-      <param name="deadzone" value="0.12" />
+      <rosparam command="load" file="$(find deneigus)/configs/joy_params.yaml" />
     </node>
   </group>
 
+<!-- map_server -->
 <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" clear_params="true"/>
 
 <!-- Static TF -->
@@ -52,106 +52,53 @@
 <node pkg="tf2_ros" type="static_transform_publisher" name="sf5_broadcaster" args="-0.22 0.32 0.73484 1.5446 0 0 base_link sonar_f_5" clear_params="true"/>
 <node pkg="tf2_ros" type="static_transform_publisher" name="sf6_broadcaster" args="0.13 0.32 0.73484 0.6108 0 0 base_link sonar_f_6" clear_params="true"/>
 
+<!-- Move base flex -->
 <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base_flex" output="screen" clear_params="true">
     <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find deneigus)/map/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find deneigus)/map/local_costmap_params.yaml" command="load"/>
     <rosparam file="$(find deneigus)/map/global_costmap_params.yaml" command="load"/>
-    <rosparam file="$(find deneigus)/map/move_base_flex.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/configs/navfn_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/configs/recovery_params.yaml" command="load"/>
+    <rosparam file="$(find deneigus)/configs/teb_params.yaml" command="load"/>
 </node>
 
+<!-- Rviz -->
 <node type="rviz" name="rviz" pkg="rviz" args="$(arg rviz_file)"/>
 
+<!-- stateManagement -->
+<node pkg="deneigus" type="stateManagement.py" name="stateManagement" output="screen" clear_params="true"/>
 
-<!-- python SimpleCmdMoveBase Node -->
-<node pkg="deneigus" type="behaviorTree.py" name="behaviorTree" output="screen" clear_params="true"/>
+<!-- MBF TREE -->
+<node pkg="deneigus" type="mbf_behavior_tree.py" name="mbf_behavior_tree" output="screen" clear_params="true"/>
 
-<!--    robot_localization odom to base_link -->
-<node pkg="robot_localization" type="ekf_localization_node"
-      name="robot_localization_ekf_node_local"
-      clear_params="true">
-  <param name="frequency" value="10."/>
-  <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.2"/>
-  <param name="two_d_mode" value="true"/>
-  <param name="publish_tf" value="true"/>
-  <param name="map_frame" value="map"/>
-  <param name="odom_frame" value="odom"/>
-  <param name="base_link_frame" value="base_link"/>
-  <param name="world_frame" value="odom"/>
-  <param name="transform_time_offset" value="1e-7"/>
+<!-- Chute -->
+<node pkg="deneigus" type="chute_node.py" name="chute_node" output="screen" clear_params="true"/>
 
-  <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
-  <param name="imu0_queue_size" value="5."/>
-  <rosparam param="odom0_config">[false, false, false,
-                              false, false, false,
-                              true, true, true,
-                              false, false, true,
-                              false, false, false]</rosparam>
+<!-- Soufflante -->
+<node pkg="deneigus" type="soufflante_node.py" name="soufflante_node" output="screen" clear_params="true"/>
 
+<!-- ProgressMap -->
+<node pkg="deneigus" type="progressMap.py" name="progressMap" output="screen" clear_params="true"/>
+
+<!-- GlobalPlanner -->
+<node pkg="deneigus" type="global_planner.py" name="global_planner" output="screen" clear_params="true"/>
+
+<!-- robot_localization_ekf_node_local -->
+<node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_local" clear_params="true">
+  <rosparam file="$(find deneigus)/configs/ekf_localization_local_params.yaml" command="load"/>
   <remap from="odometry/filtered" to="odometry/filtered/local"/>
 </node>
 
-<!-- Robot localization map to base_link -->
-<node pkg="robot_localization" type="ekf_localization_node"
-      name="robot_localization_ekf_node_global"
-      clear_params="true">
-  <param name="frequency" value="10."/>
-  <param name="sensor_timeout" value="0.2"/>
-  <param name="transform_timeout" value="0.2"/>
-  <param name="two_d_mode" value="true"/>
-  <param name="publish_tf" value="true"/>
-  <param name="map_frame" value="map"/>
-  <param name="odom_frame" value="odom"/>
-  <param name="base_link_frame" value="base_link"/>
-  <param name="world_frame" value="map"/>
-  <param name="transform_time_offset" value="1e-7"/>
-
-  <param name="imu0" value="/imu/data"/>
-  <param name="imu0_differential" value="false"/>
-  <param name="imu0_relative" value="false"/>
-  <param name="imu0_queue_size" value="5."/>
-  <rosparam param="imu0_config">[false, false, false,
-                              true, true, true,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
-
-  <param name="odom0" value="/wheel/odometry"/>
-  <param name="odom0_differential" value="false"/>
-  <param name="odom0_relative" value="false"/>
-  <param name="odom0_queue_size" value="5."/>
-  <rosparam param="odom0_config">[false, false, false,
-                              false, false, false,
-                              true, true, true,
-                              false, false, true,
-                              false, false, false]</rosparam>
-
-  <param name="odom1" value="/odometry/gps"/>
-  <param name="odom1_differential" value="false"/>
-  <param name="odom1_relative" value="false"/>
-    <param name="odom1_queue_size" value="5."/>
-  <rosparam param="odom1_config">[true, true, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false,
-                              false, false, false]</rosparam>
-
+<!-- robot_localization_ekf_node_global -->
+<node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_global" clear_params="true">
+  <rosparam file="$(find deneigus)/configs/ekf_localization_global_params.yaml" command="load"/>
   <remap from="odometry/filtered" to="odometry/filtered/global"/>
 </node>
 
-<!-- navsat_transform_node  -0.25949167467707 -->
-<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" clear_params="true">
-  <param name="transform_timeout" value="0.2"/>
-  <param name="magnetic_declination_radians" value="0.0"/>
-  <param name="navsat_transform_node's zero_altitude" value="true"/>
-  <param name="broadcast_cartesian_transform" value="false"/>
-  <param name="yaw_offset" value="0"/>
-  <param name="publish_filtered_gps" value="true"/>
-  <param name="wait_for_datum" value="true"/>
-
+<!-- navsat_transform_node -->
+<node pkg="robot_localization" type="navsat_transform_node"  name="navsat_transform_node" respawn="true" clear_params="true">
+  <rosparam file="$(find deneigus)/configs/navsat_transform_params.yaml" command="load"/>
   <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
 </node>
 

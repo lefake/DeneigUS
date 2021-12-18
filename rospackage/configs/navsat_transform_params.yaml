@@ -1,0 +1,8 @@
+frequency: 10.0
+transform_timeout: 0.2
+magnetic_declination_radians: 0.0
+navsat_transform_node's zero_altitude: true
+broadcast_cartesian_transform: false
+yaw_offset: 0
+publish_filtered_gps: true
+wait_for_datum: true
