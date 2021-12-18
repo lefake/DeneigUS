@@ -23,12 +23,9 @@ import rospy
 import sys
 import logging
 import typing
-import dynamic_reconfigure.client
 
-import geometry_msgs.msg as geometry_msgs
 import mbf_msgs.msg as mbf_msgs
 
-from geometry_msgs.msg import PoseStamped
 from deneigus.msg import mbf_msg
 from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger

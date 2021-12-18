@@ -33,7 +33,7 @@ class Ctrl_manuel:
         soufflante_cmd = Int32()
 
         prop.data = lin_ang_2_tank(msg.axes[self.joy_indexes["prop_lin"]], msg.axes[self.joy_indexes["prop_ang"]])
-        speed = abs(msg.axes[self.joy_indexes["soufl_speed"]] - 1) * 3  # TODO : Change the range
+        speed = abs(msg.axes[self.joy_indexes["soufl_speed"]] - 1) * 2
         chute.data = [(msg.axes[self.joy_indexes["chute_rot"]]) * 90,
                       (msg.axes[self.joy_indexes["chute_elev"]] + 1) * 45, speed]
 

@@ -8,11 +8,9 @@ import numpy as np
 
 from tf.listener import TransformListener
 
-from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger
 from geometry_msgs.msg import PointStamped
 from std_msgs.msg import Bool, Float32MultiArray
-from deneigus.msg import chute_msg
 from nav_msgs.msg import OccupancyGrid, Odometry
 from nav_msgs.srv import GetMap
 
