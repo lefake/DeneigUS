@@ -82,7 +82,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("BFM"):
-            path_mbf, path_soufflante, path_chute = self.plan_BF(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_BF(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("RE"):
@@ -90,7 +90,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("REM"):
-            path_mbf, path_soufflante, path_chute = self.plan_RE(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_RE(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("ZZ"):
@@ -98,7 +98,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("ZZM"):
-            path_mbf, path_soufflante, path_chute = self.plan_ZZ(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_ZZ(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         else:
