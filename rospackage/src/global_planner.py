@@ -9,44 +9,13 @@ import tf
 import numpy as np
 from numpy import deg2rad as d2r
 
-from std_msgs.msg import Float32MultiArray, Int32
-from nav_msgs.msg import OccupancyGrid
+from std_msgs.msg import Int32
 from geometry_msgs.msg import PoseStamped
 from deneigus.msg import chute_msg, mbf_msg
 from deneigus.srv import set_paths
+from nav_msgs.srv import GetMap
 
-from config_utils import ConfigUtils
-
-
-# Behavior for auto mode values
-behavior_choices = {
-    "BF": 0,
-    "BFM": 1,
-    "RE": 2,
-    "REM": 3,
-    "ZZ": 4,
-    "ZZM": 5}
-
-
-'''
-class global_target:
-    def __init__(self, pose, soufflante, chute):
-        self._pose = pose
-        self._soufflante = soufflante
-        self._chute = chute
-
-    @property
-    def pose(self):
-        return self._pose
-
-    @property
-    def soufflante(self):
-        return self._soufflante
-
-    @property
-    def chute(self):
-        return self._chute
-'''
+from common_utils import ConfigYaml, behavior_choices
 
 
 class GlobalPlan:
@@ -55,7 +24,7 @@ class GlobalPlan:
         self.logger.debug("Started global_planner init")
 
         self.turn_radius = 1.0   # turn radius of the robot (m)
-        self.slice_width = 0.5   # distance between passe (m) -> environ 20po
+        self.slice_width = 0.6   # distance between passe (m) -> environ 20po
         self.snow_throw_dist = 6 # m
         # v_ext for future use
         self.v_ext_forward = [1, 0.3]
@@ -63,16 +32,16 @@ class GlobalPlan:
         self.v_ext_none = [0, 0]
 
         # load config -> start, side_street, snow_out_area
-        config_utils = ConfigUtils()
+        config_utils = ConfigYaml()
         self.map_config = config_utils.load_yaml(path=os.getcwd() + '/../catkin_ws/src/deneigus/map/global_planner_params.yaml')
         # TODO : get params to wind (vector) and snow density
 
-        global_map = rospy.wait_for_message("/move_base_flex/global_costmap/costmap", OccupancyGrid)
-        self.map_grid = np.reshape(global_map.data, (global_map.info.height, global_map.info.width))
-        self.map_resolution = global_map.info.resolution
+        rospy.wait_for_service('static_map')
+        static_map_func = rospy.ServiceProxy('static_map', GetMap)
+        static_map = static_map_func().map
+        self.map_grid = np.reshape(static_map.data, (static_map.info.height, static_map.info.width))
+        self.map_resolution = static_map.info.resolution
         self.map_obstacle_value = 100
-        self.logger.debug("First global costmap recieved")
-        rospy.Subscriber('/move_base_flex/global_costmap/costmap', OccupancyGrid, self.map_callback)
 
         # Subscriber from nodes or robot
         rospy.Subscriber('behavior', Int32, self.auto_plan_callback)
@@ -104,11 +73,6 @@ class GlobalPlan:
         c.force45 = force45
         return c
 
-    def map_callback(self, msg):
-        self.map_resolution = msg.info.resolution
-        self.map_grid = np.reshape(msg.data, (msg.info.height, msg.info.width))
-        self.logger.debug("New global costmap recieved")
-
     def auto_plan_callback(self, msg):
         # Planning
         behavior_name_list = list(behavior_choices.keys())
@@ -117,7 +81,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("BFM"):
-            path_mbf, path_soufflante, path_chute = self.plan_BF(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_BF(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("RE"):
@@ -125,7 +89,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("REM"):
-            path_mbf, path_soufflante, path_chute = self.plan_RE(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_RE(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("ZZ"):
@@ -133,7 +97,7 @@ class GlobalPlan:
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         elif msg.data == behavior_choices.get("ZZM"):
-            path_mbf, path_soufflante, path_chute = self.plan_ZZ(self.map_config['start'], mirror=True)
+            path_mbf, path_soufflante, path_chute = self.plan_ZZ(self.map_config['startM'], mirror=True)
             self.logger.info(f"Behavior {behavior_name_list[msg.data]}")
 
         else:
@@ -198,7 +162,7 @@ class GlobalPlan:
         # First slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y, start_angle, 0, self.snow_throw_dist*M, False)
         # rotate 180deg and slide
-        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), M)
+        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), M, M)
         # Second slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, start_x, start_y+(self.slice_width*M), start_angle+(d2r(180)*M), 0, -self.snow_throw_dist*M, False)
         # Prep for rest of the driveway
@@ -208,8 +172,12 @@ class GlobalPlan:
         for i in range(nbr_slice_x):
             p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, start_x+(i*self.slice_width), max_dist_y, start_angle+(d2r(90)*M), self.snow_throw_dist, 0, True)
 
-            if i < nbr_slice_x:
+            if i == nbr_slice_x-1:
+                p_targets, s_targets, c_targets = self.goto_no_blow(p_targets, s_targets, c_targets, start_x,  start_y, start_angle)
+
+            elif i < nbr_slice_x:
                 p_targets, s_targets, c_targets = self.slide_backnext(p_targets, s_targets, c_targets, start_x+((i+1)*self.slice_width), start_y+(self.slice_width*M), start_angle+(d2r(90)*M), M)
+
 
         return p_targets, s_targets, c_targets
 
@@ -230,7 +198,7 @@ class GlobalPlan:
         # First slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y, start_angle, 0, self.snow_throw_dist*M, False)
         # rotate 180deg and slide
-        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), M)
+        p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x+self.turn_radius, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), M, M)
         # Second slice
         p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y + (self.slice_width*M), start_angle + (d2r(180)*M), 0, -self.snow_throw_dist*M, False)
         # Prep for rest of the driveway
@@ -262,12 +230,14 @@ class GlobalPlan:
 
         # Rest of the driveway
         for i in range(nbr_slice_y):
-            if i%2 == 0:  # even number
-                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), M)
+            if i == nbr_slice_y-1:
+                p_targets, s_targets, c_targets = self.goto_no_blow(p_targets, s_targets, c_targets, start_x,  start_y, start_angle)
+            elif i%2 == 0:  # even number
+                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), M, M)
                 p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, start_x, start_y + ((i+1)*self.slice_width*M), start_angle + (d2r(180)*M), 0, -self.snow_throw_dist*M, False)
             else:
-                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, start_x, start_y+((i+1)*self.slice_width*M), start_angle, -M)
-                p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y+((i+1)*self.slice_width*M), start_angle, 0, self.snow_throw_dist*M, False)
+                p_targets, s_targets, c_targets = self.slide_zigzag(p_targets, s_targets, c_targets, start_x, start_y + ((i+1)*self.slice_width*M), start_angle, M, -M)
+                p_targets, s_targets, c_targets = self.goto_blow(p_targets, s_targets, c_targets, max_dist_x, start_y + ((i+1)*self.slice_width*M), start_angle, 0, self.snow_throw_dist*M, False)
 
         return p_targets, s_targets, c_targets
 
@@ -300,16 +270,16 @@ class GlobalPlan:
         return Lpose, Lsouffl, Lchute
 
     # niv 3
-    def slide_zigzag(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, M):
-        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y-(self.slice_width*M), pose_rot-(d2r(90)*M))
-        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot-(d2r(90)*M), 4, 0, False)
+    def slide_zigzag(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, M, F):
+        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y-(self.slice_width*M), pose_rot-(d2r(90)*F))
+        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot-(d2r(90)*F), 4, 0, False)
         Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot)
         return Lpose, Lsouffl, Lchute
 
     # niv 3
     def slide_backnext(self, Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, M):
         Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x-self.slice_width, pose_y-(self.slice_width*M), pose_rot)
-        Lpose, Lsouffl, Lchute = self.goto_no_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot)
+        Lpose, Lsouffl, Lchute = self.goto_blow(Lpose, Lsouffl, Lchute, pose_x, pose_y, pose_rot, 2, 0, True)
         return Lpose, Lsouffl, Lchute
 
 

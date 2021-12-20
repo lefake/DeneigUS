@@ -19,7 +19,7 @@
 // #define HAS_IMU
 
 // ==================== SONARS ================================
-#define HAS_SONARS
+// #define HAS_SONARS
 
 // ==================== MOTOR_BLOW ============================
 // #define HAS_MOTOR_BLOW
@@ -30,10 +30,11 @@
 // ==================== SERVOS ================================
 // #define HAS_SERVOS
 
+// ==================== ACTUATOR  =============================
+// #define HAS_ACTUATOR
 
-// ==================== ENCODERS ==============================
-// #define HAS_ENCODERS
-
+// ==================== LIGHTTOWER ================================
+ #define HAS_LIGHTTOWER
 
 
 // ==================== STATE OF THE ROBOT ====================
@@ -42,8 +43,6 @@
 // Will only calibrate sensors and write values to EEPROM
 // #define CONFIGURATION_MODE
 
-#define DEBUGGING
-
-
+// #define DEBUGGING
 
 #endif // _CONFIGURATION_H

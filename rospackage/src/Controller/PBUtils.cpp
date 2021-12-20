@@ -10,8 +10,9 @@ Date: April 2020
  * 
  * @param topics: Array of all the topics containing their type
  */ 
-PBUtils::PBUtils(Topic *topics)
+PBUtils::PBUtils(Topic *topics, ErrorHandler* e)
 {
+  errorHandler = e;
   for (int i = 0; i < _NBS_TOPICS; ++i)
   {
     idToType[topics[i].id] = topics[i].type;
@@ -85,7 +86,7 @@ void PBUtils::pbSend(int nbs, ...)
       }
     }
     else
-      sendStatus(ERROR, ENCODING_PB);
+      errorHandler->sendStatus(ERROR, ENCODING_PB);
     
     toSendBuilder += ";";
   }
@@ -95,7 +96,7 @@ void PBUtils::pbSend(int nbs, ...)
   if (success)
     Serial.print(toSendBuilder);
   else
-    sendStatus(ERROR, ENCODING_PB);
+    errorHandler->sendStatus(ERROR, ENCODING_PB);
 }
 
 /*

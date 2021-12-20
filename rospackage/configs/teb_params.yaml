@@ -9,12 +9,12 @@ teb:
   xy_goal_tolerance: 0.1
   yaw_goal_tolerance: 0.05
 
-  acc_lim_x: 0.05
-  acc_lim_theta: 0.5
+  acc_lim_x: 0.25
+  acc_lim_theta: 0.06
 
-  max_vel_x: 0.25
-  max_vel_x_backwards: 0.25
-  max_vel_theta: 0.05
+  max_vel_x: 1.0
+  max_vel_x_backwards: 1.0
+  max_vel_theta: 0.25
 
   #max_global_plan_lookahead_dist: 10
 
@@ -22,15 +22,19 @@ teb:
 
   inflation_dist: 0.2
   min_obstacle_dist: 0.1
-  penalty_epsilon: 0.01
+  penalty_epsilon: 0.05
 
-  legacy_obstacle_association: True
+  weight_optimaltime: 50
+  no_inner_iterations: 8
+  no_outer_iterations: 6
+
+  #legacy_obstacle_association: True
 
   footprint_model:
     type: "polygon"
     vertices: [[0.85, 0.35],[0.85, -0.35], [-0.4, -0.35], [-0.4, 0.35]]
 
-controller_frequency: 5.0
+controller_frequency: 10.0
 controller_patience: 10.0
 
 oscillation_timeout: 60.0

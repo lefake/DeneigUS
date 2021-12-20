@@ -5,11 +5,10 @@ import logging
 
 from deneigus.srv import acknowledge,set_paths
 from logging_utils import setup_logger, get_logger
-from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Float32, Int32
 from deneigus.msg import chute_msg, mbf_msg
 
-import numpy as np
+from common_utils import control_modes
 
 
 class StateManagement:
@@ -28,12 +27,36 @@ class StateManagement:
         self.path_chute = []
         self.path_soufflante = []
 
+        self.last_mbf = mbf_msg()
+        self.last_chute = chute_msg()
+        self.last_soufflante = Int32()
+        self.actif_mode = control_modes.manual
+
         self.len_path = 0
 
         self.mbf_pub = rospy.Publisher('/mbf_new_goal', mbf_msg, queue_size=10)
         self.chute_pub = rospy.Publisher('/chute_new_goal', chute_msg, queue_size=10)
         self.soufflante_pub = rospy.Publisher('/soufflante_new_goal', Int32, queue_size=10)
         self.progress_pub = rospy.Publisher('/progress_bar', Float32, queue_size=10)
+
+        rospy.Subscriber("/control_mode", Int32, self.control_mode_callback)
+
+    def control_mode_callback(self, msg):
+        self.actif_mode = control_modes(msg.data)
+
+        if self.actif_mode == control_modes.auto:
+            if self.last_mbf.pose.pose.orientation.x != 0 or self.last_mbf.pose.pose.orientation.y != 0 or \
+               self.last_mbf.pose.pose.orientation.z != 0 or self.last_mbf.pose.pose.orientation.w != 0:
+                self.mbf_pub.publish(self.last_mbf)
+                self.acknowledge_mbf = False
+                self.logger.info('Fake aknowledge from mbf')
+
+            self.chute_pub.publish(self.last_chute)
+            self.acknowledge_chute = False
+
+            self.soufflante_pub.publish(self.last_soufflante)
+            self.acknowledge_soufflante = False
+
 
     def acknowledge_callback(self, msg):
         # example: rosservice call /acknowledge "MBF" 1
@@ -52,26 +75,29 @@ class StateManagement:
             else:
                 logger.info('Bad name')
                 success = False
-
         else:
             success = False
 
-        if len(self.path_mbf) != 0:
+        if len(self.path_mbf) != 0 and self.actif_mode == control_modes.auto:
             self.send_new_objectives()
 
         return success
 
     def send_new_objectives(self):
         if self.acknowledge_soufflante and self.acknowledge_mbf and self.acknowledge_chute:
-            mbf_now = self.path_mbf.pop(0)
-            if mbf_now.pose.pose.orientation.x != 0 or mbf_now.pose.pose.orientation.y != 0 or mbf_now.pose.pose.orientation.z != 0 or mbf_now.pose.pose.orientation.w != 0:
-                self.mbf_pub.publish(mbf_now)
+
+            self.last_mbf = self.path_mbf.pop(0)
+            if self.last_mbf.pose.pose.orientation.x != 0 or self.last_mbf.pose.pose.orientation.y != 0 or \
+               self.last_mbf.pose.pose.orientation.z != 0 or self.last_mbf.pose.pose.orientation.w != 0:
+                self.mbf_pub.publish(self.last_mbf)
                 self.acknowledge_mbf = False
 
-            self.chute_pub.publish(self.path_chute.pop(0))
+            self.last_chute = self.path_chute.pop(0)
+            self.chute_pub.publish(self.last_chute)
             self.acknowledge_chute = False
 
-            self.soufflante_pub.publish(self.path_soufflante.pop(0))
+            self.last_soufflante = self.path_soufflante.pop(0)
+            self.soufflante_pub.publish(self.last_soufflante)
             self.acknowledge_soufflante = False
 
             progress = len(self.path_mbf)/self.len_path*100

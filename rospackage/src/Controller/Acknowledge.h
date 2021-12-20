@@ -10,7 +10,7 @@
 enum ID {
   CONTROLLER = 0,
   SENSORS,
-  BATTERY,
+  SAFETY,
 
   _NBS_ID
 };
@@ -28,7 +28,7 @@ class AckHandler
   
   private:
     int id;
-    String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "BATTERY" };
+    String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "SAFETY" };
 };
 
 #endif // _ACKNOWLEDGE_H

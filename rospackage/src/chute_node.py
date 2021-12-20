@@ -2,7 +2,6 @@
 
 import rospy
 import logging
-import tf
 import numpy as np
 
 from deneigus.msg import chute_msg
@@ -31,7 +30,7 @@ class ChuteNode:
         self.rot_odom = 0
         self.rot_start = 0
 
-        self.chute_cmd_pub = rospy.Publisher('/chute', Float32MultiArray, queue_size=10)
+        self.chute_cmd_pub = rospy.Publisher('/chute_auto', Float32MultiArray, queue_size=10)
         self.chute_new_goal_sub = rospy.Subscriber('/chute_new_goal', chute_msg, self.chute_goal_callback)
         self.odom_sub = rospy.Subscriber('/odometry/filtered/global', Odometry, self.odom_callback)
         self.soufflante_speed_sub = rospy.Subscriber('/soufflante_speed', Float32, self.soufflante_start_callback)
@@ -54,7 +53,8 @@ class ChuteNode:
             path_func('Chute', 1)
 
         elif x_target != 0.0 or y_target != 0.0:
-            self.chute_cmd.data = model_inverse(x_target, y_target, self.v_wind, self.ro_snow, force45)
+            cmd_ele, cmd_rot, cmd_speed = model_inverse(x_target, y_target, self.v_wind, self.ro_snow, force45)
+            self.chute_cmd.data = [np.rad2deg(cmd_ele), np.rad2deg(cmd_rot), cmd_speed]
 
         else:
             self.chute_cmd.data = [self.chute_cmd.data[0], self.chute_cmd.data[1], 0]
@@ -76,15 +76,11 @@ class ChuteNode:
         #cmd.data = [new_cmd_rot, cmd.data[1], cmd.data[2]]
         self.chute_cmd_pub.publish(self.chute_cmd)
 
-
     def soufflante_start_callback(self, msg):
         # TODO: Acknowledge only if the goal is reach
         rospy.wait_for_service('acknowledge')
         path_func = rospy.ServiceProxy('acknowledge', acknowledge)
         path_func('Chute', 1)
-
-
-
 
 
 if __name__ == '__main__':

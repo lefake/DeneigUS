@@ -2,7 +2,7 @@
 #define _ENCODER_H
 
 #include <SPI.h>
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include "Pins.h"
 #include "Constants.h"
 
@@ -12,17 +12,20 @@
 class Encoder
 {
   public:
-    Encoder();
+    Encoder(ErrorHandler* e);
     ~Encoder();
 
-    void init(int enc[]);
-    int getEncValue(int n);
-    double getEncVel(int n, long dt);
+    void init(int enc, bool reverse);
+    int getEncValue();
+    float getEncVel(long dt);
 
   private:
-    int* encPins;
+    ErrorHandler* errorHandler;
+
+    int encPin;
+    int lastRead = 0;
+    float multiplier = 1.0;
     uint8_t sendByte(uint8_t message, int pin);
-    int lastRead[NBS_ENCODERS] = { 0 };
     
 };
 #endif // _ENCODER_H

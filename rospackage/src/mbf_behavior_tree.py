@@ -23,12 +23,9 @@ import rospy
 import sys
 import logging
 import typing
-import dynamic_reconfigure.client
 
-import geometry_msgs.msg as geometry_msgs
 import mbf_msgs.msg as mbf_msgs
 
-from geometry_msgs.msg import PoseStamped
 from deneigus.msg import mbf_msg
 from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger
@@ -158,7 +155,7 @@ def create_root():
     bt_root.add_children([get_goal, fallback])
     get_goal.add_children([have_goal, new_goal])
     navigate.add_children([get_path, exe_path, clr_goal1])
-    fallback.add_children([navigate, recovery, clr_goal2])
+    fallback.add_children([navigate, clr_goal2]) #fallback.add_children([navigate, recovery, clr_goal2])
     return bt_root
 
 

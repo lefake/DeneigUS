@@ -1,7 +1,8 @@
 #include "Sonars.h"
 
-Sonars::Sonars() 
+Sonars::Sonars(ErrorHandler* e)  
 {
+  errorHandler = e;
   echoPins = (int *) malloc(sizeof(int)*NBS_SONARS);
   triggerPins = (int *) malloc(sizeof(int)*NBS_SONARS);
 }

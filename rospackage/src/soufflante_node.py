@@ -3,12 +3,9 @@
 import rospy
 import logging
 
-from deneigus.srv import acknowledge,set_paths
+from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger
-from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Int32
-
-import numpy as np
 
 class SoufflanteNode:
     def __init__(self):
@@ -18,7 +15,7 @@ class SoufflanteNode:
         self.goal = 1
         self.goal_reach = True
 
-        self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd', Int32, queue_size=10)
+        self.soufflante_cmd_pub = rospy.Publisher('/soufflante_cmd_auto', Int32, queue_size=10)
         self.soufflante_new_goal_sub = rospy.Subscriber('/soufflante_new_goal', Int32, self.soufflante_goal_callback)
         self.soufflante_height_sub = rospy.Subscriber('/soufflante_height', Int32, self.soufflante_height_callback)
 

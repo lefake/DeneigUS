@@ -2,7 +2,6 @@
 
 import logging
 import rospy
-import time
 import numpy as np
 
 from sensor_msgs.msg import LaserScan

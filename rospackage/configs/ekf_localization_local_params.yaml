@@ -1,6 +1,6 @@
-frequency: 10.
-sensor_timeout: 0.2
-transform_timeout: 0.2
+frequency: 15.
+sensor_timeout: 0.04
+transform_timeout: 0.04
 two_d_mode: true
 publish_tf: true
 map_frame: map
