@@ -1,6 +1,10 @@
 #include "Actuator.h"
 
-Actuator::Actuator() {}
+Actuator::Actuator(ErrorHandler* e) 
+{
+  errorHandler = e;
+}
+
 Actuator::~Actuator() {}
     
 void Actuator::init(const int upPin, const int downPin, const int rUpPin, const int rDownPin)
@@ -81,6 +85,6 @@ void Actuator::readPosition()
   {
     currentPos = UNKNOWN;
     disable();
-    sendStatusWithMessage(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
+    errorHandler->sendStatus(FATAL, ACTUATOR_DEVICE, "Both switch are pressed at the same time");
   }
 }

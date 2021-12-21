@@ -2,7 +2,6 @@
 
 import logging
 import rospy
-import time
 import numpy as np
 
 from sensor_msgs.msg import LaserScan
@@ -11,6 +10,9 @@ from logging_utils import setup_logger, get_logger
 
 class Sonar2LaserScan:
     def __init__(self):
+        self.logger = get_logger("Sonar2LaserScan")
+        self.logger.debug("Started Sonar2LaserScan init")
+
         self.pub = [
             rospy.Publisher('/laser_scan0', LaserScan, queue_size=10),
             rospy.Publisher('/laser_scan1', LaserScan, queue_size=10),

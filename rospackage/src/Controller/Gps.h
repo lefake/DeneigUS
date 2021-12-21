@@ -3,14 +3,14 @@
 
 #include <Wire.h>
 #include "SparkFun_Ublox_Arduino_Library.h" //http://librarymanager/All#SparkFun_Ublox_GPS
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include "floatarray.pb.h"
 #include "Constants.h"
 
 class Gps
 {
   public:
-    Gps();
+    Gps(ErrorHandler* e);
     ~Gps();
     void init();
     void getCoordinates( FloatArray* msg );
@@ -18,7 +18,7 @@ class Gps
   private:
     SFE_UBLOX_GPS myGPS;
     bool setupDone = false;
-
+    ErrorHandler* errorHandler;
 };
 
 #endif // _GPS_H

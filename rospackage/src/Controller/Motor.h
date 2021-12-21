@@ -3,12 +3,12 @@
 
 #include <Arduino.h>
 #include "Constants.h"
-#include "StatusMessage.h"
+#include "ErrorHandler.h"
 #include "Encoder.h"
 
 class Motor {
   public:
-    Motor();
+    Motor(ErrorHandler* e);
     ~Motor();
 
     void init(const int, const int, const int, const int, bool);
@@ -24,6 +24,8 @@ class Motor {
     float getDir();
 
   private:
+    ErrorHandler* errorHandler;
+  
     int backwardPin;
     int speedPin;
     int latchPin;
@@ -43,11 +45,10 @@ class Motor {
 
     float sens = 0;
     float last_c = 1;   // Init as positive value
-    float current_c;
-
+    float current_c = 0; 
     int lastLatch = 0;
     
-    Encoder SPIEncoder;
+    Encoder *SPIEncoder;
 
     void updatedt();
     void reset();

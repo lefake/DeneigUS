@@ -1,0 +1,11 @@
+planners:
+  - name: navfn/NavfnROS
+    type: navfn/NavfnROS
+
+recovery_enabled: true
+recovery_patience: 10.0
+
+planner_frequency: 1.0
+planner_patience: 10.0
+
+force_stop_at_goal: true

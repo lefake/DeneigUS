@@ -39,12 +39,15 @@ The list of ROS libraries used in the project is as follows:
 - [Joy](http://wiki.ros.org/joy) (To control the snowblower manually with a remote control)
 - [Map_server](http://wiki.ros.org/map_server) (To generate a static map)
 - [Costmap_2d](http://wiki.ros.org/costmap_2d) (To add obstacles layers to the static map)
-- [Move_Base](http://wiki.ros.org/move_base) (To load and use Costmap_2d parameters)
+- [Move_Base_Flex](http://wiki.ros.org/move_base_flex) (To load and use Costmap_2d parameters)
 - [Rosbrige Server](http://wiki.ros.org/rosbridge_suite) (In order to use our web Interface with ROS)
+- [Py-Tree_Ros] (http://wiki.ros.org/py_trees_ros) (To make behavior tree for move base flex)
+- [Robot_localization] (http://wiki.ros.org/robot_localization) (To fuse sensors)
+- [Teb_Local_Planner] (http://wiki.ros.org/teb_local_planner) (Local planner to replace the controller in move base flex)
 
 1. To install all ROS libraries needed in one command:
 ```bash
-sudo apt-get install ros-noetic-joy ros-noetic-map-server ros-noetic-costmap-2d ros-noetic-move-base ros-noetic-rosbridge-server
+sudo apt-get install ros-noetic-joy ros-noetic-map-server ros-noetic-costmap-2d ros-noetic-move-base-flex ros-noetic-rosbridge-server ros-noetic-py-tree-ros ros-noetic-robot-localization ros-noetic-teb-local-planner
 ```
 2. Clone the [Range_Sensor_Layer](https://github.com/DLu/navigation_layers.git) in the src folder of your catkin workspace (we don't need social_navigation_layer and navigation_layers. We use only de Range Layer):
 ```bash

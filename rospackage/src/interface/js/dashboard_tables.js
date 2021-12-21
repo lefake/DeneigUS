@@ -126,17 +126,23 @@ estop_state_topic.subscribe(function(message) {
 
 debug_mot_topic.subscribe(function(message) {
     console.log('Received message on ' + debug_mot_topic.name + ': ' + message.data);
+    var i;
+    var j;
     
     motors_table = document.getElementById('Motors');
-    motors_table.rows[2].cells[1].innerHTML = message.data[0].toFixed(2);
-    motors_table.rows[2].cells[2].innerHTML = message.data[1].toFixed(2);
-    motors_table.rows[2].cells[3].innerHTML = message.data[2].toFixed(2);
-    motors_table.rows[2].cells[4].innerHTML = message.data[3].toFixed(2);
+    if (message.data[0] < 5)
+    {
+        i = 2;
+    }
+    else
+    {
+        i = 3;
+    }
 
-    motors_table.rows[3].cells[1].innerHTML = message.data[4].toFixed(2);
-    motors_table.rows[3].cells[2].innerHTML = message.data[5].toFixed(2);
-    motors_table.rows[3].cells[3].innerHTML = message.data[6].toFixed(2);
-    motors_table.rows[3].cells[4].innerHTML = message.data[7].toFixed(2);
+    for (j = 1; j < 5; j++)
+    {
+        motors_table.rows[i].cells[j].innerHTML = message.data[j].toFixed(2);
+    }
 });
 
 gps_data_topic.subscribe(function(message) {

@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   rospy
   std_msgs
+  geometry_msgs
   costmap_2d
 )
 
@@ -51,16 +52,20 @@ catkin_python_setup()
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
+add_message_files(
+  FILES
+  chute_msg.msg
+  mbf_msg.msg
 #   Message1.msg
 #   Message2.msg
-# )
+)
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
   trajgen.srv
+  acknowledge.srv
+  set_paths.srv
 #   Service2.srv
 )
 
@@ -76,6 +81,7 @@ generate_messages(
   DEPENDENCIES
   actionlib_msgs
   std_msgs
+  geometry_msgs
 )
 
 ################################################
@@ -93,10 +99,11 @@ generate_messages(
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
+#generate_dynamic_reconfigure_options(
+#    cfg/parameter_server_basics.cfg
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
-# )
+#)
 
 ###################################
 ## catkin specific configuration ##
@@ -213,3 +220,4 @@ include_directories(
 catkin_install_python(PROGRAMS
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
