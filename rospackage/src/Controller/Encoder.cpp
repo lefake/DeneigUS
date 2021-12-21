@@ -4,7 +4,7 @@ Encoder::Encoder(){ }
 
 Encoder::~Encoder(){ }
 
-void Encoder::init(int enc)
+void Encoder::init(int enc, bool reverse)
 {
   encPin = enc;
 
@@ -22,6 +22,9 @@ void Encoder::init(int enc)
   delay(75);
 
   lastRead = getEncValue();
+
+  if (reverse)
+    multiplier = -1.0;
  
 }
 
@@ -41,9 +44,7 @@ float Encoder::getEncVel(long dt)
   }
 
   lastRead = current;
-  
-  float deg = diff * 2 * M_PI / NBS_TICK_PER_REV;
-  return deg * 1000.0 / dt;
+  return multiplier * (diff * 2 * M_PI / NBS_TICK_PER_REV) * 1000.0 / dt;
 }
 
 int Encoder::getEncValue()

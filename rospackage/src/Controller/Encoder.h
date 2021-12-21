@@ -15,14 +15,15 @@ class Encoder
     Encoder();
     ~Encoder();
 
-    void init(int enc);
+    void init(int enc, bool reverse);
     int getEncValue();
     float getEncVel(long dt);
 
   private:
     int encPin;
-    uint8_t sendByte(uint8_t message, int pin);
     int lastRead = 0;
+    float multiplier = 1.0;
+    uint8_t sendByte(uint8_t message, int pin);
     
 };
 #endif // _ENCODER_H

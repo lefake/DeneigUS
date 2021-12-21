@@ -10,7 +10,7 @@ Date: April 2020
  * 
  * @param topics: Array of all the topics containing their type
  */ 
-PBUtils::PBUtils(Topic *topics)
+PBUtils::PBUtils(const Topic *topics)
 {
   for (int i = 0; i < _NBS_TOPICS; ++i)
   {

@@ -3,12 +3,10 @@
 import rospy
 import logging
 
-from deneigus.srv import acknowledge,set_paths
+from deneigus.srv import acknowledge
 from logging_utils import setup_logger, get_logger
-from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Int32
 
-import numpy as np
 
 class SoufflanteNode:
     def __init__(self):

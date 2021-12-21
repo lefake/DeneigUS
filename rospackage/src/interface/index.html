@@ -97,31 +97,18 @@
                     </table>
                  </div>
 
-                <!--Batteries-->
-                <h5 class="card-header deneigus-header">Batteries (BMS)</h5>
+                <!--Vitesse-->
+                <h5 class="card-header deneigus-header">Vitesse (Enc)</h5>
                 <div class = "add-scroll-bar">
-                    <table id='Batteries' class="table">
+                    <table id='vitesse' class="table">
                     <thead>
                         <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Voltage (V)</th>
-                        <th scope="col">Current (A)</th>
-                        <th scope="col">Temp. (°C)</th>
-                        <th scope="col">Pad Activ.</th>
+                        <th scope="col">x (m/s)</th>
+                        <th scope="col">z (m/s)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         </tr>
@@ -135,9 +122,6 @@
                     <table id='GPS' class="table">
                     <thead>
                         <tr>
-                        <th scope="col">x (m)</th>
-                        <th scope="col">y (m)</th>
-                        <th scope="col">z (m)</th>
                         <th scope="col">Lat. (m)</th>
                         <th scope="col">Long. (m)</th>
                         <th scope="col">Elev. (m)</th>
@@ -148,12 +132,32 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         </tr>
                     </tbody>
                     </table>  
+                </div>
+
+                <!-- IMU -->
+                <h5 class="card-header deneigus-header">IMU</h5>
+                <div class = "add-scroll-bar">
+                    <table id='IMU' class="table">
+                        <thead>
+                            <tr>  
+                            <th scope="col">x</th>
+                            <th scope="col">y</th>
+                            <th scope="col">z</th>
+                            <th scope="col">w</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -165,17 +169,15 @@
                     <thead>
                         <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">State</th>
                         <th scope="col">Speed (m/s)</th>
-                        <th scope="col">Torque (N*m)</th>
-                        <th scope="col">Dir. (+/-)</th>
-                        <th scope="col">Pos. (rad)</th>
+                        <th scope="col">Command (m/s)</th>
+                        <th scope="col">Output (V)</th>
+                        <th scope="col">Dir. reverse (0/1)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                         <th scope="row">Blower</th>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -187,7 +189,6 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
                         </tr>
                         <tr>
                         <th scope="row">Right Track</th>
@@ -195,58 +196,8 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        </tr>
-                        <tr>
-                        <th scope="row">Exhaust Servo 1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        </tr>
-                        <tr>
-                        <th scope="row">Exhaust Servo 2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         </tr>
                     </tbody>
-                    </table>
-                </div>
-
-                 <!-- IMU -->
-                 <h5 class="card-header deneigus-header">IMU</h5>
-                 <div class = "add-scroll-bar">
-                    <table id='IMU' class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">ddy (m/s²)</th>
-                            <th scope="col">ddp (m/s²)</th>
-                            <th scope="col">ddr (m/s²)</th>
-                            <th scope="col">dy (rad/s)</th>
-                            <th scope="col">dp (rad/s)</th>
-                            <th scope="col">dr (rad/s)</th>
-                            <th scope="col">x (m)</th>
-                            <th scope="col">y (m)</th>
-                            <th scope="col">z (m)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
 

@@ -9,10 +9,16 @@ bool AckHandler::acknowldgeArduino(char* msg)
     Serial.print("{");
     Serial.print(IdName[id]);
     Serial.print("}");
+    acked = true;
     return true;
   }
   else
     return false;
+}
+
+bool AckHandler::getAcked()
+{
+  return acked;
 }
 
 void AckHandler::writeIdToEEPROM(int idToWrite)

@@ -15,16 +15,12 @@
 
 // ======================================== CONDITIONNAL INCLUDES ========================================
 
-#ifdef HAS_SONARS
-#include "Sonars.h"
-#endif
-
 #ifdef HAS_MOTOR_PROP
 #include "Motor.h"
 #endif
 
 #ifdef HAS_IMU
-#include "IMU.h"
+#include "MPU.h"
 #endif
 
 #ifdef HAS_GPS
@@ -39,24 +35,48 @@
 #include "Servos.h"
 #endif
 
+#ifdef HAS_ACTUATOR
+#include "Actuator.h"
+#endif
+
+#ifdef HAS_SONARS
+#include "Sonars.h"
+#endif
+
+#ifdef HAS_LIGHTTOWER
+#include "LightTower.h"
+#endif
+
 // ======================================== FUNCTIONS ========================================
 void propCallback();
 void chuteCallback();
 void soufflanteCmdCallback();
 void deadmanCallback();
+void estopCallback();
+void lightCallback();
+void pidCstCallback();
 
 void loopSonars();
+void loopSafety();
 void loopController();
 
 // ======================================== VARIABLES ========================================
 
 // ==================== TIMERS ====================
-int val = 0;
 long lastTime = 0;
 long delayInterval = 100;
 
 long lastTimeSonar = 0;
 long delayIntervalSonar = 1500;
+
+long lastTimeImu = 0;
+long delayIntervalImu = 10;
+
+long lastTimeGps = 0;
+long delayIntervalGps = 200;
+
+long lastDebounceTime = 0;
+long delayDebounceInterval = 50;
 
 // ==================== TOPICS ====================
 // Out
@@ -66,13 +86,17 @@ FloatArray imuMsg = FloatArray_init_zero;
 FloatArray gpsMsg = FloatArray_init_zero;
 FloatArray sonarPairsMsg = FloatArray_init_zero;
 Int32 soufflanteHeightMsg = Int32_init_zero;
-Int32 estopMsg = Int32_init_zero;
+Int32 estopStateMsg = Int32_init_zero;
+FloatArray debugMotMsg = FloatArray_init_zero;
 
 // In
 FloatArray propMsg = FloatArray_init_zero;
 FloatArray chuteMsg = FloatArray_init_zero;
 Int32 soufflanteCmdMsg = Int32_init_zero;
 Int32 deadmanMsg = Int32_init_zero;
+Int32 estopMsg = Int32_init_zero;
+FloatArray lightMsg = FloatArray_init_zero;
+FloatArray pidCstMsg = FloatArray_init_zero;
 
 const Topic topics[] = {
       // Out
@@ -82,13 +106,17 @@ const Topic topics[] = {
       {GPS, FloatArray_fields, &gpsMsg},
       {SONAR_PAIRS, FloatArray_fields, &sonarPairsMsg},
       {SOUFFLANTE_HEIGHT, Int32_fields, &soufflanteHeightMsg},      
-      {ESTOP_STATE, Int32_fields, &estopMsg},
+      {ESTOP_STATE, Int32_fields, &estopStateMsg},
+      {DEBUG_MOT, FloatArray_fields, &debugMotMsg},
 
       // In
       {PROP, FloatArray_fields, &propMsg},
       {CHUTE, FloatArray_fields, &chuteMsg},
       {SOUFFLANTE_CMD, Int32_fields, &soufflanteCmdMsg},
       {DEADMAN, Int32_fields, &deadmanMsg},
+      {ESTOP, Int32_fields, &estopMsg},
+      {LIGHT, FloatArray_fields, &lightMsg},
+      {PID_CST, FloatArray_fields, &pidCstMsg},
     };
 
 // ==================== SERIAL COMMUNICATION ====================
@@ -107,18 +135,18 @@ bool msgDiscardedLength = false;
 PBUtils pbUtils(topics);
 AckHandler ackHandler;
 
+// ==================== Safety=======================
+bool lastEstopState = false;
+bool estopState = false;
+bool deadmanActive = false;
+
 // ==================== DEVICES ====================
 #ifdef HAS_MOTOR_PROP
 Motor motorLeft, motorRight;
 #endif
 
-#ifdef HAS_SONARS
-Sonars sonars;
-int sonarsMsgSeq = 0;
-#endif
-
 #ifdef HAS_IMU
-IMU imu;
+MPU imu;
 #endif
 
 #ifdef HAS_GPS
@@ -133,59 +161,124 @@ Encoder encoders;
 Servos servos;
 #endif
 
-// ======================================== MAIN ========================================
+#ifdef HAS_ACTUATOR
+Actuator actuator;
+#endif
+  
+#ifdef HAS_SONARS
+Sonars sonars;
+#endif
 
+#ifdef HAS_LIGHTTOWER
+LightTower lightTower;
+#endif
+
+// ======================================== MAIN ========================================
 void setup()
 {
   Serial.begin(115200);
 
 #ifdef CONFIGURATION_MODE
   ackHandler.writeIdToEEPROM(); // Left empty to force compile error and make sure the right id is writen
+  while(1);
 #else
   ackHandler.readIdFromEEPROM();
 #endif
+
+// ==== Controller ====
+
+  if(ackHandler.getId() == CONTROLLER)
+  {
+    #ifdef HAS_MOTOR_PROP
+      // Make sure the arduino is not in SPI slave mode
+      pinMode(53, OUTPUT);
+      digitalWrite(53,LOW);
+    
+      motorLeft.init(motorBackwardLeftPin, motorPwmLeftPin, csEncoderL, motorLatchLeftPin, true);
+      motorRight.init(motorBackwardRightPin, motorPwmRightPin, csEncoderR, motorLatchRightPin, false);
+      motorLeft.setPID(10.0, 3.0, 0);
+      motorRight.setPID(24.0, 5.0, 0);
+      
+      motorLeft.setVoltage(0);
+      motorRight.setVoltage(0);
+    #endif
+    
+    #ifdef HAS_IMU
+      imu.init();
+      #ifdef CONFIGURATION_MODE
+        imu.doCalibration();
+      #else
+        // Read actual calbration
+        //imu.loadCalibration();
+        // Calibrated
+        imu.hardcodeCalibration();
+      #endif
+    #endif
+    
+    #ifdef HAS_GPS
+      gps.init();
+    #endif
+    
+    #ifdef HAS_SERVOS
+      servos.init(servoPins);
+    #endif
+    
+    #ifdef HAS_ACTUATOR
+      actuator.init(actuatorSwitchUpPin, actuatorSwitchDownPin, actuatorUpPin, actuatorDownPin);
+      soufflanteHeightMsg.data = actuator.getCurrentPos();
+      pbUtils.pbSend(1, SOUFFLANTE_HEIGHT);
+    #endif
+  }
   
-#ifdef HAS_SONARS
-  sonars.init(sonarsTriggerPin, sonarsEchoPins);
-#endif
+// ==== Sensors ====
+  else if (ackHandler.getId() == SENSORS)
+  {
+    #ifdef HAS_SONARS
+      sonars.init(sonarsTriggerPin, sonarsEchoPins);
+    #endif
+  
+    #ifdef HAS_LIGHTTOWER
+    lightTower.init(lightPins);
+    #endif
+  }
+  
+// ==== Safety ====
+  else if (ackHandler.getId() == SAFETY)
+  {
+    pinMode(estopPin, OUTPUT);
+    digitalWrite(estopPin, LOW);
+    pinMode(estopStatePin, INPUT);
+    
+    estopState = digitalRead(estopStatePin);
+    estopStateMsg.data = estopState;
+    pbUtils.pbSend(1, ESTOP_STATE);
+  }
 
-#ifdef HAS_MOTOR_PROP
-  motorLeft.init(motorForwardLeft, motorPwmLeft, csEncoderL);
-  motorRight.init(motorForwardRight, motorPwmRight, csEncoderR);
-  motorLeft.setPID(13.0, 11.0, 0.7);
-  motorRight.setPID(13.0, 11.0, 0.7);
-#endif
-
-#ifdef HAS_IMU
-  imu.init();
-#endif
-
-#ifdef HAS_GPS
-  gps.init();
-#endif
-
-#ifdef HAS_SERVOS
-  servos.init(servoPins);
-#endif
-
- pinMode(53, OUTPUT);
- digitalWrite(53,LOW);
+// ==== Unknown ====
+  else
+  {
+    sendStatusWithMessage(FATAL, OTHER, "Arduino has no valid ID");
+    while(1);
+  }
 }
 
 void loop()
 {
   if (inCmdComplete && inCmdType == STATUS_MSGS)
     inCmdComplete = !ackHandler.acknowldgeArduino(inCmd);
-  
+
+  if (ackHandler.getAcked())
+  {
 #ifndef CONFIGURATION_MODE
-  if (ackHandler.getId() == CONTROLLER)
-    loopController();
-  else if (ackHandler.getId() == SENSORS)
-    loopSonars();
-  else if (ackHandler.getId() == BATTERY)
-    sendStatusWithMessage(ERROR, OTHER, "No loop for the battery arduino yet");
-  else
-    sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+    if (ackHandler.getId() == CONTROLLER)
+      loopController();
+    else if (ackHandler.getId() == SENSORS)
+      loopSonars();
+    else if (ackHandler.getId() == SAFETY)
+      loopSafety();
+    else
+      sendStatusWithMessage(FATAL, OTHER, "Arduino ID not valid");
+  }
 #endif
 
   // Send status if any errors
@@ -220,12 +313,48 @@ void chuteCallback()
 
 void soufflanteCmdCallback()
 {
-  // TODO
+#ifdef HAS_ACTUATOR
+  actuator.setDir(soufflanteCmdMsg.data);
+#endif
 }
 
 void deadmanCallback()
 {
-  // TODO
+  deadmanActive = deadmanMsg.data;
+
+#ifdef HAS_MOTOR_PROP
+  /*if (!deadmanActive && ackHandler.getId() == CONTROLLER)
+  {
+    // TODO : Test it
+    motorLeft.disable();
+    motorRight.disable();
+  }*/
+#endif
+}
+
+void estopCallback()
+{
+  digitalWrite(estopPin, estopMsg.data);
+}
+
+void lightCallback()
+{
+#ifdef HAS_LIGHTTOWER
+  lightTower.toggle(lightMsg.data[0], lightMsg.data[1]);
+#endif
+}
+
+void pidCstCallback()
+{
+#ifdef HAS_MOTOR_PROP
+  sendStatusWithMessage(INFO, MOTOR_PROP_DEVICE, "Setting PID for motor " + String(pidCstMsg.data[0]));
+
+  if (pidCstMsg.data[0] < 5)
+    motorLeft.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
+    
+  if (pidCstMsg.data[0] >  5)
+    motorRight.setPID(pidCstMsg.data[1], pidCstMsg.data[2], pidCstMsg.data[3]);
+#endif
 }
 
 // ======================================== SERIAL ========================================
@@ -272,68 +401,123 @@ void serialEvent()
 // CONTROLLER
 void loopController()
 {
+#ifdef HAS_IMU
+  long period = millis() - lastTimeImu;
+  if (period > delayIntervalImu)
+  {
+    if (period > 75)
+    {
+      String msg = "Frequency was not met";
+      msg += period;
+      sendStatusWithMessage(FATAL, IMU_DEVICE, msg);
+    }
+    else
+    {
+      imu.getValues(&imuMsg);
+      pbUtils.pbSend(1, IMU);
+    }
+    lastTimeImu = millis();
+  }
+#endif
+#ifdef HAS_GPS
+  if (millis() - lastTimeGps > delayIntervalGps)
+  {
+    gps.getCoordinates(&gpsMsg);
+    pbUtils.pbSend(1, GPS);
+    lastTimeGps = millis();
+  }
+#endif
+
+  
   if (millis() - lastTime > delayInterval)
   {
     lastTime = millis();
-
-#ifdef HAS_IMU
-    imu.getValues(&imuMsg);
-    pbUtils.pbSend(1, IMU);
-#endif
-
-#ifdef HAS_GPS
-    gps.getCoordinates(&gpsMsg);
-    pbUtils.pbSend(1, GPS);
-#endif
-
-#ifdef DEBUGGING
-    encMsg.data_count = 2;
-    encMsg.data[0] = 1;
-    encMsg.data[1] = 3;
-    pbUtils.pbSend(1, ENC);
-#endif
-
-    if (inCmdComplete)
+#ifdef HAS_ACTUATOR
+    if (actuator.getCurrentPos() != soufflanteHeightMsg.data)
     {
-      inCmdComplete = false;
-      bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
-      
-      if (status && nbsNewMsgs > 0)
+      soufflanteHeightMsg.data = actuator.getCurrentPos();
+      pbUtils.pbSend(1, SOUFFLANTE_HEIGHT);
+    }
+#endif
+
+#ifdef HAS_MOTOR_PROP
+    motorLeft.computePID();
+    motorRight.computePID();
+
+    encMsg.data_count = 2;
+    encMsg.data[0] = motorLeft.getSpeed();
+    encMsg.data[1] = motorRight.getSpeed();
+    pbUtils.pbSend(1, ENC);
+    
+
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[0] = 0.0;
+    debugMotMsg.data[1] = motorLeft.getSpeed();   // Vitesse
+    debugMotMsg.data[2] = motorLeft.getCurrentCmd();
+    debugMotMsg.data[3] = motorLeft.getCurrentOutput();
+    debugMotMsg.data[4] = motorLeft.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
+
+
+    debugMotMsg.data_count = 5;
+    debugMotMsg.data[0] = 10.0;
+    debugMotMsg.data[1] = motorRight.getSpeed();   // Vitesse
+    debugMotMsg.data[2] = motorRight.getCurrentCmd();
+    debugMotMsg.data[3] = motorRight.getCurrentOutput();
+    debugMotMsg.data[4] = motorRight.getDir();
+    pbUtils.pbSend(1, DEBUG_MOT);
+#endif
+  }
+
+  if (inCmdComplete)
+  {
+    inCmdComplete = false;
+    bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+    
+    if (status && DECODING_PB > 0)
+    {
+      for (int i = 0; i < nbsNewMsgs; ++i)
       {
-        for (int i = 0; i < nbsNewMsgs; ++i)
+        switch (newMsgsIds[i])
         {
-          switch (newMsgsIds[i])
-          {
-            case PROP:
-              propCallback();
-              break;
-              
-            case CHUTE:
-              chuteCallback();
-              break;
+          case PROP:
+            propCallback();
+            break;
+            
+          case CHUTE:
+            chuteCallback();
+            break;
 
-            case SOUFFLANTE_CMD:
-              soufflanteCmdCallback();
-              break;
+          case SOUFFLANTE_CMD:
+            soufflanteCmdCallback();
+            break;
 
-            case DEADMAN:
-              deadmanCallback();
-              break;
-              
-            default:
-              sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
-              break;
-          }
+          case DEADMAN:
+            deadmanCallback();
+            break;
+
+          case PID_CST:
+            pidCstCallback();
+            break;
+            
+          case ESTOP:
+          case LIGHT:
+            break;
+            
+          default:
+            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            break;
         }
       }
-      else
-        sendStatus(ERROR, DECODING_PB);
-      inCmdType = -1;
     }
+    else
+    {
+      sendStatusWithMessage(ERROR, DECODING_PB, inCmd);
+    }
+    inCmdType = -1;
   }
 }
 
-// SONARS
 void loopSonars()
 {
   if (millis() - lastTimeSonar > delayIntervalSonar)
@@ -347,38 +531,94 @@ void loopSonars()
       pbUtils.pbSend(1, SONAR_PAIRS);
     }
 #endif
+  }
+
+  if (inCmdComplete)
+  {
+    inCmdComplete = false;
+    bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
     
-    if (inCmdComplete)
+    if (status && nbsNewMsgs > 0)
     {
-      inCmdComplete = false;
-      bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
-      
-      if (status && nbsNewMsgs > 0)
+      for (int i = 0; i < nbsNewMsgs; ++i)
       {
-        for (int i = 0; i < nbsNewMsgs; ++i)
+        switch (newMsgsIds[i])
         {
-          switch (newMsgsIds[i])
-          {
-            case PROP:
-            case CHUTE:
-            case SOUFFLANTE_HEIGHT:
-              break;
-  
-            case DEADMAN:
-              deadmanCallback();
-              break;
-              
-            default:
-              sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
-              break;
-          }
+          case PROP:
+          case CHUTE:
+          case SOUFFLANTE_HEIGHT:
+          case ESTOP:
+          case PID_CST:
+            break;
+
+          case DEADMAN:
+            deadmanCallback();
+            break;
+
+          case LIGHT:
+            lightCallback();
+            break;
+            
+          default:
+            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            break;
         }
       }
-      else
-        sendStatus(ERROR, DECODING_PB);
-      inCmdType = -1;
     }
+    else
+      sendStatus(ERROR, DECODING_PB);
+    inCmdType = -1;
   }
-  
+}
 
+void loopSafety()
+{
+  bool state = digitalRead(estopStatePin);
+  if (lastEstopState != state)
+  {
+    lastDebounceTime = millis();
+  }
+
+  if(state != estopState && (millis() - lastDebounceTime) > delayDebounceInterval)
+  {
+    estopState = state;
+    estopStateMsg.data = state;
+    pbUtils.pbSend(1, ESTOP_STATE);
+  }
+
+  lastEstopState = state;
+  
+  if (inCmdComplete)
+  {
+    inCmdComplete = false;
+    bool status = pbUtils.decodePb(inCmd, newMsgsIds, nbsNewMsgs);
+    
+    if (status && nbsNewMsgs > 0)
+    {
+      for (int i = 0; i < nbsNewMsgs; ++i)
+      {
+        switch (newMsgsIds[i])
+        {
+          case PROP:
+          case CHUTE:
+          case SOUFFLANTE_CMD:
+          case DEADMAN:
+          case LIGHT:
+          case PID_CST:
+            break;
+            
+          case ESTOP:
+            estopCallback();
+            break;
+            
+          default:
+            sendStatusWithMessage(WARNING, OTHER, "Unsupported topic:" + String(newMsgsIds[i]));
+            break;
+        }
+      }
+    }
+    else
+      sendStatus(ERROR, DECODING_PB);
+    inCmdType = -1;
+  }
 }

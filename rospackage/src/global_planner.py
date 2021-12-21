@@ -9,8 +9,7 @@ import tf
 import numpy as np
 from numpy import deg2rad as d2r
 
-from std_msgs.msg import Float32MultiArray, Int32
-from nav_msgs.msg import OccupancyGrid
+from std_msgs.msg import Int32
 from geometry_msgs.msg import PoseStamped
 from deneigus.msg import chute_msg, mbf_msg
 from deneigus.srv import set_paths

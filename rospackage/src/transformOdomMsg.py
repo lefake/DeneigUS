@@ -2,11 +2,8 @@
 
 import logging
 import rospy
-import time
 import os
 import yaml
-
-import numpy as np
 
 from geographic_msgs.msg import GeoPose
 from sensor_msgs.msg import NavSatFix, Imu

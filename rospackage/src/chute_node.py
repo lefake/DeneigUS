@@ -2,7 +2,6 @@
 
 import rospy
 import logging
-import tf
 import numpy as np
 
 from deneigus.msg import chute_msg

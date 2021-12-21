@@ -23,6 +23,10 @@ class PB2ROS:
         self._chute_sub = rospy.Subscriber('/chute', Float32MultiArray, self.sub_callback, ('/chute'))
         self._soufflante_cmd_sub = rospy.Subscriber('/soufflante_cmd', Int32, self.sub_callback, ('/soufflante_cmd'))
         self._deadman_sub = rospy.Subscriber('/deadman', Int32, self.sub_callback, ('/deadman'))
+        self._estop_sub = rospy.Subscriber('/estop', Int32, self.sub_callback, ('/estop'))
+        self._light_sub = rospy.Subscriber('/light', Float32MultiArray, self.sub_callback, ('/light'))
+        self._pid_cst_sub = rospy.Subscriber('/pid_cst', Float32MultiArray, self.sub_callback, ('/pid_cst'))
+        # TODO: Test the pid_cst topic
 
         # In Executif, Out Arduino
         self._debug_arduino_pub = rospy.Publisher('/debug_arduino_data', Float32MultiArray, queue_size=10)
@@ -30,10 +34,22 @@ class PB2ROS:
         self._gps_pub = rospy.Publisher('/gps/fix', NavSatFix, queue_size=10)
         self._imu_pub = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self._sonar_pairs_pub = rospy.Publisher('/sonar_pairs', Float32MultiArray, queue_size=10)
-        self._soufflante_height_pub = rospy.Subscriber('/soufflante_height', Int32, self.sub_callback, ('/soufflante_height'))
+        self._soufflante_height_pub = rospy.Publisher('/soufflante_height', Int32, queue_size=10)
         self._estop_state_pub = rospy.Publisher('/estop_state', Int32, queue_size=10)
+        self._debug_motor_pub = rospy.Publisher('/debug_mot', Float32MultiArray, queue_size=10)
         
+        self.fast_msgs = []#['/deadman', '/estop']
+
         # Topic IDs much be the same in the Arduino enum (in constants.h)
+        self._sub_topics = [
+            SubTopic(8, self._prop_sub, ["CONTROLLER"]),
+            SubTopic(9, self._chute_sub, ["CONTROLLER"]),
+            SubTopic(10, self._soufflante_cmd_sub, ["CONTROLLER"]),
+            SubTopic(11, self._deadman_sub, ["CONTROLLER", "SENSORS", "SAFETY"]),
+            SubTopic(12, self._estop_sub, ["SAFETY"]),
+            SubTopic(13, self._light_sub, ["SENSORS"]),
+            SubTopic(14, self._pid_cst_sub, ["CONTROLLER"]),
+        ]
         self._pub_topics = [
             PubTopic(0, self._debug_arduino_pub),
             PubTopic(1, self._enc_pub, floatarray_pb2.FloatArray(), MsgConverter.enc_converter), # Might need to remove () on FloatArray
@@ -42,12 +58,7 @@ class PB2ROS:
             PubTopic(4, self._sonar_pairs_pub),
             PubTopic(5, self._soufflante_height_pub),
             PubTopic(6, self._estop_state_pub),
-        ]
-        self._sub_topics = [
-            SubTopic(7, self._prop_sub, ["CONTROLLER"]),
-            SubTopic(8, self._chute_sub, ["CONTROLLER"]),
-            SubTopic(9, self._soufflante_cmd_sub, ["CONTROLLER"]),
-            SubTopic(10, self._deadman_sub, ["CONTROLLER"]),
+            PubTopic(7, self._debug_motor_pub),
         ]
         self._topics = self._sub_topics + self._pub_topics
         self._serializer = PBSerializationHelper(self._topics)
@@ -72,12 +83,13 @@ class PB2ROS:
             8: "MOTOR_PROP_DEVICE",
             9: "SERVOS_DEVICE",
             10: "ENCODER_DEVICE",
-            11: "OTHER",
+            11: "ACTUATOR_DEVICE",
+            12: "OTHER",
         }
 
         self._serials = []  
         for s in serials:
-            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self.new_status_callback, self._serializer))
+            self._serials.append(PBSerialHandler(s, self.new_msg_callback, self.new_status_callback, self.id_error_callback, self._serializer, "{42}"))
             self._serials[-1].start()
 
     def new_msg_callback(self, response):
@@ -116,13 +128,26 @@ class PB2ROS:
             self._logger.fatal("Unknown topic reference")
             return
 
-        current_serial = next((serial for serial in self._serials if serial.id in current_topic.dst), None)
+        serialToSend = []
 
-        if current_serial is None:
+        for serial in self._serials:
+            if serial.id in current_topic.dst:
+                serialToSend.append(serial)
+
+        if len(serialToSend) == 0:
             self._logger.fatal("Arduino not acknowledged yet")
             return
 
-        current_serial.write_pb_msg(current_topic.id, current_topic.converter(msg))
+        for s in serialToSend:
+            if current_topic.name in self.fast_msgs:
+                s.write_fast(current_topic.id, current_topic.converter(msg))
+            else:  
+                s.write_msg(current_topic.id, current_topic.converter(msg))
+
+    def id_error_callback(self):
+        self._logger.fatal("Some arduinos have the same ids")
+        self.kill()
+        rospy.signal_shutdown("Some arduinos have the same ids")
 
     def kill(self):
         for s in self._serials:
@@ -131,10 +156,11 @@ class PB2ROS:
 if __name__ == "__main__":
     # Add rospy.get_params() for the port and baudrate
     arduinos = [
-        #serial.Serial('/dev/pts/4', 9600, timeout=0.05),
+        #serial.Serial('/dev/pts/6', 9600, timeout=0.05),
         serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05),
         serial.Serial('/dev/ttyUSB1', 115200, timeout=0.05),
-        #serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
+        serial.Serial('/dev/ttyUSB2', 115200, timeout=0.05),
+        #serial.Serial('/dev/ttyUSB3', 115200, timeout=0.05),
     ]
     rospy.init_node('pb2ros', anonymous=False)
 

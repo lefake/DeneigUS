@@ -10,7 +10,7 @@
 enum ID {
   CONTROLLER = 0,
   SENSORS,
-  BATTERY,
+  SAFETY,
 
   _NBS_ID
 };
@@ -22,13 +22,15 @@ class AckHandler
   
     bool acknowldgeArduino(char* msg);
     int getId();
+    bool getAcked();
     
     void writeIdToEEPROM(int id);
     void readIdFromEEPROM();
   
   private:
     int id;
-    String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "BATTERY" };
+    bool acked = false;
+    String IdName[_NBS_ID] = { "CONTROLLER", "SENSORS", "SAFETY" };
 };
 
 #endif // _ACKNOWLEDGE_H
