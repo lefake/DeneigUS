@@ -2,6 +2,11 @@
 
 DeneigUS is a robotics project created by seven engineering students at the University of Sherbrooke. The main objective of this projet is to design the **proof of concept of an autonomous and electric snowblower** (from mechanics to programming, including electrification).
 
+The project is split in 3 repositories. 
+1. https://github.com/lefake/DeneigUS-PCB : For the Altim PCB schematics
+2. https://github.com/lefake/DeneigUS-GUI : For the angular GUI
+3. This for the main code
+
 The team implements several tools from [ROS Noetic](http://wiki.ros.org/noetic) on Ubuntu 20.04 for navigation and control. Also, the control is ensured by a Rapberry Pi 4 with Arduinos and the fusion of several sensors, including GPS and IMU for localization, then sonars for the detection of obstacles while it is snowing. A user Interface is also implemented in HTML to visualize sensor data and error messages.
 
 ## Folders Description
